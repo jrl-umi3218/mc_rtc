@@ -6,4 +6,4 @@
 
 #include <mc_rbdyn/RobotModule.h>
 
-#include "api.h"
+#include <mc_robots/json/api.h>

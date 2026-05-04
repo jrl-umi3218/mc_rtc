@@ -38,8 +38,9 @@ std::vector<std::pair<double, Eigen::Matrix3d>> SplineTrajectoryTask<Derived>::l
         }
         else
         {
-          mc_rtc::log::error_and_throw("[bspline_trajectory] oriWaypoints should be a vector of pairs of (time, "
-                                       "orientation) or a vector of objects with a time and orientation property");
+          mc_rtc::log::error_and_throw(
+              "[bspline_trajectory] oriWaypoints should be a vector of pairs of (time, "
+              "orientation) or a vector of objects with a time and orientation property");
         }
       }
     }
@@ -154,9 +155,10 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
         }
         catch(mc_rtc::Configuration::Exception & e)
         {
-          mc_rtc::log::critical("[{}] {} interpolation values are expected to be either vector<pair<double, "
-                                "Vector6d>> or vector<pair<double, double>>",
-                                name(), key);
+          mc_rtc::log::critical(
+              "[{}] {} interpolation values are expected to be either vector<pair<double, "
+              "Vector6d>> or vector<pair<double, double>>",
+              name(), key);
           throw e;
         }
       }

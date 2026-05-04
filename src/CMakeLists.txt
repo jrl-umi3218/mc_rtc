@@ -5,9 +5,10 @@
 set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
+set(MC_RTC_ALL_TARGETS)
 
 if(UNIX AND NOT EMSCRIPTEN)
-  include(CheckCXXSourceCompiles)
+  include(CheckCXXCompilerFlag)
   check_cxx_compiler_flag("-msse2" SSE2_SUPPORTED)
 endif()
 
@@ -44,11 +45,18 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
   if(MC_RTC_BUILD_STATIC)
     target_compile_definitions(${MC_LIB} ${KWD} MC_RTC_BUILD_STATIC)
   endif()
+  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
+  list(APPEND MC_RTC_ALL_TARGETS ${MC_LIB})
+  set(MC_RTC_ALL_TARGETS
+      "${MC_RTC_ALL_TARGETS}"
+      PARENT_SCOPE
+  )
 endmacro()
 
 macro(install_mc_rtc_header_lib MC_LIB)
   install_mc_rtc_lib_common(${MC_LIB} INTERFACE)
-  install(TARGETS ${MC_LIB} EXPORT "${TARGETS_EXPORT_NAME}")
+  jrl_add_export_component(NAME ${MC_LIB} TARGETS ${MC_LIB})
+  # install(TARGETS ${MC_LIB} EXPORT "${TARGETS_EXPORT_NAME}")
 endmacro()
 
 macro(install_mc_rtc_lib MC_LIB)
@@ -65,16 +73,16 @@ macro(install_mc_rtc_lib MC_LIB)
     ${MC_LIB} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION}
   )
   if(NOT MC_RTC_BUILD_STATIC)
-    add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
+    # add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}") XXX: Check if this is
+    # strictly equivalent to the old version script
+    jrl_target_generate_config_header(
+      ${MC_LIB} PUBLIC VERSION "${PROJECT_VERSION}" FILENAME "${MC_LIB}/api.h"
+    )
+    jrl_target_generate_deprecated_header(
+      ${MC_LIB} PUBLIC FILENAME "${MC_LIB}/deprecated.h"
+    )
   endif()
-  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
-  install(
-    TARGETS ${MC_LIB}
-    EXPORT "${TARGETS_EXPORT_NAME}"
-    RUNTIME DESTINATION "${MC_RTC_BINDIR}"
-    LIBRARY DESTINATION "${MC_RTC_LIBDIR}"
-    ARCHIVE DESTINATION "${MC_RTC_LIBDIR}"
-  )
+  jrl_add_export_component(NAME ${MC_LIB} TARGETS ${MC_LIB})
 endmacro()
 
 configure_file(mc_rtc/loader.in.cpp "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp")
@@ -88,8 +96,8 @@ add_custom_command(
     -DPROJECT_VERSION_MAJOR="${PROJECT_VERSION_MAJOR}"
     -DMC_RTC_DEVELOPER_MODE="${MC_RTC_DEVELOPER_MODE}" -P
     "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
-  DEPENDS ${MC_RTC_ALL_FILES}
 )
+add_custom_target(generate_version_header DEPENDS ${VERSION_HEADER})
 
 set(DEBUG_SOURCE "${PROJECT_BINARY_DIR}/src/mc_rtc/$<LOWER_CASE:$<CONFIG>>/debug.cpp")
 # This is not necessary but a work-around for
@@ -115,42 +123,70 @@ set(mc_rtc_utils_SRC
     mc_rtc/version.cpp
     ${DEBUG_SOURCE}
 )
+add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC})
 
-set(mc_rtc_utils_HDR
-    "${VERSION_HEADER}"
-    mc_rtc/internals/json.h
-    mc_rtc/internals/msgpack.h
-    mc_rtc/internals/yaml.h
-    mc_rtc/internals/LogEntry.h
-    ../include/mc_rtc/Configuration.h
-    ../include/mc_rtc/ConfigurationHelpers.h
-    ../include/mc_rtc/MessagePackBuilder.h
-    ../include/mc_rtc/logging.h
-    ../include/mc_rtc/fmt_formatters.h
-    ../include/mc_rtc/log/FlatLog.h
-    ../include/mc_rtc/log/iterate_binary_log.h
-    ../include/mc_rtc/log/Logger.h
-    ../include/mc_rtc/io_utils.h
-    ../include/mc_rtc/utils.h
-    ../include/mc_rtc/utils_api.h
-    ../include/mc_rtc/constants.h
-    ../include/mc_rtc/DataStore.h
-    ../include/mc_rtc/type_name.h
-    ../include/mc_rtc/debug.h
-    ../include/mc_rtc/deprecated.h
-    ../include/mc_rtc/path.h
-    ../include/mc_rtc/pragma.h
-    ../include/mc_rtc/shared.h
-    ../include/mc_rtc/visual_utils.h
-    ../include/mc_rtc/utils/heatmap.h
-    ../include/mc_rtc/clock.h
-    ../include/mc_rtc/threading/AsyncJob.h
-    ../include/mc_rtc/SignalSlot.h
+jrl_target_headers(
+  mc_rtc_utils
+  PUBLIC
+  HEADERS
+  include/mc_rtc/Configuration.h
+  include/mc_rtc/ConfigurationHelpers.h
+  include/mc_rtc/MessagePackBuilder.h
+  include/mc_rtc/logging.h
+  include/mc_rtc/fmt_formatters.h
+  include/mc_rtc/log/FlatLog.h
+  include/mc_rtc/log/iterate_binary_log.h
+  include/mc_rtc/log/Logger.h
+  include/mc_rtc/io_utils.h
+  include/mc_rtc/utils.h
+  include/mc_rtc/constants.h
+  include/mc_rtc/DataStore.h
+  include/mc_rtc/type_name.h
+  include/mc_rtc/debug.h
+  include/mc_rtc/deprecated.h
+  include/mc_rtc/path.h
+  include/mc_rtc/pragma.h
+  include/mc_rtc/shared.h
+  include/mc_rtc/visual_utils.h
+  include/mc_rtc/utils/heatmap.h
+  include/mc_rtc/clock.h
+  include/mc_rtc/threading/AsyncJob.h
+  include/mc_rtc/SignalSlot.h
+  BASE_DIRS
+  include
+)
+jrl_target_headers(
+  mc_rtc_utils
+  PUBLIC
+  HEADERS
+  src/mc_rtc/internals/json.h
+  src/mc_rtc/internals/msgpack.h
+  src/mc_rtc/internals/yaml.h
+  src/mc_rtc/internals/LogEntry.h
+  BASE_DIRS
+  src
+)
+jrl_target_headers(
+  mc_rtc_utils
+  PRIVATE
+  HEADERS
+  "${VERSION_HEADER}"
+  "${PROJECT_BINARY_DIR}/include/mc_rtc/config.h"
+  BASE_DIRS
+  ${PROJECT_BINARY_DIR}/include
+)
+jrl_target_headers(
+  mc_rtc_utils PUBLIC HEADERS ${PROJECT_BINARY_DIR}/include/mc_rtc/config.h BASE_DIRS
+  ${PROJECT_BINARY_DIR}/include
 )
 
-add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
-set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
+add_dependencies(mc_rtc_utils generate_version_header)
 target_include_directories(mc_rtc_utils PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
+target_include_directories(
+  mc_rtc_utils
+  PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<INSTALL_INTERFACE:include>
+)
 target_compile_definitions(mc_rtc_utils PUBLIC ${BOOST_USE_STACKTRACE_DEFINE})
 target_link_libraries(
   mc_rtc_utils
@@ -205,7 +241,6 @@ set(mc_rtc_loader_SRC "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp")
 set(mc_rtc_loader_HDR ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
 
 add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
-set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
 target_link_libraries(
   mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking mc_rtc_utils
 )
@@ -248,76 +283,81 @@ set(mc_rbdyn_SRC
     mc_rbdyn/RobotFrame.cpp
 )
 
-set(mc_rbdyn_HDR
-    ../include/mc_rbdyn/api.h
-    ../include/mc_rbdyn/fwd.h
-    ../include/mc_rbdyn/hat.h
-    ../include/mc_rbdyn/Contact.h
-    ../include/mc_rbdyn/contact_transform.h
-    ../include/mc_rbdyn/CylindricalSurface.h
-    ../include/mc_rbdyn/GripperSurface.h
-    ../include/mc_rbdyn/Mimic.h
-    ../include/mc_rbdyn/PlanarSurface.h
-    ../include/mc_rbdyn/polygon_utils.h
-    ../include/mc_rbdyn/PolygonInterpolator.h
-    ../include/mc_rbdyn/Robot.h
-    ../include/mc_rbdyn/Robots.h
-    ../include/mc_rbdyn/RobotLoader.h
-    ../include/mc_rbdyn/RobotConverter.h
-    ../include/mc_rbdyn/RobotModule.h
-    ../include/mc_rbdyn/RobotModule_visual.h
-    ../include/mc_rbdyn/inertia.h
-    ../include/mc_rbdyn/RobotModuleMacros.h
-    ../include/mc_rbdyn/SCHAddon.h
-    ../include/mc_rbdyn/Surface.h
-    ../include/mc_rbdyn/rpy_utils.h
-    ../include/mc_rbdyn/surface_hull.h
-    ../include/mc_rbdyn/surface_utils.h
-    ../include/mc_rbdyn/Collision.h
-    ../include/mc_rbdyn/CompoundJointConstraintDescription.h
-    ../include/mc_rbdyn/ForceSensor.h
-    ../include/mc_rbdyn/Flexibility.h
-    ../include/mc_rbdyn/Springs.h
-    ../include/mc_rbdyn/Base.h
-    ../include/mc_rbdyn/BodySensor.h
-    ../include/mc_rbdyn/configuration_io.h
-    ../include/mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h
-    ../include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h
-    ../include/mc_rbdyn/ZMP.h
-    ../include/mc_control/generic_gripper.h
-    ../include/mc_rbdyn/Device.h
-    ../include/mc_rbdyn/Frame.h
-    ../include/mc_rbdyn/RobotFrame.h
-    ../include/mc_rbdyn/JointSensor.h
+add_library(mc_rbdyn SHARED)
+target_sources(mc_rbdyn PRIVATE ${mc_rbdyn_SRC})
+jrl_target_headers(
+  mc_rbdyn
+  PUBLIC
+  HEADERS
+  include/mc_rbdyn/fwd.h
+  include/mc_rbdyn/hat.h
+  include/mc_rbdyn/Contact.h
+  include/mc_rbdyn/contact_transform.h
+  include/mc_rbdyn/CylindricalSurface.h
+  include/mc_rbdyn/GripperSurface.h
+  include/mc_rbdyn/Mimic.h
+  include/mc_rbdyn/PlanarSurface.h
+  include/mc_rbdyn/polygon_utils.h
+  include/mc_rbdyn/PolygonInterpolator.h
+  include/mc_rbdyn/Robot.h
+  include/mc_rbdyn/Robots.h
+  include/mc_rbdyn/RobotLoader.h
+  include/mc_rbdyn/RobotConverter.h
+  include/mc_rbdyn/RobotModule.h
+  include/mc_rbdyn/RobotModule_visual.h
+  include/mc_rbdyn/inertia.h
+  include/mc_rbdyn/RobotModuleMacros.h
+  include/mc_rbdyn/SCHAddon.h
+  include/mc_rbdyn/Surface.h
+  include/mc_rbdyn/rpy_utils.h
+  include/mc_rbdyn/surface_hull.h
+  include/mc_rbdyn/surface_utils.h
+  include/mc_rbdyn/Collision.h
+  include/mc_rbdyn/CompoundJointConstraintDescription.h
+  include/mc_rbdyn/ForceSensor.h
+  include/mc_rbdyn/Flexibility.h
+  include/mc_rbdyn/Springs.h
+  include/mc_rbdyn/Base.h
+  include/mc_rbdyn/BodySensor.h
+  include/mc_rbdyn/configuration_io.h
+  include/mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h
+  include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h
+  include/mc_rbdyn/ZMP.h
+  include/mc_control/generic_gripper.h
+  include/mc_rbdyn/Device.h
+  include/mc_rbdyn/Frame.h
+  include/mc_rbdyn/RobotFrame.h
+  include/mc_rbdyn/JointSensor.h
 )
 
-set(mc_tvm_HDR_DIR ../include/mc_tvm)
+# tvm is added on purpose to the rbdyn target because it depends on rbdyn
+set(mc_tvm_HDR_DIR ${PROJECT_SOURCE_DIR}/include/mc_tvm)
 set(mc_tvm_HDR
-    ${mc_tvm_HDR_DIR}/api.h
-    ${mc_tvm_HDR_DIR}/CollisionFunction.h
-    ${mc_tvm_HDR_DIR}/CoM.h
-    ${mc_tvm_HDR_DIR}/CoMFunction.h
-    ${mc_tvm_HDR_DIR}/CoMInConvexFunction.h
-    ${mc_tvm_HDR_DIR}/CompoundJointFunction.h
-    ${mc_tvm_HDR_DIR}/ContactFunction.h
-    ${mc_tvm_HDR_DIR}/Convex.h
-    ${mc_tvm_HDR_DIR}/DynamicFunction.h
-    ${mc_tvm_HDR_DIR}/Frame.h
-    ${mc_tvm_HDR_DIR}/FrameVelocity.h
-    ${mc_tvm_HDR_DIR}/GazeFunction.h
-    ${mc_tvm_HDR_DIR}/Limits.h
-    ${mc_tvm_HDR_DIR}/JointsSelectorFunction.h
-    ${mc_tvm_HDR_DIR}/Momentum.h
-    ${mc_tvm_HDR_DIR}/MomentumFunction.h
-    ${mc_tvm_HDR_DIR}/OrientationFunction.h
-    ${mc_tvm_HDR_DIR}/PositionFunction.h
-    ${mc_tvm_HDR_DIR}/PositionBasedVisServoFunction.h
-    ${mc_tvm_HDR_DIR}/PostureFunction.h
-    ${mc_tvm_HDR_DIR}/Robot.h
-    ${mc_tvm_HDR_DIR}/RobotFrame.h
-    ${mc_tvm_HDR_DIR}/TransformFunction.h
-    ${mc_tvm_HDR_DIR}/VectorOrientationFunction.h
+    include/mc_tvm/CollisionFunction.h
+    include/mc_tvm/CoM.h
+    include/mc_tvm/CoMFunction.h
+    include/mc_tvm/CoMInConvexFunction.h
+    include/mc_tvm/CompoundJointFunction.h
+    include/mc_tvm/ContactFunction.h
+    include/mc_tvm/Convex.h
+    include/mc_tvm/DynamicFunction.h
+    include/mc_tvm/Frame.h
+    include/mc_tvm/FrameVelocity.h
+    include/mc_tvm/GazeFunction.h
+    include/mc_tvm/Limits.h
+    include/mc_tvm/JointsSelectorFunction.h
+    include/mc_tvm/Momentum.h
+    include/mc_tvm/MomentumFunction.h
+    include/mc_tvm/OrientationFunction.h
+    include/mc_tvm/PositionFunction.h
+    include/mc_tvm/PositionBasedVisServoFunction.h
+    include/mc_tvm/PostureFunction.h
+    include/mc_tvm/Robot.h
+    include/mc_tvm/RobotFrame.h
+    include/mc_tvm/TransformFunction.h
+    include/mc_tvm/VectorOrientationFunction.h
 )
+jrl_target_headers(mc_rbdyn PUBLIC HEADERS ${mc_tvm_HDR} BASE_DIRS include)
 set(mc_tvm_SRC
     mc_tvm/CollisionFunction.cpp
     mc_tvm/CoM.cpp
@@ -342,9 +382,7 @@ set(mc_tvm_SRC
     mc_tvm/TransformFunction.cpp
     mc_tvm/VectorOrientationFunction.cpp
 )
-
-add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR} ${mc_tvm_SRC} ${mc_tvm_HDR})
-target_compile_definitions(mc_rbdyn PRIVATE "-DMC_RBDYN_EXPORTS" "-DMC_TVM_EXPORTS")
+target_sources(mc_rbdyn PRIVATE ${mc_tvm_SRC})
 target_link_libraries(
   mc_rbdyn
   PUBLIC RBDyn::Parsers
@@ -360,11 +398,11 @@ target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 # qhull
 if(MC_RTC_BUILD_STATIC)
   target_link_libraries(
-    mc_rbdyn PRIVATE "-Wl,--no-whole-archive" qhullstatic_r "-Wl,--no-whole-archive"
-                     qhullcpp
+    mc_rbdyn PRIVATE "-Wl,--no-whole-archive" Qhull::qhullstatic_r
+                     "-Wl,--no-whole-archive" Qhull::qhullcpp
   )
 else()
-  target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
+  target_link_libraries(mc_rbdyn PRIVATE Qhull::qhullstatic_r Qhull::qhullcpp)
 endif()
 
 if(TARGET mc_rtc_3rd_party::ROS)
@@ -373,57 +411,56 @@ endif()
 
 install_mc_rtc_lib(mc_rbdyn)
 
+add_library(mc_rtc_gui SHARED)
 set(mc_rtc_gui_SRC mc_rtc/gui/StateBuilder.cpp mc_rbdyn/gui/RobotConvex.cpp
                    mc_rbdyn/gui/RobotSurface.cpp
 )
 
 set(mc_rtc_gui_HDR
-    ../include/mc_rtc/gui/api.h
-    ../include/mc_rtc/gui/StateBuilder.h
-    ../include/mc_rtc/gui/StateBuilder.hpp
-    ../include/mc_rtc/gui/ArrayInput.h
-    ../include/mc_rtc/gui/ArrayLabel.h
-    ../include/mc_rtc/gui/Arrow.h
-    ../include/mc_rtc/gui/Box.h
-    ../include/mc_rtc/gui/Button.h
-    ../include/mc_rtc/gui/Checkbox.h
-    ../include/mc_rtc/gui/ComboInput.h
-    ../include/mc_rtc/gui/Cylinder.h
-    ../include/mc_rtc/gui/DataComboInput.h
-    ../include/mc_rtc/gui/elements.h
-    ../include/mc_rtc/gui/Ellipsoid.h
-    ../include/mc_rtc/gui/Force.h
-    ../include/mc_rtc/gui/Form.h
-    ../include/mc_rtc/gui/IntegerInput.h
-    ../include/mc_rtc/gui/Input.h
-    ../include/mc_rtc/gui/Label.h
-    ../include/mc_rtc/gui/NumberInput.h
-    ../include/mc_rtc/gui/NumberSlider.h
-    ../include/mc_rtc/gui/Point3D.h
-    ../include/mc_rtc/gui/Polygon.h
-    ../include/mc_rtc/gui/Rotation.h
-    ../include/mc_rtc/gui/Schema.h
-    ../include/mc_rtc/gui/Sphere.h
-    ../include/mc_rtc/gui/StringInput.h
-    ../include/mc_rtc/gui/Trajectory.h
-    ../include/mc_rtc/gui/Transform.h
-    ../include/mc_rtc/gui/types.h
-    ../include/mc_rtc/gui/Visual.h
-    ../include/mc_rtc/gui/XYTheta.h
-    ../include/mc_rtc/gui/details/traits.h
-    ../include/mc_rtc/gui/plot.h
-    ../include/mc_rtc/gui/plot/Abscissa.h
-    ../include/mc_rtc/gui/plot/AbscissaOrdinate.h
-    ../include/mc_rtc/gui/plot/types.h
-    ../include/mc_rtc/gui/plot/Ordinate.h
-    ../include/mc_rtc/gui/plot/Polygon.h
-    ../include/mc_rtc/gui/plot/Polygons.h
-    ../include/mc_rbdyn/gui/RobotConvex.h
-    ../include/mc_rbdyn/gui/RobotSurface.h
+    include/mc_rtc/gui/StateBuilder.h
+    include/mc_rtc/gui/StateBuilder.hpp
+    include/mc_rtc/gui/ArrayInput.h
+    include/mc_rtc/gui/ArrayLabel.h
+    include/mc_rtc/gui/Arrow.h
+    include/mc_rtc/gui/Box.h
+    include/mc_rtc/gui/Button.h
+    include/mc_rtc/gui/Checkbox.h
+    include/mc_rtc/gui/ComboInput.h
+    include/mc_rtc/gui/Cylinder.h
+    include/mc_rtc/gui/DataComboInput.h
+    include/mc_rtc/gui/elements.h
+    include/mc_rtc/gui/Ellipsoid.h
+    include/mc_rtc/gui/Force.h
+    include/mc_rtc/gui/Form.h
+    include/mc_rtc/gui/IntegerInput.h
+    include/mc_rtc/gui/Input.h
+    include/mc_rtc/gui/Label.h
+    include/mc_rtc/gui/NumberInput.h
+    include/mc_rtc/gui/NumberSlider.h
+    include/mc_rtc/gui/Point3D.h
+    include/mc_rtc/gui/Polygon.h
+    include/mc_rtc/gui/Rotation.h
+    include/mc_rtc/gui/Schema.h
+    include/mc_rtc/gui/Sphere.h
+    include/mc_rtc/gui/StringInput.h
+    include/mc_rtc/gui/Trajectory.h
+    include/mc_rtc/gui/Transform.h
+    include/mc_rtc/gui/types.h
+    include/mc_rtc/gui/Visual.h
+    include/mc_rtc/gui/XYTheta.h
+    include/mc_rtc/gui/details/traits.h
+    include/mc_rtc/gui/plot.h
+    include/mc_rtc/gui/plot/Abscissa.h
+    include/mc_rtc/gui/plot/AbscissaOrdinate.h
+    include/mc_rtc/gui/plot/types.h
+    include/mc_rtc/gui/plot/Ordinate.h
+    include/mc_rtc/gui/plot/Polygon.h
+    include/mc_rtc/gui/plot/Polygons.h
+    include/mc_rbdyn/gui/RobotConvex.h
+    include/mc_rbdyn/gui/RobotSurface.h
 )
-
-add_library(mc_rtc_gui SHARED ${mc_rtc_gui_SRC} ${mc_rtc_gui_HDR})
-set_target_properties(mc_rtc_gui PROPERTIES COMPILE_FLAGS "-DMC_RTC_GUI_EXPORTS")
+target_sources(mc_rtc_gui PRIVATE ${mc_rtc_gui_SRC})
+jrl_target_headers(mc_rtc_gui PUBLIC HEADERS ${mc_rtc_gui_HDR} BASE_DIRS include)
 target_link_libraries(mc_rtc_gui PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_rtc_gui)
 
@@ -449,34 +486,35 @@ set(mc_solver_SRC
 )
 
 set(mc_solver_HDR
-    ../include/mc_solver/api.h
-    ../include/mc_solver/utils/Constraint.h
-    ../include/mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h
-    ../include/mc_solver/utils/Update.h
-    ../include/mc_solver/utils/UpdateNrVars.h
-    ../include/mc_solver/BoundedSpeedConstr.h
-    ../include/mc_solver/CollisionsConstraint.h
-    ../include/mc_solver/CoMIncPlaneConstr.h
-    ../include/mc_solver/CompoundJointConstraint.h
-    ../include/mc_solver/ConstraintSet.h
-    ../include/mc_solver/ContactConstraint.h
-    ../include/mc_solver/DynamicsConstraint.h
-    ../include/mc_solver/EqualityConstraint.h
-    ../include/mc_solver/GenInequalityConstraint.h
-    ../include/mc_solver/InequalityConstraint.h
-    ../include/mc_solver/KinematicsConstraint.h
-    ../include/mc_solver/GenericLoader.h
-    ../include/mc_solver/GenericLoader.hpp
-    ../include/mc_solver/GenInequalityConstraint.h
-    ../include/mc_solver/InequalityConstraint.h
-    ../include/mc_solver/QPSolver.h
-    ../include/mc_solver/TasksQPSolver.h
-    ../include/mc_solver/TVMQPSolver.h
-    ../include/mc_tasks/MetaTask.h
+    include/mc_solver/utils/Constraint.h
+    include/mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h
+    include/mc_solver/utils/Update.h
+    include/mc_solver/utils/UpdateNrVars.h
+    include/mc_solver/BoundedSpeedConstr.h
+    include/mc_solver/CollisionsConstraint.h
+    include/mc_solver/CoMIncPlaneConstr.h
+    include/mc_solver/CompoundJointConstraint.h
+    include/mc_solver/ConstraintSet.h
+    include/mc_solver/ContactConstraint.h
+    include/mc_solver/DynamicsConstraint.h
+    include/mc_solver/EqualityConstraint.h
+    include/mc_solver/GenInequalityConstraint.h
+    include/mc_solver/InequalityConstraint.h
+    include/mc_solver/KinematicsConstraint.h
+    include/mc_solver/TVMKinematicsConstraint.h
+    include/mc_solver/GenericLoader.h
+    include/mc_solver/GenericLoader.hpp
+    include/mc_solver/GenInequalityConstraint.h
+    include/mc_solver/InequalityConstraint.h
+    include/mc_solver/QPSolver.h
+    include/mc_solver/TasksQPSolver.h
+    include/mc_solver/TVMQPSolver.h
+    include/mc_tasks/MetaTask.h
 )
 
-add_library(mc_solver SHARED ${mc_solver_SRC} ${mc_solver_HDR})
-set_target_properties(mc_solver PROPERTIES COMPILE_FLAGS "-DMC_SOLVER_EXPORTS")
+add_library(mc_solver SHARED)
+target_sources(mc_solver PRIVATE ${mc_solver_SRC})
+jrl_target_headers(mc_solver PUBLIC HEADERS ${mc_solver_HDR} BASE_DIRS include)
 target_link_libraries(mc_solver PUBLIC mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_solver)
 
@@ -485,19 +523,19 @@ set(mc_trajectory_SRC mc_trajectory/BSpline.cpp mc_trajectory/InterpolatedRotati
 )
 
 set(mc_trajectory_HDR
-    ../include/mc_trajectory/api.h
-    ../include/mc_trajectory/Spline.h
-    ../include/mc_trajectory/Spline.hpp
-    ../include/mc_trajectory/BSpline.h
-    ../include/mc_trajectory/InterpolatedRotation.h
-    ../include/mc_trajectory/spline_utils.h
-    ../include/mc_trajectory/ExactCubic.h
-    ../include/mc_trajectory/SequenceInterpolator.h
-    ../include/mc_trajectory/LinearInterpolation.h
+    include/mc_trajectory/Spline.h
+    include/mc_trajectory/Spline.hpp
+    include/mc_trajectory/BSpline.h
+    include/mc_trajectory/InterpolatedRotation.h
+    include/mc_trajectory/spline_utils.h
+    include/mc_trajectory/ExactCubic.h
+    include/mc_trajectory/SequenceInterpolator.h
+    include/mc_trajectory/LinearInterpolation.h
 )
 
-add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
-set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
+add_library(mc_trajectory SHARED)
+target_sources(mc_trajectory PRIVATE ${mc_trajectory_SRC})
+jrl_target_headers(mc_trajectory PUBLIC HEADERS ${mc_trajectory_HDR} BASE_DIRS include)
 target_link_libraries(mc_trajectory PUBLIC ndcurves::ndcurves mc_rtc::mc_rtc_gui)
 install_mc_rtc_lib(mc_trajectory)
 
@@ -533,43 +571,43 @@ set(mc_tasks_SRC
 )
 
 set(mc_tasks_HDR
-    ../include/mc_tasks/AddRemoveContactTask.h
-    ../include/mc_tasks/api.h
-    ../include/mc_tasks/CoMTask.h
-    ../include/mc_tasks/EndEffectorTask.h
-    ../include/mc_tasks/MetaTaskLoader.h
-    ../include/mc_tasks/MomentumTask.h
-    ../include/mc_tasks/OrientationTask.h
-    ../include/mc_tasks/VectorOrientationTask.h
-    ../include/mc_tasks/PositionTask.h
-    ../include/mc_tasks/SurfaceTransformTask.h
-    ../include/mc_tasks/TransformTask.h
-    ../include/mc_tasks/RelativeEndEffectorTask.h
-    ../include/mc_tasks/SmoothTask.h
-    ../include/mc_tasks/SplineTrajectoryTask.h
-    ../include/mc_tasks/SplineTrajectoryTask.hpp
-    ../include/mc_tasks/BSplineTrajectoryTask.h
-    ../include/mc_tasks/ExactCubicTrajectoryTask.h
-    ../include/mc_tasks/TrajectoryTaskGeneric.h
-    ../include/mc_tasks/ComplianceTask.h
-    ../include/mc_tasks/AdmittanceTask.h
-    ../include/mc_tasks/ImpedanceGains.h
-    ../include/mc_tasks/ImpedanceTask.h
-    ../include/mc_tasks/DampingTask.h
-    ../include/mc_tasks/CoPTask.h
-    ../include/mc_tasks/GazeTask.h
-    ../include/mc_tasks/PositionBasedVisServoTask.h
-    ../include/mc_tasks/PostureTask.h
-    ../include/mc_tasks/LookAtTask.h
-    ../include/mc_tasks/LookAtFrameTask.h
-    ../include/mc_tasks/LookAtSurfaceTask.h
-    ../include/mc_tasks/lipm_stabilizer/StabilizerTask.h
-    ../include/mc_tasks/lipm_stabilizer/Contact.h
-    ../include/mc_tasks/lipm_stabilizer/ZMPCC.h
+    include/mc_tasks/AddRemoveContactTask.h
+    include/mc_tasks/CoMTask.h
+    include/mc_tasks/EndEffectorTask.h
+    include/mc_tasks/MetaTaskLoader.h
+    include/mc_tasks/MomentumTask.h
+    include/mc_tasks/OrientationTask.h
+    include/mc_tasks/VectorOrientationTask.h
+    include/mc_tasks/PositionTask.h
+    include/mc_tasks/SurfaceTransformTask.h
+    include/mc_tasks/TransformTask.h
+    include/mc_tasks/RelativeEndEffectorTask.h
+    include/mc_tasks/SmoothTask.h
+    include/mc_tasks/SplineTrajectoryTask.h
+    include/mc_tasks/SplineTrajectoryTask.hpp
+    include/mc_tasks/BSplineTrajectoryTask.h
+    include/mc_tasks/ExactCubicTrajectoryTask.h
+    include/mc_tasks/TrajectoryTaskGeneric.h
+    include/mc_tasks/ComplianceTask.h
+    include/mc_tasks/AdmittanceTask.h
+    include/mc_tasks/ImpedanceGains.h
+    include/mc_tasks/ImpedanceTask.h
+    include/mc_tasks/DampingTask.h
+    include/mc_tasks/CoPTask.h
+    include/mc_tasks/GazeTask.h
+    include/mc_tasks/PositionBasedVisServoTask.h
+    include/mc_tasks/PostureTask.h
+    include/mc_tasks/LookAtTask.h
+    include/mc_tasks/LookAtFrameTask.h
+    include/mc_tasks/LookAtSurfaceTask.h
+    include/mc_tasks/lipm_stabilizer/StabilizerTask.h
+    include/mc_tasks/lipm_stabilizer/Contact.h
+    include/mc_tasks/lipm_stabilizer/ZMPCC.h
 )
 
-add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
-set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
+add_library(mc_tasks SHARED)
+target_sources(mc_tasks PRIVATE ${mc_tasks_SRC})
+jrl_target_headers(mc_tasks PUBLIC HEADERS ${mc_tasks_HDR} BASE_DIRS include)
 target_link_libraries(
   mc_tasks
   PUBLIC mc_solver
@@ -582,33 +620,26 @@ target_link_libraries(
 )
 install_mc_rtc_lib(mc_tasks)
 
-set(mc_planning_SRC mc_planning/Pendulum.cpp)
+set(mc_planning_SRC)
 
-set(mc_planning_HDR ../include/mc_planning/Pendulum.h ../include/mc_planning/api.h)
-
-add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})
-set_target_properties(mc_planning PROPERTIES COMPILE_FLAGS "-DMC_PLANNING_EXPORTS")
+add_library(mc_planning SHARED)
+target_sources(mc_planning PRIVATE mc_planning/Pendulum.cpp)
+jrl_target_headers(
+  mc_planning PUBLIC HEADERS ${PROJECT_SOURCE_DIR}/include/mc_planning/Pendulum.h
+  BASE_DIRS ${PROJECT_SOURCE_DIR}/include
+)
 target_link_libraries(mc_planning PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_planning)
 
-set(mc_filter_HDR_DIR
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/mc_filter>$<INSTALL_INTERFACE:include/mc_filter>
-)
-
 set(mc_filter_HDR
-    ${mc_filter_HDR_DIR}/LowPass.h
-    ${mc_filter_HDR_DIR}/LowPassFiniteDifferences.h
-    ${mc_filter_HDR_DIR}/ExponentialMovingAverage.h
-    ${mc_filter_HDR_DIR}/LeakyIntegrator.h
-    ${mc_filter_HDR_DIR}/StationaryOffset.h
-    ${mc_filter_HDR_DIR}/utils/clamp.h
+    include/mc_filter/LowPass.h include/mc_filter/LowPassFiniteDifferences.h
+    include/mc_filter/ExponentialMovingAverage.h include/mc_filter/LeakyIntegrator.h
+    include/mc_filter/StationaryOffset.h include/mc_filter/utils/clamp.h
 )
 
 # header-only
 add_library(mc_filter INTERFACE)
-if(COMMAND target_sources)
-  target_sources(mc_filter INTERFACE ${mc_filter_HDR})
-endif()
+jrl_target_headers(mc_filter PUBLIC HEADERS ${mc_filter_HDR} BASE_DIRS include)
 target_link_libraries(mc_filter INTERFACE mc_rtc_utils)
 install_mc_rtc_header_lib(mc_filter)
 
@@ -617,9 +648,8 @@ set(mc_observers_SRC mc_observers/ObserverLoader.cpp mc_observers/Observer.cpp
 )
 
 set(mc_observers_HDR
-    ../include/mc_observers/api.h ../include/mc_observers/ObserverLoader.h
-    ../include/mc_observers/Observer.h ../include/mc_observers/ObserverPipeline.h
-    ../include/mc_observers/ObserverMacros.h
+    include/mc_observers/ObserverLoader.h include/mc_observers/Observer.h
+    include/mc_observers/ObserverPipeline.h include/mc_observers/ObserverMacros.h
 )
 
 set(mc_control_SRC
@@ -643,28 +673,26 @@ if(MC_RTC_BUILD_STATIC)
 endif()
 
 set(mc_control_HDR
-    ../include/mc_control/api.h
-    ../include/mc_control/CompletionCriteria.h
-    ../include/mc_control/Configuration.h
-    ../include/mc_control/Contact.h
-    ../include/mc_control/ControllerServer.h
-    ../include/mc_control/ControllerServerConfiguration.h
-    ../include/mc_control/GlobalPlugin.h
-    ../include/mc_control/GlobalPluginMacros.h
-    ../include/mc_control/GlobalPlugin_fwd.h
-    ../include/mc_control/MCController.h
-    ../include/mc_control/Ticker.h
-    ../include/mc_control/mc_controller.h
-    ../include/mc_control/mc_python_controller.h
-    ../include/mc_control/SimulationContactPair.h
-    ../include/mc_control/mc_global_controller.h
+    include/mc_control/CompletionCriteria.h
+    include/mc_control/Configuration.h
+    include/mc_control/Contact.h
+    include/mc_control/ControllerServer.h
+    include/mc_control/ControllerServerConfiguration.h
+    include/mc_control/GlobalPlugin.h
+    include/mc_control/GlobalPluginMacros.h
+    include/mc_control/GlobalPlugin_fwd.h
+    include/mc_control/MCController.h
+    include/mc_control/Ticker.h
+    include/mc_control/mc_controller.h
+    include/mc_control/mc_python_controller.h
+    include/mc_control/SimulationContactPair.h
+    include/mc_control/mc_global_controller.h
 )
 
-add_library(
-  mc_control SHARED ${mc_control_SRC} ${mc_observers_SRC} ${mc_control_HDR}
-                    ${mc_observers_HDR}
-)
-set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
+add_library(mc_control SHARED)
+target_sources(mc_control PRIVATE ${mc_control_SRC} ${mc_observers_SRC})
+jrl_target_headers(mc_control PUBLIC HEADERS ${mc_control_HDR} BASE_DIRS include)
+jrl_target_headers(mc_control PUBLIC HEADERS ${mc_observers_HDR} BASE_DIRS include)
 target_link_libraries(
   mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_rtc_utils mc_rtc_gui
 )
@@ -681,13 +709,12 @@ add_subdirectory(mc_observers)
 
 set(mc_control_client_SRC mc_control/ControllerClient.cpp)
 
-set(mc_control_client_HDR ../include/mc_control/client_api.h
-                          ../include/mc_control/ControllerClient.h
-)
+set(mc_control_client_HDR include/mc_control/ControllerClient.h)
 
-add_library(mc_control_client SHARED ${mc_control_client_SRC} ${mc_control_client_HDR})
-set_target_properties(
-  mc_control_client PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_CLIENT_EXPORTS"
+add_library(mc_control_client SHARED)
+target_sources(mc_control_client PRIVATE ${mc_control_client_SRC})
+jrl_target_headers(
+  mc_control_client PUBLIC HEADERS ${mc_control_client_HDR} BASE_DIRS include
 )
 target_link_libraries(mc_control_client PUBLIC mc_control)
 install_mc_rtc_lib(mc_control_client)

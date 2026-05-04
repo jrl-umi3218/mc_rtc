@@ -13,11 +13,11 @@
 #include <mc_filter/LowPassCompose.h>
 #include <mc_filter/StationaryOffset.h>
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
-#include <mc_rtc/deprecated.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/MetaTask.h>
 #include <mc_tasks/OrientationTask.h>
+#include <mc_tasks/deprecated.h>
 #include <mc_tasks/lipm_stabilizer/Contact.h>
 #include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
@@ -496,7 +496,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
   }
 
-  MC_RTC_DEPRECATED inline void dcmDerivatorTimeConstant(double T) noexcept { dcmDerivatorCutoffPeriod(T); }
+  MC_TASKS_DEPRECATED inline void dcmDerivatorTimeConstant(double T) noexcept { dcmDerivatorCutoffPeriod(T); }
 
   inline void dcmDerivatorCutoffPeriod(double T) noexcept
   {

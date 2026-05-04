@@ -6,6 +6,7 @@
 
 #include <mc_control/Configuration.h>
 #include <mc_control/Contact.h>
+#include <mc_control/deprecated.h>
 
 #include <mc_observers/ObserverPipeline.h>
 

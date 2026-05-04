@@ -15,7 +15,7 @@ namespace fsm
 {
 
 /** Change the global posture */
-struct MC_CONTROL_FSM_STATE_DLLAPI PostureState : State
+struct MC_CONTROL_DLLAPI PostureState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

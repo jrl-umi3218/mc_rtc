@@ -8,8 +8,8 @@
  * various elements in the GUI */
 
 #include <mc_rtc/Configuration.h>
-#include <mc_rtc/gui/api.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc_gui/api.h>
 
 namespace mc_rtc
 {

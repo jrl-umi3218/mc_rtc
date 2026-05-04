@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <mc_rtc/macros/deprecated.h>
 #include <mc_rtc/macros/pp_id.h>
+#include <mc_rtc_utils/deprecated.h>
 
 /** Transform a expression to string*/
 #define MC_RTC_STRINGIFY_(x) #x

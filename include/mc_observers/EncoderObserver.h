@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_observers/Observer.h>
-#include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
 
 namespace mc_observers
@@ -30,7 +30,7 @@ namespace mc_observers
  * }
  * \endcode
  */
-struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
+struct MC_CONTROL_DLLAPI EncoderObserver : public Observer
 {
   EncoderObserver(const std::string & type, double dt) : Observer(type, dt) {}
 

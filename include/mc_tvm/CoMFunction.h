@@ -20,7 +20,7 @@ namespace mc_tvm
  * - a reference CoM velocity target
  * - a reference CoM acceleration target
  */
-struct MC_TVM_DLLAPI CoMFunction : tvm::function::abstract::Function
+struct MC_RBDYN_DLLAPI CoMFunction : tvm::function::abstract::Function
 {
   SET_UPDATES(CoMFunction, Value, Velocity, Jacobian, NormalAcceleration, JDot)
 

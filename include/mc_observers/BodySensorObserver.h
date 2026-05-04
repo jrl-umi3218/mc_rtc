@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_observers/Observer.h>
-#include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -21,7 +21,7 @@ namespace mc_observers
  *
  * The default configuration estimates the floating base pose from the main bodysensor (typically an IMU).
  */
-struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
+struct MC_CONTROL_DLLAPI BodySensorObserver : public Observer
 {
   BodySensorObserver(const std::string & type, double dt) : Observer(type, dt) {}
 

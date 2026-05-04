@@ -77,8 +77,8 @@ macro(mc_rtc_test NAME)
   target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
   set_target_properties(${NAME} PROPERTIES FOLDER tests/framework)
   add_test(NAME ${NAME} COMMAND ${NAME})
-  # Adding a project configuration file (for MSVC only)
-  generate_msvc_dot_user_file(${NAME})
+  # # Adding a project configuration file (for MSVC only)
+  # generate_msvc_dot_user_file(${NAME})
 endmacro()
 
 mc_rtc_test(testConfiguration mc_rtc_utils mc_rbdyn)
@@ -117,10 +117,9 @@ mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
 set_tests_properties(
   testFSMStateFactory PROPERTIES WORKING_DIRECTORY "$<TARGET_FILE_DIR:ConfigureState>"
 )
-# Generate an MSVC .user file with the right path
-generate_msvc_dot_user_file(
-  testFSMStateFactory "$(SolutionDir)/tests/fsm_states/ConfigureState/$(Configuration)"
-)
+# # Generate an MSVC .user file with the right path generate_msvc_dot_user_file(
+# testFSMStateFactory "$(SolutionDir)/tests/fsm_states/ConfigureState/$(Configuration)"
+# )
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactoryConfig.in.h"
   "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h"
@@ -174,7 +173,7 @@ function(
   add_executable(${TEST_NAME} ${CONFIG_CPP_OUT})
   target_link_libraries(${TEST_NAME} PUBLIC ${TEST_MAIN})
   add_test(NAME ${NAME} COMMAND ${ARGN} $<TARGET_FILE:${TEST_NAME}>)
-  generate_msvc_dot_user_file(NAME ${TEST_NAME})
+  # generate_msvc_dot_user_file(NAME ${TEST_NAME})
 endfunction()
 
 function(add_global_controller_test_construction_failure NAME CONFIGURATION_FILE)
@@ -205,7 +204,7 @@ add_executable(test_controller_restart test_controller_restart.cpp)
 set_target_properties(test_controller_restart PROPERTIES FOLDER tests/ticker)
 target_link_libraries(test_controller_restart PUBLIC mc_control)
 target_include_directories(test_controller_restart PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
-generate_msvc_dot_user_file(test_controller_restart)
+# generate_msvc_dot_user_file(test_controller_restart)
 
 if(NOT DISABLE_CONTROLLER_TESTS)
   add_subdirectory(controllers)

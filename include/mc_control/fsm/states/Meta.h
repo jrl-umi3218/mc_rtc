@@ -25,7 +25,7 @@ namespace fsm
  * - configs: can contain additional configuration for the states in the FSM
  *
  */
-struct MC_CONTROL_FSM_STATE_DLLAPI MetaState : State
+struct MC_CONTROL_DLLAPI MetaState : State
 {
   void start(Controller &) override;
 

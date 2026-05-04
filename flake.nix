@@ -6,12 +6,9 @@
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
 
-    # To override dependencies according to a commit/pull request, add them to inputs
-    # For example:
-    # mc-force-shoe-plugin.url = "github:Hugo-L3174/mc_force_shoe_plugin/pull/16/head";
-    # or use pull/N/merge to get the version merged with master, assuming there are no conflicts
-    # mc-force-shoe-plugin.flake = false;
-    # use true if the repository has a flake
+    spacevecalg.url = "github:jrl-umi3218/SpaceVecAlg/pull/67/head";
+    rbdyn.url = "github:jrl-umi3218/RBDyn/pull/138/head";
+    # rbdyn.url = "/home/arnaud/devel/mc-rtc-nix/workspace/RBDyn";
   };
 
   outputs =
@@ -25,10 +22,61 @@
           # or inputs.mc-rtc-nix.flakeModule if you don't need private repositories
           {
             flakoboros = {
-              extraPackages = [ "ninja" ];
+              extraDevPyPackages = [ "mc-rtc" ];
+              extraPackages = [
+                "ninja"
+                "spacevecalg"
+                "tasks"
+                "rbdyn"
+              ];
 
-              overrideAttrs.mc-rtc = {
-                src = lib.cleanSource ./.;
+              overlays = [
+                inputs.spacevecalg.overlays.flakoboros
+                inputs.rbdyn.overlays.flakoboros
+              ];
+
+              # overrides.rbdyn = {pkgs-final, ...}:
+              # {
+              #   spacevecalg = inputs.spacevecalg.packages.${pkgs-final.system}.spacevecalg;
+              # };
+              #
+              # overrides.tasks = {pkgs-final, ...}: {
+              #   rbdyn = inputs.rbdyn.packages.${pkgs-final.system}.rbdyn;
+              # };
+
+              overrideAttrs.mc-rtc =
+                { pkgs-final, drv-prev, ... }:
+                {
+                  src = lib.cleanSource ./.;
+                  nativeBuildInputs =
+                    with pkgs-final;
+                    [
+                      pkgs-final.jrl-cmakemodulesv2
+                      python3Packages.python
+                      python3Packages.setuptools
+                    ]
+                    ++ drv-prev.nativeBuildInputs;
+
+                  propagatedBuildInputs =
+                    with pkgs-final;
+                    [
+                      qhull
+                      python3Packages.nanoeigenpy
+                      python3Packages.nanobind
+                    ]
+                    ++ drv-prev.propagatedBuildInputs;
+                  cmakeFlags = [
+                    (lib.cmakeBool "NANOBIND_BINDINGS" true)
+                  ];
+                };
+
+              pyPackages = {
+                mc-rtc =
+                  {
+                    pkgs,
+                    toPythonModule,
+                  }:
+                  (toPythonModule (pkgs.mc-rtc.override { }));
               };
 
               # Define a custom superbuild configuration
@@ -61,7 +109,6 @@
           {
             # define a devShell called local-superbuild with the superbuild configuration above
             # you can also override attributes to add additional shell functionality
-            packages.default = pkgs.mc-rtc-superbuild;
             devShells.default =
               (pkgs.callPackage "${inputs.mc-rtc-nix}/shell.nix" {
                 inherit (pkgs) mc-rtc-superbuild;

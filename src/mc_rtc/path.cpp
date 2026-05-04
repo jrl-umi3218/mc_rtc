@@ -77,16 +77,18 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
     { // could not resolve path using ament index, check for default_dir
       if(default_dir.empty())
       {
-        mc_rtc::log::error_and_throw("[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
-                                     "URI '{}', and no default_dir was provided",
-                                     pkg, uri);
+        mc_rtc::log::error_and_throw(
+            "[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
+            "URI '{}', and no default_dir was provided",
+            pkg, uri);
         return uri;
       }
       else if(!fs::exists(default_dir) || !fs::is_directory(default_dir))
       {
-        mc_rtc::log::error_and_throw("[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
-                                     "URI '{}', and default_dir '{}' does not exist or is not a directory",
-                                     pkg, uri, default_dir);
+        mc_rtc::log::error_and_throw(
+            "[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
+            "URI '{}', and default_dir '{}' does not exist or is not a directory",
+            pkg, uri, default_dir);
         return uri;
       }
       else

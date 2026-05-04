@@ -7,8 +7,8 @@
 
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_observers/Observer.h>
-#include <mc_observers/api.h>
 #include <mc_rbdyn/Robot.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
@@ -35,7 +35,7 @@ namespace mc_observers
 Benallegue, Olivier Stasse
  * <https://hal.archives-ouvertes.fr/hal-01574819/document>
  */
-struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
+struct MC_CONTROL_DLLAPI KinematicInertialPoseObserver : public Observer
 {
   /*! Initialize floating base observer */
   KinematicInertialPoseObserver(const std::string & type, double dt) : Observer(type, dt) {}

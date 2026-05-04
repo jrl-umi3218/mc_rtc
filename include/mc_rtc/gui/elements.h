@@ -6,8 +6,8 @@
 
 #include <mc_rtc/MessagePackBuilder.h>
 
-#include <mc_rtc/gui/api.h>
 #include <mc_rtc/gui/details/traits.h>
+#include <mc_rtc_gui/api.h>
 
 /** This header contains the base block of all elements in the GUI system. For the implementation details of specific
  * elements look into their dedicated header */

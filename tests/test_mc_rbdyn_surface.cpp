@@ -14,16 +14,17 @@
 BOOST_AUTO_TEST_CASE(TestSurfaceFromXMLAndToXML_Thorough)
 {
   // PlanarSurface
-  const char * planar_xml = "<planar_surface name=\"Top\" link=\"box_table\">"
-                            "<origin rpy=\"0.1 0.2 0.3\" xyz=\"1.0 2.0 3.0\" />"
-                            "<points>"
-                            "<point xy=\"-0.1 -0.2\" />"
-                            "<point xy=\"0.1 -0.2\" />"
-                            "<point xy=\"0.1 0.2\" />"
-                            "<point xy=\"-0.1 0.2\" />"
-                            "</points>"
-                            "<material name=\"plastic\" />"
-                            "</planar_surface>";
+  const char * planar_xml =
+      "<planar_surface name=\"Top\" link=\"box_table\">"
+      "<origin rpy=\"0.1 0.2 0.3\" xyz=\"1.0 2.0 3.0\" />"
+      "<points>"
+      "<point xy=\"-0.1 -0.2\" />"
+      "<point xy=\"0.1 -0.2\" />"
+      "<point xy=\"0.1 0.2\" />"
+      "<point xy=\"-0.1 0.2\" />"
+      "</points>"
+      "<material name=\"plastic\" />"
+      "</planar_surface>";
 
   tinyxml2::XMLDocument doc1;
   doc1.Parse(planar_xml);
@@ -59,10 +60,11 @@ BOOST_AUTO_TEST_CASE(TestSurfaceFromXMLAndToXML_Thorough)
   BOOST_CHECK_EQUAL(point_count, 4);
 
   // CylindricalSurface
-  const char * cyl_xml = "<cylindrical_surface name=\"Cylinder\" link=\"cyl_link\" radius=\"0.05\" width=\"0.2\">"
-                         "<origin rpy=\"0.0 0.0 0.0\" xyz=\"0.0 0.0 0.0\" />"
-                         "<material name=\"metal\" />"
-                         "</cylindrical_surface>";
+  const char * cyl_xml =
+      "<cylindrical_surface name=\"Cylinder\" link=\"cyl_link\" radius=\"0.05\" width=\"0.2\">"
+      "<origin rpy=\"0.0 0.0 0.0\" xyz=\"0.0 0.0 0.0\" />"
+      "<material name=\"metal\" />"
+      "</cylindrical_surface>";
 
   tinyxml2::XMLDocument doc2;
   doc2.Parse(cyl_xml);
@@ -86,15 +88,16 @@ BOOST_AUTO_TEST_CASE(TestSurfaceFromXMLAndToXML_Thorough)
   BOOST_CHECK_CLOSE(std::stod(elem2_out->Attribute("width")), 0.2, 1e-8);
 
   // GripperSurface
-  const char * grip_xml = "<gripper_surface name=\"LeftGripper\" link=\"l_wrist\">"
-                          "<origin rpy=\"3.14 0.0 0.0\" xyz=\"0.0 -0.0085 -0.095\" />"
-                          "<motor rpy=\"0.0 0.0 0.0\" xyz=\"0.0 0.0 0.0\" max_torque=\"1000\" />"
-                          "<points>"
-                          "<origin rpy=\"-1.57 0.0 0.0\" xyz=\"0.0 0.02 0.0\" />"
-                          "<origin rpy=\"1.57 0.0 0.0\" xyz=\"0.0 -0.02 0.0\" />"
-                          "</points>"
-                          "<material name=\"plastic\" />"
-                          "</gripper_surface>";
+  const char * grip_xml =
+      "<gripper_surface name=\"LeftGripper\" link=\"l_wrist\">"
+      "<origin rpy=\"3.14 0.0 0.0\" xyz=\"0.0 -0.0085 -0.095\" />"
+      "<motor rpy=\"0.0 0.0 0.0\" xyz=\"0.0 0.0 0.0\" max_torque=\"1000\" />"
+      "<points>"
+      "<origin rpy=\"-1.57 0.0 0.0\" xyz=\"0.0 0.02 0.0\" />"
+      "<origin rpy=\"1.57 0.0 0.0\" xyz=\"0.0 -0.02 0.0\" />"
+      "</points>"
+      "<material name=\"plastic\" />"
+      "</gripper_surface>";
 
   tinyxml2::XMLDocument doc3;
   doc3.Parse(grip_xml);
