@@ -1,8 +1,8 @@
 #include <mc_rtc_python/mc_control/mc_control_module.h>
 #include <mc_rtc_python/mc_rbdyn/mc_rbdyn_module.h>
-#include <mc_rtc_python/mc_tasks/mc_tasks_module.h> 
-#include <mc_rtc_python/mc_solver/mc_solver_module.h> 
 #include <mc_rtc_python/mc_rtc_module.h>
+#include <mc_rtc_python/mc_solver/mc_solver_module.h>
+#include <mc_rtc_python/mc_tasks/mc_tasks_module.h>
 #include <nanobind/nanobind.h>
 
 namespace nb = nanobind;

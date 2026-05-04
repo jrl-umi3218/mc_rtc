@@ -1,14 +1,13 @@
-#include <mc_tasks/PostureTask.h>
 #include <mc_solver/QPSolver.h>
+#include <mc_tasks/PostureTask.h>
 
+#include <nanobind/eigen/dense.h>
 #include <nanobind/nanobind.h>
-#include <nanobind/stl/string.h>
-#include <nanobind/stl/vector.h>
+#include <nanobind/stl/array.h>
 #include <nanobind/stl/map.h>
 #include <nanobind/stl/shared_ptr.h>
-#include <nanobind/stl/array.h>
-#include <nanobind/stl/shared_ptr.h>
-#include <nanobind/eigen/dense.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/vector.h>
 #include <nanobind/trampoline.h>
 
 namespace nb = nanobind;
@@ -45,15 +44,9 @@ struct PyPostureTask : mc_tasks::PostureTask
     NB_OVERRIDE(selectUnactiveJoints, solver, names, dofs);
   }
 
-  void resetJointsSelector(mc_solver::QPSolver & solver) override
-  {
-    NB_OVERRIDE(resetJointsSelector, solver);
-  }
+  void resetJointsSelector(mc_solver::QPSolver & solver) override { NB_OVERRIDE(resetJointsSelector, solver); }
 
-  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c) override
-  {
-    NB_OVERRIDE(load, solver, c);
-  }
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c) override { NB_OVERRIDE(load, solver, c); }
 
 protected:
   void addToSolver(mc_solver::QPSolver & solver) override { NB_OVERRIDE(addToSolver, solver); }
@@ -71,7 +64,7 @@ void bind_PostureTask(nb::module_ & m)
   using mc_tasks::PostureTask;
 
   auto cls = nb::class_<PostureTask, PyPostureTask>(m, "PostureTask");
-  
+
   cls.doc() = R"(
 A posture task for a given robot.
 
@@ -81,31 +74,27 @@ Note:
 )";
 
   // Constructors
-  cls.def(nb::init<const mc_solver::QPSolver &, unsigned int, double, double>(),
-          "solver"_a, "rIndex"_a, "stiffness"_a=1.0, "weight"_a=10.0);
+  cls.def(nb::init<const mc_solver::QPSolver &, unsigned int, double, double>(), "solver"_a, "rIndex"_a,
+          "stiffness"_a = 1.0, "weight"_a = 10.0);
 
   // --------------------------------------------------
   // Virtual methods
   // --------------------------------------------------
   cls.def("reset", &PostureTask::reset);
 
-  cls.def("dimWeight",
-          nb::overload_cast<const Eigen::VectorXd &>(&PostureTask::dimWeight),
-          "weights"_a);
-  cls.def("dimWeight",
-          nb::overload_cast<>(&PostureTask::dimWeight, nb::const_));
+  cls.def("dimWeight", nb::overload_cast<const Eigen::VectorXd &>(&PostureTask::dimWeight), "weights"_a);
+  cls.def("dimWeight", nb::overload_cast<>(&PostureTask::dimWeight, nb::const_));
 
   cls.def("eval", &PostureTask::eval);
   cls.def("speed", &PostureTask::speed);
 
-  cls.def("selectActiveJoints", &PostureTask::selectActiveJoints,
-          "solver"_a, "active_joints"_a, "active_dofs"_a = std::map<std::string, std::vector<std::array<int, 2>>>{});
+  cls.def("selectActiveJoints", &PostureTask::selectActiveJoints, "solver"_a, "active_joints"_a,
+          "active_dofs"_a = std::map<std::string, std::vector<std::array<int, 2>>>{});
 
-  cls.def("selectUnactiveJoints", &PostureTask::selectUnactiveJoints,
-          "solver"_a, "inactive_joints"_a, "inactive_dofs"_a = std::map<std::string, std::vector<std::array<int, 2>>>{});
+  cls.def("selectUnactiveJoints", &PostureTask::selectUnactiveJoints, "solver"_a, "inactive_joints"_a,
+          "inactive_dofs"_a = std::map<std::string, std::vector<std::array<int, 2>>>{});
 
-  cls.def("resetJointsSelector", &PostureTask::resetJointsSelector,
-          "solver"_a);
+  cls.def("resetJointsSelector", &PostureTask::resetJointsSelector, "solver"_a);
 
   cls.def("load", &PostureTask::load, "solver"_a, "config"_a);
 
@@ -117,12 +106,10 @@ Note:
 
   cls.def("posture", nb::overload_cast<>(&PostureTask::posture, nb::const_));
 
-  cls.def("refVel", nb::overload_cast<const Eigen::VectorXd &>(&PostureTask::refVel),
-          "ref_velocity"_a);
+  cls.def("refVel", nb::overload_cast<const Eigen::VectorXd &>(&PostureTask::refVel), "ref_velocity"_a);
   cls.def("refVel", nb::overload_cast<>(&PostureTask::refVel, nb::const_));
 
-  cls.def("refAccel", nb::overload_cast<const Eigen::VectorXd &>(&PostureTask::refAccel),
-          "ref_accel"_a);
+  cls.def("refAccel", nb::overload_cast<const Eigen::VectorXd &>(&PostureTask::refAccel), "ref_accel"_a);
   cls.def("refAccel", nb::overload_cast<>(&PostureTask::refAccel, nb::const_));
 
   // Joint gains / stiffness / weights
@@ -148,5 +135,4 @@ Note:
   cls.def("inSolver", &PostureTask::inSolver);
 }
 
-
-}
+} // namespace mc_rtc_python

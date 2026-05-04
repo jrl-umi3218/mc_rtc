@@ -25,7 +25,6 @@ void bind_Loader(nb::module_ & m)
           "Suffix appended to library paths when running in debug mode (e.g., 'd').")
 
       .doc() = "The Loader class manages the underlying lt_dlhandle map and system initialization.";
-
 }
 
 } // namespace mc_rtc_python

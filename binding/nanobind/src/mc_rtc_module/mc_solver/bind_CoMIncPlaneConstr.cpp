@@ -3,10 +3,10 @@
 
 #include <mc_rbdyn/Robots.h>
 
-#include <nanobind/nanobind.h>
-#include <nanobind/stl/vector.h>
-#include <nanobind/stl/string.h>
 #include <nanobind/eigen/dense.h>
+#include <nanobind/nanobind.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/vector.h>
 
 namespace nb = nanobind;
 using namespace nb::literals;
@@ -22,7 +22,7 @@ void bind_CoMIncPlaneConstr(nb::module_ & m)
   // CoMIncPlaneConstr
   // ------------------------------------------------------------------
   nb::class_<CoMIncPlaneConstr>(m, "CoMIncPlaneConstr",
-      R"(
+                                R"(
 Constraint ensuring that the robot's CoM remains on the positive side of given planes.
 
 This is backend-aware:
@@ -30,14 +30,9 @@ This is backend-aware:
 - TVM backend: uses details::TVMCoMIncPlaneConstr
 )")
 
-    // Constructor
-    .def(nb::init<const mc_rbdyn::Robots &,
-                  unsigned int,
-                  double>(),
-         "robots"_a,
-         "robotIndex"_a,
-         "timeStep"_a,
-         R"(
+      // Constructor
+      .def(nb::init<const mc_rbdyn::Robots &, unsigned int, double>(), "robots"_a, "robotIndex"_a, "timeStep"_a,
+           R"(
 Create a CoMIncPlaneConstr.
 
 Parameters
@@ -47,41 +42,24 @@ robotIndex : int
 timeStep : float
 )")
 
-    // Add/remove from solver
-    .def("addToSolver",
-         &CoMIncPlaneConstr::addToSolverImpl,
-         "solver"_a,
-         R"(Add the constraint to the given QPSolver.)")
-    .def("removeFromSolver",
-         &CoMIncPlaneConstr::removeFromSolverImpl,
-         "solver"_a,
-         R"(Remove the constraint from the given QPSolver.)")
+      // Add/remove from solver
+      .def("addToSolver", &CoMIncPlaneConstr::addToSolverImpl, "solver"_a,
+           R"(Add the constraint to the given QPSolver.)")
+      .def("removeFromSolver", &CoMIncPlaneConstr::removeFromSolverImpl, "solver"_a,
+           R"(Remove the constraint from the given QPSolver.)")
 
-    // Active/inactive joints
-    .def("setActiveJoints",
-         &CoMIncPlaneConstr::setActiveJoints,
-         "joints"_a,
-         R"(Set the joints that participate in the constraint.)")
-    .def("setInactiveJoints",
-         &CoMIncPlaneConstr::setInactiveJoints,
-         "joints"_a,
-         R"(Set the joints that do not participate in the constraint.)")
-    .def("resetActiveJoints",
-         &CoMIncPlaneConstr::resetActiveJoints,
-         R"(Enable all joints for the constraint.)")
+      // Active/inactive joints
+      .def("setActiveJoints", &CoMIncPlaneConstr::setActiveJoints, "joints"_a,
+           R"(Set the joints that participate in the constraint.)")
+      .def("setInactiveJoints", &CoMIncPlaneConstr::setInactiveJoints, "joints"_a,
+           R"(Set the joints that do not participate in the constraint.)")
+      .def("resetActiveJoints", &CoMIncPlaneConstr::resetActiveJoints, R"(Enable all joints for the constraint.)")
 
-    // Set planes
-    .def("setPlanes",
-         &CoMIncPlaneConstr::setPlanes,
-         "solver"_a,
-         "planes"_a = std::vector<mc_rbdyn::Plane>{},
-         "speeds"_a = std::vector<Eigen::Vector3d>{},
-         "normalsDots"_a = std::vector<Eigen::Vector3d>{},
-         "iDist"_a = 0.05,
-         "sDist"_a = 0.01,
-         "damping"_a = 0.1,
-         "dampingOff"_a = 0.0,
-         R"(
+      // Set planes
+      .def("setPlanes", &CoMIncPlaneConstr::setPlanes, "solver"_a, "planes"_a = std::vector<mc_rbdyn::Plane>{},
+           "speeds"_a = std::vector<Eigen::Vector3d>{}, "normalsDots"_a = std::vector<Eigen::Vector3d>{},
+           "iDist"_a = 0.05, "sDist"_a = 0.01, "damping"_a = 0.1, "dampingOff"_a = 0.0,
+           R"(
 Set the planes for the CoM constraint.
 
 Parameters

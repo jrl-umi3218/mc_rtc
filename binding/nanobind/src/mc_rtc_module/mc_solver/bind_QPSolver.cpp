@@ -74,9 +74,9 @@ void bind_QPSolver(nb::module_ & m)
                                R"(
 Backend selection for QPSolver and tasks/constraints.
 
-• Unset – backend not selected  
-• Tasks – use mc_rtc Tasks backend  
-• TVM – use the TVM backend  
+• Unset – backend not selected
+• Tasks – use mc_rtc Tasks backend
+• TVM – use the TVM backend
 )")
       .value("Unset", QPSolver::Backend::Unset)
       .value("Tasks", QPSolver::Backend::Tasks)
@@ -86,11 +86,11 @@ Backend selection for QPSolver and tasks/constraints.
                                      R"(
 Type of feedback used to control the robot:
 
-• None_ / OpenLoop – no feedback  
-• Joints – encoder feedback  
-• JointsWVelocity – encoder + differentiated velocity  
-• ObservedRobots / ClosedLoop – close the loop from observed state  
-• ClosedLoopIntegrateReal – integrate real robot state  
+• None_ / OpenLoop – no feedback
+• Joints – encoder feedback
+• JointsWVelocity – encoder + differentiated velocity
+• ObservedRobots / ClosedLoop – close the loop from observed state
+• ClosedLoopIntegrateReal – integrate real robot state
 )")
       .value("None_", mc_solver::FeedbackType::None)
       .value("OpenLoop", mc_solver::FeedbackType::OpenLoop)
@@ -107,34 +107,32 @@ Type of feedback used to control the robot:
 Main quadratic programming solver in mc_rtc.
 
 It manages:
-• Constraint sets  
-• MetaTasks  
-• Contact sets  
-• Logger and GUI  
-• Robot states and real-robot synchronization  
+• Constraint sets
+• MetaTasks
+• Contact sets
+• Logger and GUI
+• Robot states and real-robot synchronization
 )";
-
 
   cls.def(nb::init<mc_rbdyn::RobotsPtr, double, QPSolver::Backend>(), "robots"_a, "timeStep"_a,
           "backend"_a = QPSolver::Backend::Tasks,
           R"(
 Constructor with provided robots.
 
-• robots: shared pointer to mc_rbdyn::Robots  
-• timeStep: control timestep in seconds  
-• backend: solver backend  
+• robots: shared pointer to mc_rbdyn::Robots
+• timeStep: control timestep in seconds
+• backend: solver backend
 )");
 
   cls.def(nb::init<double, QPSolver::Backend>(), "timeStep"_a, "backend"_a = QPSolver::Backend::Tasks,
           R"(
 Constructor where the solver creates its own Robots.
 
-• timeStep: control timestep in seconds  
-• backend: solver backend  
+• timeStep: control timestep in seconds
+• backend: solver backend
 )");
 
   cls.def("backend", &QPSolver::backend, "Returns the backend for this solver instance");
-
 
   cls.def_static("context_backend", nb::overload_cast<>(&QPSolver::context_backend),
                  "Get the current backend context used when creating tasks/constraints "
@@ -193,8 +191,8 @@ Set contacts on the solver (controller-agnostic version).
           R"(
 Run one iteration of the QP.
 
-• Updates robot configurations  
-• Returns True if optimization succeeded  
+• Updates robot configurations
+• Returns True if optimization succeeded
 )");
 
   // --------------------------------

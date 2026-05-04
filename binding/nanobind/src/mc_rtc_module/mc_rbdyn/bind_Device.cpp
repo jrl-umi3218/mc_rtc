@@ -47,8 +47,8 @@ This is a barebone interface meant to be derived by a concrete device implementa
       .def(nb::init<const std::string &, const std::string &, const sva::PTransformd &>(), "name"_a, "parent"_a,
            "X_p_s"_a, "Build a device attached to a specific body of the robot");
 
-  rd.def("name", &Device::name, ":returns: the name of the sensor")
-      .def("type", &Device::type, ":returns: the type of the sensor")
+  // rd.def_prop_rw("name", &Device::name, ":returns: the name of the sensor")
+  rd.def("type", &Device::type, ":returns: the type of the sensor")
       .def_prop_rw(
           "parent", [](Device & self) -> const std::string & { return self.parent(); },
           [](Device & self, const std::string & p) { self.parent(p); }, "Get or change the parent body of the sensor")

@@ -10,7 +10,7 @@ namespace mc_rtc_python
 
 void bind_mc_tasks_module(nb::module_ & m)
 {
-  
+
   m.doc() = "mc_tasks bindings";
   bind_MetaTask(m);
   bind_TrajectoryTaskGeneric(m);

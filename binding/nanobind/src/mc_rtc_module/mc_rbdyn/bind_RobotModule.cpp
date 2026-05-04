@@ -29,18 +29,17 @@ void bind_RobotLoader(nanobind::module_ & m)
   c.doc() = "Load RobotModule instances from shared libraries and robot aliases";
 
   c.def_static("get_robot_module",
-  [](const std::string & name, nb::args args) {
-      std::vector<std::string> v{name};
-      for (auto item : args) {
-        v.push_back(nb::cast<std::string>(item));
-      }
-      return mc_rbdyn::RobotLoader::get_robot_module(v);
-  });
+               [](const std::string & name, nb::args args)
+               {
+                 std::vector<std::string> v{name};
+                 for(auto item : args) { v.push_back(nb::cast<std::string>(item)); }
+                 return mc_rbdyn::RobotLoader::get_robot_module(v);
+               });
 
-  c.def_static("get_robot_module", 
-    [](const std::vector<std::string> & args) { 
-        return mc_rbdyn::RobotLoader::get_robot_module(args); 
-    }, "args"_a, "Load a RobotModule using a list of strings.");
+  c.def_static(
+      "get_robot_module",
+      [](const std::vector<std::string> & args) { return mc_rbdyn::RobotLoader::get_robot_module(args); }, "args"_a,
+      "Load a RobotModule using a list of strings.");
 
   c.def_static("update_robot_module_path", &mc_rbdyn::RobotLoader::update_robot_module_path, "paths"_a,
                "Add additional directories to search for robot modules.");

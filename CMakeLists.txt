@@ -430,5 +430,4 @@ include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_observers.cmake\")"
 endif()
 
 jrl_export_package()
-# jrl_print_dependencies_summary()
-# jrl_print_options_summary()
+# jrl_print_dependencies_summary() jrl_print_options_summary()

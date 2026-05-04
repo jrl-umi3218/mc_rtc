@@ -17,5 +17,5 @@ void bind_OrientationTask(nanobind::module_ & m);
 void bind_CoMTask(nanobind::module_ & m);
 void bind_CoPTask(nanobind::module_ & m);
 void bind_ComplianceTask(nanobind::module_ & m);
-void bind_BSplineTrajectoryTask(nanobind::module_ & m); 
+void bind_BSplineTrajectoryTask(nanobind::module_ & m);
 } // namespace mc_rtc_python

@@ -14,4 +14,3 @@ void bind_CoMIncPlaneConstr(nanobind::module_ & m);
 void bind_CollisionsConstraint(nanobind::module_ & m);
 void bind_BoundedSpeedConstr(nanobind::module_ & m);
 } // namespace mc_rtc_python
-

@@ -120,7 +120,7 @@ void bind_Robots(nb::module_ & m)
       .def("load",
            nb::overload_cast<const std::string &, const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(
                &Robots::load),
-           "name"_a, "module"_a, "params"_a = mc_rbdyn::LoadRobotParameters(), nb::rv_policy::take_ownership, 
+           "name"_a, "module"_a, "params"_a = mc_rbdyn::LoadRobotParameters(), nb::rv_policy::take_ownership,
            R"(
    Load a single robot from a RobotModule with the provided parameters
 
@@ -134,14 +134,14 @@ void bind_Robots(nb::module_ & m)
 )")
       .def("load",
            nb::overload_cast<const mc_rbdyn::RobotModule &, const mc_rbdyn::LoadRobotParameters &>(&Robots::load),
-           "module"_a, "params"_a = mc_rbdyn::LoadRobotParameters(), nb::rv_policy::take_ownership, 
+           "module"_a, "params"_a = mc_rbdyn::LoadRobotParameters(), nb::rv_policy::take_ownership,
            R"(
    Load a single robot from a RobotModule
 
   Use the name in the module to load the robot
 )")
       .def("load", nb::overload_cast<const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> &>(&Robots::load),
-           "modules"_a, nb::rv_policy::take_ownership, 
+           "modules"_a, nb::rv_policy::take_ownership,
            R"(
    Load multiple robots from as many RobotModule instances
 
