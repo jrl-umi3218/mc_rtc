@@ -20,9 +20,17 @@ on:
       - "src/mc_rtc/README.md"
     branches:
       - '**'
+    # XXX: temporarily skip build-others ci for nanobind pr
+    #  https://github.com/jrl-umi3218/mc_rtc/pull/530
+    branches-ignore:
+      - topic/nanobind
   pull_request:
     branches:
       - '**'
+    # XXX: temporarily skip build-others ci for nanobind pr
+    #  https://github.com/jrl-umi3218/mc_rtc/pull/530
+    branches-ignore:
+      - topic/nanobind
 
 env:
   # Branch that triggered this workflow
