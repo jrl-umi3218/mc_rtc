@@ -1,8 +1,6 @@
 macro(add_observer observer_base)
   set(observer_SRC ${CMAKE_CURRENT_SOURCE_DIR}/${observer_base}.cpp)
-  set(observer_HDR ${MC_RTC_SOURCE_DIR}/include/mc_observers/api.h
-                   ${MC_RTC_SOURCE_DIR}/include/mc_observers/${observer_base}.h
-  )
+  set(observer_HDR ${MC_RTC_SOURCE_DIR}/include/mc_observers/${observer_base}.h)
   if(MC_RTC_BUILD_STATIC)
     target_sources(mc_observers PRIVATE ${observer_SRC} ${observer_HDR})
     target_include_directories(
@@ -10,6 +8,10 @@ macro(add_observer observer_base)
     )
   else()
     add_library(${observer_base} SHARED ${observer_SRC} ${observer_HDR})
+    # XXX(v2): we probably want to mimic the install tree here
+    jrl_target_set_output_directory(
+      ${observer_base} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
     set_target_properties(${observer_base} PROPERTIES FOLDER observers)
     set_target_properties(
       ${observer_base} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVER_EXPORTS" PREFIX ""

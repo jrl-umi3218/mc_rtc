@@ -5,7 +5,7 @@
 #pragma once
 
 #include <mc_rbdyn/Device.h>
-#include <mc_rtc/deprecated.h>
+#include <mc_rbdyn/deprecated.h>
 
 #include <Eigen/StdVector>
 
@@ -105,13 +105,16 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
    *
    * @deprecated in favor of const Eigen::Vector3d & linearAcceleration() const
    **/
-  MC_RTC_DEPRECATED inline const Eigen::Vector3d & acceleration() const { return linearAcceleration(); }
+  MC_RBDYN_DEPRECATED inline const Eigen::Vector3d & acceleration() const { return linearAcceleration(); }
 
   /** Set the sensor's linear acceleration reading
    *
    * @deprecated in favor of void linearAcceleration(const Eigen::Vector3d &)
    * */
-  MC_RTC_DEPRECATED inline void acceleration(const Eigen::Vector3d & acceleration) { linearAcceleration(acceleration); }
+  MC_RBDYN_DEPRECATED inline void acceleration(const Eigen::Vector3d & acceleration)
+  {
+    linearAcceleration(acceleration);
+  }
 
   /** Return the sensor's linear acceleration reading, Zero if not provided */
   inline const Eigen::Vector3d & linearAcceleration() const { return linear_acceleration_; }

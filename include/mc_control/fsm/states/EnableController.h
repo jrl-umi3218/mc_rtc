@@ -20,7 +20,7 @@ namespace fsm
  * It outputs "Failed" if the switch fails (switching to an non-enabled
  * controller).
  */
-struct MC_CONTROL_FSM_STATE_DLLAPI EnableControllerState : State
+struct MC_CONTROL_DLLAPI EnableControllerState : State
 {
   void start(Controller &) override;
 

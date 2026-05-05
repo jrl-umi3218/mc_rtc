@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 
 #include <mc_rbdyn/fwd.h>
 
@@ -28,7 +28,7 @@ namespace mc_tvm
  * two actuated robots are in contact.
  *
  */
-struct MC_TVM_DLLAPI DynamicFunction : public tvm::function::abstract::LinearFunction
+struct MC_RBDYN_DLLAPI DynamicFunction : public tvm::function::abstract::LinearFunction
 {
 public:
   using Output = tvm::function::abstract::LinearFunction::Output;

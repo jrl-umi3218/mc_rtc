@@ -6,6 +6,7 @@
 
 #include <mc_control/MCController.h>
 #include <mc_control/fsm/Executor.h>
+#include <mc_control/fsm/api.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/PostureTask.h>
 

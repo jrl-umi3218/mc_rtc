@@ -36,7 +36,7 @@ namespace fsm
  * }
  *
  */
-struct MC_CONTROL_FSM_STATE_DLLAPI ParallelState : State
+struct MC_CONTROL_DLLAPI ParallelState : State
 {
   void start(Controller &) override;
 

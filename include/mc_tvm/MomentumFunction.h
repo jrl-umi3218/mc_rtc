@@ -22,7 +22,7 @@ namespace mc_tvm
  * - a reference Momentum velocity target
  * - a reference Momentum acceleration target
  */
-struct MC_TVM_DLLAPI MomentumFunction : tvm::function::abstract::Function
+struct MC_RBDYN_DLLAPI MomentumFunction : tvm::function::abstract::Function
 {
   SET_UPDATES(MomentumFunction, Value, Velocity, Jacobian, NormalAcceleration, JDot)
 

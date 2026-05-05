@@ -19,7 +19,7 @@ namespace fsm
  *
  * This state always outputs "OK" and is always completed.
  */
-struct MC_CONTROL_FSM_STATE_DLLAPI MessageState : State
+struct MC_CONTROL_DLLAPI MessageState : State
 {
   void configure(const mc_rtc::Configuration & config) override;
 

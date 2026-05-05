@@ -124,8 +124,9 @@ struct AsyncJob
   {
     if(running_)
     {
-      throw std::runtime_error("AsyncJob: cannot get write-access to the input while an async job is running. Please "
-                               "ensure that running() is false before modifying the input in place");
+      throw std::runtime_error(
+          "AsyncJob: cannot get write-access to the input while an async job is running. Please "
+          "ensure that running() is false before modifying the input in place");
     }
     return input_;
   }

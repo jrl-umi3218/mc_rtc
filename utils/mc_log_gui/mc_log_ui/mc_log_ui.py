@@ -34,7 +34,7 @@ from .mc_log_types import (
 from .mc_log_utils import InitDialogWithOkCancel
 
 try:
-    import mc_rbdyn
+    import mc_rtc.mc_rbdyn as mc_rbdyn
 except ImportError:
     mc_rbdyn = None
 

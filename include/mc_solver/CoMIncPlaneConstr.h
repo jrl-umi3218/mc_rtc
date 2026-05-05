@@ -7,6 +7,7 @@
 #include <mc_solver/ConstraintSet.h>
 
 #include <mc_rtc/deprecated.h>
+#include <mc_solver/deprecated.h>
 
 #include <mc_rbdyn/polygon_utils.h>
 
@@ -39,14 +40,14 @@ public:
   /** Enable all joints for the constraint */
   void resetActiveJoints();
 
-  MC_RTC_DEPRECATED inline void set_planes(QPSolver & solver,
-                                           const std::vector<mc_rbdyn::Plane> & planes,
-                                           const std::vector<Eigen::Vector3d> & speeds = {},
-                                           const std::vector<Eigen::Vector3d> & normalsDots = {},
-                                           double iDist = 0.05,
-                                           double sDist = 0.01,
-                                           double damping = 0.1,
-                                           double dampingOff = 0.)
+  MC_SOLVER_DEPRECATED inline void set_planes(QPSolver & solver,
+                                              const std::vector<mc_rbdyn::Plane> & planes,
+                                              const std::vector<Eigen::Vector3d> & speeds = {},
+                                              const std::vector<Eigen::Vector3d> & normalsDots = {},
+                                              double iDist = 0.05,
+                                              double sDist = 0.01,
+                                              double damping = 0.1,
+                                              double dampingOff = 0.)
   {
     setPlanes(solver, planes, speeds, normalsDots, iDist, sDist, damping, dampingOff);
   }

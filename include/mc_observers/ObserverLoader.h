@@ -6,8 +6,8 @@
 
 /*! Interface used to load robots */
 
+#include <mc_control/api.h>
 #include <mc_observers/Observer.h>
-#include <mc_observers/api.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/loader.h>
 
@@ -20,7 +20,7 @@ namespace mc_observers
 /*! \class ObserverLoader
  * \brief Load Observer instances from shared libraries
  */
-struct MC_OBSERVERS_DLLAPI ObserverLoader
+struct MC_CONTROL_DLLAPI ObserverLoader
 {
 public:
   /** Return an Observer constructed with the provided Args

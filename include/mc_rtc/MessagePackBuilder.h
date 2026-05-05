@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mc_rtc/utils_api.h>
+#include <mc_rtc_utils/api.h>
 
 #include <mc_rbdyn/Gains.h>
 

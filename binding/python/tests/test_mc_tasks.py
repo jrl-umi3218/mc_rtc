@@ -16,7 +16,9 @@ class TestMCTasks:
     def setup_class(self):
         self.robots = mc_rbdyn.Robots()
         mc_rbdyn.RobotLoader.clear()
-        mc_rbdyn.RobotLoader.update_robot_module_path(["$<TARGET_FILE_DIR:jvrc1>"])
+        mc_rbdyn.RobotLoader.update_robot_module_path(
+            ["$<TARGET_FILE_DIR:mc_robots_jvrc1>"]
+        )
         self.rm = mc_rbdyn.get_robot_module("JVRC1")
         self.robots.load(self.rm)
         self.solver = mc_solver.QPSolver(self.robots, 0.005)

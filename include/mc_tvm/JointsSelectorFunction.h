@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 
 #include <mc_rbdyn/fwd.h>
 
@@ -16,7 +16,7 @@ namespace mc_tvm
 // FIXME Needs to implement active DoF selection
 
 /** This class implements joints' selection on a given fucntion */
-class MC_TVM_DLLAPI JointsSelectorFunction : public tvm::function::abstract::Function
+class MC_RBDYN_DLLAPI JointsSelectorFunction : public tvm::function::abstract::Function
 {
 public:
   SET_UPDATES(JointsSelectorFunction, Jacobian, JDot)

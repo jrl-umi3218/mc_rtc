@@ -146,9 +146,10 @@ void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & /* solver */,
                                         const std::vector<std::string> & /* activeJointsName */,
                                         const std::map<std::string, std::vector<std::array<int, 2>>> & /* activeDofs */)
 {
-  mc_rtc::log::error_and_throw("Task {} does not implement selectActiveJoints. Please configure it "
-                               "through the stabilizer configuration instead",
-                               name_);
+  mc_rtc::log::error_and_throw(
+      "Task {} does not implement selectActiveJoints. Please configure it "
+      "through the stabilizer configuration instead",
+      name_);
 }
 
 void StabilizerTask::selectUnactiveJoints(
@@ -156,16 +157,18 @@ void StabilizerTask::selectUnactiveJoints(
     const std::vector<std::string> & /* unactiveJointsName */,
     const std::map<std::string, std::vector<std::array<int, 2>>> & /* unactiveDofs */)
 {
-  mc_rtc::log::error_and_throw("Task {} does not implement selectUnactiveJoints. Please configure it "
-                               "through the stabilizer configuration instead.",
-                               name_);
+  mc_rtc::log::error_and_throw(
+      "Task {} does not implement selectUnactiveJoints. Please configure it "
+      "through the stabilizer configuration instead.",
+      name_);
 }
 
 void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & /* solver */)
 {
-  mc_rtc::log::error_and_throw("Task {} does not implement resetJointsSelector. Please configure it "
-                               "through the stabilizer configuration instead.",
-                               name_);
+  mc_rtc::log::error_and_throw(
+      "Task {} does not implement resetJointsSelector. Please configure it "
+      "through the stabilizer configuration instead.",
+      name_);
 }
 
 Eigen::VectorXd StabilizerTask::eval() const
@@ -467,8 +470,9 @@ void StabilizerTask::setContacts(const ContactDescriptionVector & contacts)
 {
   if(contacts.empty())
   {
-    mc_rtc::log::error_and_throw("[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
-                                 "requires at least one contact to be set.");
+    mc_rtc::log::error_and_throw(
+        "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
+        "requires at least one contact to be set.");
   }
   contacts_.clear();
   addContacts_.clear();
@@ -653,9 +657,10 @@ void StabilizerTask::computeWrenchOffsetAndCoefficient(const mc_rbdyn::Robot & r
   double verticalComAccThre = 1e-3;
   if(std::abs(verticalComAcc) < verticalComAccThre)
   {
-    mc_rtc::log::warning("[StabilizerTask::computeWrenchOffsetAndCoefficient] overwrite verticalComAcc because it's "
-                         "too close to zero: {}",
-                         verticalComAcc);
+    mc_rtc::log::warning(
+        "[StabilizerTask::computeWrenchOffsetAndCoefficient] overwrite verticalComAcc because it's "
+        "too close to zero: {}",
+        verticalComAcc);
     verticalComAcc = verticalComAcc >= 0 ? verticalComAccThre : -verticalComAccThre;
   }
   // \zeta in Murooka et al. RAL 2019

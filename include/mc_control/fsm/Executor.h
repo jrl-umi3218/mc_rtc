@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <mc_control/api.h>
 #include <mc_control/fsm/State.h>
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_control/fsm/TransitionMap.h>
+#include <mc_control/fsm/api.h>
 
 #include <chrono>
 #include <memory>

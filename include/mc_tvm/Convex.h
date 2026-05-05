@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/RobotModule.h>
@@ -20,7 +20,7 @@ namespace mc_tvm
  * It defines a single output:
  * - Position: update the convex position according to the frame
  */
-struct MC_TVM_DLLAPI Convex : public tvm::graph::abstract::Node<Convex>
+struct MC_RBDYN_DLLAPI Convex : public tvm::graph::abstract::Node<Convex>
 {
   friend struct mc_rbdyn::Robot;
 

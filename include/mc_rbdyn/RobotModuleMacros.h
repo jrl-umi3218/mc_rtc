@@ -19,12 +19,13 @@
  * MC_RTC_ROBOT_MODULE implementation
  *
  */
-#  define ROBOT_MODULE_CHECK_VERSION(NAME)                                                                             \
-    if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                    \
-    {                                                                                                                  \
-      mc_rtc::log::error("{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle " \
-                         "issues and should recompile your code",                                                      \
-                         NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \
+#  define ROBOT_MODULE_CHECK_VERSION(NAME)                                                              \
+    if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                     \
+    {                                                                                                   \
+      mc_rtc::log::error(                                                                               \
+          "{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle " \
+          "issues and should recompile your code",                                                      \
+          NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \
     }
 
 /*! ROBOT_MODULE_COMMON

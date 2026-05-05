@@ -24,7 +24,7 @@ namespace mc_tvm
  * - JDot: derivative of the jacobian of the frame in world coordinate
  *
  */
-struct MC_TVM_DLLAPI RobotFrame : public Frame
+struct MC_RBDYN_DLLAPI RobotFrame : public Frame
 {
   SET_OUTPUTS(RobotFrame, Jacobian, NormalAcceleration, JDot)
   SET_UPDATES(RobotFrame, Jacobian, NormalAcceleration, JDot)

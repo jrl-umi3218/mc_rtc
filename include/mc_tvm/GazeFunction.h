@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/fwd.h>
@@ -27,7 +27,7 @@ namespace mc_tvm
  *
  * The function does not make sense if the camera points are not provided in the control frame
  */
-struct MC_TVM_DLLAPI GazeFunction : tvm::function::abstract::Function
+struct MC_RBDYN_DLLAPI GazeFunction : tvm::function::abstract::Function
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 

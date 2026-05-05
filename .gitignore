@@ -3,8 +3,6 @@
 *~
 CMakeLists.txt.user*
 *.autosave
-build/
-build
 *.bin
 *.pos
 utils/mc_log_gui/*.png
@@ -13,3 +11,7 @@ compile_commands.json
 utils/build_and_install_user_config.sh
 .cache/
 build*
+binding/nanobind/build/
+binding/nanobind/dist/
+.direnv/
+result

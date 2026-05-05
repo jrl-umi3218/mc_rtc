@@ -8,6 +8,10 @@ on:
   pull_request:
     branches:
     - "**"
+    # XXX: temporarily skip packaging ci for nanobind pr
+    #  https://github.com/jrl-umi3218/mc_rtc/pull/530
+    branches-ignore:
+      - topic/nanobind
   push:
     paths-ignore:
     - ".gitlab-ci.yml"
@@ -25,6 +29,10 @@ on:
     - "src/mc_rtc/README.md"
     branches:
     - "**"
+    # XXX: temporarily skip packaging ci for nanobind pr
+    #  https://github.com/jrl-umi3218/mc_rtc/pull/530
+    branches-ignore:
+      - topic/nanobind
     tags:
     - v*
 jobs:

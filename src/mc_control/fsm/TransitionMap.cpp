@@ -33,8 +33,9 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
   auto transitions = config("transitions", std::vector<std::vector<std::string>>{});
   if(!transitions.size())
   {
-    mc_rtc::log::error_and_throw("Cannot load TransitionMap if the configuration does not hold a "
-                                 "transitions entry or the transitions entry is empty.");
+    mc_rtc::log::error_and_throw(
+        "Cannot load TransitionMap if the configuration does not hold a "
+        "transitions entry or the transitions entry is empty.");
   }
   bool valid_init_state = false;
   std::string first_valid_state = "";

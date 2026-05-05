@@ -20,8 +20,7 @@ macro(mc_rtc_benchmark NAME)
     )
   endif()
   target_link_libraries(${NAME} benchmark::benchmark ${ARGN})
-  generate_msvc_dot_user_file(${NAME})
-  # Add benchmark as unit-test
+  # generate_msvc_dot_user_file(${NAME}) Add benchmark as unit-test
   if(${BUILD_TESTING})
     add_test(${NAME} ${NAME})
   endif()

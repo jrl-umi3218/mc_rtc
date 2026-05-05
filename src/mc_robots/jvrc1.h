@@ -6,12 +6,12 @@
 
 #include <mc_rbdyn/RobotModule.h>
 
-#include "api.h"
+#include <mc_robots/jvrc1/api.h>
 
 namespace mc_robots
 {
 
-struct JVRC1DummySpeaker : public mc_rbdyn::Device
+struct MC_ROBOTS_JVRC1_DLLAPI JVRC1DummySpeaker : public mc_rbdyn::Device
 {
   inline JVRC1DummySpeaker() : JVRC1DummySpeaker("") {}
   inline JVRC1DummySpeaker(const std::string & name) : mc_rbdyn::Device(name) { type_ = "JVRC1DummySpeaker"; }
@@ -37,7 +37,7 @@ private:
   std::string text_ = "";
 };
 
-struct MC_ROBOTS_DLLAPI JVRC1RobotModule : public mc_rbdyn::RobotModule
+struct MC_ROBOTS_JVRC1_DLLAPI JVRC1RobotModule : public mc_rbdyn::RobotModule
 {
 public:
   JVRC1RobotModule(bool fixed = false, bool filter_mimics = false);

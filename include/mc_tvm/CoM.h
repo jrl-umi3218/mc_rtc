@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rtc/shared.h>
@@ -30,7 +30,7 @@ namespace mc_tvm
  * - JDot: derivative of the jacobian of the CoM in world coordinates
  *
  */
-struct MC_TVM_DLLAPI CoM : public tvm::graph::abstract::Node<CoM>
+struct MC_RBDYN_DLLAPI CoM : public tvm::graph::abstract::Node<CoM>
 {
   SET_OUTPUTS(CoM, CoM, Jacobian, Velocity, NormalAcceleration, Acceleration, JDot)
   SET_UPDATES(CoM, CoM, Jacobian, Velocity, NormalAcceleration, Acceleration, JDot)

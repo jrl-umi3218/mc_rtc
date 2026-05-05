@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/fwd.h>
@@ -15,7 +15,7 @@ namespace mc_tvm
 {
 
 /** This class implements an orientation function for a given frame */
-class MC_TVM_DLLAPI OrientationFunction : public tvm::function::abstract::Function
+class MC_RBDYN_DLLAPI OrientationFunction : public tvm::function::abstract::Function
 {
 public:
   SET_UPDATES(OrientationFunction, Value, Velocity, Jacobian, NormalAcceleration)

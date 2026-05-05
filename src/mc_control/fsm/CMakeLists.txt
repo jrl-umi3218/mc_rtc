@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 set(fsm_controller_SRC Controller.cpp Executor.cpp State.cpp StateFactory.cpp
@@ -8,13 +8,9 @@ set(fsm_controller_SRC Controller.cpp Executor.cpp State.cpp StateFactory.cpp
 
 set(fsm_controller_HDR_DIR ${PROJECT_SOURCE_DIR}/include/mc_control/fsm)
 set(fsm_controller_HDR
-    ${fsm_controller_HDR_DIR}/api.h
-    ${fsm_controller_HDR_DIR}/Controller.h
-    ${fsm_controller_HDR_DIR}/Executor.h
-    ${fsm_controller_HDR_DIR}/State.h
-    ${fsm_controller_HDR_DIR}/StateFactory.h
-    ${fsm_controller_HDR_DIR}/Transition.h
-    ${fsm_controller_HDR_DIR}/TransitionMap.h
+    ${fsm_controller_HDR_DIR}/Controller.h ${fsm_controller_HDR_DIR}/Executor.h
+    ${fsm_controller_HDR_DIR}/State.h ${fsm_controller_HDR_DIR}/StateFactory.h
+    ${fsm_controller_HDR_DIR}/Transition.h ${fsm_controller_HDR_DIR}/TransitionMap.h
 )
 
 if(${PYTHON_BINDING})
@@ -23,6 +19,13 @@ if(${PYTHON_BINDING})
 endif()
 
 add_library(mc_control_fsm SHARED ${fsm_controller_SRC} ${fsm_controller_HDR})
+# XXX(v2): we probably want to mimic the install tree here
+jrl_target_set_output_directory(
+  mc_control_fsm OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+jrl_target_generate_config_header(
+  mc_control_fsm PUBLIC VERSION "${PROJECT_VERSION}" FILENAME "mc_control/fsm/api.h"
+)
 set_target_properties(
   mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_EXPORTS"
 )

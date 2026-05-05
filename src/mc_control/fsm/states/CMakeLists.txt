@@ -10,9 +10,10 @@ macro(add_fsm_state state_name state_SRC state_HDR)
   if(MC_RTC_BUILD_STATIC)
     target_sources(mc_control_fsm PRIVATE ${state_SRC} ${state_HDR})
   else()
-    add_library(
-      ${state_name} SHARED ${state_SRC} ${state_HDR}
-                           "${MC_RTC_SOURCE_DIR}/include/mc_control/fsm/states/api.h"
+    add_library(${state_name} SHARED ${state_SRC} ${state_HDR})
+    # XXX(v2): we probably want to mimic the install tree here
+    jrl_target_set_output_directory(
+      ${state_name} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     )
     set_target_properties(${state_name} PROPERTIES FOLDER controllers/fsm/states)
     set_target_properties(${state_name} PROPERTIES OUTPUT_NAME ${state_name})

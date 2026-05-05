@@ -39,6 +39,8 @@ bool configureRobotLoader()
     done = true;
     mc_rtc::Loader::debug_suffix = "";
     mc_rbdyn::RobotLoader::clear();
+    mc_rbdyn::RobotLoader::set_verbosity(true);
+    mc_rtc::log::info("RobotLoader: update module path from {}", ROBOTS_BUILD_DIR);
     mc_rbdyn::RobotLoader::update_robot_module_path({std::string(ROBOTS_BUILD_DIR)});
   }
   return true;
@@ -59,6 +61,7 @@ std::string makeConfigFile(const std::string & data, const std::string & ext = "
   std::string fIn = getTmpFile(ext);
   std::ofstream ofs(fIn);
   ofs << data;
+  mc_rtc::log::info("Config file {} is\n{}", fIn, data);
   return fIn;
 }
 

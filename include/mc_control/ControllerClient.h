@@ -5,7 +5,8 @@
 #pragma once
 
 #include <mc_control/ControllerServer.h>
-#include <mc_control/client_api.h>
+#include <mc_control/api.h>
+#include <mc_control_client/api.h>
 
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/gui/plot/types.h>

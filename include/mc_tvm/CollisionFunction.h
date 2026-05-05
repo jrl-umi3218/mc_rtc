@@ -16,7 +16,7 @@ namespace mc_tvm
 {
 
 /** This class implements a collision function for two given objects */
-class MC_TVM_DLLAPI CollisionFunction : public tvm::function::abstract::Function
+class MC_RBDYN_DLLAPI CollisionFunction : public tvm::function::abstract::Function
 {
 public:
   SET_UPDATES(CollisionFunction, Value, Velocity, Jacobian, NormalAcceleration)

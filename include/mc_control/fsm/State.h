@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_control/fsm/api.h>
-#include <mc_control/fsm/states/api.h>
 
 #include <mc_solver/ConstraintSet.h>
 

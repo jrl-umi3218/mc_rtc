@@ -5,7 +5,8 @@ exclude: |
       3rd-party/.*|
       doc/_i18n/en/tutorials/introduction/multi-robot-controller/p3.py|
       doc/_i18n/jp/tutorials/introduction/multi-robot-controller/p3.py|
-      .*.svg
+      .*.svg|
+      binding/nanobind/__init__stub.conf.py
   )$
 repos:
 - repo: meta
@@ -73,6 +74,7 @@ repos:
       (?x)^(
           .cmake-format.py|
           binding/python/.*__init__.py|
+          binding/tests/nanobind/.*|
           doc/.*.py|
           utils/mc_rtc_new_controller.in.py|
           utils/mc_rtc_new_fsm_controller.in.py|

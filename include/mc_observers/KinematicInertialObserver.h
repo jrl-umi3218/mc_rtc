@@ -4,9 +4,9 @@
 
 #pragma once
 
+#include <mc_control/api.h>
 #include <mc_filter/LowPass.h>
 #include <mc_observers/KinematicInertialPoseObserver.h>
-#include <mc_observers/api.h>
 
 namespace mc_observers
 {
@@ -17,7 +17,7 @@ namespace mc_observers
  * \see KinematicInertialPoseObserver for details about the estimation of the floating
  * base position.
  */
-struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPoseObserver
+struct MC_CONTROL_DLLAPI KinematicInertialObserver : public KinematicInertialPoseObserver
 {
   KinematicInertialObserver(const std::string & type, double dt)
   : KinematicInertialPoseObserver(type, dt), velFilter_(dt, 2 * dt)

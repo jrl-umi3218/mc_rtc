@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 #include <mc_tvm/fwd.h>
 
 #include <mc_rbdyn/fwd.h>
@@ -18,7 +18,7 @@ namespace mc_tvm
 
 /** For a given vector attached to a frame expressed in frame coordinates, computes the difference with a target vector
  * in world coordinates*/
-class MC_TVM_DLLAPI VectorOrientationFunction : public tvm::function::abstract::Function
+class MC_RBDYN_DLLAPI VectorOrientationFunction : public tvm::function::abstract::Function
 {
 public:
   SET_UPDATES(VectorOrientationFunction, Value, Velocity, Jacobian, NormalAcceleration)

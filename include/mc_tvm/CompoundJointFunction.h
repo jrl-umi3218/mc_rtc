@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_tvm/api.h>
+#include <mc_rbdyn/api.h>
 
 #include <mc_rbdyn/CompoundJointConstraintDescription.h>
 #include <mc_rbdyn/fwd.h>
@@ -19,7 +19,7 @@ namespace mc_tvm
  * For a given compound joint description it computes the distance to the
  * compound line
  */
-struct MC_TVM_DLLAPI CompoundJointFunction : tvm::function::abstract::LinearFunction
+struct MC_RBDYN_DLLAPI CompoundJointFunction : tvm::function::abstract::LinearFunction
 {
   SET_UPDATES(CompoundJointFunction, B)
 

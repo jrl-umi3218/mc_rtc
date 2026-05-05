@@ -48,7 +48,7 @@ namespace fsm
  *
  */
 
-struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
+struct MC_CONTROL_DLLAPI Grippers : State
 {
   void start(Controller &) override;
 

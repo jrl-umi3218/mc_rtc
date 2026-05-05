@@ -6,7 +6,7 @@
 
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/log/utils.h>
-#include <mc_rtc/utils_api.h>
+#include <mc_rtc_utils/api.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
