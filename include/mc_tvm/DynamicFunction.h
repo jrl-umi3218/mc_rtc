@@ -36,7 +36,7 @@ public:
   SET_UPDATES(DynamicFunction, Jacobian, B)
 
   /** Construct the equation of motion for a given robot */
-  DynamicFunction(const mc_rbdyn::Robot & robot, bool compensateExternalForces = false);
+  DynamicFunction(const mc_rbdyn::Robot & robot, bool compensateExternalForces = true);
 
   /** Add a contact to the function
    *

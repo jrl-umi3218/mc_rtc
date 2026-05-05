@@ -123,6 +123,20 @@ static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
   }
 }
 
+static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
+                                   const mc_rbdyn::Robots & robots,
+                                   unsigned int robotIndex,
+                                   bool compensateExtTorques)
+{
+  switch(backend)
+  {
+    case QPSolver::Backend::TVM:
+      return initialize_tvm(robots.robot(robotIndex), compensateExtTorques);
+    default:
+      mc_rtc::log::error_and_throw("[DynamicsConstraint] Not implemented for solver backend: {}", backend);
+  }
+}
+
 DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
                                        unsigned int robotIndex,
                                        double timeStep,
@@ -149,15 +163,11 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
 
 DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
                                        unsigned int robotIndex,
-                                       double timeStep,
-                                       const std::array<double, 3> & damper,
-                                       const std::array<double, 2> & damperSecond,
+                                       const std::array<double, 5> & damperSecond,
                                        double velocityPercent,
-                                       bool infTorque,
                                        bool compensateExtTorques)
-: KinematicsConstraint(robots, robotIndex, timeStep, damper, damperSecond, velocityPercent),
-  motion_constr_(initialize(backend_, robots, robotIndex, timeStep, infTorque, compensateExtTorques)),
-  robotIndex_(robotIndex)
+: KinematicsConstraint(robots, robotIndex, damperSecond, velocityPercent),
+  motion_constr_(initialize(backend_, robots, robotIndex, compensateExtTorques)), robotIndex_(robotIndex)
 {
 }
 
