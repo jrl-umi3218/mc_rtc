@@ -32,6 +32,9 @@ macro(controller_test_common NAME)
     set(${NAME}_SRC ${NAME}.cpp)
   endif()
   add_library(${NAME} SHARED ${${NAME}_SRC})
+  jrl_target_set_output_directory(
+    ${NAME} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${NAME}
+  )
   target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework)
   if(NOT Boost_USE_STATIC_LIBS)
     target_link_libraries(${NAME} PUBLIC Boost::dynamic_linking)
@@ -71,6 +74,10 @@ macro(controller_test_common NAME)
   if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${NAME}.cpp")
     set(TEST_PLUGINS "\"${NAME}\"")
     add_library(${NAME}Plugin SHARED "${CMAKE_CURRENT_SOURCE_DIR}/plugins/${NAME}.cpp")
+    jrl_target_set_output_directory(
+      ${NAME}Plugin OUTPUT_DIRECTORY
+      ${CMAKE_CURRENT_BINARY_DIR}/controllers/plugins/${NAME}
+    )
     set_target_properties(${NAME}Plugin PROPERTIES FOLDER tests/controllers/plugins)
     target_link_libraries(${NAME}Plugin PUBLIC Boost::unit_test_framework mc_control)
     set(PLUGINS_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/controllers/plugins/${NAME}")
@@ -246,6 +253,10 @@ if(NOT DEFINED PYTHON_DEB_ROOT)
 
   # Test controller switch and threaded log policy
   add_library(TestPostureController2 SHARED TestPostureController2.cpp)
+  jrl_target_set_output_directory(
+    TestPostureController2 OUTPUT_DIRECTORY
+    ${CMAKE_CURRENT_BINARY_DIR}/TestPostureController
+  )
   set_target_properties(TestPostureController2 PROPERTIES FOLDER tests/controllers/run)
   target_link_libraries(TestPostureController2 PUBLIC ${Boost_LIBRARIES} mc_control)
   set_target_properties(
@@ -315,7 +326,10 @@ controller_test_run(TestCanonicalRobotController 2001)
 controller_test_run(TestRobotConfigurationController 1)
 
 # Create a test observer
-add_library(TestObserver observers/TestObserver.cpp)
+add_library(TestObserver SHARED observers/TestObserver.cpp)
+jrl_target_set_output_directory(
+  TestObserver OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/observers/TestObserver
+)
 set_target_properties(TestObserver PROPERTIES FOLDER tests/controllers/observers)
 target_link_libraries(
   TestObserver PUBLIC mc_control Boost::unit_test_framework
@@ -373,148 +387,150 @@ controller_test_run(TestObserverController 2001)
 target_link_libraries(TestObserverController PUBLIC BodySensorObserver)
 unset(OBSERVER_PIPELINES)
 
-# Test run of sample controllers
-macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)
-  set(TEST_CONTROLLER_NAME ${NAME})
-  set(OBSERVER_MODULE_PATH "${PROJECT_BINARY_DIR}/src/mc_observers")
-  set(PYTHON_CONTROLLER_PATH "${PROJECT_BINARY_DIR}/src/mc_control/python")
-  set(ROBOT_MODULE_PATH "${PROJECT_BINARY_DIR}/src/mc_robots")
-  if("${NAME}" MATCHES "_TVM$")
-    string(REGEX REPLACE "_TVM$" "" ACTUAL_NAME "${NAME}")
-    set(TEST_CONTROLLER_PATH
-        "${PROJECT_BINARY_DIR}/src/mc_control/samples/${ACTUAL_NAME}${PATH_SUFFIX}"
+if(${BUILD_CONTROLLER_SAMPLES})
+  # Test run of sample controllers
+  macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)
+    set(TEST_CONTROLLER_NAME ${NAME})
+    set(OBSERVER_MODULE_PATH "${PROJECT_BINARY_DIR}/src/mc_observers")
+    set(PYTHON_CONTROLLER_PATH "${PROJECT_BINARY_DIR}/src/mc_control/python")
+    set(ROBOT_MODULE_PATH "${PROJECT_BINARY_DIR}/src/mc_robots")
+    if("${NAME}" MATCHES "_TVM$")
+      string(REGEX REPLACE "_TVM$" "" ACTUAL_NAME "${NAME}")
+      set(TEST_CONTROLLER_PATH
+          "${PROJECT_BINARY_DIR}/src/mc_control/samples/${ACTUAL_NAME}${PATH_SUFFIX}"
+      )
+    else()
+      set(TEST_CONTROLLER_PATH
+          "${PROJECT_BINARY_DIR}/src/mc_control/samples/${NAME}${PATH_SUFFIX}"
+      )
+    endif()
+    if(CMAKE_CONFIGURATION_TYPES)
+      set(OBSERVER_MODULE_PATH "${OBSERVER_MODULE_PATH}/$<CONFIGURATION>")
+      set(PYTHON_CONTROLLER_PATH "${PYTHON_CONTROLLER_PATH}/$<CONFIGURATION>")
+      set(ROBOT_MODULE_PATH "${ROBOT_MODULE_PATH}/$<CONFIGURATION>")
+      set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
+    endif()
+    configure_file(
+      ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in
+      ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
     )
-  else()
-    set(TEST_CONTROLLER_PATH
-        "${PROJECT_BINARY_DIR}/src/mc_control/samples/${NAME}${PATH_SUFFIX}"
-    )
-  endif()
-  if(CMAKE_CONFIGURATION_TYPES)
-    set(OBSERVER_MODULE_PATH "${OBSERVER_MODULE_PATH}/$<CONFIGURATION>")
-    set(PYTHON_CONTROLLER_PATH "${PYTHON_CONTROLLER_PATH}/$<CONFIGURATION>")
-    set(ROBOT_MODULE_PATH "${ROBOT_MODULE_PATH}/$<CONFIGURATION>")
-    set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
-  endif()
-  configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
-  )
 
-  if(CMAKE_CONFIGURATION_TYPES)
-    set(CONFIG_OUT
-        "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIGURATION>/mc_rtc-${NAME}.conf"
+    if(CMAKE_CONFIGURATION_TYPES)
+      set(CONFIG_OUT
+          "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIGURATION>/mc_rtc-${NAME}.conf"
+      )
+      file(
+        GENERATE
+        OUTPUT ${CONFIG_OUT}
+        INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
+      )
+    else()
+      set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
+    endif()
+    if(ENABLE_FAST_TESTS)
+      set(ACTUALITER 5)
+    else()
+      set(ACTUALITER ${NRITER})
+    endif()
+    add_global_controller_test_run(
+      SampleController_${NAME} ${CONFIG_OUT} ${ACTUALITER} ""
     )
-    file(
-      GENERATE
-      OUTPUT ${CONFIG_OUT}
-      INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf
-    )
-  else()
-    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
-  endif()
+  endmacro()
+
+  controller_sample_test_run(CoM "" 1000)
+  controller_sample_test_run(EndEffector "" 1000)
+  controller_sample_test_run(Posture "" 1000)
+
   if(ENABLE_FAST_TESTS)
     set(ACTUALITER 5)
   else()
-    set(ACTUALITER ${NRITER})
+    set(ACTUALITER 20)
   endif()
-  add_global_controller_test_run(
-    SampleController_${NAME} ${CONFIG_OUT} ${ACTUALITER} ""
+  add_test(NAME "test_controller_restart" COMMAND test_controller_restart ${CONFIG_OUT}
+                                                  ${ACTUALITER}
   )
-endmacro()
 
-controller_sample_test_run(CoM "" 1000)
-controller_sample_test_run(EndEffector "" 1000)
-controller_sample_test_run(Posture "" 1000)
+  controller_sample_test_run(CoM_TVM "" 1000)
+  controller_sample_test_run(EndEffector_TVM "" 1000)
+  controller_sample_test_run(Posture_TVM "" 1000)
 
-if(ENABLE_FAST_TESTS)
-  set(ACTUALITER 5)
-else()
-  set(ACTUALITER 20)
-endif()
-add_test(NAME "test_controller_restart" COMMAND test_controller_restart ${CONFIG_OUT}
-                                                ${ACTUALITER}
-)
+  controller_sample_test_run(Text "" 1000)
+  file(
+    GENERATE
+    OUTPUT "${TEST_CONTROLLER_PATH}/etc/Text.conf"
+    INPUT "${PROJECT_SOURCE_DIR}/src/mc_control/samples/Text/etc/Text.conf"
+  )
+  controller_sample_test_run(Text_TVM "" 1000)
+  file(
+    GENERATE
+    OUTPUT "${TEST_CONTROLLER_PATH}/etc/Text_TVM.conf"
+    INPUT "${PROJECT_SOURCE_DIR}/src/mc_control/samples/Text/etc/Text.conf"
+  )
 
-controller_sample_test_run(CoM_TVM "" 1000)
-controller_sample_test_run(EndEffector_TVM "" 1000)
-controller_sample_test_run(Posture_TVM "" 1000)
-
-controller_sample_test_run(Text "" 1000)
-file(
-  GENERATE
-  OUTPUT "${TEST_CONTROLLER_PATH}/etc/Text.conf"
-  INPUT "${PROJECT_SOURCE_DIR}/src/mc_control/samples/Text/etc/Text.conf"
-)
-controller_sample_test_run(Text_TVM "" 1000)
-file(
-  GENERATE
-  OUTPUT "${TEST_CONTROLLER_PATH}/etc/Text_TVM.conf"
-  INPUT "${PROJECT_SOURCE_DIR}/src/mc_control/samples/Text/etc/Text.conf"
-)
-
-# Test sample FSM controller
-controller_sample_test_run(FSM "/src" 8000)
-set(AROBASE "@")
-set(MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX
-    "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/"
-)
-if(CMAKE_CONFIGURATION_TYPES)
+  # Test sample FSM controller
+  controller_sample_test_run(FSM "/src" 8000)
+  set(AROBASE "@")
   set(MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX
-      "${MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX}/$<CONFIGURATION>"
+      "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/"
   )
-endif()
-set(MC_FSM_STATES_DATA_DESTINATION_PREFIX
-    "${PROJECT_SOURCE_DIR}/src/mc_control/fsm/states/data/"
-)
-configure_file(
-  "${PROJECT_SOURCE_DIR}/src/mc_control/samples/FSM/etc/FSM.in.conf"
-  "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf"
-)
-file(
-  GENERATE
-  OUTPUT "${TEST_CONTROLLER_PATH}/etc/FSM.conf"
-  INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf"
-)
-controller_sample_test_run(FSM_TVM "/src" 8000)
-file(
-  GENERATE
-  OUTPUT "${TEST_CONTROLLER_PATH}/etc/FSM_TVM.conf"
-  INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf"
-)
-unset(AROBASE)
+  if(CMAKE_CONFIGURATION_TYPES)
+    set(MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX
+        "${MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX}/$<CONFIGURATION>"
+    )
+  endif()
+  set(MC_FSM_STATES_DATA_DESTINATION_PREFIX
+      "${PROJECT_SOURCE_DIR}/src/mc_control/fsm/states/data/"
+  )
+  configure_file(
+    "${PROJECT_SOURCE_DIR}/src/mc_control/samples/FSM/etc/FSM.in.conf"
+    "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf"
+  )
+  file(
+    GENERATE
+    OUTPUT "${TEST_CONTROLLER_PATH}/etc/FSM.conf"
+    INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf"
+  )
+  controller_sample_test_run(FSM_TVM "/src" 8000)
+  file(
+    GENERATE
+    OUTPUT "${TEST_CONTROLLER_PATH}/etc/FSM_TVM.conf"
+    INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf"
+  )
+  unset(AROBASE)
 
-# Test LIPMStabilizer controller execution Runs open-loop, does not check stability,
-# only that it is runnable
-controller_sample_test_run(LIPMStabilizer "/src" 1000)
-set(AROBASE "@")
-set(LIPMStabilizer_STATES_DESTINATION_PREFIX
-    "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/"
-)
-if(CMAKE_CONFIGURATION_TYPES)
+  # Test LIPMStabilizer controller execution Runs open-loop, does not check stability,
+  # only that it is runnable
+  controller_sample_test_run(LIPMStabilizer "/src" 1000)
+  set(AROBASE "@")
   set(LIPMStabilizer_STATES_DESTINATION_PREFIX
-      "${LIPMStabilizer_STATES_DESTINATION_PREFIX}/$<CONFIGURATION>"
+      "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/"
   )
-endif()
-set(LIPMStabilizer_STATES_DATA_DESTINATION_PREFIX
-    "${PROJECT_SOURCE_DIR}/src/mc_control/fsm/states/data/"
-)
-set(LIPMStabilizer_INIT_STATE "LIPMStabilizer::Standing")
-configure_file(
-  "${PROJECT_SOURCE_DIR}/src/mc_control/samples/LIPMStabilizer/etc/LIPMStabilizer.in.yaml"
-  "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml"
-)
-file(
-  GENERATE
-  OUTPUT "${TEST_CONTROLLER_PATH}/etc/LIPMStabilizer.yaml"
-  INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml"
-)
-controller_sample_test_run(LIPMStabilizer_TVM "/src" 1000)
-file(
-  GENERATE
-  OUTPUT "${TEST_CONTROLLER_PATH}/etc/LIPMStabilizer_TVM.yaml"
-  INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml"
-)
-unset(AROBASE)
+  if(CMAKE_CONFIGURATION_TYPES)
+    set(LIPMStabilizer_STATES_DESTINATION_PREFIX
+        "${LIPMStabilizer_STATES_DESTINATION_PREFIX}/$<CONFIGURATION>"
+    )
+  endif()
+  set(LIPMStabilizer_STATES_DATA_DESTINATION_PREFIX
+      "${PROJECT_SOURCE_DIR}/src/mc_control/fsm/states/data/"
+  )
+  set(LIPMStabilizer_INIT_STATE "LIPMStabilizer::Standing")
+  configure_file(
+    "${PROJECT_SOURCE_DIR}/src/mc_control/samples/LIPMStabilizer/etc/LIPMStabilizer.in.yaml"
+    "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml"
+  )
+  file(
+    GENERATE
+    OUTPUT "${TEST_CONTROLLER_PATH}/etc/LIPMStabilizer.yaml"
+    INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml"
+  )
+  controller_sample_test_run(LIPMStabilizer_TVM "/src" 1000)
+  file(
+    GENERATE
+    OUTPUT "${TEST_CONTROLLER_PATH}/etc/LIPMStabilizer_TVM.yaml"
+    INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml"
+  )
+  unset(AROBASE)
+endif() # BUILD_CONTROLLER_SAMPLES
 
 set(ENABLED_OBSERVERS "")
 set(RUN_OBSERVERS "")
@@ -522,6 +538,9 @@ set(UPDATE_OBSERVERS "")
 
 # Create a test plugin
 add_library(TestPlugin SHARED plugins/TestPlugin.cpp)
+jrl_target_set_output_directory(
+  TestPlugin OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TestPlugin
+)
 set_target_properties(TestPlugin PROPERTIES FOLDER tests/controllers/plugins)
 target_link_libraries(TestPlugin PUBLIC mc_control)
 set_target_properties(
@@ -538,6 +557,10 @@ set_target_properties(
 # Plugin3 are used in the second controller - Plugin0 and Plugin2 are the same instance
 # of the plugin
 add_library(TestPluginController SHARED TestPluginController.cpp)
+jrl_target_set_output_directory(
+  TestPluginController OUTPUT_DIRECTORY
+  ${CMAKE_CURRENT_BINARY_DIR}/TestPluginController
+)
 set_target_properties(TestPluginController PROPERTIES FOLDER tests/controllers/plugins)
 target_link_libraries(TestPluginController PUBLIC Boost::unit_test_framework mc_control)
 set_target_properties(

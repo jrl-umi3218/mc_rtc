@@ -171,6 +171,9 @@ function(
     INPUT ${CONFIG_CPP_INT_OUT}
   )
   add_executable(${TEST_NAME} ${CONFIG_CPP_OUT})
+  jrl_target_set_output_directory(
+    ${TEST_NAME} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  )
   target_link_libraries(${TEST_NAME} PUBLIC ${TEST_MAIN})
   add_test(NAME ${NAME} COMMAND ${ARGN} $<TARGET_FILE:${TEST_NAME}>)
   # generate_msvc_dot_user_file(NAME ${TEST_NAME})

@@ -7,6 +7,10 @@ macro(add_controller controller_name)
     target_sources(mc_control PRIVATE ${ARGN})
   else()
     add_library(${controller_name} SHARED ${ARGN})
+    # XXX(v2): we probably want to mimic the install tree here
+    jrl_target_set_output_directory(
+      ${controller_name} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
     set_target_properties(${controller_name} PROPERTIES FOLDER controllers)
     set_target_properties(
       ${controller_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS" PREFIX ""

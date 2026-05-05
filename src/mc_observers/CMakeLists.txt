@@ -8,6 +8,10 @@ macro(add_observer observer_base)
     )
   else()
     add_library(${observer_base} SHARED ${observer_SRC} ${observer_HDR})
+    # XXX(v2): we probably want to mimic the install tree here
+    jrl_target_set_output_directory(
+      ${observer_base} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
     set_target_properties(${observer_base} PROPERTIES FOLDER observers)
     set_target_properties(
       ${observer_base} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVER_EXPORTS" PREFIX ""

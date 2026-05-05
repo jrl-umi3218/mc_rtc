@@ -6,6 +6,7 @@
 
 #include <mc_control/MCController.h>
 #include <mc_control/fsm/Executor.h>
+#include <mc_control/fsm/api.h>
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/PostureTask.h>
 
@@ -46,7 +47,7 @@ using ContactSet = mc_control::ContactSet;
  *   transition map must be provided.
  *
  */
-struct MC_CONTROL_DLLAPI Controller : public MCController
+struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 {
   friend struct Executor;
 

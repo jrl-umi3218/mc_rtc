@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_control/api.h>
+#include <mc_control/fsm/api.h>
 
 #include <mc_solver/ConstraintSet.h>
 
@@ -19,7 +20,7 @@ namespace mc_control
 namespace fsm
 {
 
-struct MC_CONTROL_DLLAPI Controller;
+struct MC_CONTROL_FSM_DLLAPI Controller;
 
 /** \class State
  *
@@ -54,7 +55,7 @@ struct MC_CONTROL_DLLAPI Controller;
  * as teardown(...) is called anyway.
  *
  */
-struct MC_CONTROL_DLLAPI State
+struct MC_CONTROL_FSM_DLLAPI State
 {
   virtual ~State() {}
 

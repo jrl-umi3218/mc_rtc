@@ -23,6 +23,9 @@ if(BUILD_MC_RTC_CPP_UTILS)
       list(APPEND SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.cpp)
     endif()
     add_executable(${NAME} ${SOURCES})
+    jrl_target_set_output_directory(
+      ${NAME} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
     set_target_properties(${NAME} PROPERTIES FOLDER utils)
     target_link_libraries(${NAME} PUBLIC mc_control)
     install(TARGETS ${NAME} DESTINATION bin)

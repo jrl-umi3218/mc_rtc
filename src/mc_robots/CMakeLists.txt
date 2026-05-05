@@ -10,7 +10,11 @@ macro(add_robot robot_base)
     target_sources(mc_rbdyn PRIVATE ${robot_SRC} ${robot_HDR})
     target_include_directories(mc_rbdyn PRIVATE "../../include/mc_robots")
   else()
-    add_library(${lib_name} SHARED ${robot_SRC} ${robot_HDR})
+    add_library(${lib_name} SHARED ${robot_SRC})
+    # XXX(v2): we probably want to mimic the install tree here
+    jrl_target_set_output_directory(
+      ${lib_name} OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
     jrl_target_generate_config_header(
       ${lib_name} PUBLIC VERSION "${PROJECT_VERSION}" FILENAME
       "mc_robots/${robot_base}/api.h"

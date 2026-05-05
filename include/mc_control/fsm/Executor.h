@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <mc_control/api.h>
 #include <mc_control/fsm/State.h>
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_control/fsm/TransitionMap.h>
+#include <mc_control/fsm/api.h>
 
 #include <chrono>
 #include <memory>
@@ -29,7 +29,7 @@ struct Controller;
  * - self-managed: handles transitions thanks to a TransitionMap
  *
  */
-struct MC_CONTROL_DLLAPI Executor
+struct MC_CONTROL_FSM_DLLAPI Executor
 {
   /** Executor should not be copied or moved
    *

@@ -47,6 +47,7 @@
               overrideAttrs.mc-rtc =
                 { pkgs-final, drv-prev, ... }:
                 {
+                  pname = "mc-rtc-nanobind";
                   src = lib.cleanSource ./.;
                   nativeBuildInputs =
                     with pkgs-final;
@@ -67,6 +68,7 @@
                     ++ drv-prev.propagatedBuildInputs;
                   cmakeFlags = [
                     (lib.cmakeBool "NANOBIND_BINDINGS" true)
+                    (lib.cmakeBool "MC_RTC_HONOR_INSTALL_PREFIX" true)
                   ];
                 };
 

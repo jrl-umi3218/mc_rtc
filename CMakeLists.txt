@@ -10,14 +10,10 @@ if(POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW)
 endif()
 
-set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_VERSION 2.14.0)
-set(PROJECT_URL https://github.com/jrl-umi3218/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
-set(PROJECT_USE_CMAKE_EXPORT TRUE)
-set(PROJECT_CUSTOM_HEADER_DIR "mc_rtc/macros")
-set(PROJECT_CUSTOM_HEADER_EXTENSION "h")
+# set(PROJECT_CUSTOM_HEADER_DIR "mc_rtc/macros") set(PROJECT_CUSTOM_HEADER_EXTENSION
+# "h")
 set(PROJECT_GENERATED_HEADERS_SKIP_CONFIG ON)
 set(PROJECT_GENERATED_HEADERS_SKIP_WARNING ON)
 
@@ -27,8 +23,6 @@ set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
-
-find_package(jrl-cmakemodules 0.2.0 CONFIG QUIET)
 
 include(cmake/get-jrl-cmakemodules.cmake)
 jrl_configure_defaults()
