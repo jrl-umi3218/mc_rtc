@@ -1,17 +1,19 @@
 var searchData=
 [
-  ['base_2eh_6100',['Base.h',['../Base_8h.html',1,'']]],
-  ['basiclinearconstraint_2eh_6101',['BasicLinearConstraint.h',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/BasicLinearConstraint_8h.html',1,'']]],
-  ['basiclinearfunction_2eh_6102',['BasicLinearFunction.h',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/BasicLinearFunction_8h.html',1,'']]],
-  ['bernstein_2eh_6103',['bernstein.h',['/usr/local/share/doc/ndcurves/doxygen-html/bernstein_8h.html',1,'']]],
-  ['bezier_5fcurve_2eh_6104',['bezier_curve.h',['/usr/local/share/doc/ndcurves/doxygen-html/bezier__curve_8h.html',1,'']]],
-  ['bodysensor_2eh_6105',['BodySensor.h',['../BodySensor_8h.html',1,'']]],
-  ['bodysensorobserver_2eh_6106',['BodySensorObserver.h',['../BodySensorObserver_8h.html',1,'']]],
-  ['boundedspeedconstr_2eh_6107',['BoundedSpeedConstr.h',['../BoundedSpeedConstr_8h.html',1,'']]],
-  ['bounds_2eh_6108',['Bounds.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Bounds_8h.html',1,'']]],
-  ['box_2eh_6109',['Box.h',['../Box_8h.html',1,'']]],
-  ['bspline_2eh_6110',['BSpline.h',['../BSpline_8h.html',1,'']]],
-  ['bsplinetrajectorytask_2eh_6111',['BSplineTrajectoryTask.h',['../BSplineTrajectoryTask_8h.html',1,'']]],
-  ['bufferedmatrix_2eh_6112',['BufferedMatrix.h',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/BufferedMatrix_8h.html',1,'']]],
-  ['button_2eh_6113',['Button.h',['../Button_8h.html',1,'']]]
+  ['base_2eh_7932',['Base.h',['../Base_8h.html',1,'']]],
+  ['basiclinearconstraint_2eh_7933',['BasicLinearConstraint.h',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/BasicLinearConstraint_8h.html',1,'']]],
+  ['basiclinearfunction_2eh_7934',['BasicLinearFunction.h',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/BasicLinearFunction_8h.html',1,'']]],
+  ['bernstein_2eh_7935',['bernstein.h',['/usr/local/share/doc/ndcurves/doxygen-html/bernstein_8h.html',1,'']]],
+  ['bezier_5fcurve_2eh_7936',['bezier_curve.h',['/usr/local/share/doc/ndcurves/doxygen-html/bezier__curve_8h.html',1,'']]],
+  ['bidim_2delastic_2dinv_2dpendulum_2ddyn_2dsys_2ehpp_7937',['bidim-elastic-inv-pendulum-dyn-sys.hpp',['/usr/local/share/doc/state-observation/doxygen-html/bidim-elastic-inv-pendulum-dyn-sys_8hpp.html',1,'']]],
+  ['body_2eh_7938',['Body.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/Body_8h.html',1,'']]],
+  ['bodysensor_2eh_7939',['BodySensor.h',['../BodySensor_8h.html',1,'']]],
+  ['bodysensorobserver_2eh_7940',['BodySensorObserver.h',['../BodySensorObserver_8h.html',1,'']]],
+  ['boundedspeedconstr_2eh_7941',['BoundedSpeedConstr.h',['../BoundedSpeedConstr_8h.html',1,'']]],
+  ['bounds_2eh_7942',['Bounds.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Bounds_8h.html',1,'']]],
+  ['box_2eh_7943',['Box.h',['../Box_8h.html',1,'']]],
+  ['bspline_2eh_7944',['BSpline.h',['../BSpline_8h.html',1,'']]],
+  ['bsplinetrajectorytask_2eh_7945',['BSplineTrajectoryTask.h',['../BSplineTrajectoryTask_8h.html',1,'']]],
+  ['bufferedmatrix_2eh_7946',['BufferedMatrix.h',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/BufferedMatrix_8h.html',1,'']]],
+  ['button_2eh_7947',['Button.h',['../Button_8h.html',1,'']]]
 ];

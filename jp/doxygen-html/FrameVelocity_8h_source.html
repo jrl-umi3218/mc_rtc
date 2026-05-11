@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('FrameVelocity_8h_source.html',''); ini
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Function_8h.html">tvm/function/abstract/Function.h</a>&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;RBDyn/Jacobian.h&gt;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;<a class="codeRef" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/Jacobian_8h.html">RBDyn/Jacobian.h</a>&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacemc__tvm.html">mc_tvm</a></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
@@ -138,8 +138,8 @@ $(document).ready(function(){initNavTree('FrameVelocity_8h_source.html',''); ini
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> refVel_ = Eigen::Vector6d::Zero();</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a> refAccel_ = Eigen::Vector6d::Zero();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  rbd::Jacobian jac_;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  rbd::Blocks blocks_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/classrbd_1_1Jacobian.html">rbd::Jacobian</a> jac_;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/namespacerbd.html#addcc00b58bd78ec27ff56ad979f5ff2d">rbd::Blocks</a> blocks_;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  Eigen::MatrixXd jacobian_;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordtype">void</span> updateValue();</div>
@@ -152,6 +152,8 @@ $(document).ready(function(){initNavTree('FrameVelocity_8h_source.html',''); ini
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;} <span class="comment">// namespace mc_tvm</span></div>
 <div class="ttc" id="aAbstractNode_8h_html_abd38cd98a6567962387d6ebe5a27ce45"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/AbstractNode_8h.html#abd38cd98a6567962387d6ebe5a27ce45">SET_UPDATES</a></div><div class="ttdeci">#define SET_UPDATES(SelfT,...)</div></div>
 <div class="ttc" id="aFunction_8h.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/Function_8h.html">Function.h</a></div></div>
+<div class="ttc" id="aJacobian_8h.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/Jacobian_8h.html">Jacobian.h</a></div></div>
+<div class="ttc" id="aclassrbd_1_1Jacobian_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/classrbd_1_1Jacobian.html">rbd::Jacobian</a></div></div>
 <div class="ttc" id="aclasstvm_1_1function_1_1abstract_1_1Function_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/classtvm_1_1function_1_1abstract_1_1Function.html">tvm::function::abstract::Function</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html">api.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__tvm_2api_8h_html_abbd61a50e2e306b709065c31949a254e"><div class="ttname"><a href="include_2mc__tvm_2api_8h.html#abbd61a50e2e306b709065c31949a254e">MC_TVM_DLLAPI</a></div><div class="ttdeci">#define MC_TVM_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:47</div></div>
@@ -163,6 +165,7 @@ $(document).ready(function(){initNavTree('FrameVelocity_8h_source.html',''); ini
 <div class="ttc" id="anamespacemc__rbdyn_html_a1d750a36f101823e43d108ec5c8231cc"><div class="ttname"><a href="namespacemc__rbdyn.html#a1d750a36f101823e43d108ec5c8231cc">mc_rbdyn::ConstRobotFramePtr</a></div><div class="ttdeci">std::shared_ptr&lt; const RobotFrame &gt; ConstRobotFramePtr</div><div class="ttdef"><b>Definition:</b> fwd.h:25</div></div>
 <div class="ttc" id="anamespacemc__tvm_html"><div class="ttname"><a href="namespacemc__tvm.html">mc_tvm</a></div><div class="ttdef"><b>Definition:</b> CollisionFunction.h:16</div></div>
 <div class="ttc" id="anamespacemc__tvm_html_a617a72af19f2c7df9c68c994dfa922f5"><div class="ttname"><a href="namespacemc__tvm.html#a617a72af19f2c7df9c68c994dfa922f5">mc_tvm::FrameVelocityPtr</a></div><div class="ttdeci">std::shared_ptr&lt; FrameVelocity &gt; FrameVelocityPtr</div><div class="ttdef"><b>Definition:</b> FrameVelocity.h:67</div></div>
+<div class="ttc" id="anamespacerbd_html_addcc00b58bd78ec27ff56ad979f5ff2d"><div class="ttname"><a href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/namespacerbd.html#addcc00b58bd78ec27ff56ad979f5ff2d">rbd::Blocks</a></div><div class="ttdeci">std::vector&lt; Block &gt; Blocks</div></div>
 <div class="ttc" id="anamespacetvm_1_1robot_html_ae695c229a7d819c057992d913a3ad10fa88156d46910a2d733443c339a9231d12"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1robot.html#ae695c229a7d819c057992d913a3ad10fa88156d46910a2d733443c339a9231d12">ContactConstraintType::Velocity</a></div><div class="ttdeci">@ Velocity</div></div>
 <div class="ttc" id="astructmc__rbdyn_1_1RobotFrame_html"><div class="ttname"><a href="structmc__rbdyn_1_1RobotFrame.html">mc_rbdyn::RobotFrame</a></div><div class="ttdef"><b>Definition:</b> RobotFrame.h:22</div></div>
 <div class="ttc" id="astructmc__tvm_1_1FrameVelocity_html"><div class="ttname"><a href="structmc__tvm_1_1FrameVelocity.html">mc_tvm::FrameVelocity</a></div><div class="ttdef"><b>Definition:</b> FrameVelocity.h:21</div></div>
