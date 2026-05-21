@@ -36,6 +36,7 @@ set_contact_sources:
       dof[4] = 0.0;
       double friction = mc_rbdyn::Contact::defaultFriction;
       addContact({"dingo", "ground", "Base", "AllGround", friction, dof});
+      // In the reset function after setting up initial position
       addContact({"dingo", "ur5e", "Base", "Base"});
   - name: Python
     lang: python
@@ -51,6 +52,7 @@ set_contact_sources:
               "dingo", "ground", "Base", "AllGround", friction, dof
           )
       )
+      # In the reset function after setting up initial position
       self.addContact(mc_control.Contact("dingo", "ur5e", "Base", "Base"))
 reposition_sources:
   - name: C++
