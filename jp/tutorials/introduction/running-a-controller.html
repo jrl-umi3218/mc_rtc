@@ -149,6 +149,14 @@
                         <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
                         
                       
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/dual-arm-controller.html">双腕コントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/mobile-arm-controller.html">移動マニピュレータコントローラ</a></li>
+                        
+                      
                     </ul>
                     
                     <li>フレームワークの利用法</li>
@@ -378,7 +386,7 @@
 
 <p>次のコマンドを実行して、必要なmc_rtc専用パネルとロボットモデルとともにRViZを起動します。</p>
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>roslaunch mc_rtc_ticker display.launch</code></pre></figure>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ros2 launch mc_rtc_ticker display.launch</code></pre></figure>
 
 <p>シミュレーションに2つ以上のロボットがある場合は、新しいRobotModelをシーンに追加する必要があります。ロボットの説明は、パラメータ<code>/control/env_N</code>（Nはロボットインデックスです）で公開されます。</p>
 

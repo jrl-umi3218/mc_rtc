@@ -153,6 +153,14 @@
                         <li><a href="/mc_rtc/jp/tutorials/introduction/multi-robot-controller.html">マルチロボットコントローラ</a></li>
                         
                       
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/dual-arm-controller.html">双腕コントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/mobile-arm-controller.html">移動マニピュレータコントローラ</a></li>
+                        
+                      
                     </ul>
                     
                     <li>フレームワークの利用法</li>
@@ -475,8 +483,8 @@
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">dynamicsConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
-  <span class="n">addContact</span><span class="p">(</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">);</span>
-  <span class="n">addContact</span><span class="p">(</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">);</span>
+  <span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
+  <span class="n">addContact</span><span class="p">({</span><span class="n">robot</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="s">"ground"</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">});</span>
   <span class="n">comTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">comTask</span><span class="p">);</span>
   <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>

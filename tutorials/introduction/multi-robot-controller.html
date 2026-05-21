@@ -149,6 +149,14 @@
                           
                         
                       
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/dual-arm-controller.html">Dual arm controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/mobile-arm-controller.html">Mobile arm controller</a></li>
+                        
+                      
                     </ul>
                     
                     <li>Framework usage</li>
@@ -416,8 +424,8 @@
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
 <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span>
-    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"door"</span><span class="p">)),</span>
-    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"ground"</span><span class="p">))},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/door"</span><span class="p">),</span>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/ground"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
   
   </div>
@@ -437,8 +445,8 @@
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="nb">staticmethod</span>
 <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-    <span class="n">door</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="s">"door"</span><span class="p">)</span>
-    <span class="n">ground</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
+    <span class="n">door</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/door"</span><span class="p">)</span>
+    <span class="n">ground</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/ground"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">door</span><span class="p">,</span> <span class="n">ground</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
   
@@ -1050,7 +1058,7 @@
         <hr/>
         
         <div class="text-right">
-          <a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html">Next tutorial: <code>mc_rtc::Configuration</code> general purpose configuration</a>
+          <a href="/mc_rtc/tutorials/introduction/dual-arm-controller.html">Next tutorial: Dual arm controller</a>
         </div>
         
       </div>

@@ -149,6 +149,14 @@
                           
                         
                       
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/dual-arm-controller.html">双腕コントローラ</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/jp/tutorials/introduction/mobile-arm-controller.html">移動マニピュレータコントローラ</a></li>
+                        
+                      
                     </ul>
                     
                     <li>フレームワークの利用法</li>
@@ -356,7 +364,7 @@
 <p>このセクションでは、1台のロボットだけでなく複数のロボットを同時に制御します。この手法を使用すると、数多くの自由度を制御する際に計算負荷が非常に高くなりますが、以下のことが可能となります。</p>
 
 <ul>
-  <li>ロボット間の制約条件（接触面や衝突メッシュなど）を指定する</li>
+  <li>ロボット間の制約条件 (接触面や衝突メッシュなど) を指定する</li>
   <li>連携してタスクを実行する</li>
   <li>多関節オブジェクトを操作する</li>
 </ul>
@@ -365,7 +373,7 @@
 
 <p>これを実現するため、本フレームワークの二次計画法コントローラーは、一定の制約条件の下で、ロボットのシステム全体が考慮された目的関数の値を最小にします。</p>
 
-<p>今回の例では、自由度2のシンプルなオブジェクト（ドア）の操作について見ていきます。ここでは、ドアのハンドルに向けてロボットの手を伸ばし、ハンドルを回してドアを開くという動作を実現します。</p>
+<p>今回の例では、自由度2のシンプルなオブジェクト (ドア) の操作について見ていきます。ここでは、ドアのハンドルに向けてロボットの手を伸ばし、ハンドルを回してドアを開くという動作を実現します。</p>
 
 <p><em>注: この記事では、読者がROSを使用してコントローラを実行・可視化できることを前提として説明します。</em></p>
 
@@ -416,8 +424,8 @@
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
 <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span>
-    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"door"</span><span class="p">)),</span>
-    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"ground"</span><span class="p">))},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/door"</span><span class="p">),</span>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/ground"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
   
   </div>
@@ -437,8 +445,8 @@
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="nb">staticmethod</span>
 <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-    <span class="n">door</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="s">"door"</span><span class="p">)</span>
-    <span class="n">ground</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
+    <span class="n">door</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/door"</span><span class="p">)</span>
+    <span class="n">ground</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env/ground"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">door</span><span class="p">,</span> <span class="n">ground</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
   
@@ -453,7 +461,7 @@
 <h4 id="ロボットのインデックス">ロボットのインデックス</h4>
 
 
-<p>今回の新しい例では、追加のロボット（ドア）を読み込みました。その際、読み込むべきロボットモジュールのリストを指定しました。読み込まれたロボットには、モジュールを指定した順にインデックスが付けられています。すなわち、メインロボットのインデックスは0のままですが、ドアにはインデックス1が、地面にはインデックス2が付けられています。そのため、接触面の設定を以下のように変更する必要があります。</p>
+<p>今回の新しい例では、追加のロボット (ドア) を読み込みました。その際、読み込むべきロボットモジュールのリストを指定しました。読み込まれたロボットには、モジュールを指定した順にインデックスが付けられています。すなわち、メインロボットのインデックスは0のままですが、ドアにはインデックス1が、地面にはインデックス2が付けられています。そのため、接触面の設定を以下のように変更する必要があります。</p>
 
 <ul class="nav nav-tabs" id="set_contactTab" role="tablist">
   
@@ -865,7 +873,7 @@
   <li>何を実行するか</li>
 </ol>
 
-<p>最初の項目については、<code>SurfaceTransformTask</code>の実行を監視します。2番目の項目については、ドアとロボットのグリッパーとの間に接触面を追加し、ロボットのグリッパーに関するタスクを削除し（これは現在、接触面によって処理されています）、ハンドルの位置に関する目標を変更します。</p>
+<p>最初の項目については、<code>SurfaceTransformTask</code>の実行を監視します。2番目の項目については、ドアとロボットのグリッパーとの間に接触面を追加し、ロボットのグリッパーに関するタスクを削除し (これは現在、接触面によって処理されています) 、ハンドルの位置に関する目標を変更します。</p>
 
 <ul class="nav nav-tabs" id="p2Tab" role="tablist">
   
@@ -1050,7 +1058,7 @@
         <hr/>
         
         <div class="text-right">
-          <a href="/mc_rtc/jp/tutorials/usage/mc_rtc_configuration.html">次のチュートリアル: <code>mc_rtc::Configuration</code> 設定</a>
+          <a href="/mc_rtc/jp/tutorials/introduction/dual-arm-controller.html">次のチュートリアル: 双腕コントローラ</a>
         </div>
         
       </div>

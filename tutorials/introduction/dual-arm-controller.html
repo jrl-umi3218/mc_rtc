@@ -1,0 +1,1273 @@
+
+
+
+
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+<link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+<link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
+
+
+
+<link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+
+    <title>Tutorials - Dual arm controller - mc_rtc</title>
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+      
+        
+        
+        <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+      
+        
+        
+        <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+      
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+    </div>
+    
+      
+      
+      
+      EN
+      
+      
+        &nbsp;|&nbsp;
+      
+    
+      
+      
+      
+        <a href="/mc_rtc/jp/tutorials/introduction/dual-arm-controller.html">
+      
+      JP
+      
+        </a>
+      
+      
+        &nbsp;&nbsp;&nbsp;
+      
+    
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>
+  </div>
+</header>
+
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>Introduction</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc and its components</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+                        
+                      
+                        
+                        <li><strong>Dual arm controller</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/mobile-arm-controller.html">Mobile arm controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework usage</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/global-plugins.html">Using global plugins</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/schema.html">Schema structures integrated to the framework</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework tools</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_rtc_ticker-and-replay.html">mc_rtc_ticker and the Replay plugin</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Control recipes</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/observers.html">State Observation Pipelines</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/threading.html">Real-Time Considerations and Threading</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Samples</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/list-of-samples.html">Available sample controllers</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Advanced topics</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-plugin.html">Implement a new plugin for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Supporting MC_RTC_BUILD_STATIC in your code</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h3"><a href="#example">Example</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#robot-index">Robot index</a></li>
+<li class="toc-entry toc-h4"><a href="#initial-position-of-the-kinova-robot">Initial position of the Kinova robot</a></li>
+<li class="toc-entry toc-h4"><a href="#tasks-and-constraints">Tasks and constraints</a></li>
+<li class="toc-entry toc-h4"><a href="#setting-up-the-controller-logic">Setting up the controller logic</a></li>
+<li class="toc-entry toc-h4"><a href="#phase-1-move-the-ur5e-to-standby-pose">Phase 1: Move the UR5e to standby pose</a></li>
+<li class="toc-entry toc-h4"><a href="#phase-2-enable-end-effector-task-on-ur5e">Phase 2: Enable end-effector task on UR5e</a></li>
+<li class="toc-entry toc-h4"><a href="#phase-3-start-repetitive-motion-for-both-arms">Phase 3: Start repetitive motion for both arms</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#play-time">Play time</a></li>
+</ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        
+        <h1>Dual arm controller</h1>
+        
+
+        <p>The objective in this section is to coordinate two arms, specifying collision constraints between them, achieving cooperative motion.</p>
+
+<p><em>Note: this article assumes you are able to run and visualize the controller using ROS.</em></p>
+
+<h3 id="example">Example</h3>
+
+
+<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as mc_rtc robot module <a href="https://github.com/isri-aist/mc_ur5e" target="blank_">mc_ur5e</a>, <a href="https://github.com/isri-aist/mc_ur5e_description" target="blank_">mc_ur5e_description</a> and <a href="https://github.com/isri-aist/mc_kinova" target="blank_">mc_kinova</a> respectively.
+The robot module is the interface software, allowing `mc_rtc` to communicate - sending commands and receiving feedback - with that specific robot type.
+While the robot's description contains lists of joints, links, and other physical attribute of the robots that is necessary to to simulate and control the robot.
+<a href="https://github.com/isri-aist/mc_kinova" target="blank_">mc_kinova</a> contains both module and description of the Kinova robot.</p>
+
+<p>To load UR5e as the main robot, mc_rtc configuration file need to be modified as follows:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">UR5e</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">DualArmController</span></code></pre></figure>
+
+<p>Now, let's build a controller that takes dual arm robots as input:</p>
+
+<ul>
+  <li>UR5e</li>
+  <li>Kinova</li>
+</ul>
+
+<p>To do so, we will modify the constructor:</p>
+
+<ul class="nav nav-tabs" id="constructorTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="constructorc-cppTab" data-toggle="tab" href="#constructorc-cppTabContent" role="tab" aria-controls="constructorc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="constructorpythonpythonTab" data-toggle="tab" href="#constructorpythonpythonTabContent" role="tab" aria-controls="constructorpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="constructorTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="constructorc-cppTabContent" role="tabpanel" arial-labelledby="constructorc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
+</span>
+<span class="n">DualArmController</span><span class="o">::</span><span class="n">DualArmController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
+<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span>
+    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"KinovaDefault"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="constructorpythonpythonTabContent" role="tabpanel" arial-labelledby="constructorpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="nb">staticmethod</span>
+<span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">kinova</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"KinovaDefault"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">DualArmController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">kinova</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>
+If you installed <code>mc_rtc</code> and <code>mc_kinova</code> and build the project using <a href="https://github.com/mc-rtc/mc-rtc-superbuild" target="blank_">mc-rtc-superbuild</a>,
+the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("KinovaDefault")</code>.
+</p>
+
+<h4 id="robot-index">Robot index</h4>
+
+
+<p>In this new example, we have loaded an extra robot: kinova. We have done so by providing a list of robot modules to load. The loaded robots are then indexed according to the order in which the modules were provided. It means that our main robot UR5e still has the index 0, however we now have the Kinova robot at index 1.</p>
+<p>You can also adding multiple robots by following <a href="https://jrl.cnrs.fr/mc_rtc/tutorials/introduction/multi-robot-controller.html">this tutorial</a>.</p>
+
+<h4 id="initial-position-of-the-kinova-robot">Initial position of the Kinova robot</h4>
+
+
+<p>If you start the controller now, you will notice that the Kinova and the UR5e are in the same location, for the purpose of this tutorial, we will manually reposition the Kinova:</p>
+
+<ul class="nav nav-tabs" id="reposition_kinovaTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="reposition-kinovac-cppTab" data-toggle="tab" href="#reposition-kinovac-cppTabContent" role="tab" aria-controls="reposition-kinovac-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="reposition-kinovapythonpythonTab" data-toggle="tab" href="#reposition-kinovapythonpythonTabContent" role="tab" aria-controls="reposition-kinovapythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="reposition_kinovaTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="reposition-kinovac-cppTabContent" role="tabpanel" arial-labelledby="reposition-kinovac-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the reset function</span>
+<span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">M_PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="reposition-kinovapythonpythonTabContent" role="tabpanel" arial-labelledby="reposition-kinovapythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the reset callback
+</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span>
+    <span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<img src="/mc_rtc/assets/tutorials/introduction/img/dual_arm_initial.png" alt="architecture_overview" class="img-fluid" />
+
+<h4 id="tasks-and-constraints">Tasks and constraints</h4>
+
+
+<p>For each robot, we will add tasks and constraints. To demonstrate different possibilities, we will add end-effector task for UR5e and posture task for Kinova robot. Moreover, we will add collision constraint between two robots to avoid collision during motion. First we will add tasks and constraints for UR5e robot:</p>
+
+<ul class="nav nav-tabs" id="add_ur5e_tasksTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="add-ur5e-tasksc-cppTab" data-toggle="tab" href="#add-ur5e-tasksc-cppTabContent" role="tab" aria-controls="add-ur5e-tasksc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="add-ur5e-taskspythonpythonTab" data-toggle="tab" href="#add-ur5e-taskspythonpythonTabContent" role="tab" aria-controls="add-ur5e-taskspythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="add_ur5e_tasksTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="add-ur5e-tasksc-cppTabContent" role="tabpanel" arial-labelledby="add-ur5e-tasksc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the header</span>
+<span class="cp">#include</span> <span class="cpf">&lt;mc_tasks/EndEffectorTask.h&gt;</span><span class="cp">
+</span>
+<span class="k">struct</span> <span class="nc">DualArmController_DLLAPI</span> <span class="n">DualArmController</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span>
+<span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">urEndEffectorTask_</span><span class="p">;</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="c1">// In the reset function</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">urBody</span> <span class="o">=</span> <span class="s">"tool0"</span><span class="p">;</span>
+<span class="n">urEndEffectorTask_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">urBody</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="add-ur5e-taskspythonpythonTabContent" role="tabpanel" arial-labelledby="add-ur5e-taskspythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the reset callback
+</span><span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">EndEffectorTask</span><span class="p">(</span><span class="s">"tool0"</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>Then we will add tasks for Kinova robot:</p>
+
+<ul class="nav nav-tabs" id="add_kinova_tasksTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="add-kinova-tasksc-cppTab" data-toggle="tab" href="#add-kinova-tasksc-cppTabContent" role="tab" aria-controls="add-kinova-tasksc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="add-kinova-taskspythonpythonTab" data-toggle="tab" href="#add-kinova-taskspythonpythonTabContent" role="tab" aria-controls="add-kinova-taskspythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="add_kinova_tasksTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="add-kinova-tasksc-cppTabContent" role="tabpanel" arial-labelledby="add-kinova-tasksc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the header</span>
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">kinovaPostureTask_</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">KinematicsConstraint</span><span class="o">&gt;</span> <span class="n">kinovaKinematics_</span><span class="p">;</span>
+
+<span class="c1">// In the reset function</span>
+<span class="n">kinovaPostureTask_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">kinovaPostureTask_</span><span class="p">);</span>
+<span class="n">kinovaKinematics_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">KinematicsConstraint</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
+<span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinovaKinematics_</span><span class="p">);</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="add-kinova-taskspythonpythonTabContent" role="tabpanel" arial-labelledby="add-kinova-taskspythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the reset callback
+</span><span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">PostureTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">_kinovaKinematicsConstraint</span> <span class="o">=</span> <span class="n">mc_solver</span><span class="p">.</span><span class="n">KinematicsConstraint</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">dt</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_kinovaKinematicsConstraint</span><span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>Finally we will add collision constraint between two robots:</p>
+
+<ul class="nav nav-tabs" id="add_collision_constraintTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="add-collision-constraintc-cppTab" data-toggle="tab" href="#add-collision-constraintc-cppTabContent" role="tab" aria-controls="add-collision-constraintc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="add-collision-constraintpythonpythonTab" data-toggle="tab" href="#add-collision-constraintpythonpythonTabContent" role="tab" aria-controls="add-collision-constraintpythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="add_collision_constraintTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="add-collision-constraintc-cppTabContent" role="tabpanel" arial-labelledby="add-collision-constraintc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the constructor or reset function</span>
+<span class="kt">double</span> <span class="n">iDist</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">sDist</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">;</span>
+<span class="kt">double</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="n">addCollisions</span><span class="p">(</span><span class="s">"ur5e"</span><span class="p">,</span> <span class="s">"kinova_default"</span><span class="p">,</span> <span class="p">{{</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">}});</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="add-collision-constraintpythonpythonTabContent" role="tabpanel" arial-labelledby="add-collision-constraintpythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the constructor or reset callback
+</span><span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.0</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">addCollisions</span><span class="p">(</span>
+    <span class="s">"ur5e"</span><span class="p">,</span>
+    <span class="s">"kinova_default"</span><span class="p">,</span>
+    <span class="p">[</span><span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Collision</span><span class="p">(</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">)],</span>
+<span class="p">)</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="setting-up-the-controller-logic">Setting up the controller logic</h4>
+
+
+<p>In that part of the tutorial we will setup the logic of our controller. We want to:</p>
+
+<ol>
+  <li>Move the UR5e to standby pose using posture task</li>
+  <li>Enable end-effector task on UR5e</li>
+  <li>Start repetitive motion for both arms</li>
+</ol>
+
+<p>So, our code will reflect that:</p>
+
+<ul class="nav nav-tabs" id="logic_setupTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="logic-setupc-cppTab" data-toggle="tab" href="#logic-setupc-cppTabContent" role="tab" aria-controls="logic-setupc-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="logic-setuppythonpythonTab" data-toggle="tab" href="#logic-setuppythonpythonTabContent" role="tab" aria-controls="logic-setuppythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="logic_setupTabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="logic-setupc-cppTabContent" role="tabpanel" arial-labelledby="logic-setupc-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the header</span>
+<span class="k">enum</span> <span class="n">ControllerPhase</span>
+<span class="p">{</span>
+  <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">STARTED</span><span class="p">,</span>
+  <span class="n">MOVE</span>
+<span class="p">};</span>
+<span class="c1">// A private property of our controller</span>
+<span class="n">ControllerPhase</span> <span class="n">phase_</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
+<span class="c1">// In the run function</span>
+<span class="kt">bool</span> <span class="n">DualArmController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">IDLE</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="cm">/** we write this condition later */</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="cm">/** Setup the STARTED phase */</span>
+    <span class="n">phase_</span> <span class="o">=</span> <span class="n">STARTED</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">STARTED</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="cm">/** we write this condition later */</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="cm">/** Setup the MOVE phase */</span>
+    <span class="n">phase_</span> <span class="o">=</span> <span class="n">MOVE</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">MOVE</span> <span class="o">&amp;&amp;</span> <span class="mi">0</span> <span class="cm">/** we write this condition later */</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="logic-setuppythonpythonTabContent" role="tabpanel" arial-labelledby="logic-setuppythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Declare constants
+</span><span class="k">class</span> <span class="nc">ControllerPhase</span><span class="p">:</span>
+    <span class="n">IDLE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">STARTED</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MOVE</span> <span class="o">=</span> <span class="mi">2</span>
+
+
+<span class="c1"># In constructor
+</span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">=</span> <span class="n">IDLE</span>
+
+
+<span class="c1"># In the run callback
+</span><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">IDLE</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span>  <span class="c1"># We write this condition later
+</span>        <span class="c1"># Setup the STARTED phase
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">=</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">STARTED</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">STARTED</span> <span class="ow">and</span> <span class="bp">False</span>
+    <span class="p">):</span>  <span class="c1"># We write this condition later
+</span>        <span class="c1"># Setup the MOVE phase
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">=</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">MOVE</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">MOVE</span> <span class="ow">and</span> <span class="bp">False</span><span class="p">:</span>  <span class="c1"># We write this condition later
+</span>        <span class="c1"># Continue the MOVE phase
+</span>        <span class="k">pass</span>
+    <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="phase-1-move-the-ur5e-to-standby-pose">Phase 1: Move the UR5e to standby pose</h4>
+
+
+<p>For this phase, we move the main robot UR5e to a predefined standby pose using a posture task. In order not to conflict with the end-effector task, we temporarily disable the end-effector task during this phase then re-enable it once the posture task is achieved.</p>
+
+<p><em>Note: if we don't disable the end-effector task, both tasks will compete against each other and the robot won't be able to reach the desired pose.</em></p>
+
+<ul class="nav nav-tabs" id="p1Tab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="p1c-cppTab" data-toggle="tab" href="#p1c-cppTabContent" role="tab" aria-controls="p1c-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="p1pythonpythonTab" data-toggle="tab" href="#p1pythonpythonTabContent" role="tab" aria-controls="p1pythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="p1TabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="p1c-cppTabContent" role="tabpanel" arial-labelledby="p1c-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the run function</span>
+<span class="kt">bool</span> <span class="n">DualArmController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">IDLE</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"elbow_joint"</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="n">M_PI</span> <span class="o">/</span> <span class="mi">2</span><span class="p">}},</span> <span class="p">{</span><span class="s">"wrist_2_joint"</span><span class="p">,</span> <span class="p">{</span><span class="n">M_PI</span> <span class="o">/</span> <span class="mi">2</span><span class="p">}}});</span>
+    <span class="n">phase_</span> <span class="o">=</span> <span class="n">STARTED</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="p1pythonpythonTabContent" role="tabpanel" arial-labelledby="p1pythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the run callback
+</span><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">IDLE</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s">"elbow_joint"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">):</span> <span class="p">[</span><span class="o">-</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">],</span>
+                <span class="s">"wrist_2_joint"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">):</span> <span class="p">[</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">=</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">STARTED</span>
+    <span class="c1"># ...</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<img src="/mc_rtc/assets/tutorials/introduction/img/dual_arm_standby.png" alt="architecture_overview" class="img-fluid" />
+
+<h4 id="phase-2-enable-end-effector-task-on-ur5e">Phase 2: Enable end-effector task on UR5e</h4>
+
+
+<p>In this phase, we will check if the posture task of UR5e is achieved to reset the target of end-effector task and enable it.</p>
+
+<ul class="nav nav-tabs" id="p2Tab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="p2c-cppTab" data-toggle="tab" href="#p2c-cppTabContent" role="tab" aria-controls="p2c-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="p2pythonpythonTab" data-toggle="tab" href="#p2pythonpythonTabContent" role="tab" aria-controls="p2pythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="p2TabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="p2c-cppTabContent" role="tabpanel" arial-labelledby="p2c-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the run function</span>
+<span class="kt">bool</span> <span class="n">DualArmController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">STARTED</span> <span class="o">&amp;&amp;</span> <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span> <span class="o">&amp;&amp;</span> <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">phase_</span> <span class="o">=</span> <span class="n">MOVE</span><span class="p">;</span>
+    <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">urEndEffectorTask_</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">STARTED</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="p2pythonpythonTabContent" role="tabpanel" arial-labelledby="p2pythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the run callback
+</span><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ...
+</span>    <span class="k">elif</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">STARTED</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">=</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">MOVE</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">STARTED</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="c1"># ...
+</span>    <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<h4 id="phase-3-start-repetitive-motion-for-both-arms">Phase 3: Start repetitive motion for both arms</h4>
+
+
+<p>This phase is the main phase where both arms will perform repetitive motions. For UR5e, we will move the end-effector in a straight line, while for Kinova, we will make it's second joints to oscillate back and forth.</p>
+
+<ul class="nav nav-tabs" id="p3Tab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="p3c-cppTab" data-toggle="tab" href="#p3c-cppTabContent" role="tab" aria-controls="p3c-cppTabContent" aria-selected="true">C++</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="p3pythonpythonTab" data-toggle="tab" href="#p3pythonpythonTabContent" role="tab" aria-controls="p3pythonpythonTabContent" aria-selected="false">Python</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="p3TabContent">
+  
+    
+    
+    
+    
+    <div class="tab-pane show active" id="p3c-cppTabContent" role="tabpanel" arial-labelledby="p3c-cppTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// ヘッダー内</span>
+<span class="k">enum</span> <span class="n">ControllerState</span>
+<span class="p">{</span>
+  <span class="n">GO</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">RETURN</span>
+<span class="p">};</span>
+
+<span class="c1">// Controller's private properties</span>
+<span class="n">ControllerState</span> <span class="n">urState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
+<span class="n">ControllerState</span> <span class="n">kinovaState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
+
+<span class="c1">// Two support functions added</span>
+<span class="kt">void</span> <span class="n">DualArmController</span><span class="o">::</span><span class="n">runUr</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">urState_</span> <span class="o">==</span> <span class="n">GO</span> <span class="o">&amp;&amp;</span> <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span> <span class="o">&amp;&amp;</span> <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">urState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
+    <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">add_ef_pose</span><span class="p">({</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)});</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">urState_</span> <span class="o">==</span> <span class="n">RETURN</span> <span class="o">&amp;&amp;</span> <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span> <span class="o">&amp;&amp;</span> <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">urState_</span> <span class="o">=</span> <span class="n">GO</span><span class="p">;</span>
+    <span class="n">urEndEffectorTask_</span><span class="o">-&gt;</span><span class="n">add_ef_pose</span><span class="p">({</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DualArmController</span><span class="o">::</span><span class="n">runKinova</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">kinovaState_</span> <span class="o">==</span> <span class="n">GO</span> <span class="o">&amp;&amp;</span> <span class="n">kinovaPostureTask_</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span> <span class="o">&amp;&amp;</span> <span class="n">kinovaPostureTask_</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">kinovaState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
+    <span class="n">kinovaPostureTask_</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">joint_2</span><span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">kinovaState_</span> <span class="o">==</span> <span class="n">RETURN</span> <span class="o">&amp;&amp;</span> <span class="n">kinovaPostureTask_</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+          <span class="o">&amp;&amp;</span> <span class="n">kinovaPostureTask_</span><span class="o">-&gt;</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">kinovaState_</span> <span class="o">=</span> <span class="n">GO</span><span class="p">;</span>
+    <span class="n">kinovaPostureTask_</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">joint_2</span><span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// run function</span>
+<span class="kt">bool</span> <span class="n">DualArmController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase_</span> <span class="o">==</span> <span class="n">MOVE</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">runUr</span><span class="p">();</span>
+    <span class="n">runKinova</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+    
+    
+    
+    
+    <div class="tab-pane" id="p3pythonpythonTabContent" role="tabpanel" arial-labelledby="p3pythonpythonTab">
+      
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Define state constants
+</span><span class="k">class</span> <span class="nc">ControllerState</span><span class="p">:</span>
+    <span class="n">GO</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">RETURN</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># In the constructor
+</span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">_ur_state</span> <span class="o">=</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">RETURN</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">_kinova_state</span> <span class="o">=</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">RETURN</span>
+    
+<span class="c1"># Add helper methods
+</span><span class="k">def</span> <span class="nf">_run_kinova</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_kinova_state</span> <span class="o">==</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">GO</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_kinova_state</span> <span class="o">=</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">RETURN</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s">"joint_2"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">):</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_kinova_state</span> <span class="o">==</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">RETURN</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_kinova_state</span> <span class="o">=</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">GO</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_kinovaPostureTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s">"joint_2"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">):</span> <span class="p">[</span><span class="o">-</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_run_ur5e</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_ur_state</span> <span class="o">==</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">GO</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">positionTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">positionTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_ur_state</span> <span class="o">=</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">RETURN</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">add_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span>
+            <span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="p">))</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_ur_state</span> <span class="o">==</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">RETURN</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">positionTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+        <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">positionTask</span><span class="p">.</span><span class="n">speed</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_ur_state</span> <span class="o">=</span> <span class="n">ControllerState</span><span class="p">.</span><span class="n">GO</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_urEndEffectorTask</span><span class="p">.</span><span class="n">add_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span>
+            <span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="p">))</span>
+<span class="c1"># In the run callback
+</span><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># ...
+</span>    <span class="k">elif</span> <span class="bp">self</span><span class="p">.</span><span class="n">_phase</span> <span class="o">==</span> <span class="n">ControllerPhase</span><span class="p">.</span><span class="n">MOVE</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_run_ur5e</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_run_kinova</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+    </div>
+  
+</div>
+
+
+<p>At this point, both arms should be performing repetitive motions.
+If UR5e fails to perform the task, it might be because the <code>PostureTask</code> is overpowering the <code>EndEffectorTask</code>.
+You can solve this problem by tuning task's gains (weight, stiffness, damping).</p>
+
+<p><code>weight</code> sets the priority of each task.
+By default, weight of <code>EndEffectorTask</code> is already higher than of <code>PostureTask</code>.</p>
+
+<p>
+On the other hand, <code>stiffness</code> and <code>damping</code> controls the speed and smoothness of the motion.
+The usual procedure when setting up a controller is to set the weight and then tune to <code>stiffness</code> and <code>damping</code> gains.
+Note that <code>damping = 2*sqrt(stiffness)</code>
+</p>
+
+<p>
+Tuning these gains can be done using the task constructor or available methods,
+such as <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight ( double w )</a>
+or <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9">setGains ( double stiffness, double damping )</a>
+</p>
+
+<img src="/mc_rtc/assets/tutorials/introduction/img/dual_arm_collision_avoidance_1.png" alt="dual_arm_collision_avoidance_1" class="img-fluid" />
+<img src="/mc_rtc/assets/tutorials/introduction/img/dual_arm_collision_avoidance_2.png" alt="dual_arm_collision_avoidance_2" class="img-fluid" />
+
+<h3 id="play-time">Play time</h3>
+
+
+<p>At this point you can play around with this setup of dual arm controller by modifying tasks, constraints and target motion for each arm. You can for example change:</p>
+
+<ul>
+  <li>Change tasks for UR5e</li>
+  <li>Change tasks for Kinova</li>
+  <li>Change the motion of UR5e in phase 3</li>
+  <li>Change the motion of Kinova in phase 3</li>
+</ul>
+
+<p>The full sources for this controller are available <a href="sources/dual-arm-controller.html">here</a>. Also, the source code including environment setup can be found in <a href="https://github.com/isri-aist/mc_rtc_tutorials" target="blank_">mc_rtc_tutorials</a> repository.</p>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+          <a href="/mc_rtc/tutorials/introduction/mobile-arm-controller.html">Next tutorial: Mobile arm controller</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-8 offset-lg-2 col-lg-6">
+        Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+      </div>
+      <div class="col-4 col-lg-2 text-right">
+        <a href="/mc_rtc/credits.html">Credits</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+  </body>
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+  new ClipboardJS('.copy-button');
+});
+</script>
+
+
+</html>
