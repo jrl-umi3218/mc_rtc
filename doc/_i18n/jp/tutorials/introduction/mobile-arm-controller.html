@@ -32,6 +32,11 @@ Enabled: MobileArmController
 {% include show_sources.html sources=page.set_contact_sources copy=false id="set_contact" %}
 
 <p>また、ドアや地面では「env」を使用しているのに対し、Dingo をフローティングベースロボットとして定義するため、コンストラクタでロボットモジュールを読み込む際には「object」を使用します。</p>
+<p>
+  接触自体が制約であるため、初期位置を設定した後に <code>addContact()</code> を呼び出す必要があります。
+  次のセクションで示すように <code>posW()</code> を使用してロボット位置を移動しても、<code>addContact()</code> に使用されるフレームは移動しません。
+  この例では、ur5e の dingo に対する変換が固定されているため問題にはなりませんが、初期オフセットがより複雑な場合にはバグが発生します。
+</p>
 
 {% include h4.html title="ロボットの初期位置" %}
 
