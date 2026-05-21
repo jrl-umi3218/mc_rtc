@@ -44,7 +44,6 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
   if(MC_RTC_BUILD_STATIC)
     target_compile_definitions(${MC_LIB} ${KWD} MC_RTC_BUILD_STATIC)
   endif()
-  add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
 endmacro()
 
 macro(install_mc_rtc_header_lib MC_LIB)
@@ -127,6 +126,7 @@ set(mc_rtc_utils_HDR
     ../include/mc_rtc/ConfigurationHelpers.h
     ../include/mc_rtc/MessagePackBuilder.h
     ../include/mc_rtc/logging.h
+    ../include/mc_rtc/fmt_formatters.h
     ../include/mc_rtc/log/FlatLog.h
     ../include/mc_rtc/log/iterate_binary_log.h
     ../include/mc_rtc/log/Logger.h
@@ -145,6 +145,7 @@ set(mc_rtc_utils_HDR
     ../include/mc_rtc/utils/heatmap.h
     ../include/mc_rtc/clock.h
     ../include/mc_rtc/threading/AsyncJob.h
+    ../include/mc_rtc/SignalSlot.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
@@ -237,6 +238,7 @@ set(mc_rbdyn_SRC
     mc_rbdyn/RobotModule.cpp
     mc_rbdyn/RobotModule_visual.cpp
     mc_rbdyn/inertia.cpp
+    mc_rbdyn/RobotModule_connect.cpp
     mc_rbdyn/configuration_io.cpp
     mc_rbdyn/ZMP.cpp
     mc_control/generic_gripper.cpp

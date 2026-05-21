@@ -8,6 +8,7 @@
  * @CMAKE_CURRENT_SOURCE_DIR@/mc_rtc/loader.in.cpp
  */
 
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/loader.h>
 
 #include <mc_rtc/debug.h>
@@ -183,6 +184,11 @@ void Loader::load_libraries(const std::string & class_name,
                             bool verbose,
                             Loader::callback_t cb)
 {
+  if(verbose)
+    mc_rtc::log::info("\n\n-----\n"
+                      "Looking for libraries containing matching symbol \"{}\" in the following paths: [{}]\n"
+                      "-----\n",
+                      class_name, mc_rtc::io::to_string(pathsIn));
 #ifndef MC_RTC_BUILD_STATIC
   std::vector<std::string> debug_paths;
   auto pathsRef = std::cref(pathsIn);
@@ -201,59 +207,48 @@ void Loader::load_libraries(const std::string & class_name,
 #  else
   std::string rpath = "";
 #  endif
+  // Look for libraries in the paths in the provided order
+  // first library with matching symbols will be kept
   for(const auto & path : paths)
   {
+    if(verbose) mc_rtc::log::info("\n-- Looking for libraries in {}", mc_rtc::io::to_string(paths));
     if(!fs::exists(path))
     {
-      if(verbose) { mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path); }
+      if(verbose) mc_rtc::log::warning("Tried to load libraries from \"{}\" which does not exist", path);
       continue;
     }
     fs::directory_iterator dit(path), endit;
     std::vector<fs::path> drange;
     std::copy(dit, endit, std::back_inserter(drange));
-    // Sort by newest file
+    // Sort by newest file (within the current folder)
     std::sort(drange.begin(), drange.end(), [](const fs::path & p1, const fs::path & p2)
               { return fs::last_write_time(p1) > fs::last_write_time(p2); });
-    for(const auto & path : paths)
+    for(const auto & p : drange)
     {
-      if(!fs::exists(path))
+      /* Attempt to load all dynamic libraries in the directory */
+      if((!fs::is_directory(p)) && p.extension() == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
       {
-        if(verbose) { mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path); }
-        continue;
-      }
-      fs::directory_iterator dit(path), endit;
-      std::vector<fs::path> drange;
-      std::copy(dit, endit, std::back_inserter(drange));
-      // Sort by newest file
-      std::sort(drange.begin(), drange.end(), [](const fs::path & p1, const fs::path & p2)
-                { return fs::last_write_time(p1) > fs::last_write_time(p2); });
-      for(const auto & p : drange)
-      {
-        /* Attempt to load all dynamics libraries in the directory */
-        if((!fs::is_directory(p)) && p.extension() == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
+        auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), rpath, verbose);
+        for(const auto & cn : handle->classes())
         {
-          auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), rpath, verbose);
-          for(const auto & cn : handle->classes())
+          if(out.count(cn))
           {
-            if(out.count(cn))
+            if(verbose) mc_rtc::log::info("Symbol \"{}\" detected in \"{}\"", cn, p.string());
+            /* We get the first library that declared this class name and only
+             * emit an exception if this is declared in a different file */
+            fs::path orig_p(out[cn]->path());
+            if(orig_p != p)
             {
-              /* We get the first library that declared this class name and only
-               * emit an exception if this is declared in a different file */
-              fs::path orig_p(out[cn]->path());
-              if(orig_p != p)
-              {
-                if(verbose)
-                {
-                  mc_rtc::log::warning(
-                      "Multiple files export the same name {} (new declaration in {}, previous declaration in {})", cn,
-                      p.string(), out[cn]->path());
-                }
-                continue;
-              }
+              if(verbose)
+                mc_rtc::log::warning("Multiple files export the same symbol \"{}\":\n"
+                                     "     + Using current declaration in: \"{}\"\n"
+                                     "     - Duplicate declaration in:     \"{}\"",
+                                     cn, p.string(), out[cn]->path());
+              continue;
             }
-            out[cn] = handle;
-            cb(cn, *handle);
           }
+          out[cn] = handle;
+          cb(cn, *handle);
         }
       }
     }

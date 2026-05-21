@@ -50,7 +50,7 @@ SymT LTDLHandle::get_symbol(const std::string & name)
   if(ret == nullptr)
   {
     const char * error = lt_dlerror();
-    if(verbose_) { mc_rtc::log::warning("Could not get symbol {} in library {}\n{}", name, path_, error); }
+    if(verbose_) { mc_rtc::log::info("Could not get symbol {} in library {}\n{}", name, path_, error); }
   }
   return ret;
 #else

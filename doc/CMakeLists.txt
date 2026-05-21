@@ -1,13 +1,28 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-set(JSON_DOC_INSTALL ${CMAKE_INSTALL_DOCDIR}/json)
-configure_file(_plugins/doxygen.rb.in "${CMAKE_CURRENT_SOURCE_DIR}/_plugins/doxygen.rb")
+set(MC_RTC_JEKYLL_PLUGINS_PATH "${CMAKE_INSTALL_DOCDIR}/jekyll/plugins")
+configure_file(
+  _plugins/data_page_generator.in.rb
+  "${CMAKE_CURRENT_BINARY_DIR}/_plugins/data_page_generator.rb"
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_plugins/data_page_generator.rb
+        DESTINATION ${MC_RTC_JEKYLL_PLUGINS_PATH}
+)
+
+configure_file(_plugins/doxygen.in.rb "${CMAKE_CURRENT_BINARY_DIR}/_plugins/doxygen.rb")
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_plugins/doxygen.rb
+        DESTINATION ${MC_RTC_JEKYLL_PLUGINS_PATH}
+)
+
+install(FILES _plugins/include_raw.rb _plugins/link.rb _plugins/pretty_json.rb
+        DESTINATION "${MC_RTC_JEKYLL_PLUGINS_PATH}"
+)
 
 install(
-  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_data/schemas
-  DESTINATION ${JSON_DOC_INSTALL}
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_data/schemas/
+  DESTINATION ${MC_RTC_JSON_SCHEMA_PATH}
   FILES_MATCHING
   PATTERN "*.json"
 )

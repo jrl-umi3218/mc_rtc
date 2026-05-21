@@ -204,6 +204,11 @@
       "default": false,
       "description": "Clear default global plugin path"
     },
+    "LoadUserConfiguration": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to load the user's configuration file from $HOME/.config/mc_rtc.yaml (linux) ; %APPDATA%/mc_rtc/mc_rtc.yaml (windows)"
+    },
     "ObserverPipelines": {
       "$ref": "../Observers/ObserverPipelines.json"
     }

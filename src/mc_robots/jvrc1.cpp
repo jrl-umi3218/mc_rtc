@@ -2,18 +2,12 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#ifndef JVRC_DESCRIPTION_PATH
-#  error "JVRC_DESCRIPTION_PATH must be defined to build this RobotModule"
-#endif
-
-#define JVRC_VAL(x) #x
-#define JVRC_VAL_VAL(x) JVRC_VAL(x)
-
 #include "jvrc1.h"
 
 #include <mc_rbdyn/Device.h>
 #include <mc_rbdyn/RobotModuleMacros.h>
 
+#include <mc_rtc/config.h>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/parsers/urdf.h>
@@ -33,8 +27,7 @@ mc_rbdyn::DevicePtr JVRC1DummySpeaker::clone() const
   return mc_rbdyn::DevicePtr(dummy);
 }
 
-JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics)
-: RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
+JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule(mc_rtc::JVRC_DESCRIPTION_PATH, "jvrc1")
 {
   _canonicalParameters = {"JVRC1"};
 

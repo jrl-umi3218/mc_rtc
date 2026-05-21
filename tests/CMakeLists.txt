@@ -98,15 +98,11 @@ get_filename_component(
   EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../doc/_examples" ABSOLUTE
 )
 mc_rtc_test(testSchemaExamples mc_tasks)
+mc_rtc_test(test_fmt_formatters mc_rtc_utils)
 mc_rtc_test(testLogger mc_rbdyn)
 mc_rtc_test(testLogUtils mc_rbdyn)
 mc_rtc_test(testRobotModule mc_rbdyn)
 mc_rtc_test(testRobotModule_visual mc_rbdyn)
-find_description_package(jvrc_description)
-set_target_properties(
-  testRobotModule PROPERTIES COMPILE_FLAGS
-                             "-DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\""
-)
 mc_rtc_test(testCanonicalRobot mc_rbdyn)
 mc_rtc_test(testSolverBackend mc_tasks)
 
