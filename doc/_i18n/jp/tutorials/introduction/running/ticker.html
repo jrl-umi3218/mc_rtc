@@ -16,7 +16,7 @@
 <p>次のコマンドを実行して、必要なmc_rtc専用パネルとロボットモデルとともにRViZを起動します。</p>
 
 {% highlight bash %}
-$ roslaunch mc_rtc_ticker display.launch
+$ ros2 launch mc_rtc_ticker display.launch
 {% endhighlight %}
 
 <p>シミュレーションに2つ以上のロボットがある場合は、新しいRobotModelをシーンに追加する必要があります。ロボットの説明は、パラメータ<code>/control/env_N</code>（Nはロボットインデックスです）で公開されます。</p>

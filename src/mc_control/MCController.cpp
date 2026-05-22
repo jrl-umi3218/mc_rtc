@@ -820,7 +820,7 @@ bool MCController::run(mc_solver::FeedbackType fType)
   auto startUpdateContacts = mc_rtc::clock::now();
   updateContacts();
   updateContacts_dt_ = mc_rtc::clock::now() - startUpdateContacts;
-  if(!qpsolver->run(fType))
+  if(fType != mc_solver::FeedbackType::SkipQP && !qpsolver->run(fType))
   {
     mc_rtc::log::error("QP failed to run()");
     return false;
