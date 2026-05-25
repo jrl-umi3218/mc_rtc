@@ -735,6 +735,12 @@ public:
   const std::string name_;
   /** Stores the loading location provided by the loader via \ref set_loading_location */
   const std::string loading_location_;
+  /** Signal emitted when a loaded robot is to replace another robot
+   *
+   * \param old_robot_name
+   * \param new_robot_name
+   */
+  mc_rtc::Signal<std::string, std::string> replaceRobot;
 
   /** Load a robot specific configuration (if any)
    *
