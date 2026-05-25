@@ -241,7 +241,8 @@ EXPORT_SINGLE_STATE("{controller_name}_Initial", {controller_name}_Initial)
     # VSCode extension recommendations
     vscode_extensions = {
         "recommendations": [
-            "redhat.vscode-yaml" "twxs.cmake",
+            "redhat.vscode-yaml",
+            "twxs.cmake",
             "ms-vscode.cmake-tools",
             "josetr.cmake-language-support-vscode",
             "ms-vscode.cpptools",
