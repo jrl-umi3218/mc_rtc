@@ -1121,7 +1121,8 @@ void MCGlobalController::trackPluginDatastoreEntries(PluginHandle & plugin, cons
   for(const auto & key : afterKeys)
   {
     if(std::find(beforeKeys.begin(), beforeKeys.end(), key) == beforeKeys.end()
-   && std::find(plugin.datastore_entries.begin(), plugin.datastore_entries.end(), key) == plugin.datastore_entries.end())
+       && std::find(plugin.datastore_entries.begin(), plugin.datastore_entries.end(), key)
+              == plugin.datastore_entries.end())
     {
       plugin.datastore_entries.push_back(key);
     }
