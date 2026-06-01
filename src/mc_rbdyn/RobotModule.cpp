@@ -181,7 +181,7 @@ void RobotModule::bind_convexes()
           continue;
         }
 
-        _convexHull[b.name() + "_" + std::to_string(added)] = {b.name() + "_" + std::to_string(added), convex_path};
+        _convexHull[b.name() + "_" + std::to_string(added)] = {b.name(), convex_path};
         added++;
       }
     }
