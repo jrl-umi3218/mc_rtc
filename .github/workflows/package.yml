@@ -102,6 +102,10 @@ jobs:
           arch: amd64
           variant: ros
           ros_distro: jazzy
+        - dist: resolute
+          arch: amd64
+          variant: ros
+          ros_distro: kilted
     runs-on: ubuntu-22.04
     outputs:
       mirror: ${{ steps.setup-parameters.outputs.mirror }}
@@ -224,6 +228,9 @@ jobs:
           arch: amd64
           variant: ros
         - dist: noble
+          arch: amd64
+          variant: ros
+        - dist: resolute
           arch: amd64
           variant: ros
     runs-on: ubuntu-22.04
