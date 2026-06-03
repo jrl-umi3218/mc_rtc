@@ -127,13 +127,13 @@ $(document).ready(function(){initNavTree('clamp_8h_source.html',''); initResizab
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span>(<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a> &gt; upper)</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="namespacemc__rtc_1_1log.html#a9e944001fd155fd1621157e450cf3d06">mc_rtc::log::warning</a>(<span class="stringliteral">&quot;{} clamped to {}&quot;</span>, label, upper);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="namespacemc__rtc_1_1log.html#aabb6d46320068e39a0d80f27ad332624">mc_rtc::log::warning</a>(<span class="stringliteral">&quot;{} clamped to {}&quot;</span>, label, upper);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    ;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> upper;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span>(<a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a> &lt; lower)</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="namespacemc__rtc_1_1log.html#a9e944001fd155fd1621157e450cf3d06">mc_rtc::log::warning</a>(<span class="stringliteral">&quot;{} clamped to {}&quot;</span>, label, lower);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="namespacemc__rtc_1_1log.html#aabb6d46320068e39a0d80f27ad332624">mc_rtc::log::warning</a>(<span class="stringliteral">&quot;{} clamped to {}&quot;</span>, label, lower);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">return</span> lower;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">else</span></div>
@@ -217,7 +217,7 @@ $(document).ready(function(){initNavTree('clamp_8h_source.html',''); initResizab
 <div class="ttc" id="anamespacemc__filter_1_1utils_html_ae558cb782558a6fe59c9975f5e9dc2b4"><div class="ttname"><a href="namespacemc__filter_1_1utils.html#ae558cb782558a6fe59c9975f5e9dc2b4">mc_filter::utils::clampAndWarn</a></div><div class="ttdeci">double clampAndWarn(double value, double lower, double upper, const std::string &amp;label)</div><div class="ttdef"><b>Definition:</b> clamp.h:49</div></div>
 <div class="ttc" id="anamespacemc__filter_html"><div class="ttname"><a href="namespacemc__filter.html">mc_filter</a></div><div class="ttdef"><b>Definition:</b> ExponentialMovingAverage.h:15</div></div>
 <div class="ttc" id="anamespacemc__rbdyn_1_1details_html_a71fcd7fe46e75452f9c6302bb1c40412"><div class="ttname"><a href="namespacemc__rbdyn_1_1details.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string</a></div><div class="ttdeci">std::conditional&lt; std::is_same&lt; std::string, T &gt;::value, const std::string &amp;, std::string &gt;::type to_string(const T &amp;value)</div><div class="ttdef"><b>Definition:</b> RobotLoader.h:51</div></div>
-<div class="ttc" id="anamespacemc__rtc_1_1log_html_a9e944001fd155fd1621157e450cf3d06"><div class="ttname"><a href="namespacemc__rtc_1_1log.html#a9e944001fd155fd1621157e450cf3d06">mc_rtc::log::warning</a></div><div class="ttdeci">void warning(Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> logging.h:62</div></div>
+<div class="ttc" id="anamespacemc__rtc_1_1log_html_aabb6d46320068e39a0d80f27ad332624"><div class="ttname"><a href="namespacemc__rtc_1_1log.html#aabb6d46320068e39a0d80f27ad332624">mc_rtc::log::warning</a></div><div class="ttdeci">void warning(const S &amp;format, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> logging.h:75</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

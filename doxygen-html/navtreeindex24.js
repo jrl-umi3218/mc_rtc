@@ -1,12 +1,5 @@
 var NAVTREEINDEX24 =
 {
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a5c4c24081d3cfc9ba7d61097f97c968e":[6,0,8,6,4],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a60f2ef40ea951b8d1b9235dbfda346ca":[6,0,8,6,5],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a669d5fdec2578c135db701bba1727403":[6,0,8,6,1],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a81a378c092ca9206ea9fa9e14448e979":[6,0,8,6,7],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a81d5a557b19cceddeb5fe7911db9dceb":[6,0,8,6,0],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a9c6b5bc01bbaa882d10178076867265e":[6,0,8,6,8],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#ac5eeec3b2af2e5d3a329daf981453a2e":[6,0,8,6,10],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#ac881b5b505b63c5e89bec2e598c767e0":[6,0,8,6,11],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#ae178d7681e5746a9ba423a9eb3ecbf6e":[6,0,8,6,2],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#aeb967476c50f3838e13951e0f3d9527c":[6,0,8,6,3],
@@ -249,5 +242,12 @@ var NAVTREEINDEX24 =
 "structmc__tasks_1_1SplineTrajectoryTask.html#a501a30432b64fcb91f8cd5eeb1881d39":[6,0,8,22,16],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a552e7c8b7ef80649a462476c30ef6cc6":[6,0,8,22,6],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a55ddc08175e2c18024ba3aba28c9caa7":[6,0,8,22,58],
-"structmc__tasks_1_1SplineTrajectoryTask.html#a56aabae51096134f054ab31c175ba59d":[6,0,8,22,27]
+"structmc__tasks_1_1SplineTrajectoryTask.html#a56aabae51096134f054ab31c175ba59d":[6,0,8,22,27],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a5f788408068897c33c6096c643252413":[6,0,8,22,31],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a649052a5fbf326990d2b3d20ec66ab19":[6,0,8,22,1],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a6b58c786b84e0d4f82f6e434589c0e80":[6,0,8,22,49],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a6d3a61eea75bf5fa5125564e9d5752e2":[6,0,8,22,34],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a716f3f5f2c7db43ad8e22a49bdfd4bde":[6,0,8,22,23],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a7584b0ee675b53361e1efe97f3069543":[6,0,8,22,59],
+"structmc__tasks_1_1SplineTrajectoryTask.html#a7c566eaeab9b359df65abcf52005bbce":[6,0,8,22,32]
 };

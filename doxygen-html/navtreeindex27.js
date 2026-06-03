@@ -1,12 +1,5 @@
 var NAVTREEINDEX27 =
 {
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad8304c9dda559e368bae68116dfad3d5":[6,0,8,2,2,93],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad88115d8e55d081009462825237bc93f":[6,0,8,2,2,59],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad95c2c21d090a13680ccd51b542688ac":[6,0,8,2,2,38],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ada370921b62caa185b6eaeaa9638cd06":[6,0,8,2,2,43],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ada9ebbf97e6283a4bf82103945d48ae3":[6,0,8,2,2,129],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#adb8ecfa54ccf98e0a512b92f27a4c104":[6,0,8,2,2,127],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#adc4360c9ae88e17ad408826deaeeb1c9":[6,0,8,2,2,91],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae0837cd5e41e827e59bfcae07f3b0c7b":[6,0,8,2,2,47],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae1133e256a909367f839ecef2528c7be":[6,0,8,2,2,177],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae1f0f546550766ef228fc687e556c8eb":[6,0,8,2,2,118],
@@ -249,5 +242,12 @@ var NAVTREEINDEX27 =
 "structmc__tvm_1_1FrameVelocity.html#ae5689793295ce372530f9583c7a2f01d":[6,0,10,9,3],
 "structmc__tvm_1_1Frame_1_1NewFrameToken.html":[6,0,10,8,0],
 "structmc__tvm_1_1GazeFunction.html":[6,0,10,10],
-"structmc__tvm_1_1GazeFunction.html#a03a21038f61e035bf05b1ed2f68c9099":[6,0,10,10,10]
+"structmc__tvm_1_1GazeFunction.html#a03a21038f61e035bf05b1ed2f68c9099":[6,0,10,10,10],
+"structmc__tvm_1_1GazeFunction.html#a0988c704abe22b041088a2abd35bfb25":[6,0,10,10,16],
+"structmc__tvm_1_1GazeFunction.html#a2089b01a40331d63b594fd2489bc734d":[6,0,10,10,18],
+"structmc__tvm_1_1GazeFunction.html#a215602b167c44aaa4643ecb8e5ac75fb":[6,0,10,10,14],
+"structmc__tvm_1_1GazeFunction.html#a23ac4daf288cf9b74bdb0a165de4a8a8":[6,0,10,10,11],
+"structmc__tvm_1_1GazeFunction.html#a252a96edd8ef0e93fb59c63155b1ba44":[6,0,10,10,0],
+"structmc__tvm_1_1GazeFunction.html#a295fe6fa32bb6033ef8a5338b282a903":[6,0,10,10,23],
+"structmc__tvm_1_1GazeFunction.html#a2d60982335d860c0de76ac6619ec26f4":[6,0,10,10,2]
 };

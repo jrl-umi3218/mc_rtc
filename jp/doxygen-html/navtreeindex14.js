@@ -1,12 +1,5 @@
 var NAVTREEINDEX14 =
 {
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#ab540aeb0263d7368a8f0f28c6cf8db01":[6,0,1,1,16,18],
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#ac1b5a6462db239740800b703e5ef6d38":[6,0,1,1,16,20],
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#aec95cfe1bf344ed978a0f427916c457c":[6,0,1,1,16,9],
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#aef9d57338a8967af8f645abde17fe235":[6,0,1,1,16,8],
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#aefa6ecfbc94489eec5d0cac0ae5b82ba":[6,0,1,1,16,14],
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#af13d0e8b9e94acd0cfc3e6a7a42516ba":[6,0,1,1,16,1],
-"structmc__control_1_1fsm_1_1StabilizerStandingState.html#af2dcb13246f2146455596c75fa75eb62":[6,0,1,1,16,4],
 "structmc__control_1_1fsm_1_1State.html":[6,0,1,1,4],
 "structmc__control_1_1fsm_1_1State.html#a03a05dd1fc9942911d73ea2cdb28478f":[6,0,1,1,4,22],
 "structmc__control_1_1fsm_1_1State.html#a0b2e5163abce708367767793befab639":[6,0,1,1,4,23],
@@ -249,5 +242,12 @@ var NAVTREEINDEX14 =
 "structmc__observers_1_1Observer.html#af9063e58cac679404843fb7104c60835":[6,0,3,4,24],
 "structmc__observers_1_1Observer.html#afaf68e30ac5a8d4fdb65a781b124f0cb":[6,0,3,4,5],
 "structmc__observers_1_1Observer.html#afb00b8e7fde2d086d3e8674bf70f1c9f":[6,0,3,4,10],
-"structmc__observers_1_1ObserverLoader.html":[6,0,3,5]
+"structmc__observers_1_1ObserverLoader.html":[6,0,3,5],
+"structmc__observers_1_1ObserverPipeline.html":[6,0,3,6],
+"structmc__observers_1_1ObserverPipeline.html#a006ac6ed54fdedf365bb56f3e17d1c83":[6,0,3,6,22],
+"structmc__observers_1_1ObserverPipeline.html#a11d57d5e2c6ea582f034a82fbd905ed0":[6,0,3,6,12],
+"structmc__observers_1_1ObserverPipeline.html#a196508f4fadc9c18b17e430877904765":[6,0,3,6,26],
+"structmc__observers_1_1ObserverPipeline.html#a1ff155de33b02e9583105970a7dd7f62":[6,0,3,6,20],
+"structmc__observers_1_1ObserverPipeline.html#a27cfd874cd81d8640f15c525214ed9a4":[6,0,3,6,1],
+"structmc__observers_1_1ObserverPipeline.html#a37430f05658ebc329bb44d1408606ecd":[6,0,3,6,24]
 };

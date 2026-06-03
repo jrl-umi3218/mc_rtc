@@ -151,7 +151,7 @@ Include dependency graph for GlobalPluginMacros.h:</div>
 <area shape="rect" href="StabilizerConfiguration_8h.html" title=" " alt="" coords="5075,512,5261,553"/>
 <area shape="rect" href="constants_8h.html" title=" " alt="" coords="5539,519,5685,546"/>
 <area shape="rect" target="_parent" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/common_8h.html.html" title=" " alt="" coords="3670,519,3861,546"/>
-<area shape="rect" title=" " alt="" coords="4227,519,4405,546"/>
+<area shape="rect" target="_parent" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/S__Object_8h.html.html" title=" " alt="" coords="4227,519,4405,546"/>
 </map>
 </div>
 </div>
@@ -228,12 +228,12 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keywordflow">if</span>(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                    \</div>
-<div class="line">  {                                                                                                                  <a class="code" href="namespacemc__rtc_1_1log.html#aa189b2ec856ad8f96d632d635efc05ce">\</a></div>
-<div class="line"><a class="code" href="namespacemc__rtc_1_1log.html#aa189b2ec856ad8f96d632d635efc05ce">    mc_rtc::log::error</a>(<span class="stringliteral">&quot;{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle &quot;</span> \</div>
+<div class="line">  {                                                                                                                  <a class="code" href="namespacemc__rtc_1_1log.html#abcf8a142c794bd59e207298b4410a152">\</a></div>
+<div class="line"><a class="code" href="namespacemc__rtc_1_1log.html#abcf8a142c794bd59e207298b4410a152">    mc_rtc::log::error</a>(<span class="stringliteral">&quot;{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle &quot;</span> \</div>
 <div class="line">                       <span class="stringliteral">&quot;issues and should recompile your code&quot;</span>,                                                      \</div>
 <div class="line">                       NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \</div>
 <div class="line">  }</div>
-<div class="ttc" id="anamespacemc__rtc_1_1log_html_aa189b2ec856ad8f96d632d635efc05ce"><div class="ttname"><a href="namespacemc__rtc_1_1log.html#aa189b2ec856ad8f96d632d635efc05ce">mc_rtc::log::error</a></div><div class="ttdeci">void error(Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> logging.h:56</div></div>
+<div class="ttc" id="anamespacemc__rtc_1_1log_html_abcf8a142c794bd59e207298b4410a152"><div class="ttname"><a href="namespacemc__rtc_1_1log.html#abcf8a142c794bd59e207298b4410a152">mc_rtc::log::error</a></div><div class="ttdeci">void error(const S &amp;format, Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> logging.h:65</div></div>
 </div><!-- fragment --><p>A simple compile-time versus run-time version checking macro</p>
 <p>If you are not relying on EXPORT_MC_RTC_PLUGIN you should use this in your MC_RTC_GLOBAL_PLUGIN implementation </p>
 

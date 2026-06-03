@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['matrixmult_13978',['MatrixMult',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm_1_1scheme_1_1internal.html#accdeba42434e6c326e35e438acca74fd',1,'tvm::scheme::internal']]]
+  ['linestyle_14938',['LineStyle',['../namespacemc__rtc_1_1gui.html#a23166295a3983f35cb0fa510b4c156c9',1,'mc_rtc::gui']]],
+  ['logtype_14939',['LogType',['../namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549',1,'mc_rtc::log']]]
 ];

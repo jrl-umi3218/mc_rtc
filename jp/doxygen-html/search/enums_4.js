@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['integral_5fcost_5fflag_13975',['integral_cost_flag',['/usr/local/share/doc/ndcurves/doxygen-html/namespacendcurves_1_1optimization.html#a26dceefc0228378378619b2daa39f154',1,'ndcurves::optimization']]]
+  ['geometrytype_14936',['GeometryType',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/structsch_1_1Geometry.html#a589fcbf549a272b3a643c861b284d27f',1,'sch::Geometry']]]
 ];

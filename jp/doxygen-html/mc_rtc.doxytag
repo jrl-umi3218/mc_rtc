@@ -5454,50 +5454,50 @@
       <type>void</type>
       <name>error_and_throw</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a2bad497e8a4c7a7f29f7ab908c83274e</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>a5afa175c4185b161edbd3ad0ca59712a</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>critical</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a82d6969aa78c74fbe4716532661ea0d8</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>a5b512edcacf5875ec691bcdd8d39eeb2</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>error</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>aa189b2ec856ad8f96d632d635efc05ce</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>abcf8a142c794bd59e207298b4410a152</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>warning</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a9e944001fd155fd1621157e450cf3d06</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>aabb6d46320068e39a0d80f27ad332624</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>info</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a0d3a4bb8b582e5c1795b8ae9cd5f3ec9</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>ab6a101832d54a2912148fe2906cd064c</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>success</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a4493319384c54d938a70d54193ed2dbc</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>adb4852695cffc6b1fe4c4b3dda05e50f</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>notify</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a54ebcc7be85c707e724b30af37292667</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>a085fe6ba931fdf207bb452fbedb1733a</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="variable">
       <type>constexpr auto</type>
@@ -49231,50 +49231,50 @@
       <type>void</type>
       <name>error_and_throw</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a2bad497e8a4c7a7f29f7ab908c83274e</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>a5afa175c4185b161edbd3ad0ca59712a</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>critical</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a82d6969aa78c74fbe4716532661ea0d8</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>a5b512edcacf5875ec691bcdd8d39eeb2</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>error</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>aa189b2ec856ad8f96d632d635efc05ce</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>abcf8a142c794bd59e207298b4410a152</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>warning</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a9e944001fd155fd1621157e450cf3d06</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>aabb6d46320068e39a0d80f27ad332624</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>info</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a0d3a4bb8b582e5c1795b8ae9cd5f3ec9</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>ab6a101832d54a2912148fe2906cd064c</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>success</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a4493319384c54d938a70d54193ed2dbc</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>adb4852695cffc6b1fe4c4b3dda05e50f</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>notify</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
-      <anchor>a54ebcc7be85c707e724b30af37292667</anchor>
-      <arglist>(Args &amp;&amp;... args)</arglist>
+      <anchor>a085fe6ba931fdf207bb452fbedb1733a</anchor>
+      <arglist>(const S &amp;format, Args &amp;&amp;... args)</arglist>
     </member>
   </compound>
   <compound kind="namespace">

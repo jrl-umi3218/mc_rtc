@@ -47,10 +47,10 @@ var namespacemc__rtc_1_1log =
       [ "MotionVecd", "namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a08efd42d00b69280268271026472b237", null ],
       [ "VectorDouble", "namespacemc__rtc_1_1log.html#ae623e7dc6e6722fd48752713664b3549a18f1829c8dab599745c7d5bc84585aa2", null ]
     ] ],
-    [ "critical", "namespacemc__rtc_1_1log.html#a82d6969aa78c74fbe4716532661ea0d8", null ],
+    [ "critical", "namespacemc__rtc_1_1log.html#a5b512edcacf5875ec691bcdd8d39eeb2", null ],
     [ "deprecated", "namespacemc__rtc_1_1log.html#af847170ed484855237b58e8b2706fecd", null ],
-    [ "error", "namespacemc__rtc_1_1log.html#aa189b2ec856ad8f96d632d635efc05ce", null ],
-    [ "error_and_throw", "namespacemc__rtc_1_1log.html#a2bad497e8a4c7a7f29f7ab908c83274e", null ],
+    [ "error", "namespacemc__rtc_1_1log.html#abcf8a142c794bd59e207298b4410a152", null ],
+    [ "error_and_throw", "namespacemc__rtc_1_1log.html#a5afa175c4185b161edbd3ad0ca59712a", null ],
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#a9aa92bc1668b9218bf395ae4fc92e795", null ],
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#aa770174431aaede54b4a01e08165626a", null ],
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#a254cbef473857a8f7300c4893e025070", null ],
@@ -95,13 +95,13 @@ var namespacemc__rtc_1_1log =
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#a045770b65be467c0c0d9ed24e4515d13", null ],
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#a8df0101c1870d2156a9009ab9019d154", null ],
     [ "IMPL_MAPPING", "namespacemc__rtc_1_1log.html#a2155b830cb24a83a16d9cf3587081c22", null ],
-    [ "info", "namespacemc__rtc_1_1log.html#a0d3a4bb8b582e5c1795b8ae9cd5f3ec9", null ],
+    [ "info", "namespacemc__rtc_1_1log.html#ab6a101832d54a2912148fe2906cd064c", null ],
     [ "iterate_binary_log", "namespacemc__rtc_1_1log.html#a5a2dd6ca6dfa01179bbe077ab11abc67", null ],
     [ "iterate_binary_log", "namespacemc__rtc_1_1log.html#a4167ee6992725b9b1545f55118560002", null ],
     [ "iterate_binary_log", "namespacemc__rtc_1_1log.html#a70dfcae1b3566ebd23adecd27752e15f", null ],
     [ "LogTypeName", "namespacemc__rtc_1_1log.html#a6351f9d1bb2bb7f8f3508cc9f0e36e5e", null ],
     [ "LogTypeNames", "namespacemc__rtc_1_1log.html#a9979086ae04c2369f6ea39d42ec2fcb6", null ],
-    [ "notify", "namespacemc__rtc_1_1log.html#a54ebcc7be85c707e724b30af37292667", null ],
-    [ "success", "namespacemc__rtc_1_1log.html#a4493319384c54d938a70d54193ed2dbc", null ],
-    [ "warning", "namespacemc__rtc_1_1log.html#a9e944001fd155fd1621157e450cf3d06", null ]
+    [ "notify", "namespacemc__rtc_1_1log.html#a085fe6ba931fdf207bb452fbedb1733a", null ],
+    [ "success", "namespacemc__rtc_1_1log.html#adb4852695cffc6b1fe4c4b3dda05e50f", null ],
+    [ "warning", "namespacemc__rtc_1_1log.html#aabb6d46320068e39a0d80f27ad332624", null ]
 ];

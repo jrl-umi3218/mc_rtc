@@ -1,12 +1,5 @@
 var NAVTREEINDEX23 =
 {
-"structmc__solver_1_1DynamicsConstraint.html#ac888a5f53afab169be85ef6609821c38":[6,0,7,11,4],
-"structmc__solver_1_1DynamicsConstraint.html#aebe3a1c0ac228a8b688b95dfadf01cac":[6,0,7,11,2],
-"structmc__solver_1_1DynamicsConstraint.html#afb2a10971e64329c161cd0ea8af3ea4d":[6,0,7,11,7],
-"structmc__solver_1_1EqualityConstraintForce.html":[6,0,7,14],
-"structmc__solver_1_1EqualityConstraintForce.html#a252d0cb3773296939c4fabf8802ee6ee":[6,0,7,14,0],
-"structmc__solver_1_1EqualityConstraintLambda.html":[6,0,7,13],
-"structmc__solver_1_1EqualityConstraintLambda.html#ad47fb029ea828403ea18f1d7d68bca15":[6,0,7,13,0],
 "structmc__solver_1_1EqualityConstraintRobot.html":[6,0,7,12],
 "structmc__solver_1_1EqualityConstraintRobot.html#a8f57f09de172e6a12c7d29717f6e6066":[6,0,7,12,0],
 "structmc__solver_1_1GenInequalityConstraintForce.html":[6,0,7,18],
@@ -249,5 +242,12 @@ var NAVTREEINDEX23 =
 "structmc__tasks_1_1AddRemoveContactTask.html#afcdad65af3391e9059dbfac1db885679":[6,0,8,3,23],
 "structmc__tasks_1_1BSplineTrajectoryTask.html":[6,0,8,6],
 "structmc__tasks_1_1BSplineTrajectoryTask.html#a559bf605e5d3ee712f3beb4ca867daf0":[6,0,8,6,9],
-"structmc__tasks_1_1BSplineTrajectoryTask.html#a57429fbfc25ba22a34d9881f54b76121":[6,0,8,6,6]
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a57429fbfc25ba22a34d9881f54b76121":[6,0,8,6,6],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a5c4c24081d3cfc9ba7d61097f97c968e":[6,0,8,6,4],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a60f2ef40ea951b8d1b9235dbfda346ca":[6,0,8,6,5],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a669d5fdec2578c135db701bba1727403":[6,0,8,6,1],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a81a378c092ca9206ea9fa9e14448e979":[6,0,8,6,7],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a81d5a557b19cceddeb5fe7911db9dceb":[6,0,8,6,0],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#a9c6b5bc01bbaa882d10178076867265e":[6,0,8,6,8],
+"structmc__tasks_1_1BSplineTrajectoryTask.html#ac5eeec3b2af2e5d3a329daf981453a2e":[6,0,8,6,10]
 };

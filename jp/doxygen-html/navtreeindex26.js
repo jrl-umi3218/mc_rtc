@@ -1,12 +1,5 @@
 var NAVTREEINDEX26 =
 {
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a076633d27b8ad48da2e8f3a19e275377":[6,0,8,1,6,4],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a32892f4c1d6ca689541dbd2fc97a1d30":[6,0,8,1,6,9],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a4aa76bf8f0fb24b8683f9ae6a79d76a2":[6,0,8,1,6,11],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a5bace86a7fa64130588279be37094b5c":[6,0,8,1,6,12],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a6b88536a57828978dc2877d83b65001d":[6,0,8,1,6,6],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a6be8a021cc0967787e4bfcd3619d6a10":[6,0,8,1,6,3],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a738759b89bc0325fd66daf8d70be9072":[6,0,8,1,6,1],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a7d9f24350044abdb57754a79aba2ea9e":[6,0,8,1,6,17],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a89707b58ca496b54f97c2e02c80e8243":[6,0,8,1,6,15],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a898e2a2ca110dfe75e95402f78cd739f":[6,0,8,1,6,7],
@@ -249,5 +242,12 @@ var NAVTREEINDEX26 =
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad173d40ca3a81fe661d64d90fcf92106":[6,0,8,2,2,56],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad18a80a6d1ff8b73cf2badb5bf618a28":[6,0,8,2,2,135],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad55b59e574799dcf11bc7598b8a6cea9":[6,0,8,2,2,179],
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad69940b8fb336e2728359e8a1014958b":[6,0,8,2,2,73]
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad69940b8fb336e2728359e8a1014958b":[6,0,8,2,2,73],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad8304c9dda559e368bae68116dfad3d5":[6,0,8,2,2,93],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad88115d8e55d081009462825237bc93f":[6,0,8,2,2,59],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad95c2c21d090a13680ccd51b542688ac":[6,0,8,2,2,38],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ada370921b62caa185b6eaeaa9638cd06":[6,0,8,2,2,43],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ada9ebbf97e6283a4bf82103945d48ae3":[6,0,8,2,2,129],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#adb8ecfa54ccf98e0a512b92f27a4c104":[6,0,8,2,2,127],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#adc4360c9ae88e17ad408826deaeeb1c9":[6,0,8,2,2,91]
 };
