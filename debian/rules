@@ -5,7 +5,7 @@ export ROS_DISTRO:=@ROS_DISTRO@
 ifneq ("$(wildcard /opt/ros/${ROS_DISTRO}/setup.sh)","")
 	export ROS_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_VERSION)
 	export ROS_PYTHON_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_PYTHON_VERSION)
-	export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:$PKG_CONFIG_PATH
+	export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:${PKG_CONFIG_PATH}
 	export ROS_MASTER_URI:=http://localhost:11311
 	ifeq (${ROS_PYTHON_VERSION}, 3)
 		export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python3/dist-packages:${PYTHONPATH}
@@ -19,7 +19,7 @@ ifneq ("$(wildcard /opt/ros/${ROS_DISTRO}/setup.sh)","")
 	ifeq (${ROS_VERSION}, 2)
 		export AMENT_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}
 	else
-		export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$CMAKE_PREFIX_PATH
+		export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:${CMAKE_PREFIX_PATH}
 	endif
 	CMAKE_DISABLE_ROS:=-DDISABLE_ROS:BOOL=OFF
 else

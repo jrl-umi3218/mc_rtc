@@ -27,9 +27,13 @@ on:
     - "**"
     tags:
     - v*
+permissions:
+  contents: read
 jobs:
   check-tag:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v4
       with:
@@ -148,12 +152,7 @@ jobs:
       shell: bash
       run: |
         set -x
-        if [ "${{ matrix.dist }}" = "xenial" -o "${{ matrix.dist }}" = "bionic" -o "${{ matrix.dist }}" = "focal" ]
-        then
-          sed -i -e"s/#PYTHON2 //" debian/control
-        else
-          sed -i -e"s/-DPYTHON_DEB_ROOT=\$(TMP)/-DPYTHON_DEB_ROOT=\$(TMP) -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=OFF -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=ON/" debian/rules
-        fi
+        sed -i -e"s/-DPYTHON_DEB_ROOT=\$(TMP)/-DPYTHON_DEB_ROOT=\$(TMP) -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=OFF -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=ON/" debian/rules
     - name: Setup package variant
       id: setup-variant
       shell: bash
@@ -183,9 +182,12 @@ jobs:
         sed -i -e"s/^Package: libmc-rtc-dev$/Package: ros-${ROS_DISTRO}-libmc-rtc-dev/" debian/control
         sed -i -e"s/^Package: libmc-rtc$/Package: ros-${ROS_DISTRO}-libmc-rtc/" debian/control
         sed -i -e "s/ libmc-rtc (= \${binary:Version}),/ ros-${ROS_DISTRO}-libmc-rtc (= \${binary:Version}),/g" debian/control
-        perl -0pi -e "s/Package: ros-${ROS_DISTRO}-libmc-rtc-dev\\nSection:/Package: ros-${ROS_DISTRO}-libmc-rtc-dev\\nConflicts: libmc-rtc-dev\\nReplaces: libmc-rtc-dev\\nProvides: libmc-rtc-dev\\nSection:/s" debian/control
-        perl -0pi -e "s/Package: ros-${ROS_DISTRO}-libmc-rtc\\nSection:/Package: ros-${ROS_DISTRO}-libmc-rtc\\nConflicts: libmc-rtc\\nProvides: libmc-rtc\\nSection:/s" debian/control
-        sed -i -e "/^Package: ros-${ROS_DISTRO}-libmc-rtc\$/,/^$/ s/^Replaces: /Replaces: libmc-rtc, /" debian/control
+        sed -i -e "/^Package: ros-${ROS_DISTRO}-libmc-rtc-dev$/a Conflicts: libmc-rtc-dev" debian/control
+        sed -i -e "/^Package: ros-${ROS_DISTRO}-libmc-rtc-dev$/a Replaces: libmc-rtc-dev" debian/control
+        sed -i -e "/^Package: ros-${ROS_DISTRO}-libmc-rtc-dev$/a Provides: libmc-rtc-dev" debian/control
+        sed -i -e "/^Package: ros-${ROS_DISTRO}-libmc-rtc$/a Conflicts: libmc-rtc" debian/control
+        sed -i -e "/^Package: ros-${ROS_DISTRO}-libmc-rtc$/a Provides: libmc-rtc" debian/control
+        sed -i -e "s/^Replaces: libmc-rtc1$/Replaces: libmc-rtc, libmc-rtc1/" debian/control
         cp debian/libmc-rtc.install debian/ros-${ROS_DISTRO}-libmc-rtc.install
         cp debian/libmc-rtc-dev.install debian/ros-${ROS_DISTRO}-libmc-rtc-dev.install
         cat debian/control
