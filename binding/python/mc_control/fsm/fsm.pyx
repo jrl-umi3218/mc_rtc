@@ -12,6 +12,7 @@ cimport mc_rtc.mc_rtc as mc_rtc
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
 cimport mc_solver.mc_solver as mc_solver
+cimport mc_control.c_mc_control as c_mc_control
 
 from mc_control.mc_control cimport MCController
 cimport mc_control.mc_control as mc_control
@@ -29,7 +30,8 @@ cdef class Controller(MCController):
   def __cinit__(self):
     self.impl = self.base = NULL
   def contactConstraint(self):
-    return mc_solver.ContactConstraintFromPtr(&(self.impl.contactConstraint()))
+    return mc_solver.ContactConstraintFromPtr((<c_mc_control.MCController*>self.impl).contactConstraint.get())
+
 
 cdef Controller ControllerFromPtr(c_fsm.Controller * ctl):
   cdef Controller ret = Controller()
