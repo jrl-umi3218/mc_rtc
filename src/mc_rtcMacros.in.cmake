@@ -1,5 +1,11 @@
 # -- Path to mc_rtc install prefix
 set(PACKAGE_PREFIX_DIR "@MC_RTC_INSTALL_PREFIX@")
+
+# -- Absolute GNUInstallDirs paths for mc_rtc install prefix
+set(PACKAGE_PREFIX_FULL_LIBDIR "@CMAKE_INSTALL_FULL_LIBDIR@")
+set(PACKAGE_PREFIX_FULL_BINDIR "@CMAKE_INSTALL_FULL_BINDIR@")
+set(PACKAGE_PREFIX_FULL_DOCDIR "@CMAKE_INSTALL_FULL_DOCDIR@")
+
 message(VERBOSE "mc_rtc is installed in: ${PACKAGE_PREFIX_DIR}")
 
 # -- Library source directory --
@@ -42,20 +48,68 @@ else()
 endif()
 
 # -- Library install directory --
+# This macro sets the default install paths for mc_rtc runtime dependencies:
+# - If HONOR_PREFIX=true, this is the path to the user-specified `CMAKE_INSTALL_PREFIX` with standard GNUInstallDirs conventions
+# - If HONOR_PREFIX=false, this is the path to mc_rtc's own install prefix (that is the `CMAKE_INSTALL_PREFIX` in which mc_rtc was installed)
 macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
   if(HONOR_PREFIX)
     message(DEBUG "Honoring CMAKE_INSTALL_PREFIX for all runtime install paths")
+    # This is the install path to the user-provided `CMAKE_INSTALL_PREFIX`
+    # For example building a panda-prosthesis controller:
+    # panda-prosthesis> -- CMAKE_INSTALL_LIBDIR=/nix/store/ik6cr7ad94axd5nsfg12lkarnbbnw9j1-panda-prosthesis-1.0.0/lib
+    # panda-prosthesis> -- CMAKE_INSTALL_DOCDIR=/nix/store/ik6cr7ad94axd5nsfg12lkarnbbnw9j1-panda-prosthesis-1.0.0/share/doc/panda_prosthesis
+    # panda-prosthesis> -- CMAKE_INSTALL_BINDIR=/nix/store/ik6cr7ad94axd5nsfg12lkarnbbnw9j1-panda-prosthesis-1.0.0/bin
     include(GNUInstallDirs)
     set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
     set(MC_RTC_DOCDIR "${CMAKE_INSTALL_FULL_DOCDIR}")
     set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
   else()
-    message(DEBUG "Using mc_rtc's install prefix for all runtime install paths")
-    # On Nix all paths obtained from GNUInstallDir are absolute, here we want mc_rtc'
-    # runtime paths include(GNUInstallDirs)
-    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/bin")
-    set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/share/doc/mc_rtc")
-    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
+    message(
+      DEBUG
+      "Using mc_rtc's install prefix ${PACKAGE_PREFIX_DIR} for all runtime install paths"
+    )
+    # On Nix all paths obtained from GNUInstallDir are absolute (e.g CMAKE_INSTALL_PREFIX/lib),
+    # here we want paths relative to mc_rtc's own install prefix
+    # Thus we:
+    # - Strip CMAKE_INSTALL_PREFIX from GNUInstallDirs absolute paths
+    # - Add this relative path to PACKAGE_PREFIX_DIR (mc_rtc's install prefix)
+    # This results in paths such as ${PACKAGE_PREFIX_DIR}/share/doc/<user-package-name>
+    # For example, building the panda-prosthesis controller on nix would give:
+    # panda-prosthesis> -- MC_RTC_LIBDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/lib
+    # panda-prosthesis> -- MC_RTC_DOCDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/share/doc/panda_prosthesis
+    # panda-prosthesis> -- MC_RTC_BINDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/bin
+    #
+    # Note: using PACKAGE_PREFIX_FULL_*DIR would have the same install prefix, but mc-rtc's relative paths, e.g
+    # set(MC_RTC_BINDIR "${PACKAGE_PREFIX_FULL_LIBDIR}/${REL_MC_RTC_BINDIR}")
+    # set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_FULL_DOCDIR}/${REL_MC_RTC_DOCDIR}")
+    # set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_FULL_BINDIR}/${REL_MC_RTC_LIBDIR}")
+    # would give:
+    # panda-prosthesis> -- MC_RTC_LIBDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/lib
+    # panda-prosthesis> -- MC_RTC_DOCDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/share/doc/mc-rtc
+    # panda-prosthesis> -- MC_RTC_BINDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/bin
+    #
+    # We (most-likely) want the path to the user project's installed in mc_rtc install prefix here, but for all practical purposes except documentation
+    # it behaves the same way
+    #
+    # Also note that if mc_rtc was installed from debian packages, we would have lib/x86_64-linux-gnu instead of lib
+    include(GNUInstallDirs)
+    # Get relative part of GNUInstallDirs
+    cmake_path(
+      RELATIVE_PATH CMAKE_INSTALL_FULL_BINDIR BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+      OUTPUT_VARIABLE REL_MC_RTC_BINDIR
+    )
+    cmake_path(
+      RELATIVE_PATH CMAKE_INSTALL_FULL_LIBDIR BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+      OUTPUT_VARIABLE REL_MC_RTC_LIBDIR
+    )
+    cmake_path(
+      RELATIVE_PATH CMAKE_INSTALL_FULL_DOCDIR BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+      OUTPUT_VARIABLE REL_MC_RTC_DOCDIR
+    )
+    # Set output path relative to mc_rtc install prefix
+    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/${REL_MC_RTC_BINDIR}")
+    set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/${REL_MC_RTC_DOCDIR}")
+    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/${REL_MC_RTC_LIBDIR}")
   endif()
   message(DEBUG
           "MC_RTC_BINDIR set to ${MC_RTC_BINDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
@@ -69,6 +123,13 @@ macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
 endmacro()
 
 # -- Helper to set the components install prefix --
+# This macro accepts 3 arguments:
+# - NAME: name of the runtime component, e.g CONTROLLER, ROBOTS, OBSERVERS, etc
+# - FOLDER: name of the corresponding install folder, e.g mc_controller, mc_robots, etc
+# - HONOR_PREFIX (optional):
+#   when true installs in the user-specified CMAKE_INSTALL_PREFIX
+#   otherwise installs in mc_rtc's prefix
+#   See mc_rtc_set_all_install_paths for details
 macro(mc_rtc_set_prefix NAME FOLDER)
   if(${ARGC} GREATER 2)
     set(HONOR_PREFIX "${ARGV2}")
@@ -226,8 +287,9 @@ set_target_properties(
   mc_rtc::mc_observers PROPERTIES INTERFACE_LINK_LIBRARIES mc_rtc::mc_control
 )
 
-# -- States -- Default MC_RTC_HONOR_INSTALL_PREFIX to OFF, so that mc_rtc's path to its
-# default states is available to controllers
+# -- States --
+# Default MC_RTC_HONOR_INSTALL_PREFIX to OFF, so that it points to states in mc_rtc's install prefix
+# This makes mc_rtc's default states available to controllers
 mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states OFF)
 # Honour MC_RTC_HONOR_INSTALL_PREFIX for the main states prefix, so that users can
 # choose to install their own states in a different prefix if they want to
