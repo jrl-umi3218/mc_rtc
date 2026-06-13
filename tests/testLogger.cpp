@@ -1,6 +1,11 @@
 /*
- * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
  */
+
+#define EIGEN_RUNTIME_NO_MALLOC
+#include <mc_rtc/log/FlatLog.h>
+
+#include <mc_rtc/log/Logger.h>
 
 #include <filesystem>
 namespace fs = std::filesystem;
