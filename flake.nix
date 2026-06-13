@@ -24,57 +24,39 @@
           inputs.mc-rtc-nix.flakeModule
           # or inputs.mc-rtc-nix.flakeModule if you don't need private repositories
           {
+            mc-rtc-superbuild =
+              { ... }:
+              {
+                enable = true;
+                shells.defaultShells.release = true;
+                shells.defaultShells.devel = false;
+              };
             flakoboros = {
-              extraPackages = [ "ninja" ];
-
               overrideAttrs.mc-rtc = {
                 src = lib.cleanSource ./.;
               };
-
-              # Define a custom superbuild configuration
-              # This will make all
-              overrides.mc-rtc-superbuild =
-                { pkgs-prev, ... }:
-                let
-                  cfg-prev = pkgs-prev.mc-rtc-superbuild.superbuildArgs;
-                in
-                {
-                  superbuildArgs = cfg-prev // {
-                    pname = "mc-rtc-superbuild-override";
-                    # for example, override any runtime dependency (robots, controllers, etc)
-                    # # extend robots
-                    # robots = cfg-prev.robots ++ [ pkgs-final.mc-hrp4 ];
-                    # # override controllers
-                    # controllers = [ pkgs-final.polytopeController ];
-                    # configs = [ "${pkgs-final.polytopeController}/lib/mc_controller/etc/mc_rtc.yaml" ];
-                    # plugins = [ pkgs-final.mc-force-shoe-plugin ];
-                    # observers = [ pkgs-final.mc-state-observation ];
-                    # apps = [];
-                  };
-                };
-
             };
           }
         ];
         perSystem =
-          { pkgs, ... }:
+          { ... }:
           {
-            # define a devShell called local-superbuild with the superbuild configuration above
-            # you can also override attributes to add additional shell functionality
-            packages.default = pkgs.mc-rtc-superbuild;
-            devShells.default =
-              (pkgs.callPackage "${inputs.mc-rtc-nix}/shell.nix" {
-                inherit (pkgs) mc-rtc-superbuild;
-              }).overrideAttrs
-                (old: {
-                  shellHook = ''
-                    ${old.shellHook or ""}
-
-                    echo ""
-                    echo "Welcome to the mc-rtc-superbuild devShell for local mc-rtc development!"
-                    echo "----"
-                  '';
-                });
+            treefmt = {
+              settings.global.excludes = [
+                ".envrc"
+                ".git-blame-ignore-revs"
+                ".jrl-ci"
+                "3rd-party/*"
+                "doc/*"
+                "LICENSE"
+              ];
+              programs = {
+                # keep-sorted start
+                mdformat.enable = true;
+                yamlfmt.enable = false;
+                # keep-sorted end
+              };
+            };
           };
       }
     );

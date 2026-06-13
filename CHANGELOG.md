@@ -5,16 +5,18 @@
 ## [2.14.0] - 2025-08-28
 
 ## What's Changed
-* RVIZ RobotModel dynamic update by @ThomasDuvinage in https://github.com/jrl-umi3218/mc_rtc/pull/471
-* [ImpedanceTask] Allow to set the limits of deltaComp from the task configurations by @mmurooka in https://github.com/jrl-umi3218/mc_rtc/pull/451
-* Correct TVM contact constraints to enable torque control by @Hugo-L3174 in https://github.com/jrl-umi3218/mc_rtc/pull/474
+
+- RVIZ RobotModel dynamic update by @ThomasDuvinage in https://github.com/jrl-umi3218/mc_rtc/pull/471
+- [ImpedanceTask] Allow to set the limits of deltaComp from the task configurations by @mmurooka in https://github.com/jrl-umi3218/mc_rtc/pull/451
+- Correct TVM contact constraints to enable torque control by @Hugo-L3174 in https://github.com/jrl-umi3218/mc_rtc/pull/474
 
 ## Fixes
-* Fix loading of color information from `PolyhedronConfig` in [a389935](https://github.com/jrl-umi3218/mc_rtc/commit/a389935bc481c4337027b8f73170b202e2b8a806)
+
+- Fix loading of color information from `PolyhedronConfig` in [a389935](https://github.com/jrl-umi3218/mc_rtc/commit/a389935bc481c4337027b8f73170b202e2b8a806)
 
 ## New Contributors
-* @Hugo-L3174 made their first contribution in https://github.com/jrl-umi3218/mc_rtc/pull/474
 
+- @Hugo-L3174 made their first contribution in https://github.com/jrl-umi3218/mc_rtc/pull/474
 
 ## [2.13.0] - 2025-05-19
 
@@ -27,19 +29,31 @@
 ### Fixes
 
 - TransformTask: Fix use of targetFrame and relative from YAML configuration
+
 - RobotVisualizer: Fix behaviour of checkbox for adding/removing frames
+
 - `mc_rtc_new_fsm_controller`: upgrade to use importlib
+
 - Correctly replace debug suffix (cmake)
+
 - Properly store contacts' DoF in `mc_rbydn::Contact`
+
 - Ensure uniqueness of contacts
+
 - Add `mc_surfaces_visualization/mc_convex_visualization/mc_robot_visualization` tools to apt package
+
 - Remove the default all signal handler to avoid signal_handler message and FULL ROS MESSAGE QUEUE error (#456)
+
 - RobotMsg: fix wrong vector conversion for tau, alpha and alphaD (#445)
+
 - ImpedanceTask: Log compliance pose (#446)
+
 - Fix missing symbol in posture task
 
 - [cmake] Uninstall autoload files when plugin autoload option is disabled (#436)
+
 - [mc_control] Trim autoload files so they can be edited manually (#436)
+
 - [mc_rbdyn] Fix a bug in `addBodySensor` (#433)
 
 ## [2.12.0] - 2024-02-29
@@ -428,7 +442,7 @@ framework. (#247)
 ### API breaks
 
 - `mc_rbdyn::Robots` cannot be created directly anymore, one has to go through
-   a factory function (#247)
+  a factory function (#247)
 - `mc_rbdyn::Robots` stores indiviual robot as pointer and in particular
   `robots.robots()` returns a self reference instead of `vector<Robot>`,
   `Robots` behaves a little more like a vector now to mitigate the impact of this
@@ -625,8 +639,6 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 - [utils] Fix string display in `mc_log_ui` (#180)
 - [utils] Fix branch selection
 
-
-
 ## [1.7.0] - 2021-03-30
 
 ### New packages
@@ -722,7 +734,7 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 ### Changes
 
 - Output torques are automatically computed when a dynamics constraint is added to the solver (#52)
-- mc\_rtc::Configuration error reporting now reports the source of error (#60)
+- mc_rtc::Configuration error reporting now reports the source of error (#60)
 - Real robots instance are now created for all robots loaded by a controller
 - Observer pipelines have been overhauled (#61); see the [refreshed tutorial](https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html) for details
 - If a RobotModule provides torque derivative or joint acceleration bounds those will be enforced by (resp.) DynamicsConstraint and KinematicsConstraint
@@ -730,13 +742,13 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 ### Added
 
 - [GUI] Added Table element with formatting support (#45/#47)
-- [mc\_rbdyn] Add an API to find force sensors indirectly attached to a surface
+- [mc_rbdyn] Add an API to find force sensors indirectly attached to a surface
 - Support for simple collision shapes described in URDF (#53)
 - Suppport for wildcard collision specifications (#53)
 - GUI monitoring for collisions (#53)
 - User configuration for the build and install script (#48)
 - Support for specifying torque derivative and joint acceleration bounds in RobotModule
-- [mc\_naoqi](https://github.com/jrl-umi3218/mc_naoqi) public release, an interface for SoftBank Robotics robots
+- [mc_naoqi](https://github.com/jrl-umi3218/mc_naoqi) public release, an interface for SoftBank Robotics robots
 - Support for logging `std::array<double, N>` (#62)
 - Wrench completion criteria for SurfaceTransformTask (#63)
 - Admittance sample controller (!215)
@@ -745,7 +757,7 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 - Support for Ubuntu Focal/ROS noetic in utils script/CI
 - Support for Debian Buster/ROS noetic in utils script/CI
-- Fix several issues with special plots in mc\_log\_ui
+- Fix several issues with special plots in mc_log_ui
 - Publish up-to-date surfaces in ROS TF (#44)
 - Improve documentation for completion criteria (#50)
 - C-string overload for GenericLoader (fixes possibly ambiguous calls)
@@ -763,8 +775,8 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 - `bodyWrench` and `surfaceWrench` can now be computed with joints between the sensor and body/surface
 - `Message` state can be used to display messages in the GUI as well as the CLI
 - Benchmarks can now be compiled and run with the `build_and_install.sh` script
-- Use RBDyn::Parsers instead of mc\_rbdyn\_urdf
-- Functions that use mc\_rbdyn\_urdf were kept for backwards compatibility, they will be removed in a later release
+- Use RBDyn::Parsers instead of mc_rbdyn_urdf
+- Functions that use mc_rbdyn_urdf were kept for backwards compatibility, they will be removed in a later release
 - Improve error reporting when some tasks parameters are not set correctly
 - `mc_rtc::log::info`, `mc_rtc::log::success`, `mc_rtc::log::warning` and `mc_rtc::log::error` replace the respective `LOG_*` macros, they use the spdlog library for asynchronous logging and modern formatting support
 - `LOG_*` macros are now deprecated, they will be removed in a later release
@@ -780,19 +792,19 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 - Fix and upgrade benchmarks compilation
 - Correctly teardown the last FSM state
 - Computed contact forces are logged with a unique identifier
-- Improve Python 3 compatibility for mc\_log\_ui
+- Improve Python 3 compatibility for mc_log_ui
 
 ## [1.3.0] - 2020-05-07
 
 ### Added
 
-- mc\_tasks::MomentumTask
-- mc\_rbdyn::RobotModule can specify a different URDF for showing the real robot
-- mc\_log\_ui now has an icon and a dedicated .desktop file
+- mc_tasks::MomentumTask
+- mc_rbdyn::RobotModule can specify a different URDF for showing the real robot
+- mc_log_ui now has an icon and a dedicated .desktop file
 
 ### Changes
 
-- mc\_solver::QPSolver always makes sure to udpate the problem size
+- mc_solver::QPSolver always makes sure to udpate the problem size
 - Many tasks throw as documented when pre-conditions are not met (e.g. surface does not exist or has no sensor attached)
 
 ### Changes
@@ -819,7 +831,7 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 ### Fixes
 
 - Bug when removing contacts from the GUI
-- Loading of mc\_rbdyn::Contact from YAML/JSON now supports friction
+- Loading of mc_rbdyn::Contact from YAML/JSON now supports friction
 
 ## [1.2.0] - 2020-03-17
 
@@ -827,9 +839,9 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 - CoM task is now optional in `AddRemoveContact` state
 - timeout API for ControllerClient
-- XY and 3D plots support in mc\_log\_ui
-- animation support in mc\_log\_ui
-- mc\_rtc::DataStore to store arbitrary data and callbacks available across states
+- XY and 3D plots support in mc_log_ui
+- animation support in mc_log_ui
+- mc_rtc::DataStore to store arbitrary data and callbacks available across states
 - Python bindings for robot().module() and controller configuration
 - ZMP compensation control (ZMPCC) is now possible with the LIPMStabilizer
 - Safety settings for gripper control can now be modified
@@ -841,7 +853,7 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 - Simplify usage of constraint helpers
 - Create a default CompoundJointConstraint for the main robot
-- mc\_log\_ui uses PyQt5 instead of PySide
+- mc_log_ui uses PyQt5 instead of PySide
 
 ### Fixes
 
@@ -851,7 +863,7 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 - Check 3rd-party CMake targets existence before creating them
 - Improve constraint helpers documentation
 - Fix typos in documentation and website
-- Pass down mc\_rtc version to Python bindings
+- Pass down mc_rtc version to Python bindings
 - Improve build script ability to handle incremental updates
 - Correct issue in calling MCController::loadRobot after the controller was started
 - CoMTask logging correctly reports the current CoM
@@ -886,55 +898,54 @@ mc_rtc website and tutorials are now available in [Japanese](https://jrl-umi3218
 
 ### Fixes
 
-- [mc\_rbdyn] Allow aliases to specify a string
-- [mc\_rbdyn] Allow loading aliases of aliases
+- [mc_rbdyn] Allow aliases to specify a string
+- [mc_rbdyn] Allow loading aliases of aliases
 
 ## [1.0.0] - 2019-12-23
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.14.0...HEAD
-[2.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.14.0
-[2.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.13.0
-[2.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.12.0
-[2.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.11.0
-[2.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.10.0
-[2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
-[2.9.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.2
-[2.9.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.1
-[2.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
-[2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.8.0
-[2.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.7.0
-[2.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.6.0
-[2.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.5.0
-[2.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.4.0
-[2.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.3.0
-[2.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.2.0
-[2.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.1.0
-[2.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.1
-[2.0.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.0
-[1.14.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.2
-[1.14.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.1
-[1.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.0
-[1.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.13.0
-[1.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.12.0
-[1.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.11.0
-[1.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.10.0
-[1.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.9.0
-[1.8.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.2
-[1.8.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.1
-[1.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.0
-[1.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.7.0
-[1.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.6.0
-[1.5.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
-[1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.0
-[1.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.4.0
-[1.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.3.0
-[1.2.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.1
-[1.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.0
-[1.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.1.0
-[1.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.0.1
 [1.0.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.0.0
-
+[1.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.0.1
+[1.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.1.0
+[1.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.10.0
+[1.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.11.0
+[1.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.12.0
+[1.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.13.0
+[1.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.0
+[1.14.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.1
+[1.14.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.14.2
+[1.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.0
+[1.2.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.1
+[1.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.3.0
+[1.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.4.0
+[1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.0
+[1.5.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
+[1.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.6.0
+[1.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.7.0
+[1.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.0
+[1.8.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.1
+[1.8.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.2
+[1.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.9.0
+[2.0.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.0
+[2.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.0.1
+[2.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.1.0
+[2.10.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.10.0
+[2.11.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.11.0
+[2.12.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.12.0
+[2.13.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.13.0
+[2.14.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.14.0
+[2.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.2.0
+[2.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.3.0
+[2.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.4.0
+[2.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.5.0
+[2.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.6.0
+[2.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.7.0
+[2.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.8.0
+[2.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.0
+[2.9.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.1
+[2.9.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.2
+[2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
 [stabilizer documentation]: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/lipm-stabilizer.html
-[TVM]: https://github.com/jrl-umi3218/tvm
+[tvm]: https://github.com/jrl-umi3218/tvm
+[unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.14.0...HEAD
