@@ -392,7 +392,7 @@ transitions:
 - [Stabilizer::GoCenter, OK, LIPMStabilizer::CustomConfiguration]
 
 # Initial state
-init: @LIPMStabilizer_INIT_STATE@
+init: "@LIPMStabilizer_INIT_STATE@"
 
 ObserverPipelines:
 - name: "MainPipeline"
