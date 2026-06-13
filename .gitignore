@@ -14,3 +14,4 @@ utils/build_and_install_user_config.sh
 .cache/
 build*
 .direnv/
+result

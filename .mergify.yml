@@ -1,10 +1,7 @@
 pull_request_rules:
+  # Automatically queue bot PRs when they are ready
   - name: merge [bot] PRs when CI pass
     conditions:
-      - check-success = "check-macos-linux-nix"
-      - check-success = "check-build"
-      - check-success = "check-package"
-      - check-success = "pre-commit.ci - pr"
       - or:
           - author = dependabot[bot]
           - author = gepetto-flake-updater[bot]
@@ -12,4 +9,20 @@ pull_request_rules:
           - author = github-actions[bot]
           - author = pre-commit-ci[bot]
     actions:
-      merge:
+      queue:
+
+  # Queue PRs when a human adds the "queued" label
+  # Or upon '@mergifyio queue' comment
+  - name: queue PRs with "queued" label
+    conditions:
+      - label = queued
+    actions:
+      queue:
+
+queue_rules:
+  - name: default
+    queue_conditions:
+      - check-success = "check-macos-linux-nix"
+      - check-success = "check-build"
+      - check-success = "check-package"
+      - check-success = "pre-commit.ci - pr"
