@@ -11,10 +11,8 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/parsers/urdf.h>
 
-// For unique_path only
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
 #include <filesystem>
+#include <random>
 namespace fs = std::filesystem;
 
 #include <tinyxml2.h>
@@ -25,13 +23,24 @@ namespace mc_rbdyn
 namespace
 {
 
+static std::string unique_path(const std::string & pattern)
+{
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  static std::uniform_int_distribution<int> dist(0, 15);
+  static const char hex[] = "0123456789abcdef";
+  std::string result = pattern;
+  for(char & c : result)
+  {
+    if(c == '%') { c = hex[dist(gen)]; }
+  }
+  return result;
+}
+
 std::string make_temporary_path(const std::string & prefix)
 {
-  auto tmp = fs::temp_directory_path();
   auto pattern = fmt::format("{}-%%%%-%%%%-%%%%-%%%%", prefix);
-  // std::filesystem does not have a unique_path function in c++17
-  // keep boost around for now
-  auto out = tmp / bfs::unique_path(pattern).string();
+  auto out = fs::temp_directory_path() / unique_path(pattern);
   fs::create_directories(out);
   return out.string();
 }

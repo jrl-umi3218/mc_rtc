@@ -1,8 +1,8 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <iostream>
 
@@ -18,9 +18,9 @@ int main(int argc, char * argv[])
     usage(argv[0]);
     return 1;
   }
-  bfs::path in(argv[1]);
-  bfs::path out;
-  if(argc > 2) { out = bfs::path(argv[2]); }
+  fs::path in(argv[1]);
+  fs::path out;
+  if(argc > 2) { out = fs::path(argv[2]); }
   else
   {
     out = in;

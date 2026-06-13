@@ -7,9 +7,6 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_rtc/config.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
-
 #include <boost/test/unit_test.hpp>
 
 static std::string JVRC1_DATA = fmt::format(R"(
@@ -78,7 +75,7 @@ BOOST_AUTO_TEST_CASE(TestRobotModule)
   auto config = makeConfigFile(JVRC1_DATA, ".yaml");
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("json", config);
-  bfs::remove(config);
+  fs::remove(config);
   auto robots = mc_rbdyn::loadRobot(*rm);
   const auto & robot = robots->robot();
 

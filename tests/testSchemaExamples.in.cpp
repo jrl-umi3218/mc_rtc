@@ -2,10 +2,11 @@
  * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
-namespace bfs = boost::filesystem;
 
 #include <mc_tasks/AddRemoveContactTask.h>
 #include <mc_tasks/AdmittanceTask.h>
@@ -54,9 +55,9 @@ static std::unique_ptr<mc_solver::QPSolver> solver_ptr = [](mc_rbdyn::RobotsPtr 
 }(robots);
 static mc_solver::QPSolver & solver = *solver_ptr;
 
-static const bfs::path EXAMPLE_PATH = "@EXAMPLE_PATH@";
-static const bfs::path JSON_EXAMPLES = EXAMPLE_PATH / "json" / "MetaTask";
-static const bfs::path YAML_EXAMPLES = EXAMPLE_PATH / "yaml" / "MetaTask";
+static const fs::path EXAMPLE_PATH = "@EXAMPLE_PATH@";
+static const fs::path JSON_EXAMPLES = EXAMPLE_PATH / "json" / "MetaTask";
+static const fs::path YAML_EXAMPLES = EXAMPLE_PATH / "yaml" / "MetaTask";
 
 template<typename T>
 struct TaskExamples
@@ -68,8 +69,8 @@ struct TaskExamples
   template<>                                                                 \
   struct TaskExamples<TaskT>                                                 \
   {                                                                          \
-    static const bfs::path json() { return JSON_EXAMPLES / #TaskN ".json"; } \
-    static const bfs::path yaml() { return YAML_EXAMPLES / #TaskN ".yaml"; } \
+    static const fs::path json() { return JSON_EXAMPLES / #TaskN ".json"; } \
+    static const fs::path yaml() { return YAML_EXAMPLES / #TaskN ".yaml"; } \
   };                                                                         \
   BOOST_AUTO_TEST_CASE(TaskN)                                                \
   {                                                                          \

@@ -94,15 +94,3 @@ BOOST_AUTO_TEST_CASE(fmt_format_const_required_fmt_10_std_filesystem)
   // Unreachable if compilation fails, but keeps the test "well-formed".
   BOOST_TEST(!s.empty());
 }
-
-BOOST_AUTO_TEST_CASE(fmt_format_const_required_fmt_10_boost_filesystem)
-{
-  boost::filesystem::path p = "/tmp/config";
-
-  // This line should FAIL TO COMPILE with fmt v12 due to const-correctness
-  // requirements on formatter::format.
-  auto s = fmt::format("path={}", p);
-
-  // Unreachable if compilation fails, but keeps the test "well-formed".
-  BOOST_TEST(!s.empty());
-}

@@ -8,20 +8,20 @@
 
 #include <mc_control/MCController.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include "mc_rtc/deprecated.h"
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_observers
 {
 
 static inline std::string get_config(const std::string & dir, const std::string & name)
 {
-  bfs::path cfg = bfs::path(dir) / name;
+  fs::path cfg = fs::path(dir) / name;
   for(const auto & ext : {".conf", ".yaml", ".yml"})
   {
     cfg.replace_extension(ext);
-    if(bfs::exists(cfg)) { return cfg.string(); }
+    if(fs::exists(cfg)) { return cfg.string(); }
   }
   return "";
 }
@@ -42,7 +42,7 @@ static inline mc_rtc::Configuration get_observer_config(const std::string & obse
   // Load observer configuration
   auto runtime_dir = mc_observers::ObserverLoader::get_observer_runtime_directory(observerType);
   if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/etc", observerType); }
-  bfs::path user_path = mc_rtc::user_config_directory_path("observers");
+  fs::path user_path = mc_rtc::user_config_directory_path("observers");
   load_config(out, user_path.string(), observerType);
   // Load robot specific configuration
   if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/" + observerType, robot); }

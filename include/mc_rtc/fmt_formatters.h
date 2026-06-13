@@ -8,7 +8,6 @@
 #include <fmt/ranges.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
-#include <boost/filesystem.hpp>
 #include <filesystem>
 
 /**
@@ -22,7 +21,7 @@
  * Since fmt10, fmt::formatter's format function should be const
  * This macro adds the const qualifier for required version
  * use as
- * ```auto format(const boost::filesystem::path& p, FormatContext& ctx)
+ * ```auto format(const std::filesystem::path& p, FormatContext& ctx)
  * FMT_CONST_IF_REQUIRED {}```
  */
 #if defined(FMT_VERSION) && FMT_VERSION >= 100000
@@ -30,19 +29,6 @@
 #else
 #  define FMT_CONST_IF_REQUIRED
 #endif
-
-/**
- * Formatter for boost::filesystem::path
- */
-template<>
-struct fmt::formatter<boost::filesystem::path> : fmt::formatter<std::string>
-{
-  template<typename FormatContext>
-  auto format(const boost::filesystem::path & p, FormatContext & ctx) FMT_CONST_IF_REQUIRED
-  {
-    return fmt::formatter<std::string>::format(p.string(), ctx);
-  }
-};
 
 /**
  * Formatter for std::filesystem::path
