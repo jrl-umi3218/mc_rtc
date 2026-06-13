@@ -6,8 +6,6 @@
 
 #include "utils.h"
 
-
-
 static bool initialized = configureRobotLoader();
 
 /** This tests checks that MCGlobalController can be deleted and constructed multiple time */

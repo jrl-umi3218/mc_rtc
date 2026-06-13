@@ -8,8 +8,8 @@
 
 #include <mc_control/MCController.h>
 
-#include <filesystem>
 #include "mc_rtc/deprecated.h"
+#include <filesystem>
 namespace fs = std::filesystem;
 
 namespace mc_observers
