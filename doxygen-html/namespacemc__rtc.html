@@ -297,6 +297,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b">make_temporary_path</a> (const std::string &amp;prefix)</td></tr>
 <tr class="memdesc:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a unique temporary directory path with the given prefix.  <a href="namespacemc__rtc.html#ac274591c17dbd2c3d4c93f5eba9a228b">More...</a><br /></td></tr>
 <tr class="separator:ac274591c17dbd2c3d4c93f5eba9a228b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51cc8eabf0117e7ab599033d3f2ab1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#aa51cc8eabf0117e7ab599033d3f2ab1f">unique_path</a> (std::string pattern)</td></tr>
+<tr class="memdesc:aa51cc8eabf0117e7ab599033d3f2ab1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a unique path string by replacing placeholder '' characters with random hex digits.  <a href="namespacemc__rtc.html#aa51cc8eabf0117e7ab599033d3f2ab1f">More...</a><br /></td></tr>
+<tr class="separator:aa51cc8eabf0117e7ab599033d3f2ab1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">type_name</a> ()</td></tr>
 <tr class="separator:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1144,6 +1147,39 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>Return a human-readable type name</p>
 <p>Only use for displaying messages as the name is not guaranteed to be the same across compilers and invokation </p>
+
+</div>
+</div>
+<a id="aa51cc8eabf0117e7ab599033d3f2ab1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa51cc8eabf0117e7ab599033d3f2ab1f">&#9670;&nbsp;</a></span>unique_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::unique_path </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>pattern</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a unique path string by replacing placeholder '' characters with random hex digits. </p>
+<ul>
+<li>This function models the behavior of <code>boost::filesystem::unique_path</code>. It scans the input pattern and replaces every occurrence of the percent sign (<code>%</code>) with a cryptographically pseudo-random hexadecimal character <code>[0-9a-f]</code>.</li>
+<li><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pattern</td><td>The model string containing <code>%</code> placeholders (e.g., "temp_dir/file_%%%%.tmp").</td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+<li><dl class="section return"><dt>Returns</dt><dd>A new <code>std::string</code> with all placeholders substituted with random hex characters.</dd></dl>
+</li>
+<li>@threadsafe Yes. Utilizes a <code>thread_local</code> pseudo-random number generator (<code>std::mt19937</code>), ensuring thread isolation without the concurrency overhead of a mutex lock. </li>
+</ul>
 
 </div>
 </div>

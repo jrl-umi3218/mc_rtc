@@ -108,6 +108,7 @@ var namespacemc__rtc =
     [ "makeVisualSuperellispoid", "namespacemc__rtc.html#a96ffc71a55eba088e4e6e07923a9ae8e", null ],
     [ "temp_directory_path", "namespacemc__rtc.html#a5616d104c3e121be9cb465d12d18db7b", null ],
     [ "type_name", "namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641", null ],
+    [ "unique_path", "namespacemc__rtc.html#aa51cc8eabf0117e7ab599033d3f2ab1f", null ],
     [ "user_config_directory_path", "namespacemc__rtc.html#a0e4bce12cf517283be1a0b784e881dfe", null ],
     [ "CONF_PATH", "namespacemc__rtc.html#af3bcdfd81d5fe5835fbc6869350519e2", null ],
     [ "Configuration", "namespacemc__rtc.html#a9b620c9005d103e65363b518ba6dca23", null ],

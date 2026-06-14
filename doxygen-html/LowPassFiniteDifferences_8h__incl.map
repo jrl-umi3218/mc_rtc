@@ -1,20 +1,19 @@
 <map id="include/mc_filter/LowPassFiniteDifferences.h" name="include/mc_filter/LowPassFiniteDifferences.h">
-<area shape="rect" id="node1" title=" " alt="" coords="642,5,831,47"/>
-<area shape="rect" id="node2" href="$LowPass_8h.html" title=" " alt="" coords="661,95,812,121"/>
-<area shape="rect" id="node3" href="$logging_8h.html" title=" " alt="" coords="606,169,737,196"/>
-<area shape="rect" id="node19" title=" " alt="" coords="761,169,846,196"/>
-<area shape="rect" id="node4" href="$utils__api_8h.html" title=" " alt="" coords="161,244,299,271"/>
-<area shape="rect" id="node5" href="$fmt__formatters_8h.html" title=" " alt="" coords="323,244,505,271"/>
-<area shape="rect" id="node15" title=" " alt="" coords="529,244,659,271"/>
-<area shape="rect" id="node16" title=" " alt="" coords="684,244,816,271"/>
-<area shape="rect" id="node17" title=" " alt="" coords="840,244,961,271"/>
-<area shape="rect" id="node18" title=" " alt="" coords="985,244,1144,271"/>
+<area shape="rect" id="node1" title=" " alt="" coords="555,5,745,47"/>
+<area shape="rect" id="node2" href="$LowPass_8h.html" title=" " alt="" coords="575,95,725,121"/>
+<area shape="rect" id="node3" href="$logging_8h.html" title=" " alt="" coords="519,169,650,196"/>
+<area shape="rect" id="node18" title=" " alt="" coords="674,169,759,196"/>
+<area shape="rect" id="node4" href="$utils__api_8h.html" title=" " alt="" coords="75,244,212,271"/>
+<area shape="rect" id="node5" href="$fmt__formatters_8h.html" title=" " alt="" coords="237,244,418,271"/>
+<area shape="rect" id="node14" title=" " alt="" coords="442,244,573,271"/>
+<area shape="rect" id="node15" title=" " alt="" coords="597,244,729,271"/>
+<area shape="rect" id="node16" title=" " alt="" coords="753,244,875,271"/>
+<area shape="rect" id="node17" title=" " alt="" coords="899,244,1057,271"/>
 <area shape="rect" id="node6" title=" " alt="" coords="5,319,111,345"/>
 <area shape="rect" id="node7" title=" " alt="" coords="135,319,250,345"/>
 <area shape="rect" id="node8" title=" " alt="" coords="275,319,380,345"/>
 <area shape="rect" id="node9" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag$SpaceVecAlg.html.html" title=" " alt="" coords="405,319,597,345"/>
-<area shape="rect" id="node13" title=" " alt="" coords="621,319,780,345"/>
-<area shape="rect" id="node14" title=" " alt="" coords="805,319,895,345"/>
+<area shape="rect" id="node13" title=" " alt="" coords="621,319,711,345"/>
 <area shape="rect" id="node10" href="$mc__rbdyn_2fwd_8h.html" title=" " alt="" coords="431,393,488,420"/>
 <area shape="rect" id="node12" href="$mc__tvm_2fwd_8h.html" title=" " alt="" coords="512,393,569,420"/>
 <area shape="rect" id="node11" title=" " alt="" coords="461,468,538,495"/>

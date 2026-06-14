@@ -5,5 +5,6 @@ var path_8h =
     [ "local_share_directory", "path_8h.html#a9c625c9913b5b37d779f662f6cfa902e", null ],
     [ "make_temporary_path", "path_8h.html#ac274591c17dbd2c3d4c93f5eba9a228b", null ],
     [ "temp_directory_path", "path_8h.html#a5616d104c3e121be9cb465d12d18db7b", null ],
+    [ "unique_path", "path_8h.html#aa51cc8eabf0117e7ab599033d3f2ab1f", null ],
     [ "user_config_directory_path", "path_8h.html#a0e4bce12cf517283be1a0b784e881dfe", null ]
 ];
