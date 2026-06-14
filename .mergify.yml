@@ -21,7 +21,7 @@ pull_request_rules:
 
 queue_rules:
   - name: default
-    queue_conditions:
+    merge_conditions:
       - check-success = "check-macos-linux-nix"
       - check-success = "check-build"
       - check-success = "check-package"
