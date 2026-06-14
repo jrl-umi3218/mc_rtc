@@ -7,12 +7,12 @@
 #include <mc_rbdyn/RobotModule.h>
 
 #include <mc_rbdyn/configuration_io.h>
+#include <mc_rtc/path.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/parsers/urdf.h>
 
 #include <filesystem>
-#include <random>
 namespace fs = std::filesystem;
 
 #include <tinyxml2.h>
@@ -22,28 +22,6 @@ namespace mc_rbdyn
 
 namespace
 {
-
-static std::string unique_path(const std::string & pattern)
-{
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  static std::uniform_int_distribution<int> dist(0, 15);
-  static const char hex[] = "0123456789abcdef";
-  std::string result = pattern;
-  for(char & c : result)
-  {
-    if(c == '%') { c = hex[dist(gen)]; }
-  }
-  return result;
-}
-
-std::string make_temporary_path(const std::string & prefix)
-{
-  auto pattern = fmt::format("{}-%%%%-%%%%-%%%%-%%%%", prefix);
-  auto out = fs::temp_directory_path() / unique_path(pattern);
-  fs::create_directories(out);
-  return out.string();
-}
 
 template<std::string RobotModule::* member, typename GetDefault>
 void set_or_default(mc_rbdyn::RobotModule & out, const std::string & value, GetDefault && get_default)
@@ -117,7 +95,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   SET_OR_DEFAULT(NAME, CALLBACK);                \
   if(!fs::exists(out.NAME)) { fs::create_directories(out.NAME); }
   SET_OR_DEFAULT(name, ([&, this]() { return fmt::format("{}_{}_{}", this->name, prefix, other.name); }));
-  SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
+  SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return mc_rtc::make_temporary_path(out.name); }));
   SET_OR_DEFAULT(urdf_path, ([&]() { return (fs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
   auto urdf_dir = fs::path(out.urdf_path).parent_path();
   if(!fs::exists(urdf_dir)) { fs::create_directories(urdf_dir); }
@@ -640,7 +618,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
 #define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
   SET_OR_DEFAULT(NAME, CALLBACK);                \
   if(!fs::exists(out.NAME)) { fs::create_directories(out.NAME); }
-  SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
+  SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return mc_rtc::make_temporary_path(out.name); }));
   SET_OR_DEFAULT(urdf_path, ([&]() { return (fs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
   auto urdf_dir = fs::path(out.urdf_path).parent_path();
   if(!fs::exists(urdf_dir)) { fs::create_directories(urdf_dir); }

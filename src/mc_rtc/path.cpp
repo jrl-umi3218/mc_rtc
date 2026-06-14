@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <random>
 #include <string_view>
+
 namespace fs = std::filesystem;
 
 namespace mc_rtc
@@ -103,18 +104,33 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
   return uri;
 }
 
-static std::string unique_path(const std::string & pattern)
+/**
+ * @brief Generates a unique path string by replacing placeholder '%' characters with random hex digits.
+ * * This function models the behavior of `boost::filesystem::unique_path`. It scans the input
+ * pattern and replaces every occurrence of the percent sign (`%`) with a cryptographically
+ * pseudo-random hexadecimal character `[0-9a-f]`.
+ * * @param pattern The model string containing `%` placeholders (e.g., "temp_dir/file_%%%%.tmp").
+ * * @return A new `std::string` with all placeholders substituted with random hex characters.
+ * * @threadsafe Yes. Utilizes a `thread_local` pseudo-random number generator (`std::mt19937`),
+ * ensuring thread isolation without the concurrency overhead of a mutex lock.
+ */
+std::string unique_path(std::string pattern)
 {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  static std::uniform_int_distribution<int> dist(0, 15);
-  static const char hex[] = "0123456789abcdef";
-  std::string result = pattern;
-  for(char & c : result)
-  {
-    if(c == '%') { c = hex[dist(gen)]; }
-  }
-  return result;
+  // each thread owns its own generator
+  thread_local std::mt19937 gen(
+      []()
+      {
+        std::random_device rd;
+        return rd();
+      }());
+
+  static constexpr std::string_view hex = "0123456789abcdef";
+  std::uniform_int_distribution<size_t> dist(0, hex.size() - 1);
+  // replace '%' by one of the chars from "hex"
+  std::transform(pattern.begin(), pattern.end(), pattern.begin(),
+                 [&](char c) { return (c == '%') ? hex[dist(gen)] : c; });
+
+  return pattern;
 }
 
 std::string make_temporary_path(const std::string & prefix)
