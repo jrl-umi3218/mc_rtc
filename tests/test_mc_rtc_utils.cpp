@@ -46,5 +46,5 @@ BOOST_AUTO_TEST_CASE(TestPaths_convertURI)
   auto path = std::string{"/tmp/test"};
   BOOST_REQUIRE_EQUAL(mc_rtc::convertURI(path), path);
   auto path_file = std::string{"file:///tmp/test"};
-  BOOST_REQUIRE_EQUAL(mc_rtc::convertURI(path_file), path_file);
+  BOOST_REQUIRE_EQUAL(mc_rtc::convertURI(path_file), path);
 }
