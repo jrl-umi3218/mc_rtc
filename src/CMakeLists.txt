@@ -154,13 +154,8 @@ target_include_directories(mc_rtc_utils PRIVATE "${PROJECT_BINARY_DIR}/include/m
 target_compile_definitions(mc_rtc_utils PUBLIC ${BOOST_USE_STACKTRACE_DEFINE})
 target_link_libraries(
   mc_rtc_utils
-  PUBLIC SpaceVecAlg::SpaceVecAlg
-         Boost::${BOOST_STACKTRACE}
-         Boost::filesystem
-         Boost::disable_autolinking
-         ${YAML_CPP_TARGET}
-         spdlog::spdlog
-         ${CMAKE_DL_LIBS}
+  PUBLIC SpaceVecAlg::SpaceVecAlg Boost::${BOOST_STACKTRACE} Boost::disable_autolinking
+         ${YAML_CPP_TARGET} spdlog::spdlog ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
 )
 if(TARGET mc_rtc_3rd_party::ROS)
@@ -206,9 +201,7 @@ set(mc_rtc_loader_HDR ../include/mc_rtc/loader.h ../include/mc_rtc/loader_api.h)
 
 add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
-target_link_libraries(
-  mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking mc_rtc_utils
-)
+target_link_libraries(mc_rtc_loader PUBLIC Boost::disable_autolinking mc_rtc_utils)
 if(NOT Boost_USE_STATIC_LIBS)
   target_link_libraries(mc_rtc_loader PUBLIC Boost::dynamic_linking)
 endif()

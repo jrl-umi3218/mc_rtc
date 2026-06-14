@@ -13,9 +13,8 @@
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/TasksQPSolver.h>
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/operations.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
@@ -287,5 +286,5 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestConstraintSetLoaderTasksBackend, T, test_types
   auto conf = tester.json();
   auto loaded = mc_solver::ConstraintSetLoader::load(solver, conf);
   tester.check(ref, loaded, solver);
-  bfs::remove(conf);
+  fs::remove(conf);
 }

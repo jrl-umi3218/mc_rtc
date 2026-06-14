@@ -1,8 +1,8 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/pragma.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 MC_RTC_diagnostic_push
 MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion")
@@ -375,7 +375,7 @@ int main(int argc, char * argv[])
   if(argc == 3) { out = argv[2]; }
   else
   {
-    out = bfs::path(argv[1]).filename().replace_extension(".flat").string();
+    out = fs::path(argv[1]).filename().replace_extension(".flat").string();
     if(out == in)
     {
       mc_rtc::log::error("Please specify a different output name");

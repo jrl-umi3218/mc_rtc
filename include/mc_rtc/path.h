@@ -92,4 +92,16 @@ MC_RTC_UTILS_DLLAPI fs::path convertURI(const std::string & uri, [[maybe_unused]
  */
 MC_RTC_UTILS_DLLAPI std::string make_temporary_path(const std::string & prefix);
 
+/**
+ * @brief Generates a unique path string by replacing placeholder '%' characters with random hex digits.
+ * * This function models the behavior of `boost::filesystem::unique_path`. It scans the input
+ * pattern and replaces every occurrence of the percent sign (`%`) with a cryptographically
+ * pseudo-random hexadecimal character `[0-9a-f]`.
+ * * @param pattern The model string containing `%` placeholders (e.g., "temp_dir/file_%%%%.tmp").
+ * * @return A new `std::string` with all placeholders substituted with random hex characters.
+ * * @threadsafe Yes. Utilizes a `thread_local` pseudo-random number generator (`std::mt19937`),
+ * ensuring thread isolation without the concurrency overhead of a mutex lock.
+ */
+MC_RTC_UTILS_DLLAPI std::string unique_path(std::string pattern);
+
 } // namespace mc_rtc

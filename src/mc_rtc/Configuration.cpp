@@ -10,8 +10,9 @@
 #include <mc_rbdyn/rpy_utils.h>
 
 #include <boost/algorithm/string/case_conv.hpp>
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "internals/json.h"
 #include <fstream>
@@ -687,7 +688,7 @@ void Configuration::load(const std::string & path)
 
   if(target.IsNull())
   {
-    std::string extension = to_lower(bfs::path(path).extension().string());
+    std::string extension = to_lower(fs::path(path).extension().string());
     if(extension == ".yml" || extension == ".yaml")
     {
       target.SetObject();
@@ -781,7 +782,7 @@ void Configuration::loadYAMLData(const std::string & data)
 
 void Configuration::save(const std::string & path, bool pretty) const
 {
-  std::string extension = to_lower(bfs::path(path).extension().string());
+  std::string extension = to_lower(fs::path(path).extension().string());
   if(extension == ".yml" || extension == ".yaml") { mc_rtc::internal::saveYAML(path, *this); }
   else
   {

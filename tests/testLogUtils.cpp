@@ -1,8 +1,5 @@
 #include "utils.h"
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
-
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/log/Logger.h>
 
@@ -49,7 +46,7 @@ public:
 std::string make_log_ref()
 {
   using Policy = mc_rtc::Logger::Policy;
-  mc_rtc::Logger logger(Policy::NON_THREADED, bfs::temp_directory_path().string(), "mc-rtc-test");
+  mc_rtc::Logger logger(Policy::NON_THREADED, fs::temp_directory_path().string(), "mc-rtc-test");
   logger.start("log-utils", 0.001);
   auto log_s = [&](size_t sec)
   {
@@ -81,19 +78,19 @@ std::string make_log_ref()
   logger.removeLogEntry("data");
   /** Log for 10 more seconds */
   log_s(10);
-  auto latest = bfs::temp_directory_path() / "mc-rtc-test-log-utils-latest.bin";
-  if(bfs::exists(latest)) { bfs::remove(latest); }
+  auto latest = fs::temp_directory_path() / "mc-rtc-test-log-utils-latest.bin";
+  if(fs::exists(latest)) { fs::remove(latest); }
   return logger.path();
 }
 
 void do_cleanup(const std::string & path)
 {
-  if(bfs::exists(path)) { bfs::remove(path); }
+  if(fs::exists(path)) { fs::remove(path); }
 }
 
 bool check_split(const std::string & path)
 {
-  auto out = fmt::format("{}/mc-rtc-test-log-utils-split", bfs::temp_directory_path().string());
+  auto out = fmt::format("{}/mc-rtc-test-log-utils-split", fs::temp_directory_path().string());
   auto split_cmd = fmt::format("{} split {} {} 2", MC_BIN_UTILS, path, out);
   int err = system(split_cmd.c_str());
   if(err != 0)
@@ -103,7 +100,7 @@ bool check_split(const std::string & path)
   }
   auto path_1 = out + "_1.bin";
   auto path_2 = out + "_2.bin";
-  if(!bfs::exists(path_1) || !bfs::exists(path_2))
+  if(!fs::exists(path_1) || !fs::exists(path_2))
   {
     mc_rtc::log::critical("No split files found at {} or {}", path_1, path_2);
     return false;
@@ -141,7 +138,7 @@ bool check_split(const std::string & path)
 
 bool check_extract_time(const std::string & path)
 {
-  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-time", bfs::temp_directory_path().string());
+  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-time", fs::temp_directory_path().string());
   auto extract_cmd = fmt::format("{} extract {} {} --from 5 --to 15", MC_BIN_UTILS, path, out);
   int err = system(extract_cmd.c_str());
   if(err != 0)
@@ -150,7 +147,7 @@ bool check_extract_time(const std::string & path)
     return false;
   }
   auto path_out = out + "_from_5_to_15.bin";
-  if(!bfs::exists(path_out))
+  if(!fs::exists(path_out))
   {
     mc_rtc::log::critical("No output file after command: {}", extract_cmd);
     return false;
@@ -183,7 +180,7 @@ bool check_extract_time(const std::string & path)
 
 bool check_extract_key(const std::string & path)
 {
-  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-key", bfs::temp_directory_path().string());
+  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-key", fs::temp_directory_path().string());
   auto extract_cmd = fmt::format("{} extract {} {} --key data", MC_BIN_UTILS, path, out);
   int err = system(extract_cmd.c_str());
   if(err != 0)
@@ -192,7 +189,7 @@ bool check_extract_key(const std::string & path)
     return false;
   }
   auto path_out = out + ".bin";
-  if(!bfs::exists(path_out))
+  if(!fs::exists(path_out))
   {
     mc_rtc::log::critical("No output file after command: {}", extract_cmd);
     return false;
@@ -221,12 +218,12 @@ bool check_extract_key(const std::string & path)
 
 bool check_extract_keys(const std::string & path)
 {
-  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-keys", bfs::temp_directory_path().string());
+  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-keys", fs::temp_directory_path().string());
   auto extract_cmd = fmt::format("{} extract {} {} --keys Eigen::*", MC_BIN_UTILS, path, out);
   int err = system(extract_cmd.c_str());
   if(err != 0) { mc_rtc::log::critical("Execution failed: {}", extract_cmd); }
   auto path_out = out + ".bin";
-  if(!bfs::exists(path_out))
+  if(!fs::exists(path_out))
   {
     mc_rtc::log::critical("No output file after command: {}", extract_cmd);
     return false;
@@ -262,7 +259,7 @@ bool check_extract_keys(const std::string & path)
 
 bool check_extract_events(const std::string & path)
 {
-  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-events", bfs::temp_directory_path().string());
+  auto out = fmt::format("{}/mc-rtc-test-log-utils-extract-events", fs::temp_directory_path().string());
   auto extract_cmd = fmt::format("{} extract --events {} {}", MC_BIN_UTILS, path, out);
   int err = system(extract_cmd.c_str());
   if(err != 0)
@@ -271,7 +268,7 @@ bool check_extract_events(const std::string & path)
     return false;
   }
   auto path_out = out + ".bin";
-  if(!bfs::exists(path_out)) { mc_rtc::log::critical("No output file after command: {}", extract_cmd); }
+  if(!fs::exists(path_out)) { mc_rtc::log::critical("No output file after command: {}", extract_cmd); }
   bool ret = false;
   auto flat_in = mc_rtc::log::FlatLog(path);
   auto flat_out = mc_rtc::log::FlatLog(path_out);
@@ -305,7 +302,7 @@ bool check_extract_events(const std::string & path)
   }
   ret = true;
 do_cleanup_extract_events:
-  bfs::remove(path_out);
+  fs::remove(path_out);
   return ret;
 }
 

@@ -8,10 +8,10 @@
 
 #include <mc_rtc/logging.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include <fstream>
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_robots
 {
@@ -22,12 +22,12 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
   init(rbd::parsers::from_urdf_file(urdf_path, fixed));
 
   std::string convexPath = path + "/convex/" + name + "/";
-  bfs::path p(convexPath);
-  if(bfs::exists(p) && bfs::is_directory(p))
+  fs::path p(convexPath);
+  if(fs::exists(p) && fs::is_directory(p))
   {
-    std::vector<bfs::path> files;
-    std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));
-    for(const bfs::path & file : files)
+    std::vector<fs::path> files;
+    for(const auto & entry : fs::directory_iterator(p)) { files.push_back(entry.path()); }
+    for(const fs::path & file : files)
     {
       size_t off = file.filename().string().rfind("-ch.txt");
       if(off != std::string::npos)

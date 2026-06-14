@@ -5,8 +5,9 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/utils.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+#include <system_error>
+namespace fs = std::filesystem;
 
 #include <chrono>
 #include <fstream>
@@ -29,13 +30,13 @@ struct LoggerImpl
 
   virtual ~LoggerImpl() {}
 
-  virtual void initialize(const bfs::path & path) = 0;
+  virtual void initialize(const fs::path & path) = 0;
   virtual void write(char * data, size_t size) = 0;
   virtual void flush() {}
 
   std::vector<char> data_;
 
-  bfs::path directory;
+  fs::path directory;
   std::string tmpl;
   double log_iter_ = 0;
   bool valid_ = true;
@@ -67,7 +68,7 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
 {
   LoggerNonThreadedPolicyImpl(const std::string & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl) {}
 
-  void initialize(const bfs::path & path) final
+  void initialize(const fs::path & path) final
   {
     if(log_.is_open()) { log_.close(); }
     open(path.string());
@@ -120,7 +121,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     return true;
   }
 
-  void initialize(const bfs::path & path) final
+  void initialize(const fs::path & path) final
   {
     if(log_.is_open())
     {
@@ -192,7 +193,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
        << "-" << std::setw(2) << std::setfill('0') << tm->tm_sec
        << ".bin";
     // clang-format on
-    bfs::path log_path = impl_->directory / bfs::path(ss.str().c_str());
+    fs::path log_path = impl_->directory / fs::path(ss.str().c_str());
     log::info("Will log controller outputs to {}", log_path.string());
     return log_path;
   };
@@ -200,12 +201,12 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume, d
   impl_->initialize(log_path);
   std::stringstream ss_sym;
   ss_sym << impl_->tmpl << "-" << ctl_name << "-latest.bin";
-  bfs::path log_sym_path = impl_->directory / bfs::path(ss_sym.str().c_str());
-  if(bfs::is_symlink(log_sym_path)) { bfs::remove(log_sym_path); }
-  if(!bfs::exists(log_sym_path))
+  fs::path log_sym_path = impl_->directory / fs::path(ss_sym.str().c_str());
+  if(fs::is_symlink(log_sym_path)) { fs::remove(log_sym_path); }
+  if(!fs::exists(log_sym_path))
   {
-    boost::system::error_code ec;
-    bfs::create_symlink(log_path, log_sym_path, ec);
+    std::error_code ec;
+    fs::create_symlink(log_path, log_sym_path, ec);
     if(!ec) { log::info("Updated latest log symlink: {}", log_sym_path.string()); }
     else
     {

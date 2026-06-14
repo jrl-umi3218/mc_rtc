@@ -11,13 +11,13 @@
 // For some dom manipulations
 #include <RBDyn/parsers/urdf.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include <fmt/format.h>
 #include <fstream>
 #include <tinyxml2.h>
 
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_rbdyn
 {
@@ -69,13 +69,13 @@ std::vector<std::shared_ptr<Surface>> readRSDFFromDir(const std::string & dirnam
 {
   std::vector<std::shared_ptr<Surface>> res;
 
-  bfs::path p(dirname);
+  fs::path p(dirname);
 
-  if(bfs::exists(p) && bfs::is_directory(p))
+  if(fs::exists(p) && fs::is_directory(p))
   {
-    std::vector<bfs::path> files;
-    std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));
-    for(const bfs::path & file : files)
+    std::vector<fs::path> files;
+    for(const auto & entry : fs::directory_iterator(p)) { files.push_back(entry.path()); }
+    for(const fs::path & file : files)
     {
       if(file.extension() == ".rsdf")
       {
