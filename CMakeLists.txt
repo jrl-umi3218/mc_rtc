@@ -235,24 +235,25 @@ endif()
 find_package(
   Qhull
   COMPONENTS qhullcpp qhullstatic_r
-  QUIET
+  REQUIRED
 )
-message(STATUS "Using system Qhull")
-if(Qhull_FOUND)
-  set(QHULL_TARGETS Qhull::qhullcpp Qhull::qhullstatic_r)
-else()
-  message(STATUS "Using bundled Qhull (re-entrant static version)")
-  # qhull (build re-entrant static version)
-  add_subdirectory(3rd-party/qhull)
-
-  # Alias bundled targets to Qhull:: namespace if not already present
-  if(NOT TARGET Qhull::qhullcpp)
-    add_library(Qhull::qhullcpp ALIAS qhullcpp)
-  endif()
-  if(NOT TARGET Qhull::qhullstatic_r)
-    add_library(Qhull::qhullstatic_r ALIAS qhullstatic_r)
-  endif()
-endif()
+set(QHULL_TARGETS Qhull::qhullcpp Qhull::qhullstatic_r)
+# message(STATUS "Using system Qhull")
+# if(Qhull_FOUND)
+#   set(QHULL_TARGETS Qhull::qhullcpp Qhull::qhullstatic_r)
+# else()
+#   message(STATUS "Using bundled Qhull (re-entrant static version)")
+#   # qhull (build re-entrant static version)
+#   add_subdirectory(3rd-party/qhull)
+#
+#   # Alias bundled targets to Qhull:: namespace if not already present
+#   if(NOT TARGET Qhull::qhullcpp)
+#     add_library(Qhull::qhullcpp ALIAS qhullcpp)
+#   endif()
+#   if(NOT TARGET Qhull::qhullstatic_r)
+#     add_library(Qhull::qhullstatic_r ALIAS qhullstatic_r)
+#   endif()
+# endif()
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)
