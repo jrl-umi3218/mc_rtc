@@ -28,6 +28,7 @@ set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
 
 # Check if the submodule cmake have been initialized
 set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -243,6 +244,7 @@ else()
   message(STATUS "Using bundled Qhull (re-entrant static version)")
   # qhull (build re-entrant static version)
   add_subdirectory(3rd-party/qhull)
+
   # Alias bundled targets to Qhull:: namespace if not already present
   if(NOT TARGET Qhull::qhullcpp)
     add_library(Qhull::qhullcpp ALIAS qhullcpp)
