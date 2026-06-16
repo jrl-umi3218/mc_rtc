@@ -39,7 +39,7 @@ jobs:
       latest-cmake: true
       matrix: |
           {
-            "dist": ["jammy"],
+            "dist": ["jammy", "noble", "resolute"],
             "arch": ["amd64"]
           }
     secrets:
