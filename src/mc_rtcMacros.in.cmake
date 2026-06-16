@@ -70,7 +70,19 @@ macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
     )
     # On Nix all paths obtained from GNUInstallDir are absolute (e.g CMAKE_INSTALL_PREFIX/lib),
     # here we want paths relative to mc_rtc's own install prefix
-    # Thus we:
+    #
+    # For BINDIR and LIBDIR, we use mc_rtc's own frozen paths directly (PACKAGE_PREFIX_FULL_*DIR)
+    # These were baked in at mc_rtc's build time via configure_file() and already contain
+    # the correct platform-specific paths (e.g lib/x86_64-linux-gnu on Debian multiarch)
+    #
+    # We cannot use the downstream project's GNUInstallDirs for these because:
+    # - GNUInstallDirs only produces multiarch paths (lib/x86_64-linux-gnu) when CMAKE_INSTALL_PREFIX=/usr
+    # - Downstream projects typically use CMAKE_INSTALL_PREFIX=/usr/local, which gives plain "lib"
+    # - Combining the downstream's relative "lib" with mc_rtc's prefix would give /usr/lib
+    #   instead of the correct /usr/lib/x86_64-linux-gnu
+    #
+    # For DOCDIR, we still use the relative path approach because DOCDIR is the only path
+    # that includes the project name (e.g share/doc/panda_prosthesis vs share/doc/mc_rtc)
     # - Strip CMAKE_INSTALL_PREFIX from GNUInstallDirs absolute paths
     # - Add this relative path to PACKAGE_PREFIX_DIR (mc_rtc's install prefix)
     # This results in paths such as ${PACKAGE_PREFIX_DIR}/share/doc/<user-package-name>
@@ -79,37 +91,20 @@ macro(mc_rtc_set_all_install_paths HONOR_PREFIX)
     # panda-prosthesis> -- MC_RTC_DOCDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/share/doc/panda_prosthesis
     # panda-prosthesis> -- MC_RTC_BINDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/bin
     #
-    # Note: using PACKAGE_PREFIX_FULL_*DIR would have the same install prefix, but mc-rtc's relative paths, e.g
-    # set(MC_RTC_BINDIR "${PACKAGE_PREFIX_FULL_LIBDIR}/${REL_MC_RTC_BINDIR}")
-    # set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_FULL_DOCDIR}/${REL_MC_RTC_DOCDIR}")
-    # set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_FULL_BINDIR}/${REL_MC_RTC_LIBDIR}")
-    # would give:
-    # panda-prosthesis> -- MC_RTC_LIBDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/lib
-    # panda-prosthesis> -- MC_RTC_DOCDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/share/doc/mc-rtc
-    # panda-prosthesis> -- MC_RTC_BINDIR=/nix/store/8llwfhbwavrpy3gzwgvqbms1iwnmazi7-mc-rtc-2.14.1/bin
-    #
-    # We (most-likely) want the path to the user project's installed in mc_rtc install prefix here, but for all practical purposes except documentation
-    # it behaves the same way
-    #
     # Also note that if mc_rtc was installed from debian packages, we would have lib/x86_64-linux-gnu instead of lib
+    # mc_ur5e> -- MC_RTC_BINDIR=/usr/bin
+    # mc_ur5e> -- MC_RTC_LIBDIR=/usr/lib/x86_64-linux-gnu
+    # mc_ur5e> -- MC_RTC_DOCDIR=/usr/share/doc/mc_ur5e
+
     include(GNUInstallDirs)
     # Get relative part of GNUInstallDirs
-    cmake_path(
-      RELATIVE_PATH CMAKE_INSTALL_FULL_BINDIR BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
-      OUTPUT_VARIABLE REL_MC_RTC_BINDIR
-    )
-    cmake_path(
-      RELATIVE_PATH CMAKE_INSTALL_FULL_LIBDIR BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
-      OUTPUT_VARIABLE REL_MC_RTC_LIBDIR
-    )
     cmake_path(
       RELATIVE_PATH CMAKE_INSTALL_FULL_DOCDIR BASE_DIRECTORY ${CMAKE_INSTALL_PREFIX}
       OUTPUT_VARIABLE REL_MC_RTC_DOCDIR
     )
-    # Set output path relative to mc_rtc install prefix
-    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/${REL_MC_RTC_BINDIR}")
+    set(MC_RTC_BINDIR "${PACKAGE_PREFIX_FULL_BINDIR}")
     set(MC_RTC_DOCDIR "${PACKAGE_PREFIX_DIR}/${REL_MC_RTC_DOCDIR}")
-    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/${REL_MC_RTC_LIBDIR}")
+    set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_FULL_LIBDIR}")
   endif()
   message(DEBUG
           "MC_RTC_BINDIR set to ${MC_RTC_BINDIR} because HONOR_PREFIX=${HONOR_PREFIX}"
