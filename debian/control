@@ -10,6 +10,7 @@ Build-Depends: debhelper (>= 9),
                cmake,
                doxygen,
                graphviz,
+	       rapidjson-dev,
                libboost-filesystem-dev,
                libboost-program-options-dev,
                libboost-regex-dev,
@@ -36,13 +37,14 @@ Build-Depends: debhelper (>= 9),
                libyaml-cpp-dev,
                libspdlog-dev,
                libnotify-dev,
-# ros-@ROS_DISTRO@-ros-base,
-# ros-@ROS_DISTRO@-rclcpp,
-# ros-@ROS_DISTRO@-sensor-msgs,
-# ros-@ROS_DISTRO@-common-interfaces,
-# ros-@ROS_DISTRO@-tf2-ros,
-# ros-@ROS_DISTRO@-rosbag2,
-# ros-@ROS_DISTRO@-mc-rtc-msgs,
+               ros-@ROS_DISTRO@-ros-base,
+               ros-@ROS_DISTRO@-rclcpp,
+               ros-@ROS_DISTRO@-sensor-msgs,
+               ros-@ROS_DISTRO@-common-interfaces,
+               ros-@ROS_DISTRO@-tf2-ros,
+               ros-@ROS_DISTRO@-rosbag2,
+               ros-@ROS_DISTRO@-mc-rtc-msgs,
+               ros-@ROS_DISTRO@-ament-index-cpp,
                libltdl-dev
 
 Package: libmc-rtc-dev
@@ -55,6 +57,7 @@ Depends: cmake,
          libboost-thread-dev,
          libboost-timer-dev,
          libtasks-qld-dev|libtasks-dev,
+	 rapidjson-dev,
          libtvm-dev,
          libmesh-sampling-dev,
          libeigen-quadprog-dev,
@@ -98,11 +101,17 @@ Package: mc-rtc-utils
 Section: science
 Architecture: any
 Depends: libmc-rtc (= ${binary:Version}),
-         python-git | python3-git,
-#PYTHON2         python-mc-rtc,
+         python3-git,
          python3-mc-rtc,
-         python-matplotlib | python3-matplotlib,
-         python-pyqt5 | python3-pyqt5,
+         python3-matplotlib,
+         python3-pyqt5,
+         ros-@ROS_DISTRO@-rclcpp,
+         ros-@ROS_DISTRO@-common-interfaces,
+         ros-@ROS_DISTRO@-tf2-ros,
+         ros-@ROS_DISTRO@-rosbag2,
+         ros-@ROS_DISTRO@-mc-rtc-data,
+         ros-@ROS_DISTRO@-mc-rtc-msgs,
+	 ros-@ROS_DISTRO@-ament-index-cpp,
          ${shlibs:Depends},
          ${misc:Depends}
 Description: mc-rtc - Utilities
@@ -138,3 +147,23 @@ Description: mc_rtc - Python bindings
  said controllers.
  .
  Python bindings for the mc_rtc library. Compatible with Python 3.
+
+Package: ros-@ROS_DISTRO@-mc-rtc-plugin
+Section: libs
+Architecture: any
+Depends: libmc-rtc-dev,
+         ros-@ROS_DISTRO@-rclcpp,
+         ros-@ROS_DISTRO@-common-interfaces,
+         ros-@ROS_DISTRO@-tf2-ros,
+         ros-@ROS_DISTRO@-rosbag2,
+         ros-@ROS_DISTRO@-mc-rtc-data,
+         ros-@ROS_DISTRO@-mc-rtc-msgs,
+         ${misc:Depends}
+Description: mc_rtc - ROS plugin
+ mc_rtc is an interface for simulated and real robotic systems suitable for
+ real-time control.  It provides programmers with a simple interface to build
+ versatile controllers as well as a set of tools to help with the development of
+ said controllers.
+ .
+ ROS plugin for mc_rtc. It will enable the publication of the robot's state by
+ mc_rtc controllers
