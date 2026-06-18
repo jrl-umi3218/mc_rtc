@@ -31,8 +31,10 @@ struct MC_CONTROL_DLLAPI Contact
           const std::string & r1Surface,
           const std::string & r2Surface,
           double friction = mc_rbdyn::Contact::defaultFriction,
-          const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
-  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), friction(friction), dof(dof)
+          const Eigen::Vector6d & dof = Eigen::Vector6d::Ones(),
+          std::optional<mc_rbdyn::FeasiblePolytope> feasiblePolytope = std::nullopt)
+  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), friction(friction), dof(dof),
+    feasiblePolytope(feasiblePolytope)
   {
   }
 
@@ -42,6 +44,7 @@ struct MC_CONTROL_DLLAPI Contact
   std::string r2Surface;
   mutable double friction;
   mutable Eigen::Vector6d dof;
+  mutable std::optional<mc_rbdyn::FeasiblePolytope> feasiblePolytope;
 
   bool operator==(const Contact & rhs) const
   {
