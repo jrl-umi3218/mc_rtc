@@ -190,7 +190,10 @@ else()
     mc_rtc_utils PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rd-party/mpack>
   )
 endif()
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND NOT EMSCRIPTEN)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"
+   AND NOT EMSCRIPTEN
+   AND NOT APPLE
+)
   target_link_libraries(mc_rtc_utils PUBLIC atomic)
 endif()
 install_mc_rtc_lib(mc_rtc_utils)
