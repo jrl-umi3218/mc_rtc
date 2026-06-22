@@ -3,11 +3,11 @@ name: Package mc_rtc
 on:
   repository_dispatch:
     types:
-    - package-master
-    - package-release
+      - package-master
+      - package-release
   pull_request:
     branches:
-    - "**"
+      - "**"
   push:
     paths-ignore:
     - ".gitlab-ci.yml"
@@ -24,11 +24,28 @@ on:
     - "binding/**/README.md"
     - "src/mc_rtc/README.md"
     branches:
-    - "**"
+      - "**"
     tags:
-    - v*
+      - v*
+
 jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
   package:
+    needs:
+      - clean
     uses: jrl-umi3218/github-actions/.github/workflows/package-project.yml@master
     with:
       deps: '["jrl-umi3218/mc_rtc_ros", "jrl-umi3218/mc_openrtm", "jrl-umi3218/mc_udp", "jrl-umi3218/mc_panda", "jrl-umi3218/mc_state_observation"]'
@@ -36,7 +53,7 @@ jobs:
       latest-cmake: true
       matrix: |
           {
-            "dist": ["jammy"],
+            "dist": ["jammy", "noble", "resolute" ],
             "arch": ["amd64"]
           }
     secrets:
