@@ -7,6 +7,8 @@ var namespaces_dup =
       [ "Vector3", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#a55408ba932fc7d1707bd7adc7e5e930f", null ],
       [ "Vector6", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#a664778266262bbdb1d1b2776bef25c7d", null ],
       [ "Vector6d", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#acdb6a5c038a9c26a61b0187b696b2630", null ],
+      [ "qpgen1_", "/usr/local/share/doc/eigen-quadprog/doxygen-html/namespaceEigen.html#ad3bfb7eb46287440d2e75a2396a76c7f", null ],
+      [ "qpgen2_", "/usr/local/share/doc/eigen-quadprog/doxygen-html/namespaceEigen.html#a18071e8a41973e397737334385593da4", null ],
       [ "vector3ToCrossMatrix", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#a34d0d0706dc16ae0358433af740a48fd", null ],
       [ "vector6ToCrossDualMatrix", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#a2964e2c4bbe44365032512d28ce500ee", null ],
       [ "vector6ToCrossMatrix", "https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/namespaceEigen.html#a843e61000f53c05966116a6dead6d7cb", null ]
