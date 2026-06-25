@@ -45,6 +45,20 @@ public:
                        const std::array<double, 3> & damper,
                        double velocityPercent = 0.5);
 
+  /** CBF constraint constructor
+   * Builds a CBF joint limits constraint, see Safe Execution of RL Policies via Acceleration-based CBF-QP Constraint
+   * Enforcement for Real-World Robotic Deployments, B.Muraccioli et al. (2026)
+   * \param robots The robots including the robot affected by this constraint
+   * \param robotIndex The index of the robot affected by this constraint
+   * \param damperSecond Value of the damper {interaction distance, safety distance,
+   * offset, amortization margin}
+   * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
+   */
+  KinematicsConstraint(const mc_rbdyn::Robots & robots,
+                       unsigned int robotIndex,
+                       const std::array<double, 5> & damperSecond,
+                       double velocityPercent = 0.5);
+
 protected:
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   void addToSolverImpl(mc_solver::QPSolver & solver) override;
