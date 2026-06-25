@@ -390,7 +390,16 @@ Robot::Robot(NewRobotToken,
     for(const auto & b : mb().bodies()) { collisionTransforms_[b.name()] = sva::PTransformd::Identity(); }
     for(const auto & [body, visuals] : module_._visual)
     {
-      if(visuals.size() && hasBody(body)) { collisionTransforms_[body] = visuals[0].origin; }
+      if(visuals.size() == 1 && hasBody(body)) { collisionTransforms_[body] = visuals[0].origin; }
+      else if(visuals.size() > 1 && hasBody(body))
+      {
+        size_t added = 0;
+        for(const auto & visual : visuals)
+        {
+          collisionTransforms_[body + "_" + std::to_string(added)] = visual.origin;
+          added++;
+        }
+      }
     }
     for(const auto & p : module_.collisionTransforms()) { collisionTransforms_[p.first] = p.second; }
     fixCollisionTransforms();
