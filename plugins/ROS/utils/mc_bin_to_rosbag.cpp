@@ -383,9 +383,7 @@ void mc_bin_to_rosbag(const std::string & in, const std::string & out, double dt
   mc_rtc::log::FlatLog log(in);
   auto entries = utils::entries(log);
 #ifdef MC_RTC_ROS_IS_ROS2
-  int argc = 0;
-  char * argv[] = {0};
-  rclcpp::init(argc, argv);
+  rclcpp::init(0, nullptr);
   auto node = rclcpp::Node::make_shared("mc_bin_to_rosbag");
   auto now = node->now();
   rosbag2_cpp::Writer bag;
