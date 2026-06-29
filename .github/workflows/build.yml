@@ -92,6 +92,9 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}/mc-rtc-superbuild
         ./utils/bootstrap-linux.sh
+        # FIXME: temporarely install libqhull-dev manually until it
+        #        is merged in the superbuild's bootstrap script
+        sudo apt-get install -qq libqhull-dev
         git config --global user.email "arn.tanguy@gmail.com"
         git config --global user.name "Arnaud Tanguy (Automated CI update)"
     - name: "[superbuild] Install system dependencies"
