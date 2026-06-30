@@ -231,8 +231,21 @@ elseif(NOT HOST_IS_WSL AND WIN32)
   message("-- Use WinToast for notifications")
 endif()
 
-# qhull (build re-entrant static version)
-add_subdirectory(3rd-party/qhull)
+if(MC_RTC_BUILD_STATIC)
+  message(
+    STATUS
+      "Using bundled Qhull (re-entrant static version) because MC_RTC_BUILD_STATIC=ON"
+  ) # qhull (build re-entrant static version)
+  add_subdirectory(3rd-party/qhull)
+else()
+  find_package(
+    Qhull
+    COMPONENTS qhullcpp qhull_r
+    REQUIRED
+  )
+  set(QHULL_TARGETS Qhull::qhullcpp Qhull::qhull_r)
+  message(STATUS "Using system Qhull")
+endif()
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)
