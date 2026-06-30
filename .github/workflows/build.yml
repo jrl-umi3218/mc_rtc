@@ -24,9 +24,12 @@ on:
   pull_request:
     branches:
       - '**'
+
+# cancel running workflows when pushing to the same branch/pr
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 env:
   # Branch that triggered this workflow
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
