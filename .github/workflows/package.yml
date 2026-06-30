@@ -27,6 +27,9 @@ on:
     - "**"
     tags:
     - v*
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   package:
     uses: jrl-umi3218/github-actions/.github/workflows/package-project.yml@master
