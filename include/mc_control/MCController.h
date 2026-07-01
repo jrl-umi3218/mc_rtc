@@ -731,6 +731,12 @@ public:
   mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
+  /** Signal emitted when a loaded robot is to replace another robot
+   *
+   * \param old_robot_name
+   * \param new_robot_name
+   */
+  mc_rtc::Signal<std::string, std::string> replaceRobot;
   /* Controller's name */
   const std::string name_;
   /** Stores the loading location provided by the loader via \ref set_loading_location */
