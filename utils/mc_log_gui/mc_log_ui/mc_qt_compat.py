@@ -25,7 +25,7 @@ def configure_matplotlib():
 
     try:
         matplotlib.use(get_matplotlib_backend())
-    except:  # noqa: E722
+    except Exception:
         pass
 
 
