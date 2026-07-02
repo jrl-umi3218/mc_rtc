@@ -14,15 +14,13 @@ import numpy as np
 
 import matplotlib
 
+from .mc_qt_compat import configure_matplotlib
+
+configure_matplotlib()
 import matplotlib.pyplot as plt
 
 matplotlib.rcParams["pdf.fonttype"] = 42
 matplotlib.rcParams["ps.fonttype"] = 42
-# This might fail if mc_log_ui is imported in a headless environment
-try:
-    matplotlib.use("Qt5Agg")
-except:  # noqa: E722
-    pass
 
 
 class PlotSide(Enum):

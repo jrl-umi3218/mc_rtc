@@ -4,7 +4,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore, QtWidgets
+from .mc_qt_compat import QtCore, QtWidgets
 
 
 class MCLogTabBar(QtWidgets.QTabBar):

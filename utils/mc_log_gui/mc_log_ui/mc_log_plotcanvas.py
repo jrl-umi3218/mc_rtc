@@ -5,24 +5,40 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from .mc_qt_compat import (
+    QT_VERSION,
+    QtCore,
+    QtGui,
+    QtWidgets,
+    configure_matplotlib,
+)
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QComboBox
+QWidget = QtWidgets.QWidget
+QVBoxLayout = QtWidgets.QVBoxLayout
+QHBoxLayout = QtWidgets.QHBoxLayout
+QComboBox = QtWidgets.QComboBox
 
 import os
 import copy
 import math
 import matplotlib
 
+configure_matplotlib()
 import matplotlib.pyplot
 
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
 
-from matplotlib.backends.backend_qt5agg import (
-    FigureCanvasQTAgg as FigureCanvas,
-    NavigationToolbar2QT as NavigationToolbar,
-)
+if QT_VERSION == 6:
+    from matplotlib.backends.backend_qt6agg import (
+        FigureCanvasQTAgg as FigureCanvas,
+        NavigationToolbar2QT as NavigationToolbar,
+    )
+else:
+    from matplotlib.backends.backend_qt5agg import (
+        FigureCanvasQTAgg as FigureCanvas,
+        NavigationToolbar2QT as NavigationToolbar,
+    )
 
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
@@ -40,11 +56,6 @@ import sys
 
 matplotlib.rcParams["pdf.fonttype"] = 42
 matplotlib.rcParams["ps.fonttype"] = 42
-# This might fail if mc_log_ui is imported in a headless environment
-try:
-    matplotlib.use("Qt5Agg")
-except:  # noqa: E722
-    pass
 
 
 if sys.version_info[0] > 2:

@@ -5,7 +5,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtGui, QtWidgets
+from mc_log_ui.mc_qt_compat import QtGui, QtWidgets
 from mc_log_ui import MCLogUI, get_icon
 
 import signal

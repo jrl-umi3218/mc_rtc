@@ -2,7 +2,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtWidgets
+from .mc_qt_compat import QtWidgets
 
 import functools
 

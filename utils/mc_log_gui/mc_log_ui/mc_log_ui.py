@@ -18,7 +18,7 @@ if sys.version_info.major == 3:
 
 from functools import partial
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from .mc_qt_compat import QtCore, QtGui, QtWidgets
 
 from . import ui
 from .mc_log_data import Data

@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from mc_log_ui.mc_qt_compat import QtCore, QtGui, QtWidgets
 
 class Ui_MCLogTab(object):
     def setupUi(self, MCLogTab):
