@@ -25,8 +25,8 @@ def configure_matplotlib():
 
     try:
         matplotlib.use(get_matplotlib_backend())
-    except (ImportError, ValueError):
-        pass
+    except (ImportError, ValueError) as exc:
+        warnings.warn("Failed to configure matplotlib backend: {}".format(exc))
 
 
 if QT_VERSION == 6:
@@ -112,3 +112,4 @@ __all__ = [
     "get_matplotlib_backend",
     "configure_matplotlib",
 ]
+import warnings
