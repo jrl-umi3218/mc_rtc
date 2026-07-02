@@ -49,6 +49,7 @@ if QT_VERSION == 6:
         "ApplicationShortcut": QtCore.Qt.ShortcutContext.ApplicationShortcut,
         "LeftToRight": QtCore.Qt.LayoutDirection.LeftToRight,
         "CTRL": QtCore.Qt.KeyboardModifier.ControlModifier,
+        "ControlModifier": QtCore.Qt.KeyboardModifier.ControlModifier,
         "Key_O": QtCore.Qt.Key.Key_O,
         "Key_W": QtCore.Qt.Key.Key_W,
         "Key_PageDown": QtCore.Qt.Key.Key_PageDown,
