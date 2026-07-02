@@ -4,6 +4,8 @@
 # Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
+import warnings
+
 try:
     from PyQt6 import QtCore, QtGui, QtWidgets
 
@@ -26,7 +28,11 @@ def configure_matplotlib():
     try:
         matplotlib.use(get_matplotlib_backend())
     except (ImportError, ValueError) as exc:
-        warnings.warn("Failed to configure matplotlib backend: {}".format(exc))
+        warnings.warn(
+            "Failed to configure matplotlib backend {}: {}".format(
+                get_matplotlib_backend(), exc
+            )
+        )
 
 
 if QT_VERSION == 6:
@@ -112,4 +118,3 @@ __all__ = [
     "get_matplotlib_backend",
     "configure_matplotlib",
 ]
-import warnings
