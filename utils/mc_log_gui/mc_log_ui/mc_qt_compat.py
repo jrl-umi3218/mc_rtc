@@ -25,7 +25,7 @@ def configure_matplotlib():
 
     try:
         matplotlib.use(get_matplotlib_backend())
-    except Exception:
+    except (ImportError, ValueError):
         pass
 
 
