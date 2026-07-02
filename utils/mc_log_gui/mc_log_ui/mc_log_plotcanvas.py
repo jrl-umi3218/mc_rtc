@@ -13,11 +13,6 @@ from .mc_qt_compat import (
     configure_matplotlib,
 )
 
-QWidget = QtWidgets.QWidget
-QVBoxLayout = QtWidgets.QVBoxLayout
-QHBoxLayout = QtWidgets.QHBoxLayout
-QComboBox = QtWidgets.QComboBox
-
 import os
 import copy
 import math
@@ -1285,15 +1280,15 @@ class SaveAnimationDialog(QtWidgets.QDialog):
         event.ignore()
 
 
-class PlotCanvasWithToolbar(PlotFigure, QWidget):
+class PlotCanvasWithToolbar(PlotFigure, QtWidgets.QWidget):
     def __init__(self, parent=None, mode=PlotType.TIME):
         PlotFigure.__init__(self, mode, True)
-        QWidget.__init__(self, parent)
+        QtWidgets.QWidget.__init__(self, parent)
 
         self.canvas.mpl_connect("draw_event", self.on_draw)
         self.toolbar = NavigationToolbar(self.canvas, self)
 
-        self.layout = QVBoxLayout(self)
+        self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.canvas)
         self.layout.addWidget(self.toolbar)
 
@@ -1307,9 +1302,9 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
         self.saveAnimationDialog = SaveAnimationDialog(self)
 
     def setupLockButtons(self):
-        layout = QHBoxLayout()
+        layout = QtWidgets.QHBoxLayout()
 
-        self.xSelector = QComboBox(self)
+        self.xSelector = QtWidgets.QComboBox(self)
         self.xSelector.activated.connect(
             lambda: self.parent().on_xSelector_activated(
                 self, self.xSelector.currentText()
@@ -1630,4 +1625,4 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
             self.draw()
 
     def show(self):
-        return QWidget.show(self)
+        return QtWidgets.QWidget.show(self)

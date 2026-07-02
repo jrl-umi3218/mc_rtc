@@ -29,8 +29,9 @@ def configure_matplotlib():
         matplotlib.use(get_matplotlib_backend())
     except (ImportError, ValueError) as exc:
         warnings.warn(
-            "Failed to configure matplotlib backend {}: {}".format(
-                get_matplotlib_backend(), exc
+            "Failed to configure matplotlib backend {} (non-fatal, mc_log_ui can keep running): {}".format(
+                get_matplotlib_backend(),
+                exc,
             )
         )
 
@@ -57,6 +58,7 @@ if QT_VERSION == 6:
         "Key_A": QtCore.Qt.Key.Key_A,
     }
     for _name, _value in _qt_aliases.items():
+        # Keep compatibility with both native PyQt6 enums and potential pre-existing aliases.
         if not hasattr(QtCore.Qt, _name):
             setattr(QtCore.Qt, _name, _value)
 
