@@ -360,7 +360,7 @@ if(MC_RTC_BUILD_STATIC)
                      "-Wl,--no-whole-archive" Qhull::qhullcpp
   )
 else()
-  target_link_libraries(mc_rbdyn PRIVATE Qhull::qhullstatic_r Qhull::qhullcpp)
+  target_link_libraries(mc_rbdyn PRIVATE Qhull::qhull_r Qhull::qhullcpp)
 endif()
 
 if(TARGET mc_rtc_3rd_party::ROS)
