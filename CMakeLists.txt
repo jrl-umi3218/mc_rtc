@@ -180,6 +180,7 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
+# NOTE: linking against mesh_sampling transitively links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 add_project_dependency(mesh_sampling REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
@@ -231,12 +232,6 @@ if(NOT HOST_IS_WSL AND NOT WIN32)
 elseif(NOT HOST_IS_WSL AND WIN32)
   message("-- Use WinToast for notifications")
 endif()
-
-find_package(
-  Qhull
-  COMPONENTS qhullcpp qhull_r
-  REQUIRED
-)
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)

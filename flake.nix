@@ -6,8 +6,10 @@
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
 
-    mesh-sampling.url = "github:jrl-umi3218/mesh_sampling";
-    mesh-sampling.flake = false;
+    mesh-sampling.url = "github:jrl-umi3218/mesh_sampling/pull/12/head";
+    # mesh-sampling.url = "path:/home/arnaud/devcontainers/volumes/mc-rtc-superbuild-jammy/devel/mesh-sampling";
+    mesh-sampling.flake = true;
+    # mesh-sampling.url = "path:/home/arnaud/devel/mc-rtc-nix/workspace/mesh_sampling";
 
     # To override dependencies according to a commit/pull request, add them to inputs
     # For example:
@@ -47,7 +49,7 @@
                   # - testRobotModule fails in nix devel
                   cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
                   nativeBuildInputs = drv-prev.nativeBuildInputs ++ [ pkgs-final.ninja ];
-                  # propagatedBuildInputs = (drv-prev.propagatedBuildInputs or []) ++ [ pkgs-final.qhull ];
+                  propagatedBuildInputs = (drv-prev.propagatedBuildInputs or []) ++ [ pkgs-final.qhull ];
                   nativeCheckInputs = [
                     # workaround for some tests trying to write to /homeless-shelter
                     pkgs-final.writableTmpDirAsHomeHook

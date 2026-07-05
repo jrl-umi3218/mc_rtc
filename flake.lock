@@ -1395,18 +1395,29 @@
     },
     "mesh-sampling": {
       "inputs": {
-        "mc-rtc-nix": "mc-rtc-nix_2"
+        "flake-parts": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "flake-parts"
+        ],
+        "mc-rtc-nix": "mc-rtc-nix_2",
+        "systems": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "systems"
+        ]
       },
       "locked": {
-        "lastModified": 1783209746,
-        "narHash": "sha256-9oY4T+lZeR8nyeTZIsZJ8Mb+yEMTrkGCPt2d9Tb4tsc=",
+        "lastModified": 1783252092,
+        "narHash": "sha256-w1z137pUR3LbkblVhfNaKBmMQytSti4HlAOJiZyH1Ms=",
         "owner": "jrl-umi3218",
         "repo": "mesh_sampling",
-        "rev": "62bf2a3f39f3695f9046e095b4105b8b839c8d54",
+        "rev": "b57cde43d4a814ebc747954d2d0153aa305b4be6",
         "type": "github"
       },
       "original": {
         "owner": "jrl-umi3218",
+        "ref": "pull/12/head",
         "repo": "mesh_sampling",
         "type": "github"
       }
