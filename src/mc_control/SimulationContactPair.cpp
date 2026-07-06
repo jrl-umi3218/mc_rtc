@@ -28,8 +28,6 @@ double SimulationContactPair::update(const mc_rbdyn::Robot & robot, const mc_rbd
 void SimulationContactPair::updateSCH(sch::S_Object * obj,
                                       const mc_rbdyn::Robot & robot,
                                       const std::shared_ptr<mc_rbdyn::Surface> & robotSurface)
-{
-  sch::mc_rbdyn::transform(*obj, robot.mbc().bodyPosW[robot.bodyIndexByName(robotSurface->bodyName())]);
-}
+{ sch::mc_rbdyn::transform(*obj, robot.mbc().bodyPosW[robot.bodyIndexByName(robotSurface->bodyName())]); }
 
 } // namespace mc_control

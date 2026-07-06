@@ -515,9 +515,7 @@ struct ConfigurationLoader<mc_rtc::gui::PolyhedronConfig>
   }
 
   static mc_rtc::Configuration save(const mc_rtc::gui::PolyhedronConfig & polyhedron)
-  {
-    return polyhedron.saveConfig();
-  }
+  { return polyhedron.saveConfig(); }
 };
 
 } // namespace mc_rtc

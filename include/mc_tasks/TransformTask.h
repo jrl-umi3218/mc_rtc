@@ -161,9 +161,7 @@ public:
    *
    */
   void setGains(const sva::MotionVecd & stiffness, const sva::MotionVecd & damping)
-  {
-    return TrajectoryTaskGeneric::setGains(stiffness.vector(), damping.vector());
-  }
+  { return TrajectoryTaskGeneric::setGains(stiffness.vector(), damping.vector()); }
 
   /*! \brief Set dimensional stiffness
    *

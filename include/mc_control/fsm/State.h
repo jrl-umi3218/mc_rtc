@@ -193,17 +193,11 @@ using StatePtr = std::shared_ptr<State>;
     extern "C"                                                              \
     {                                                                       \
       FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names) \
-      {                                                                     \
-        names = {NAME};                                                     \
-      }                                                                     \
+      { names = {NAME}; }                                                   \
       FSM_STATE_API void destroy(mc_control::fsm::State * ptr)              \
-      {                                                                     \
-        delete ptr;                                                         \
-      }                                                                     \
+      { delete ptr; }                                                       \
       FSM_STATE_API mc_control::fsm::State * create(const std::string &)    \
-      {                                                                     \
-        return new TYPE();                                                  \
-      }                                                                     \
+      { return new TYPE(); }                                                \
     }
 
 #else

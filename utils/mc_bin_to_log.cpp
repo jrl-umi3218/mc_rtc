@@ -202,15 +202,11 @@ void write_data<sva::PTransformd>(std::ofstream & ofs, const sva::PTransformd & 
 
 template<>
 void write_data<sva::ForceVecd>(std::ofstream & ofs, const sva::ForceVecd & data, size_t s)
-{
-  write_data(ofs, data.vector(), s);
-}
+{ write_data(ofs, data.vector(), s); }
 
 template<>
 void write_data<sva::MotionVecd>(std::ofstream & ofs, const sva::MotionVecd & data, size_t s)
-{
-  write_data(ofs, data.vector(), s);
-}
+{ write_data(ofs, data.vector(), s); }
 
 template<typename T>
 void write_data(std::ofstream & ofs,

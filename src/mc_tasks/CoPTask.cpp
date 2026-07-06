@@ -32,9 +32,7 @@ CoPTask::CoPTask(const std::string & surfaceName,
 
 CoPTask::CoPTask(const mc_rbdyn::RobotFrame & frame, double stiffness, double weight)
 : DampingTask(frame, stiffness, weight)
-{
-  name_ = "cop_" + frame_->robot().name() + "_" + frame_->name();
-}
+{ name_ = "cop_" + frame_->robot().name() + "_" + frame_->name(); }
 
 void CoPTask::reset()
 {

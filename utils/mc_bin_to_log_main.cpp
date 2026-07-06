@@ -10,9 +10,7 @@ namespace fs = std::filesystem;
 #include "mc_bin_to_log.h"
 
 void usage(const char * bin)
-{
-  mc_rtc::log::error("Usage: {} [bin] ([log])", bin);
-}
+{ mc_rtc::log::error("Usage: {} [bin] ([log])", bin); }
 
 int main(int argc, char * argv[])
 {

@@ -180,14 +180,10 @@ void TransformTask::targetVel(const sva::MotionVecd & worldVec)
 void TransformTask::targetSurface(unsigned int robotIndex,
                                   const std::string & surfaceName,
                                   const sva::PTransformd & offset)
-{
-  target(robots.robot(robotIndex).frame(surfaceName), offset);
-}
+{ target(robots.robot(robotIndex).frame(surfaceName), offset); }
 
 void TransformTask::targetFrame(const mc_rbdyn::Frame & targetFrame, const sva::PTransformd & offset)
-{
-  target(targetFrame, offset);
-}
+{ target(targetFrame, offset); }
 
 void TransformTask::targetFrameVelocity(const mc_rbdyn::Frame & targetFrame, const sva::PTransformd & offset)
 {
@@ -198,9 +194,7 @@ void TransformTask::targetFrameVelocity(const mc_rbdyn::Frame & targetFrame, con
 }
 
 void TransformTask::target(const mc_rbdyn::Frame & frame, const sva::PTransformd & offset)
-{
-  target(offset * frame.position());
-}
+{ target(offset * frame.position()); }
 
 void TransformTask::addToLogger(mc_rtc::Logger & logger)
 {

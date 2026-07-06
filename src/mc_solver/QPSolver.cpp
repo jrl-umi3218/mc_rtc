@@ -22,14 +22,10 @@ namespace mc_solver
 static thread_local QPSolver::Backend CONTEXT_BACKEND = QPSolver::Backend::Unset;
 
 QPSolver::Backend QPSolver::context_backend()
-{
-  return CONTEXT_BACKEND;
-}
+{ return CONTEXT_BACKEND; }
 
 void QPSolver::context_backend(Backend backend)
-{
-  CONTEXT_BACKEND = backend;
-}
+{ CONTEXT_BACKEND = backend; }
 
 QPSolver::QPSolver(mc_rbdyn::RobotsPtr robots, double timeStep, Backend backend)
 : backend_(backend), robots_p(robots), timeStep(timeStep)
@@ -120,36 +116,22 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
 }
 
 bool QPSolver::run(FeedbackType fType)
-{
-  return run_impl(fType);
-}
+{ return run_impl(fType); }
 
 const mc_rbdyn::Robot & QPSolver::robot() const
-{
-  return robots_p->robot();
-}
+{ return robots_p->robot(); }
 mc_rbdyn::Robot & QPSolver::robot()
-{
-  return robots_p->robot();
-}
+{ return robots_p->robot(); }
 
 mc_rbdyn::Robot & QPSolver::robot(unsigned int idx)
-{
-  return robots_p->robot(idx);
-}
+{ return robots_p->robot(idx); }
 const mc_rbdyn::Robot & QPSolver::robot(unsigned int idx) const
-{
-  return robots_p->robot(idx);
-}
+{ return robots_p->robot(idx); }
 
 const mc_rbdyn::Robot & QPSolver::env() const
-{
-  return robots_p->env();
-}
+{ return robots_p->env(); }
 mc_rbdyn::Robot & QPSolver::env()
-{
-  return robots_p->env();
-}
+{ return robots_p->env(); }
 
 const mc_rbdyn::Robots & QPSolver::robots() const
 {
@@ -174,9 +156,7 @@ mc_rbdyn::Robots & QPSolver::realRobots()
 }
 
 double QPSolver::dt() const
-{
-  return timeStep;
-}
+{ return timeStep; }
 
 void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)
 {
@@ -192,9 +172,7 @@ void QPSolver::logger(std::shared_ptr<mc_rtc::Logger> logger)
 }
 
 std::shared_ptr<mc_rtc::Logger> QPSolver::logger() const
-{
-  return logger_;
-}
+{ return logger_; }
 
 void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
 {
@@ -211,9 +189,7 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
 
 /** Access to the gui instance */
 std::shared_ptr<mc_rtc::gui::StateBuilder> QPSolver::gui() const
-{
-  return gui_;
-}
+{ return gui_; }
 
 void QPSolver::addTaskToGUI(mc_tasks::MetaTask * t)
 {

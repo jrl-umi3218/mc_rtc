@@ -62,9 +62,7 @@ void MessageState::start(Controller & ctl)
 }
 
 bool MessageState::run(Controller &)
-{
-  return true;
-}
+{ return true; }
 
 void MessageState::teardown(Controller & ctl)
 {

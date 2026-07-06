@@ -21,9 +21,7 @@ namespace mc_rbdyn
 PolygonInterpolator::GeometryDeleter::GeometryDeleter(const geos::geom::GeometryFactory & factory) : factory(factory) {}
 
 void PolygonInterpolator::GeometryDeleter::operator()(geos::geom::Geometry * ptr)
-{
-  factory.destroyGeometry(ptr);
-}
+{ factory.destroyGeometry(ptr); }
 
 PolygonInterpolator::PolygonInterpolator(const std::vector<tuple_pair_t> & tpv)
 : geom_factory(*geos::geom::GeometryFactory::getDefaultInstance()), geom_deleter(geom_factory), tuple_pairs_(tpv)
@@ -154,8 +152,6 @@ std::vector<PolygonInterpolator::tuple_t> PolygonInterpolator::normal_derivative
 }
 
 const std::vector<PolygonInterpolator::tuple_pair_t> & PolygonInterpolator::tuple_pairs() const
-{
-  return tuple_pairs_;
-}
+{ return tuple_pairs_; }
 
 } // namespace mc_rbdyn

@@ -20,15 +20,11 @@ namespace details
 
 template<typename ErrorT>
 void set_ref_vel(void * task, const Eigen::VectorXd & refVel)
-{
-  static_cast<ErrorT *>(task)->refVel(refVel);
-}
+{ static_cast<ErrorT *>(task)->refVel(refVel); }
 
 template<typename ErrorT>
 void set_ref_accel(void * task, const Eigen::VectorXd & refAccel)
-{
-  static_cast<ErrorT *>(task)->refAccel(refAccel);
-}
+{ static_cast<ErrorT *>(task)->refAccel(refAccel); }
 
 struct TVMTrajectoryTaskGeneric
 {

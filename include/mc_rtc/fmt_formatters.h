@@ -38,9 +38,7 @@ struct fmt::formatter<std::filesystem::path> : fmt::formatter<std::string>
 {
   template<typename FormatContext>
   auto format(const std::filesystem::path & p, FormatContext & ctx) FMT_CONST_IF_REQUIRED
-  {
-    return fmt::formatter<std::string>::format(p.string(), ctx);
-  }
+  { return fmt::formatter<std::string>::format(p.string(), ctx); }
 };
 
 #if FMT_VERSION >= 9 * 10000

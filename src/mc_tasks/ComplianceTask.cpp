@@ -97,14 +97,10 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
 }
 
 void ComplianceTask::addToSolver(mc_solver::QPSolver & solver)
-{
-  MetaTask::addToSolver(*efTask_, solver);
-}
+{ MetaTask::addToSolver(*efTask_, solver); }
 
 void ComplianceTask::removeFromSolver(mc_solver::QPSolver & solver)
-{
-  MetaTask::removeFromSolver(*efTask_, solver);
-}
+{ MetaTask::removeFromSolver(*efTask_, solver); }
 
 sva::PTransformd ComplianceTask::computePose()
 {
@@ -141,24 +137,16 @@ void ComplianceTask::update(mc_solver::QPSolver & solver)
 }
 
 void ComplianceTask::reset()
-{
-  efTask_->reset();
-}
+{ efTask_->reset(); }
 
 sva::ForceVecd ComplianceTask::getFilteredWrench() const
-{
-  return wrench_ + sva::ForceVecd(dof_ * obj_.vector());
-}
+{ return wrench_ + sva::ForceVecd(dof_ * obj_.vector()); }
 
 void ComplianceTask::dimWeight(const Eigen::VectorXd & dimW)
-{
-  efTask_->dimWeight(dimW);
-}
+{ efTask_->dimWeight(dimW); }
 
 Eigen::VectorXd ComplianceTask::dimWeight() const
-{
-  return efTask_->dimWeight();
-}
+{ return efTask_->dimWeight(); }
 
 void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                         const std::vector<std::string> & activeJointsName,
@@ -177,9 +165,7 @@ void ComplianceTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
 }
 
 void ComplianceTask::resetJointsSelector(mc_solver::QPSolver & solver)
-{
-  efTask_->resetJointsSelector(solver);
-}
+{ efTask_->resetJointsSelector(solver); }
 
 } // namespace force
 

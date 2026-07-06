@@ -66,27 +66,19 @@ ExactCubicTrajectoryTask::ExactCubicTrajectoryTask(const mc_rbdyn::RobotFrame & 
 }
 
 void ExactCubicTrajectoryTask::posWaypoints(const std::vector<std::pair<double, Eigen::Vector3d>> & posWp)
-{
-  bspline.waypoints(posWp);
-}
+{ bspline.waypoints(posWp); }
 
 void ExactCubicTrajectoryTask::constraints(const Eigen::Vector3d & init_vel,
                                            const Eigen::Vector3d & init_acc,
                                            const Eigen::Vector3d & end_vel,
                                            const Eigen::Vector3d & end_acc)
-{
-  bspline.constraints(init_vel, init_acc, end_vel, end_acc);
-}
+{ bspline.constraints(init_vel, init_acc, end_vel, end_acc); }
 
 void ExactCubicTrajectoryTask::targetPos(const Eigen::Vector3d & target)
-{
-  bspline.target(target);
-}
+{ bspline.target(target); }
 
 const Eigen::Vector3d & ExactCubicTrajectoryTask::targetPos() const
-{
-  return bspline.target();
-}
+{ return bspline.target(); }
 
 void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {

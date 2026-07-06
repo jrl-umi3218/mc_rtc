@@ -53,15 +53,11 @@ struct XYThetaImpl : public CommonInputImpl<GetT, SetT>
 /** Helper function to create an XYTheta element (read-only) */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto XYTheta(const std::string & name, GetT get_fn)
-{
-  return details::XYThetaImpl(name, get_fn);
-}
+{ return details::XYThetaImpl(name, get_fn); }
 
 /** Helper function to create an XYTheta element */
 template<typename GetT, typename SetT>
 auto XYTheta(const std::string & name, GetT get_fn, SetT set_fn)
-{
-  return details::XYThetaImpl(name, get_fn, set_fn);
-}
+{ return details::XYThetaImpl(name, get_fn, set_fn); }
 
 } // namespace mc_rtc::gui

@@ -21,8 +21,6 @@ Convex::Convex(NewConvexToken,
 }
 
 void Convex::updatePosition()
-{
-  sch::mc_rbdyn::transform(*object_, X_f_c_ * frame_->tvm_frame().position());
-}
+{ sch::mc_rbdyn::transform(*object_, X_f_c_ * frame_->tvm_frame().position()); }
 
 } // namespace mc_tvm

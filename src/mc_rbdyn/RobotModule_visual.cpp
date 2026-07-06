@@ -228,9 +228,7 @@ RobotModulePtr robotModuleFromVisual(const std::string & name,
                                      const rbd::parsers::Visual & visual,
                                      double mass,
                                      bool isFixed)
-{
-  return robotModuleFromVisual(name, visual, computeInertiaFromVisual(visual, mass), isFixed);
-}
+{ return robotModuleFromVisual(name, visual, computeInertiaFromVisual(visual, mass), isFixed); }
 
 RobotModulePtr robotModuleFromVisual(const std::string & name, const mc_rtc::Configuration & config)
 {
