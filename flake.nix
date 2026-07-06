@@ -49,7 +49,7 @@
                   # - testRobotModule fails in nix devel
                   cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
                   nativeBuildInputs = drv-prev.nativeBuildInputs ++ [ pkgs-final.ninja ];
-                  propagatedBuildInputs = (drv-prev.propagatedBuildInputs or []) ++ [ pkgs-final.qhull ];
+                  propagatedBuildInputs = (drv-prev.propagatedBuildInputs or [ ]) ++ [ pkgs-final.qhull ];
                   nativeCheckInputs = [
                     # workaround for some tests trying to write to /homeless-shelter
                     pkgs-final.writableTmpDirAsHomeHook
