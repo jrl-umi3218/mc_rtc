@@ -275,9 +275,7 @@ mc_rtc::Configuration RobotModule::Gripper::Safety::save() const
 }
 
 void RobotModule::boundsFromURDF(const rbd::parsers::Limits & limits)
-{
-  _bounds = urdf_limits_to_bounds(limits);
-}
+{ _bounds = urdf_limits_to_bounds(limits); }
 
 void RobotModule::expand_stance()
 {

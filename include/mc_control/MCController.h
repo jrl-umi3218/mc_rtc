@@ -440,9 +440,7 @@ public:
    * \anchor mc_controller_outputRealRobot_name_const_doc
    **/
   inline const mc_rbdyn::Robot & outputRealRobot(const std::string & name) const
-  {
-    return outputRealRobots_->robot(name);
-  }
+  { return outputRealRobots_->robot(name); }
 
   /** Non-const variant of \ref mc_controller_outputRealRobot_name_const_doc "outputRealRobot(name)" */
   inline mc_rbdyn::Robot & outputRealRobot(const std::string & name) { return outputRealRobots_->robot(name); }

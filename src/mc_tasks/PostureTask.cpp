@@ -121,9 +121,7 @@ PostureTask::PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex
 }
 
 void PostureTask::reset()
-{
-  posture(robots_.robot(rIndex_).mbc().q);
-}
+{ posture(robots_.robot(rIndex_).mbc().q); }
 
 void PostureTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
@@ -212,9 +210,7 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
 }
 
 void PostureTask::resetJointsSelector(mc_solver::QPSolver & solver)
-{
-  selectUnactiveJoints(solver, {});
-}
+{ selectUnactiveJoints(solver, {}); }
 
 Eigen::VectorXd PostureTask::eval() const
 {
@@ -233,9 +229,7 @@ Eigen::VectorXd PostureTask::eval() const
 }
 
 Eigen::VectorXd PostureTask::speed() const
-{
-  return speed_;
-}
+{ return speed_; }
 
 void PostureTask::refVel(const Eigen::VectorXd & refVel) noexcept
 {
@@ -370,9 +364,7 @@ void PostureTask::posture(const std::vector<std::vector<double>> & p)
 }
 
 std::vector<std::vector<double>> PostureTask::posture() const
-{
-  return posture_;
-}
+{ return posture_; }
 
 void PostureTask::stiffness(double s)
 {
@@ -473,9 +465,7 @@ double PostureTask::weight() const
 }
 
 bool PostureTask::inSolver() const
-{
-  return inSolver_;
-}
+{ return inSolver_; }
 
 void PostureTask::jointGains(const mc_solver::QPSolver & solver, const std::vector<tasks::qp::JointGains> & jgs)
 {

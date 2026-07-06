@@ -30,9 +30,7 @@ struct RobotImpl : public Element
   static constexpr auto type = Elements::Robot;
 
   RobotImpl(const std::string & name, GetT get_fn) : Element(name), get_fn_(get_fn)
-  {
-    static_assert(CheckReturnType<GetT, mc_rbdyn::Robot>::value, "Robot element must return an mc_rbdyn::Robot");
-  }
+  { static_assert(CheckReturnType<GetT, mc_rbdyn::Robot>::value, "Robot element must return an mc_rbdyn::Robot"); }
 
   static constexpr size_t write_size() { return Element::write_size() + 3; }
 
@@ -54,8 +52,6 @@ private:
 /** Helper function to create a RobotImpl */
 template<typename GetT>
 auto Robot(const std::string & name, GetT get_fn)
-{
-  return details::RobotImpl(name, get_fn);
-}
+{ return details::RobotImpl(name, get_fn); }
 
 } // namespace mc_rtc::gui

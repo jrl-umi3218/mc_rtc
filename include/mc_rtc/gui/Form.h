@@ -279,9 +279,7 @@ private:
 
 #define MAKE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                                          \
   inline details::FormDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required)                 \
-  {                                                                                                            \
-    return {name, required};                                                                                   \
-  }                                                                                                            \
+  { return {name, required}; }                                                                                 \
                                                                                                                \
   template<typename T = DATAT>                                                                                 \
   inline auto FNAME(const std::string & name, bool required, T value)                                          \
@@ -303,9 +301,7 @@ private:
 #define MAKE_INTERACTIVE_DATA_INPUT_HELPER(DATAT, ELEMENT, FNAME)                                            \
   inline details::FormInteractiveDataInput<DATAT, ELEMENT> FNAME(const std::string & name, bool required,    \
                                                                  bool interactive = true)                    \
-  {                                                                                                          \
-    return {name, required, interactive};                                                                    \
-  }                                                                                                          \
+  { return {name, required, interactive}; }                                                                  \
                                                                                                              \
   template<typename T = DATAT, typename = std::enable_if_t<!std::is_same_v<T, bool>>>                        \
   inline auto FNAME(const std::string & name, bool required, T value, bool interactive = true)               \
@@ -359,9 +355,7 @@ struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInp
                  const std::vector<std::string> & labels = {},
                  bool fixed_size = false)
   : FormArrayInput<T>(name, required, labels, {}, fixed_size)
-  {
-    has_def_ = false;
-  }
+  { has_def_ = false; }
 
   static constexpr size_t write_size_() { return 4; }
 
@@ -577,8 +571,6 @@ private:
 /** Helper to create a Form element */
 template<typename Callback, typename... Args>
 auto Form(const std::string & name, Callback cb, Args &&... args)
-{
-  return details::FormImpl(name, cb, std::forward<Args>(args)...);
-}
+{ return details::FormImpl(name, cb, std::forward<Args>(args)...); }
 
 } // namespace mc_rtc::gui

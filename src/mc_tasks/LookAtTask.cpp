@@ -29,9 +29,7 @@ LookAtTask::LookAtTask(const std::string & bodyName,
                        double stiffness,
                        double weight)
 : LookAtTask(robots.robot(robotIndex).frame(bodyName), bodyVector, stiffness, weight)
-{
-  target(targetPos);
-}
+{ target(targetPos); }
 
 LookAtTask::LookAtTask(const mc_rbdyn::RobotFrame & frame,
                        const Eigen::Vector3d & frameVector,
@@ -57,9 +55,7 @@ void LookAtTask::target(const Eigen::Vector3d & pos)
 }
 
 Eigen::Vector3d LookAtTask::target() const
-{
-  return target_pos_;
-}
+{ return target_pos_; }
 void LookAtTask::addToLogger(mc_rtc::Logger & logger)
 {
   VectorOrientationTask::addToLogger(logger);

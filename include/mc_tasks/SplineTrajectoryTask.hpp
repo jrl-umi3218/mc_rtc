@@ -241,9 +241,7 @@ void SplineTrajectoryTask<Derived>::interpolateGains()
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::oriWaypoints(const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
-{
-  oriSpline_.waypoints(oriWp);
-}
+{ oriSpline_.waypoints(oriWp); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
@@ -257,46 +255,32 @@ void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::stiffnessInterpolation(
     const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnesses)
-{
-  stiffnessInterpolator_.values(stiffnesses);
-}
+{ stiffnessInterpolator_.values(stiffnesses); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::dampingInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & damping)
-{
-  dampingInterpolator_.values(damping);
-}
+{ dampingInterpolator_.values(damping); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::dimWeightInterpolation(
     const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeight)
-{
-  dimWeightInterpolator_.values(dimWeight);
-}
+{ dimWeightInterpolator_.values(dimWeight); }
 
 template<typename Derived>
 Eigen::VectorXd SplineTrajectoryTask<Derived>::dimWeight() const
-{
-  return TrajectoryBase::dimWeight();
-}
+{ return TrajectoryBase::dimWeight(); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::stiffness(double stiffness)
-{
-  this->stiffness(stiffness * Eigen::Vector6d::Ones());
-}
+{ this->stiffness(stiffness * Eigen::Vector6d::Ones()); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::stiffness(const Eigen::VectorXd & stiffness)
-{
-  setGains(stiffness, stiffness.cwiseSqrt());
-}
+{ setGains(stiffness, stiffness.cwiseSqrt()); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::damping(double damping)
-{
-  this->damping(damping * Eigen::Vector6d::Ones());
-}
+{ this->damping(damping * Eigen::Vector6d::Ones()); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::damping(const Eigen::VectorXd & damping)
@@ -309,9 +293,7 @@ void SplineTrajectoryTask<Derived>::damping(const Eigen::VectorXd & damping)
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::setGains(double stiffness, double damping)
-{
-  setGains(stiffness * Eigen::Vector6d::Ones(), damping * Eigen::Vector6d::Ones());
-}
+{ setGains(stiffness * Eigen::Vector6d::Ones(), damping * Eigen::Vector6d::Ones()); }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping)
@@ -340,33 +322,23 @@ const sva::PTransformd SplineTrajectoryTask<Derived>::target() const
 
 template<typename Derived>
 Eigen::VectorXd SplineTrajectoryTask<Derived>::eval() const
-{
-  return sva::transformError(frame_->position(), target()).vector();
-}
+{ return sva::transformError(frame_->position(), target()).vector(); }
 
 template<typename Derived>
 Eigen::VectorXd SplineTrajectoryTask<Derived>::evalTracking() const
-{
-  return TrajectoryBase::eval();
-}
+{ return TrajectoryBase::eval(); }
 
 template<typename Derived>
 bool SplineTrajectoryTask<Derived>::timeElapsed() const
-{
-  return currTime_ >= duration_;
-}
+{ return currTime_ >= duration_; }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::displaySamples(unsigned s)
-{
-  samples_ = s;
-}
+{ samples_ = s; }
 
 template<typename Derived>
 unsigned SplineTrajectoryTask<Derived>::displaySamples() const
-{
-  return samples_;
-}
+{ return samples_; }
 
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::refPose(const sva::PTransformd & target)

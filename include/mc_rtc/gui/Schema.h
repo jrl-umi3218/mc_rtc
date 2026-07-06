@@ -46,8 +46,6 @@ private:
 /** Helper function to create a Schema element */
 template<typename Callback>
 auto Schema(const std::string & name, const std::string & schema, Callback cb)
-{
-  return details::SchemaImpl(name, schema, cb);
-}
+{ return details::SchemaImpl(name, schema, cb); }
 
 } // namespace mc_rtc::gui

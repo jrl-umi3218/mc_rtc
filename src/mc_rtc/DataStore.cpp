@@ -28,9 +28,7 @@ std::string demangle(const char * name)
 #else
 
 std::string demangle(const char * name)
-{
-  return name;
-}
+{ return name; }
 
 #endif
 

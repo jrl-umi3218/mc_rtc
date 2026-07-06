@@ -8,9 +8,7 @@ protected:                                                                      
   inline static mc_rtc::schema::Operations ops_;                                                             \
                                                                                                              \
   inline static size_t schema_size() noexcept                                                                \
-  {                                                                                                          \
-    return ops_.values_count + BaseT::ops_.values_count;                                                     \
-  }                                                                                                          \
+  { return ops_.values_count + BaseT::ops_.values_count; }                                                   \
   inline void write_impl(mc_rtc::MessagePackBuilder & builder) const                                         \
   {                                                                                                          \
     BaseT::ops_.write(this, builder);                                                                        \
@@ -80,13 +78,9 @@ public:                                                                         
     gui.addElement(category, form);                                                                          \
   }                                                                                                          \
   inline bool operator==(const SchemaT & rhs) const                                                          \
-  {                                                                                                          \
-    return BaseT::ops_.areEqual(this, &rhs) && ops_.areEqual(this, &rhs);                                    \
-  }                                                                                                          \
+  { return BaseT::ops_.areEqual(this, &rhs) && ops_.areEqual(this, &rhs); }                                  \
   inline bool operator!=(const SchemaT & rhs) const                                                          \
-  {                                                                                                          \
-    return !(*this == rhs);                                                                                  \
-  }
+  { return !(*this == rhs); }
 
 #define MC_RTC_NEW_SCHEMA(SchemaT) MC_RTC_SCHEMA(SchemaT, mc_rtc::schema::details::EmptySchema)
 

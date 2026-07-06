@@ -82,9 +82,7 @@ void ZMPCC::addToLogger(mc_rtc::Logger & logger, const std::string & name)
 }
 
 void ZMPCC::removeFromLogger(mc_rtc::Logger & logger, const std::string &)
-{
-  logger.removeLogEntries(this);
-}
+{ logger.removeLogEntries(this); }
 
 } // namespace lipm_stabilizer
 } // namespace mc_tasks

@@ -62,9 +62,7 @@ void GazeFunction::setDepthEstimate(double d)
 }
 
 void GazeFunction::updateValue()
-{
-  value_ = point_ - pointRef_;
-}
+{ value_ = point_ - pointRef_; }
 
 void GazeFunction::updateVelocity()
 {

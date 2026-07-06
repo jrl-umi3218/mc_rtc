@@ -36,9 +36,7 @@ struct AddRemoveContactStateImplHelper
                        mc_rtc::Configuration & config);
 
   static void make_run_impl(AddRemoveContactStateImpl &, Controller &, mc_rbdyn::Contact &, mc_rtc::Configuration &)
-  {
-    static_assert(always_false<T>::value, "AddRemoveContactStateImplHelper not implemented for this type");
-  }
+  { static_assert(always_false<T>::value, "AddRemoveContactStateImplHelper not implemented for this type"); }
 };
 
 template<>
@@ -263,9 +261,7 @@ AddRemoveContactState::AddRemoveContactState() : impl_(new AddRemoveContactState
 AddRemoveContactState::~AddRemoveContactState() {}
 
 void AddRemoveContactState::start(Controller & ctl)
-{
-  impl_->start(ctl, config_);
-}
+{ impl_->start(ctl, config_); }
 
 bool AddRemoveContactState::run(Controller & ctl)
 {

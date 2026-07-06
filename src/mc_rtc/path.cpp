@@ -13,9 +13,7 @@ namespace mc_rtc
 {
 
 std::string temp_directory_path(const std::string & suffix)
-{
-  return (fs::temp_directory_path() / suffix).string();
-}
+{ return (fs::temp_directory_path() / suffix).string(); }
 
 std::string user_config_directory_path(const std::string & suffix)
 {

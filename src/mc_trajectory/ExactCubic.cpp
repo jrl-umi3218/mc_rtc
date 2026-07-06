@@ -84,21 +84,13 @@ void ExactCubic::constraints(const point_t & init_vel,
 }
 
 const point_t & ExactCubic::init_vel() const
-{
-  return constraints_.init_vel;
-}
+{ return constraints_.init_vel; }
 const point_t & ExactCubic::init_acc() const
-{
-  return constraints_.init_acc;
-}
+{ return constraints_.init_acc; }
 const point_t & ExactCubic::end_vel() const
-{
-  return constraints_.end_vel;
-}
+{ return constraints_.end_vel; }
 const point_t & ExactCubic::end_acc() const
-{
-  return constraints_.end_acc;
-}
+{ return constraints_.end_acc; }
 
 std::vector<point_t> ExactCubic::splev(double t, unsigned int der)
 {
