@@ -6,6 +6,11 @@
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
 
+    mesh-sampling.url = "github:jrl-umi3218/mesh_sampling/pull/12/head";
+    # mesh-sampling.url = "path:/home/arnaud/devcontainers/volumes/mc-rtc-superbuild-jammy/devel/mesh-sampling";
+    mesh-sampling.flake = true;
+    # mesh-sampling.url = "path:/home/arnaud/devel/mc-rtc-nix/workspace/mesh_sampling";
+
     # To override dependencies according to a commit/pull request, add them to inputs
     # For example:
     # mc-force-shoe-plugin.url = "github:Hugo-L3174/mc_force_shoe_plugin/pull/16/head";
@@ -32,14 +37,24 @@
                 shells.defaultShells.devel = false;
               };
             flakoboros = {
+              overrideAttrs.mesh-sampling = {
+                src = inputs.mesh-sampling;
+              };
               overrideAttrs.mc-rtc =
-                { ... }:
+                { drv-prev, pkgs-final, ... }:
                 {
                   src = lib.cleanSource ./.;
                   # FIXME: enable testing:
                   # - testing fails in nix build
                   # - testRobotModule fails in nix devel
-                  # cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
+                  cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
+                  nativeBuildInputs = drv-prev.nativeBuildInputs ++ [ pkgs-final.ninja ];
+                  propagatedBuildInputs = (drv-prev.propagatedBuildInputs or []) ++ [ pkgs-final.qhull ];
+                  nativeCheckInputs = [
+                    # workaround for some tests trying to write to /homeless-shelter
+                    pkgs-final.writableTmpDirAsHomeHook
+                  ];
+                  doCheck = false;
                 };
             };
           }

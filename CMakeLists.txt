@@ -28,6 +28,7 @@ set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
 
 # Check if the submodule cmake have been initialized
 set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -179,6 +180,7 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
+# NOTE: linking against mesh_sampling transitively links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 add_project_dependency(mesh_sampling REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
@@ -230,9 +232,6 @@ if(NOT HOST_IS_WSL AND NOT WIN32)
 elseif(NOT HOST_IS_WSL AND WIN32)
   message("-- Use WinToast for notifications")
 endif()
-
-# qhull (build re-entrant static version)
-add_subdirectory(3rd-party/qhull)
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)
