@@ -56,12 +56,7 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
 #  ifdef MC_RTC_HAS_ROS_SUPPORT
     try
     {
-#    ifdef MC_RTC_ROS_IS_ROS2
       pkg = ament_index_cpp::get_package_share_directory(pkg);
-#    else
-      pkg = ros::package::getPath(pkg);
-      if(pkg.empty()) { throw std::runtime_error("Package not found"); }
-#    endif
       return pkg / leaf;
     }
     catch(...)

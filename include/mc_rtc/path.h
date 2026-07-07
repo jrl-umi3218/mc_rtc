@@ -5,11 +5,7 @@
 #pragma once
 
 #ifdef MC_RTC_HAS_ROS_SUPPORT
-#  ifdef MC_RTC_ROS_IS_ROS2
-#    include <ament_index_cpp/get_package_share_directory.hpp>
-#  else
-#    include <ros/package.h>
-#  endif
+#  include <ament_index_cpp/get_package_share_directory.hpp>
 #endif
 
 #include <mc_rtc/utils_api.h>
