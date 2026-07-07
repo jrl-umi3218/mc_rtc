@@ -48,6 +48,8 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
   mc_rtc_ros2_dependency(mc_rtc_msgs mc_rtc_msgs__rosidl_typesupport_cpp)
   mc_rtc_ros2_dependency(tf2_ros tf2_ros)
   mc_rtc_ros2_dependency(rosbag2_cpp rosbag2_cpp)
-  target_compile_definitions(mc_rtc_3rd_party::ROS INTERFACE MC_RTC_HAS_ROS_SUPPORT)
+  target_compile_definitions(
+    mc_rtc_3rd_party::ROS INTERFACE MC_RTC_HAS_ROS_SUPPORT MC_RTC_ROS_IS_ROS2
+  )
   set(ROSCPP_FOUND True)
 endif()
