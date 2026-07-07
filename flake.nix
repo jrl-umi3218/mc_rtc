@@ -11,6 +11,8 @@
     mesh-sampling.flake = true;
     # mesh-sampling.url = "path:/home/arnaud/devel/mc-rtc-nix/workspace/mesh_sampling";
 
+    mc-rtc-ros-compat.url = "path:/home/arnaud/devel/mc-rtc-nix/workspace/mc_rtc_ros_compat";
+
     # To override dependencies according to a commit/pull request, add them to inputs
     # For example:
     # mc-force-shoe-plugin.url = "github:Hugo-L3174/mc_force_shoe_plugin/pull/16/head";
@@ -29,6 +31,9 @@
           inputs.mc-rtc-nix.flakeModule
           # or inputs.mc-rtc-nix.flakeModule if you don't need private repositories
           {
+            mc-rtc-nix = {
+              # with-ros = false;
+            };
             mc-rtc-superbuild =
               { ... }:
               {
@@ -49,7 +54,8 @@
                   # - testRobotModule fails in nix devel
                   cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
                   nativeBuildInputs = drv-prev.nativeBuildInputs ++ [ pkgs-final.ninja ];
-                  propagatedBuildInputs = (drv-prev.propagatedBuildInputs or [ ]) ++ [ pkgs-final.qhull ];
+                  propagatedBuildInputs = (drv-prev.propagatedBuildInputs or [ ])
+  ++ [ inputs.mc-rtc-ros-compat.packages.x86_64-linux.default ];
                   nativeCheckInputs = [
                     # workaround for some tests trying to write to /homeless-shelter
                     pkgs-final.writableTmpDirAsHomeHook

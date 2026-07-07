@@ -30,6 +30,21 @@
         "type": "github"
       }
     },
+    "ccache-trigger_3": {
+      "locked": {
+        "lastModified": 1657739266,
+        "narHash": "sha256-vLy8GQr0noEcoA+jX24FgUVBA/poV36zDWAUChN3hIY=",
+        "owner": "boolean-option",
+        "repo": "false",
+        "rev": "d06b4794a134686c70a1325df88a6e6768c6b212",
+        "type": "github"
+      },
+      "original": {
+        "owner": "boolean-option",
+        "repo": "false",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -38,6 +53,22 @@
         "owner": "edolstra",
         "repo": "flake-compat",
         "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_10": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
         "type": "github"
       },
       "original": {
@@ -113,11 +144,59 @@
     "flake-compat_6": {
       "flake": false,
       "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_7": {
+      "flake": false,
+      "locked": {
         "lastModified": 1696426674,
         "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
         "owner": "edolstra",
         "repo": "flake-compat",
         "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_8": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_9": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
         "type": "github"
       },
       "original": {
@@ -136,6 +215,119 @@
         "owner": "hercules-ci",
         "repo": "flake-parts",
         "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_10": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768135262,
+        "narHash": "sha256-PVvu7OqHBGWN16zSi6tEmPwwHQ4rLPU9Plvs8/1TUBY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_11": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_6"
+      },
+      "locked": {
+        "lastModified": 1778716662,
+        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_12": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768135262,
+        "narHash": "sha256-PVvu7OqHBGWN16zSi6tEmPwwHQ4rLPU9Plvs8/1TUBY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_13": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_7"
+      },
+      "locked": {
+        "lastModified": 1775087534,
+        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_14": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768135262,
+        "narHash": "sha256-PVvu7OqHBGWN16zSi6tEmPwwHQ4rLPU9Plvs8/1TUBY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
         "type": "github"
       },
       "original": {
@@ -232,8 +424,8 @@
     "flake-parts_6": {
       "inputs": {
         "nixpkgs-lib": [
-          "mesh-sampling",
-          "mc-rtc-nix",
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
           "gepetto",
           "system-manager",
           "userborn",
@@ -259,11 +451,11 @@
         "nixpkgs-lib": "nixpkgs-lib_4"
       },
       "locked": {
-        "lastModified": 1775087534,
-        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
+        "lastModified": 1778716662,
+        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
+        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
         "type": "github"
       },
       "original": {
@@ -275,9 +467,8 @@
     "flake-parts_8": {
       "inputs": {
         "nixpkgs-lib": [
-          "mesh-sampling",
+          "mc-rtc-ros-compat",
           "mc-rtc-nix",
-          "jrl-cmakemodulesv2",
           "gepetto",
           "system-manager",
           "userborn",
@@ -290,6 +481,24 @@
         "owner": "hercules-ci",
         "repo": "flake-parts",
         "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_9": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_5"
+      },
+      "locked": {
+        "lastModified": 1775087534,
+        "narHash": "sha256-91qqW8lhL7TLwgQWijoGBbiD4t7/q75KTi8NxjVmSmA=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "3107b77cd68437b9a76194f0f7f9c55f2329ca5b",
         "type": "github"
       },
       "original": {
@@ -355,6 +564,60 @@
     "flake-utils_4": {
       "inputs": {
         "systems": "systems_7"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_5": {
+      "inputs": {
+        "systems": "systems_9"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_6": {
+      "inputs": {
+        "systems": "systems_11"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_7": {
+      "inputs": {
+        "systems": "systems_13"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -451,6 +714,125 @@
         "flake-parts": "flake-parts_5",
         "nix-ros-overlay": "nix-ros-overlay_3",
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay",
+          "nixpkgs"
+        ],
+        "systems": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay",
+          "flake-utils",
+          "systems"
+        ],
+        "treefmt-nix": "treefmt-nix_3"
+      },
+      "locked": {
+        "lastModified": 1782042109,
+        "narHash": "sha256-oDCl/rcvJVTcf6G2ag3YdZSMHDVBBmoXTysY5yzq+Dk=",
+        "owner": "gepetto",
+        "repo": "flakoboros",
+        "rev": "fc7d44063fa05f1a78c97c63b124c1da2862331c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "flakoboros",
+        "type": "github"
+      }
+    },
+    "flakoboros_4": {
+      "inputs": {
+        "flake-parts": "flake-parts_7",
+        "nix-ros-overlay": "nix-ros-overlay_4",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay",
+          "nixpkgs"
+        ],
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay",
+          "flake-utils",
+          "systems"
+        ],
+        "treefmt-nix": "treefmt-nix_4"
+      },
+      "locked": {
+        "lastModified": 1782042109,
+        "narHash": "sha256-oDCl/rcvJVTcf6G2ag3YdZSMHDVBBmoXTysY5yzq+Dk=",
+        "owner": "gepetto",
+        "repo": "flakoboros",
+        "rev": "fc7d44063fa05f1a78c97c63b124c1da2862331c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "flakoboros",
+        "type": "github"
+      }
+    },
+    "flakoboros_5": {
+      "inputs": {
+        "flake-parts": "flake-parts_9",
+        "nix-ros-overlay": "nix-ros-overlay_5",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay",
+          "nixpkgs"
+        ],
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay",
+          "flake-utils",
+          "systems"
+        ],
+        "treefmt-nix": "treefmt-nix_5"
+      },
+      "locked": {
+        "lastModified": 1776113076,
+        "narHash": "sha256-rQp/6mgQc4szevay50RbGXOXwL3xC7oHktywFPrmbAM=",
+        "owner": "gepetto",
+        "repo": "flakoboros",
+        "rev": "07a89fe2a47f2f0364e795cf3e69c045de14a3b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "flakoboros",
+        "type": "github"
+      }
+    },
+    "flakoboros_6": {
+      "inputs": {
+        "flake-parts": "flake-parts_11",
+        "nix-ros-overlay": "nix-ros-overlay_6",
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -469,7 +851,7 @@
           "flake-utils",
           "systems"
         ],
-        "treefmt-nix": "treefmt-nix_3"
+        "treefmt-nix": "treefmt-nix_6"
       },
       "locked": {
         "lastModified": 1781324212,
@@ -485,10 +867,10 @@
         "type": "github"
       }
     },
-    "flakoboros_4": {
+    "flakoboros_7": {
       "inputs": {
-        "flake-parts": "flake-parts_7",
-        "nix-ros-overlay": "nix-ros-overlay_4",
+        "flake-parts": "flake-parts_13",
+        "nix-ros-overlay": "nix-ros-overlay_7",
         "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -510,7 +892,7 @@
           "flake-utils",
           "systems"
         ],
-        "treefmt-nix": "treefmt-nix_4"
+        "treefmt-nix": "treefmt-nix_7"
       },
       "locked": {
         "lastModified": 1776113076,
@@ -653,6 +1035,210 @@
     "gazebros2nix_3": {
       "inputs": {
         "flake-parts": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "flake-parts"
+        ],
+        "flakoboros": "flakoboros_3",
+        "nix-ros-overlay": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay"
+        ],
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nixpkgs"
+        ],
+        "pyproject-build-systems": "pyproject-build-systems_3",
+        "pyproject-nix": "pyproject-nix_3",
+        "rosdistro": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "nix-ros-overlay",
+          "rosdistro"
+        ],
+        "systems": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "treefmt-nix"
+        ],
+        "uv2nix": "uv2nix_3"
+      },
+      "locked": {
+        "lastModified": 1782566589,
+        "narHash": "sha256-vXVLP31bnnk8KUBUV88Ms2R6P06wdQPZzsXgR6iZ5FI=",
+        "owner": "gepetto",
+        "repo": "gazebros2nix",
+        "rev": "6e51068e9e9fec8e960f68911127ad64b417bf6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "gazebros2nix",
+        "type": "github"
+      }
+    },
+    "gazebros2nix_4": {
+      "inputs": {
+        "flake-parts": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "flake-parts"
+        ],
+        "flakoboros": "flakoboros_4",
+        "nix-ros-overlay": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay"
+        ],
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nixpkgs"
+        ],
+        "pyproject-build-systems": "pyproject-build-systems_4",
+        "pyproject-nix": "pyproject-nix_4",
+        "rosdistro": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "nix-ros-overlay",
+          "rosdistro"
+        ],
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "treefmt-nix"
+        ],
+        "uv2nix": "uv2nix_4"
+      },
+      "locked": {
+        "lastModified": 1782566589,
+        "narHash": "sha256-vXVLP31bnnk8KUBUV88Ms2R6P06wdQPZzsXgR6iZ5FI=",
+        "owner": "gepetto",
+        "repo": "gazebros2nix",
+        "rev": "6e51068e9e9fec8e960f68911127ad64b417bf6b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "gazebros2nix",
+        "type": "github"
+      }
+    },
+    "gazebros2nix_5": {
+      "inputs": {
+        "flake-parts": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "flake-parts"
+        ],
+        "flakoboros": "flakoboros_5",
+        "nix-ros-overlay": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nix-ros-overlay"
+        ],
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nixpkgs"
+        ],
+        "pyproject-build-systems": "pyproject-build-systems_5",
+        "pyproject-nix": "pyproject-nix_5",
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "treefmt-nix"
+        ],
+        "uv2nix": "uv2nix_5"
+      },
+      "locked": {
+        "lastModified": 1777754176,
+        "narHash": "sha256-bnR2Aor+qSLVCcUUV/IjjHM5AnJR6cpf0AljUSiUuco=",
+        "owner": "gepetto",
+        "repo": "gazebros2nix",
+        "rev": "29d82bf45d91a5e9ca9f8c40f963ad20168e6ae1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "gazebros2nix",
+        "type": "github"
+      }
+    },
+    "gazebros2nix_6": {
+      "inputs": {
+        "flake-parts": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -660,7 +1246,7 @@
           "flakoboros",
           "flake-parts"
         ],
-        "flakoboros": "flakoboros_3",
+        "flakoboros": "flakoboros_6",
         "nix-ros-overlay": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -677,8 +1263,8 @@
           "flakoboros",
           "nixpkgs"
         ],
-        "pyproject-build-systems": "pyproject-build-systems_3",
-        "pyproject-nix": "pyproject-nix_3",
+        "pyproject-build-systems": "pyproject-build-systems_6",
+        "pyproject-nix": "pyproject-nix_6",
         "systems": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -695,7 +1281,7 @@
           "flakoboros",
           "treefmt-nix"
         ],
-        "uv2nix": "uv2nix_3"
+        "uv2nix": "uv2nix_6"
       },
       "locked": {
         "lastModified": 1781362845,
@@ -711,7 +1297,7 @@
         "type": "github"
       }
     },
-    "gazebros2nix_4": {
+    "gazebros2nix_7": {
       "inputs": {
         "flake-parts": [
           "mesh-sampling",
@@ -722,7 +1308,7 @@
           "flakoboros",
           "flake-parts"
         ],
-        "flakoboros": "flakoboros_4",
+        "flakoboros": "flakoboros_7",
         "nix-ros-overlay": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -741,8 +1327,8 @@
           "flakoboros",
           "nixpkgs"
         ],
-        "pyproject-build-systems": "pyproject-build-systems_4",
-        "pyproject-nix": "pyproject-nix_4",
+        "pyproject-build-systems": "pyproject-build-systems_7",
+        "pyproject-nix": "pyproject-nix_7",
         "systems": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -761,7 +1347,7 @@
           "flakoboros",
           "treefmt-nix"
         ],
-        "uv2nix": "uv2nix_4"
+        "uv2nix": "uv2nix_7"
       },
       "locked": {
         "lastModified": 1777754176,
@@ -900,6 +1486,201 @@
     "gepetto_3": {
       "inputs": {
         "flake-parts": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flake-parts"
+        ],
+        "flakoboros": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros"
+        ],
+        "gazebros2nix": "gazebros2nix_3",
+        "home-manager": "home-manager_3",
+        "nix-ros-overlay": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "nix-ros-overlay"
+        ],
+        "nix-system-graphics": "nix-system-graphics_3",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "system-manager": "system-manager_3",
+        "systems": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783001154,
+        "narHash": "sha256-kPrfWL8YePlBRv0Sz2J4Uwn6C/HlhM3WZG96Y6TEqeU=",
+        "owner": "gepetto",
+        "repo": "nix",
+        "rev": "7a2bf9834c160a05872d0f77eeadc9362cb6f014",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
+    "gepetto_4": {
+      "inputs": {
+        "flake-parts": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flake-parts"
+        ],
+        "flakoboros": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros"
+        ],
+        "gazebros2nix": "gazebros2nix_4",
+        "home-manager": "home-manager_4",
+        "nix-ros-overlay": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "nix-ros-overlay"
+        ],
+        "nix-system-graphics": "nix-system-graphics_4",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "system-manager": "system-manager_4",
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783001154,
+        "narHash": "sha256-kPrfWL8YePlBRv0Sz2J4Uwn6C/HlhM3WZG96Y6TEqeU=",
+        "owner": "gepetto",
+        "repo": "nix",
+        "rev": "7a2bf9834c160a05872d0f77eeadc9362cb6f014",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
+    "gepetto_5": {
+      "inputs": {
+        "flake-parts": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flake-parts"
+        ],
+        "flakoboros": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros"
+        ],
+        "gazebros2nix": "gazebros2nix_5",
+        "home-manager": "home-manager_5",
+        "nix-ros-overlay": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "nix-ros-overlay"
+        ],
+        "nix-system-graphics": "nix-system-graphics_5",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "system-manager": "system-manager_5",
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "systems"
+        ],
+        "treefmt-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777773493,
+        "narHash": "sha256-6zivX47/UVo1dR9iGNRBETvz7/igFrc2SrqCbJqxtWY=",
+        "owner": "gepetto",
+        "repo": "nix",
+        "rev": "506ba63b0f3f7f1b1ac5e215f957feb4b12013d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gepetto",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
+    "gepetto_6": {
+      "inputs": {
+        "flake-parts": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -913,8 +1694,8 @@
           "gazebros2nix",
           "flakoboros"
         ],
-        "gazebros2nix": "gazebros2nix_3",
-        "home-manager": "home-manager_3",
+        "gazebros2nix": "gazebros2nix_6",
+        "home-manager": "home-manager_6",
         "nix-ros-overlay": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -922,7 +1703,7 @@
           "gazebros2nix",
           "nix-ros-overlay"
         ],
-        "nix-system-graphics": "nix-system-graphics_3",
+        "nix-system-graphics": "nix-system-graphics_6",
         "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -930,7 +1711,7 @@
           "gazebros2nix",
           "nixpkgs"
         ],
-        "system-manager": "system-manager_3",
+        "system-manager": "system-manager_6",
         "systems": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -960,7 +1741,7 @@
         "type": "github"
       }
     },
-    "gepetto_4": {
+    "gepetto_7": {
       "inputs": {
         "flake-parts": [
           "mesh-sampling",
@@ -978,8 +1759,8 @@
           "gazebros2nix",
           "flakoboros"
         ],
-        "gazebros2nix": "gazebros2nix_4",
-        "home-manager": "home-manager_4",
+        "gazebros2nix": "gazebros2nix_7",
+        "home-manager": "home-manager_7",
         "nix-ros-overlay": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -988,7 +1769,7 @@
           "gazebros2nix",
           "nix-ros-overlay"
         ],
-        "nix-system-graphics": "nix-system-graphics_4",
+        "nix-system-graphics": "nix-system-graphics_7",
         "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -997,7 +1778,7 @@
           "gazebros2nix",
           "nixpkgs"
         ],
-        "system-manager": "system-manager_4",
+        "system-manager": "system-manager_7",
         "systems": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -1083,6 +1864,85 @@
     "gitignore_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "pre-commit-hooks-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "pre-commit-hooks-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "pre-commit-hooks-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -1106,7 +1966,7 @@
         "type": "github"
       }
     },
-    "gitignore_4": {
+    "gitignore_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -1183,6 +2043,79 @@
     "home-manager_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779506708,
+        "narHash": "sha256-QOD/CNm196nCJRheux/URi4/HE66fthdOMqCJoPP1Y0=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779506708,
+        "narHash": "sha256-QOD/CNm196nCJRheux/URi4/HE66fthdOMqCJoPP1Y0=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777771528,
+        "narHash": "sha256-YycygK6n7KeW1YCobdFJcORWzkmrvNcp6xT+IovA0d4=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "0585fbf645640973e3398863bbaf3bd1ddce4a51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-25.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -1204,7 +2137,7 @@
         "type": "github"
       }
     },
-    "home-manager_4": {
+    "home-manager_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -1229,6 +2162,24 @@
         "type": "github"
       }
     },
+    "jrl-cmakemodules": {
+      "inputs": {
+        "gepetto": "gepetto_3"
+      },
+      "locked": {
+        "lastModified": 1783244775,
+        "narHash": "sha256-+zA8cyh5o+5U1rbW/qCZbeO3t+uGcCieIVqMh2yNomg=",
+        "owner": "jrl-umi3218",
+        "repo": "jrl-cmakemodules",
+        "rev": "648efca10ffc9081c633e5d23d8b069e89eee341",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jrl-umi3218",
+        "repo": "jrl-cmakemodules",
+        "type": "github"
+      }
+    },
     "jrl-cmakemodulesv2": {
       "inputs": {
         "gepetto": "gepetto_2"
@@ -1250,7 +2201,26 @@
     },
     "jrl-cmakemodulesv2_2": {
       "inputs": {
-        "gepetto": "gepetto_4"
+        "gepetto": "gepetto_5"
+      },
+      "locked": {
+        "lastModified": 1782668743,
+        "narHash": "sha256-nHyHqmL/b31tO4/S+lyf9yNL8tYYX2HxNFlvAfb/0k4=",
+        "owner": "ahoarau",
+        "repo": "jrl-cmakemodules",
+        "rev": "49e8e570d630abf6e978c4ff2b5edab4a0f46d28",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ahoarau",
+        "ref": "jrl-next",
+        "repo": "jrl-cmakemodules",
+        "type": "github"
+      }
+    },
+    "jrl-cmakemodulesv2_3": {
+      "inputs": {
+        "gepetto": "gepetto_7"
       },
       "locked": {
         "lastModified": 1781271796,
@@ -1287,7 +2257,25 @@
     },
     "make-shell_2": {
       "inputs": {
-        "flake-compat": "flake-compat_6"
+        "flake-compat": "flake-compat_7"
+      },
+      "locked": {
+        "lastModified": 1733933815,
+        "narHash": "sha256-9JjM7eT66W4NJAXpGUsdyAFXhBxFWR2Z9LZwUa7Hli0=",
+        "owner": "nicknovitski",
+        "repo": "make-shell",
+        "rev": "ffeceae9956df03571ea8e96ef77c2924f13a63c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nicknovitski",
+        "repo": "make-shell",
+        "type": "github"
+      }
+    },
+    "make-shell_3": {
+      "inputs": {
+        "flake-compat": "flake-compat_10"
       },
       "locked": {
         "lastModified": 1733933815,
@@ -1334,11 +2322,11 @@
         "with-ros-trigger": "with-ros-trigger"
       },
       "locked": {
-        "lastModified": 1783328191,
-        "narHash": "sha256-sKoRmhOcQOnh98p557ZpxBvc36vIRA9ZcbpFLwB1i4U=",
+        "lastModified": 1783341505,
+        "narHash": "sha256-+eGGzarWHP9HUoKQxNI9hadiO0zmp3HncJ+x7ZK/S28=",
         "owner": "mc-rtc",
         "repo": "nixpkgs",
-        "rev": "0a36a0f5f00877eedfa17e8bb19d5e66cd70424b",
+        "rev": "12e25cb776b7456821a6bd57179b0b354fb2fd5b",
         "type": "github"
       },
       "original": {
@@ -1351,6 +2339,54 @@
       "inputs": {
         "ccache-trigger": "ccache-trigger_2",
         "flake-parts": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "flake-parts"
+        ],
+        "flakoboros": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "flakoboros"
+        ],
+        "gepetto": "gepetto_4",
+        "jrl-cmakemodulesv2": "jrl-cmakemodulesv2_2",
+        "make-shell": "make-shell_2",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "nixpkgs"
+        ],
+        "private-trigger": "private-trigger_2",
+        "systems": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "systems"
+        ],
+        "with-python-trigger": "with-python-trigger_2",
+        "with-ros-trigger": "with-ros-trigger_2"
+      },
+      "locked": {
+        "lastModified": 1783341505,
+        "narHash": "sha256-+eGGzarWHP9HUoKQxNI9hadiO0zmp3HncJ+x7ZK/S28=",
+        "owner": "mc-rtc",
+        "repo": "nixpkgs",
+        "rev": "12e25cb776b7456821a6bd57179b0b354fb2fd5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mc-rtc",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "mc-rtc-nix_3": {
+      "inputs": {
+        "ccache-trigger": "ccache-trigger_3",
+        "flake-parts": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -1362,16 +2398,16 @@
           "gepetto",
           "flakoboros"
         ],
-        "gepetto": "gepetto_3",
-        "jrl-cmakemodulesv2": "jrl-cmakemodulesv2_2",
-        "make-shell": "make-shell_2",
+        "gepetto": "gepetto_6",
+        "jrl-cmakemodulesv2": "jrl-cmakemodulesv2_3",
+        "make-shell": "make-shell_3",
         "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
           "nixpkgs"
         ],
-        "private-trigger": "private-trigger_2",
+        "private-trigger": "private-trigger_3",
         "systems": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -1393,6 +2429,22 @@
         "type": "github"
       }
     },
+    "mc-rtc-ros-compat": {
+      "inputs": {
+        "jrl-cmakemodules": "jrl-cmakemodules",
+        "mc-rtc-nix": "mc-rtc-nix_2"
+      },
+      "locked": {
+        "lastModified": 1783434175,
+        "narHash": "sha256-VSYKx44SqCqeE4aGVBDitJEvXugnNrCDYH2jxIt36E8=",
+        "path": "/home/arnaud/devel/mc-rtc-nix/workspace/mc_rtc_ros_compat",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/arnaud/devel/mc-rtc-nix/workspace/mc_rtc_ros_compat",
+        "type": "path"
+      }
+    },
     "mesh-sampling": {
       "inputs": {
         "flake-parts": [
@@ -1400,7 +2452,7 @@
           "mc-rtc-nix",
           "flake-parts"
         ],
-        "mc-rtc-nix": "mc-rtc-nix_2",
+        "mc-rtc-nix": "mc-rtc-nix_3",
         "systems": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -1470,6 +2522,68 @@
         "rosdistro": "rosdistro_2"
       },
       "locked": {
+        "lastModified": 1781900693,
+        "narHash": "sha256-4KFk+S9ZbMonItYsdPtZjwESsgrCEpXGDa6rosDxLGs=",
+        "owner": "lopsided98",
+        "repo": "nix-ros-overlay",
+        "rev": "fb296510db68c2e760980ab8c6daf6ded9060213",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lopsided98",
+        "ref": "develop",
+        "repo": "nix-ros-overlay",
+        "type": "github"
+      }
+    },
+    "nix-ros-overlay_4": {
+      "inputs": {
+        "flake-utils": "flake-utils_4",
+        "nixpkgs": "nixpkgs_4",
+        "rosdistro": "rosdistro_3"
+      },
+      "locked": {
+        "lastModified": 1781900693,
+        "narHash": "sha256-4KFk+S9ZbMonItYsdPtZjwESsgrCEpXGDa6rosDxLGs=",
+        "owner": "lopsided98",
+        "repo": "nix-ros-overlay",
+        "rev": "fb296510db68c2e760980ab8c6daf6ded9060213",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lopsided98",
+        "ref": "develop",
+        "repo": "nix-ros-overlay",
+        "type": "github"
+      }
+    },
+    "nix-ros-overlay_5": {
+      "inputs": {
+        "flake-utils": "flake-utils_5",
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1775764892,
+        "narHash": "sha256-l1UbHppd5KaU4K/TQPIXf9wnVifH4Tgrx5z2GFoq/bw=",
+        "owner": "lopsided98",
+        "repo": "nix-ros-overlay",
+        "rev": "0a4e8cf51001d2d1c613f95dadd3853da42c0164",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lopsided98",
+        "ref": "develop",
+        "repo": "nix-ros-overlay",
+        "type": "github"
+      }
+    },
+    "nix-ros-overlay_6": {
+      "inputs": {
+        "flake-utils": "flake-utils_6",
+        "nixpkgs": "nixpkgs_6",
+        "rosdistro": "rosdistro_4"
+      },
+      "locked": {
         "lastModified": 1781297240,
         "narHash": "sha256-OpYxlrSlcqJyknjgIuvv8dtEEbHuuZoe+fJzclrBgmg=",
         "owner": "lopsided98",
@@ -1484,10 +2598,10 @@
         "type": "github"
       }
     },
-    "nix-ros-overlay_4": {
+    "nix-ros-overlay_7": {
       "inputs": {
-        "flake-utils": "flake-utils_4",
-        "nixpkgs": "nixpkgs_4"
+        "flake-utils": "flake-utils_7",
+        "nixpkgs": "nixpkgs_7"
       },
       "locked": {
         "lastModified": 1775764892,
@@ -1552,6 +2666,76 @@
     "nix-system-graphics_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763296639,
+        "narHash": "sha256-K9JBscC7ApwCnl0wR0sVkxrKFsoDYVqXN5fOujvyBWA=",
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "rev": "ac37f0f3ec0cb15d63a520918433c794d01d9dac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "type": "github"
+      }
+    },
+    "nix-system-graphics_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763296639,
+        "narHash": "sha256-K9JBscC7ApwCnl0wR0sVkxrKFsoDYVqXN5fOujvyBWA=",
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "rev": "ac37f0f3ec0cb15d63a520918433c794d01d9dac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "type": "github"
+      }
+    },
+    "nix-system-graphics_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1763296639,
+        "narHash": "sha256-K9JBscC7ApwCnl0wR0sVkxrKFsoDYVqXN5fOujvyBWA=",
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "rev": "ac37f0f3ec0cb15d63a520918433c794d01d9dac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "soupglasses",
+        "repo": "nix-system-graphics",
+        "type": "github"
+      }
+    },
+    "nix-system-graphics_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -1572,7 +2756,7 @@
         "type": "github"
       }
     },
-    "nix-system-graphics_4": {
+    "nix-system-graphics_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -1659,6 +2843,51 @@
     },
     "nixpkgs-lib_4": {
       "locked": {
+        "lastModified": 1777168982,
+        "narHash": "sha256-GOkGPcboWE9BmGCRMLX3worL4EMnsnG8MyKmXNeYuhQ=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "f5901329dade4a6ea039af1433fb087bd9c1fe14",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib_5": {
+      "locked": {
+        "lastModified": 1774748309,
+        "narHash": "sha256-+U7gF3qxzwD5TZuANzZPeJTZRHS29OFQgkQ2kiTJBIQ=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "333c4e0545a6da976206c74db8773a1645b5870a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib_6": {
+      "locked": {
+        "lastModified": 1777168982,
+        "narHash": "sha256-GOkGPcboWE9BmGCRMLX3worL4EMnsnG8MyKmXNeYuhQ=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "f5901329dade4a6ea039af1433fb087bd9c1fe14",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib_7": {
+      "locked": {
         "lastModified": 1774748309,
         "narHash": "sha256-+U7gF3qxzwD5TZuANzZPeJTZRHS29OFQgkQ2kiTJBIQ=",
         "owner": "nix-community",
@@ -1705,6 +2934,54 @@
       }
     },
     "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1778869304,
+        "narHash": "sha256-30sZNZoA1cqF5JNO9fVX+wgiQYjB7HJqqJ4ztCDeBZE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d233902339c02a9c334e7e593de68855ad26c4cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1771369470,
+        "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0182a361324364ae3f436a63005877674cf45efb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_6": {
+      "locked": {
+        "lastModified": 1778869304,
+        "narHash": "sha256-30sZNZoA1cqF5JNO9fVX+wgiQYjB7HJqqJ4ztCDeBZE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d233902339c02a9c334e7e593de68855ad26c4cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1771369470,
         "narHash": "sha256-0NBlEBKkN3lufyvFegY4TYv5mCNHbi5OmBDrzihbBMQ=",
@@ -1789,8 +3066,8 @@
     "pre-commit-hooks-nix_3": {
       "inputs": {
         "flake-compat": [
-          "mesh-sampling",
-          "mc-rtc-nix",
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
           "gepetto",
           "system-manager",
           "userborn",
@@ -1798,8 +3075,8 @@
         ],
         "gitignore": "gitignore_3",
         "nixpkgs": [
-          "mesh-sampling",
-          "mc-rtc-nix",
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
           "gepetto",
           "system-manager",
           "userborn",
@@ -1823,6 +3100,110 @@
     "pre-commit-hooks-nix_4": {
       "inputs": {
         "flake-compat": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "flake-compat"
+        ],
+        "gitignore": "gitignore_4",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769069492,
+        "narHash": "sha256-Efs3VUPelRduf3PpfPP2ovEB4CXT7vHf8W+xc49RL/U=",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "a1ef738813b15cf8ec759bdff5761b027e3e1d23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks-nix_5": {
+      "inputs": {
+        "flake-compat": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "flake-compat"
+        ],
+        "gitignore": "gitignore_5",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769069492,
+        "narHash": "sha256-Efs3VUPelRduf3PpfPP2ovEB4CXT7vHf8W+xc49RL/U=",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "a1ef738813b15cf8ec759bdff5761b027e3e1d23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks-nix_6": {
+      "inputs": {
+        "flake-compat": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "flake-compat"
+        ],
+        "gitignore": "gitignore_6",
+        "nixpkgs": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "userborn",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769069492,
+        "narHash": "sha256-Efs3VUPelRduf3PpfPP2ovEB4CXT7vHf8W+xc49RL/U=",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "a1ef738813b15cf8ec759bdff5761b027e3e1d23",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks-nix_7": {
+      "inputs": {
+        "flake-compat": [
           "mesh-sampling",
           "mc-rtc-nix",
           "jrl-cmakemodulesv2",
@@ -1831,7 +3212,7 @@
           "userborn",
           "flake-compat"
         ],
-        "gitignore": "gitignore_4",
+        "gitignore": "gitignore_7",
         "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -1872,6 +3253,21 @@
       }
     },
     "private-trigger_2": {
+      "locked": {
+        "lastModified": 1657739266,
+        "narHash": "sha256-vLy8GQr0noEcoA+jX24FgUVBA/poV36zDWAUChN3hIY=",
+        "owner": "boolean-option",
+        "repo": "false",
+        "rev": "d06b4794a134686c70a1325df88a6e6768c6b212",
+        "type": "github"
+      },
+      "original": {
+        "owner": "boolean-option",
+        "repo": "false",
+        "type": "github"
+      }
+    },
+    "private-trigger_3": {
       "locked": {
         "lastModified": 1657739266,
         "narHash": "sha256-vLy8GQr0noEcoA+jX24FgUVBA/poV36zDWAUChN3hIY=",
@@ -1962,6 +3358,123 @@
     "pyproject-build-systems_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782093830,
+        "narHash": "sha256-6gmEVe69+KlRkZD4PEEV5xAlB9CB0Y9TiuEgQjDrKTQ=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "430680a19bc85a3bda55f12e4cc1a1aadcf2e478",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-build-systems_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782093830,
+        "narHash": "sha256-6gmEVe69+KlRkZD4PEEV5xAlB9CB0Y9TiuEgQjDrKTQ=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "430680a19bc85a3bda55f12e4cc1a1aadcf2e478",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-build-systems_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776659114,
+        "narHash": "sha256-qapCOQmR++yZSY43dzrp3wCrkOTLpod+ONtJWBk6iKU=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "ffaa2161dd5d63e0e94591f86b54fc239660fb2e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-build-systems_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -1997,7 +3510,7 @@
         "type": "github"
       }
     },
-    "pyproject-build-systems_4": {
+    "pyproject-build-systems_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -2088,6 +3601,79 @@
     "pyproject-nix_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782089418,
+        "narHash": "sha256-LRD1SuQWr49fGq3A+8GLXfsLE2xqIpQA440YDZwms3M=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "43f0b40edd0a74c63f66b7b48d969ae6b740d611",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
+    "pyproject-nix_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782089418,
+        "narHash": "sha256-LRD1SuQWr49fGq3A+8GLXfsLE2xqIpQA440YDZwms3M=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "43f0b40edd0a74c63f66b7b48d969ae6b740d611",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
+    "pyproject-nix_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1776715674,
+        "narHash": "sha256-Gs1VnEkCkkRZxJQAC/Dhz0Jbfi22mFXChbtNg9w/Ybg=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "69f57f27e52a87c54e28138a75ec741cd46663c9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
+    "pyproject-nix_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -2109,7 +3695,7 @@
         "type": "github"
       }
     },
-    "pyproject-nix_4": {
+    "pyproject-nix_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -2141,6 +3727,7 @@
           "flake-parts"
         ],
         "mc-rtc-nix": "mc-rtc-nix",
+        "mc-rtc-ros-compat": "mc-rtc-ros-compat",
         "mesh-sampling": "mesh-sampling",
         "systems": [
           "mc-rtc-nix",
@@ -2165,6 +3752,38 @@
       }
     },
     "rosdistro_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781238695,
+        "narHash": "sha256-Sk8KQa9ryFrkdGGZ64sNdqoVqiGmC+IAAi3qzE7zn8s=",
+        "owner": "ros",
+        "repo": "rosdistro",
+        "rev": "a0e7ccc6f866a081acc0656d9cd03cda7acc6853",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ros",
+        "repo": "rosdistro",
+        "type": "github"
+      }
+    },
+    "rosdistro_3": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781238695,
+        "narHash": "sha256-Sk8KQa9ryFrkdGGZ64sNdqoVqiGmC+IAAi3qzE7zn8s=",
+        "owner": "ros",
+        "repo": "rosdistro",
+        "rev": "a0e7ccc6f866a081acc0656d9cd03cda7acc6853",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ros",
+        "repo": "rosdistro",
+        "type": "github"
+      }
+    },
+    "rosdistro_4": {
       "flake": false,
       "locked": {
         "lastModified": 1780665549,
@@ -2233,8 +3852,8 @@
       "inputs": {
         "flake-compat": "flake-compat_4",
         "nixpkgs": [
-          "mesh-sampling",
-          "mc-rtc-nix",
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
           "gepetto",
           "nixpkgs"
         ],
@@ -2258,13 +3877,89 @@
       "inputs": {
         "flake-compat": "flake-compat_5",
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "nixpkgs"
+        ],
+        "userborn": "userborn_4"
+      },
+      "locked": {
+        "lastModified": 1778508009,
+        "narHash": "sha256-mp63mt+EwfKiVZX+4BC/59g5oTbsXNtSYESVci3opso=",
+        "owner": "numtide",
+        "repo": "system-manager",
+        "rev": "dc1baae12eed1758755e73f8aff7fca5502c6e9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "system-manager",
+        "type": "github"
+      }
+    },
+    "system-manager_5": {
+      "inputs": {
+        "flake-compat": "flake-compat_6",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "nixpkgs"
+        ],
+        "userborn": "userborn_5"
+      },
+      "locked": {
+        "lastModified": 1777545354,
+        "narHash": "sha256-T3u9Ixg0SX6bYYXHYEZ7O+MW0pQ1qxnjIQKCPM+irN4=",
+        "owner": "numtide",
+        "repo": "system-manager",
+        "rev": "6eac5ac077960363d3807b1c74f47103d1f62efd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "system-manager",
+        "type": "github"
+      }
+    },
+    "system-manager_6": {
+      "inputs": {
+        "flake-compat": "flake-compat_8",
+        "nixpkgs": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "gepetto",
+          "nixpkgs"
+        ],
+        "userborn": "userborn_6"
+      },
+      "locked": {
+        "lastModified": 1778508009,
+        "narHash": "sha256-mp63mt+EwfKiVZX+4BC/59g5oTbsXNtSYESVci3opso=",
+        "owner": "numtide",
+        "repo": "system-manager",
+        "rev": "dc1baae12eed1758755e73f8aff7fca5502c6e9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "system-manager",
+        "type": "github"
+      }
+    },
+    "system-manager_7": {
+      "inputs": {
+        "flake-compat": "flake-compat_9",
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "jrl-cmakemodulesv2",
           "gepetto",
           "nixpkgs"
         ],
-        "userborn": "userborn_4"
+        "userborn": "userborn_7"
       },
       "locked": {
         "lastModified": 1777545354,
@@ -2281,6 +3976,81 @@
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_10": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_11": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_12": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_13": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_14": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -2400,6 +4170,21 @@
         "type": "github"
       }
     },
+    "systems_9": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -2452,6 +4237,82 @@
     "treefmt-nix_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780220602,
+        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780220602,
+        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "flakoboros",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775636079,
+        "narHash": "sha256-pc20NRoMdiar8oPQceQT47UUZMBTiMdUuWrYu2obUP0=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "790751ff7fd3801feeaf96d7dc416a8d581265ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -2474,7 +4335,7 @@
         "type": "github"
       }
     },
-    "treefmt-nix_4": {
+    "treefmt-nix_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -2571,16 +4432,16 @@
     "userborn_3": {
       "inputs": {
         "flake-compat": [
-          "mesh-sampling",
-          "mc-rtc-nix",
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
           "gepetto",
           "system-manager",
           "flake-compat"
         ],
         "flake-parts": "flake-parts_6",
         "nixpkgs": [
-          "mesh-sampling",
-          "mc-rtc-nix",
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
           "gepetto",
           "system-manager",
           "nixpkgs"
@@ -2606,6 +4467,113 @@
     "userborn_4": {
       "inputs": {
         "flake-compat": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "flake-compat"
+        ],
+        "flake-parts": "flake-parts_8",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "nixpkgs"
+        ],
+        "pre-commit-hooks-nix": "pre-commit-hooks-nix_4",
+        "systems": "systems_8"
+      },
+      "locked": {
+        "lastModified": 1770377964,
+        "narHash": "sha256-q2pnlX2IW0kg80GLFnwWd/GigIpkuZnyKPLhrgJql3E=",
+        "owner": "jfroche",
+        "repo": "userborn",
+        "rev": "55c2cd7952c207a62736a5bbd9499ea73da18d24",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jfroche",
+        "ref": "system-manager",
+        "repo": "userborn",
+        "type": "github"
+      }
+    },
+    "userborn_5": {
+      "inputs": {
+        "flake-compat": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "flake-compat"
+        ],
+        "flake-parts": "flake-parts_10",
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "system-manager",
+          "nixpkgs"
+        ],
+        "pre-commit-hooks-nix": "pre-commit-hooks-nix_5",
+        "systems": "systems_10"
+      },
+      "locked": {
+        "lastModified": 1770377964,
+        "narHash": "sha256-q2pnlX2IW0kg80GLFnwWd/GigIpkuZnyKPLhrgJql3E=",
+        "owner": "jfroche",
+        "repo": "userborn",
+        "rev": "55c2cd7952c207a62736a5bbd9499ea73da18d24",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jfroche",
+        "ref": "system-manager",
+        "repo": "userborn",
+        "type": "github"
+      }
+    },
+    "userborn_6": {
+      "inputs": {
+        "flake-compat": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "flake-compat"
+        ],
+        "flake-parts": "flake-parts_12",
+        "nixpkgs": [
+          "mesh-sampling",
+          "mc-rtc-nix",
+          "gepetto",
+          "system-manager",
+          "nixpkgs"
+        ],
+        "pre-commit-hooks-nix": "pre-commit-hooks-nix_6",
+        "systems": "systems_12"
+      },
+      "locked": {
+        "lastModified": 1770377964,
+        "narHash": "sha256-q2pnlX2IW0kg80GLFnwWd/GigIpkuZnyKPLhrgJql3E=",
+        "owner": "jfroche",
+        "repo": "userborn",
+        "rev": "55c2cd7952c207a62736a5bbd9499ea73da18d24",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jfroche",
+        "ref": "system-manager",
+        "repo": "userborn",
+        "type": "github"
+      }
+    },
+    "userborn_7": {
+      "inputs": {
+        "flake-compat": [
           "mesh-sampling",
           "mc-rtc-nix",
           "jrl-cmakemodulesv2",
@@ -2613,7 +4581,7 @@
           "system-manager",
           "flake-compat"
         ],
-        "flake-parts": "flake-parts_8",
+        "flake-parts": "flake-parts_14",
         "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
@@ -2622,8 +4590,8 @@
           "system-manager",
           "nixpkgs"
         ],
-        "pre-commit-hooks-nix": "pre-commit-hooks-nix_4",
-        "systems": "systems_8"
+        "pre-commit-hooks-nix": "pre-commit-hooks-nix_7",
+        "systems": "systems_14"
       },
       "locked": {
         "lastModified": 1770377964,
@@ -2703,6 +4671,101 @@
     "uv2nix_3": {
       "inputs": {
         "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "mc-rtc-ros-compat",
+          "jrl-cmakemodules",
+          "gepetto",
+          "gazebros2nix",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781810314,
+        "narHash": "sha256-PQfvfKWaBvCysdHFUO5GewwvwIqI/WL6OcrJhDSUdbc=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "14aa44100859a44144878fe079f8089d3fa4dc4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "uv2nix_4": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "gepetto",
+          "gazebros2nix",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781810314,
+        "narHash": "sha256-PQfvfKWaBvCysdHFUO5GewwvwIqI/WL6OcrJhDSUdbc=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "14aa44100859a44144878fe079f8089d3fa4dc4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "uv2nix_5": {
+      "inputs": {
+        "nixpkgs": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "mc-rtc-ros-compat",
+          "mc-rtc-nix",
+          "jrl-cmakemodulesv2",
+          "gepetto",
+          "gazebros2nix",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777463177,
+        "narHash": "sha256-1PcD0+IZPQXyvmXJ1OYH+23sRc9IyOKrUUBYZonVBm8=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "6c53dcf4d3f63240f57e0b0c826cb15eda61f249",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "uv2nix_6": {
+      "inputs": {
+        "nixpkgs": [
           "mesh-sampling",
           "mc-rtc-nix",
           "gepetto",
@@ -2731,7 +4794,7 @@
         "type": "github"
       }
     },
-    "uv2nix_4": {
+    "uv2nix_7": {
       "inputs": {
         "nixpkgs": [
           "mesh-sampling",
@@ -2779,7 +4842,37 @@
         "type": "github"
       }
     },
+    "with-python-trigger_2": {
+      "locked": {
+        "lastModified": 1657739253,
+        "narHash": "sha256-L9eyTL7njtPBUYmZRYFKCzQFDgua9U9oE7UwCzjZfl8=",
+        "owner": "boolean-option",
+        "repo": "true",
+        "rev": "6ecb49143ca31b140a5273f1575746ba93c3f698",
+        "type": "github"
+      },
+      "original": {
+        "owner": "boolean-option",
+        "repo": "true",
+        "type": "github"
+      }
+    },
     "with-ros-trigger": {
+      "locked": {
+        "lastModified": 1657739253,
+        "narHash": "sha256-L9eyTL7njtPBUYmZRYFKCzQFDgua9U9oE7UwCzjZfl8=",
+        "owner": "boolean-option",
+        "repo": "true",
+        "rev": "6ecb49143ca31b140a5273f1575746ba93c3f698",
+        "type": "github"
+      },
+      "original": {
+        "owner": "boolean-option",
+        "repo": "true",
+        "type": "github"
+      }
+    },
+    "with-ros-trigger_2": {
       "locked": {
         "lastModified": 1657739253,
         "narHash": "sha256-L9eyTL7njtPBUYmZRYFKCzQFDgua9U9oE7UwCzjZfl8=",

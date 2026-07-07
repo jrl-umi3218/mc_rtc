@@ -340,6 +340,7 @@ set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_FULL_DOCDIR}/json/schemas")
 
+find_package(mc_rtc_ros_compat REQUIRED)
 find_package(mc_rtc_3rd_party_ros QUIET)
 if(TARGET mc_rtc_3rd_party::ROS)
   set(MC_RTC_HAS_ROS_SUPPORT "true")

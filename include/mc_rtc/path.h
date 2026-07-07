@@ -4,10 +4,6 @@
 
 #pragma once
 
-#ifdef MC_RTC_HAS_ROS_SUPPORT
-#  include <ament_index_cpp/get_package_share_directory.hpp>
-#endif
-
 #include <mc_rtc/utils_api.h>
 
 #include <filesystem>
