@@ -182,6 +182,8 @@ add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
 # NOTE: linking against mesh_sampling transitively links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 add_project_dependency(mesh_sampling REQUIRED)
+# Optional ROS compatiblity library
+add_project_dependency(mc_rtc_ros_compat REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -340,7 +342,6 @@ set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_FULL_DOCDIR}/json/schemas")
 
-find_package(mc_rtc_ros_compat REQUIRED)
 find_package(mc_rtc_3rd_party_ros QUIET)
 if(TARGET mc_rtc_3rd_party::ROS)
   set(MC_RTC_HAS_ROS_SUPPORT "true")

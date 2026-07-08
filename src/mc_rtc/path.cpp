@@ -56,7 +56,7 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
       return uri;
     }
   }
-  catch(std::runtime_error & e)
+  catch(std::runtime_error & resolve_package_path_error)
   {
     // The path is a package:// but it failed to resolve, fallback to:
     // - mc_rtc default paths for known packages (mc_env_description, mc_int_obj_description, jvrc_description)
@@ -81,7 +81,6 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
               "[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
               "URI '{}', and no default_dir was provided",
               pkg, uri);
-          return uri;
         }
         else if(!fs::exists(default_dir) || !fs::is_directory(default_dir))
         {
@@ -89,7 +88,6 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
               "[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
               "URI '{}', and default_dir '{}' does not exist or is not a directory",
               pkg, uri, default_dir);
-          return uri;
         }
         else
         { // default_dir exists
@@ -102,8 +100,9 @@ fs::path convertURI(const std::string & uri, std::string_view default_dir)
       return pkg / leaf;
     }
 
-    mc_rtc::log::error_and_throw("[mc_rtc::convertURI] Could not resolve path to ROS package path in URI '{}': {}", uri,
-                                 e.what());
+    mc_rtc::log::error_and_throw(
+        "[mc_rtc::convertURI] Could not resolve path to ROS package path in URI, and no fallback was suitable '{}': {}",
+        uri, resolve_package_path_error.what());
   }
   const std::string file = "file://";
   if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
