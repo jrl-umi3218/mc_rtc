@@ -6,27 +6,7 @@
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
 
-    # mc-rtc-ros-compat.url = "path:/home/arnaud/devel/mc-rtc-nix/workspace/mc_rtc_ros_compat";
     mc-rtc-ros-compat.url = "github:jrl-umi3218/mc_rtc_ros_compat";
-
-    # To override dependencies according to a commit/pull request, add them to inputs
-    # For example:
-    # mc-force-shoe-plugin.url = "github:Hugo-L3174/mc_force_shoe_plugin/pull/16/head";
-    # or use pull/N/merge to get the version merged with master, assuming there are no conflicts
-    # mc-force-shoe-plugin.flake = false;
-    # use true if the repository has a flake
-  };
-  nixConfig = {
-    extra-substituters = [
-      "https://mc-rtc-nix.cachix.org"
-      "https://gepetto.cachix.org"
-      "https://attic.iid.ciirc.cvut.cz/ros"
-    ];
-    extra-trusted-public-keys = [
-      "mc-rtc-nix.cachix.org-1:5M3sLvHXJCep4wc1tQl7QuFWL2eH2I0jkuvWtqJDYQs="
-      "gepetto.cachix.org-1:toswMl31VewC0jGkN6+gOelO2Yom0SOHzPwJMY2XiDY="
-      "ros:JR95vUYsShSqfA1VTYoFt1Nz6uXasm5QrcOsGry9f6Q="
-    ];
   };
 
   outputs =
@@ -45,7 +25,6 @@
             {
               mc-rtc-nix = {
                 with-ros = with-ros-default;
-                overlays.ccache = true;
               };
               mc-rtc-superbuild =
                 { ... }:
@@ -78,8 +57,10 @@
                       lib,
                       cmake,
                       jrl-cmakemodulesv2,
+                      catch2_3,
                       buildRosPackage,
                       with-ros ? with-ros-default,
+                      human-description ? null,
                       rclcpp,
                     }:
 
@@ -94,11 +75,15 @@
                       ];
                       nativeBuildInputs = [
                         cmake
-                      ];
+                        catch2_3
+                      ]
+                      # for tests
+                      ++ lib.optional (human-description != null) human-description;
                       propagatedBuildInputs = lib.optional with-ros rclcpp;
 
                       cmakeFlags = [
                         (lib.cmakeBool "DISABLE_ROS" (!with-ros))
+                        (lib.cmakeBool "BUILD_TESTS_WITH_ROS_PACKAGES" (human-description != null))
                       ];
 
                       doCheck = true;
