@@ -99,6 +99,26 @@ jobs:
         ./utils/bootstrap-linux.sh
         git config --global user.email "arn.tanguy@gmail.com"
         git config --global user.name "Arnaud Tanguy (Automated CI update)"
+
+    # Restores the cache from warmest cache to most generic one
+    # Saves the newly generated cache automatically after job success
+    # - First, it looks for an exact match:
+    #   `ccache-ubuntu-22.04-gcc-RelWithDebInfo-refs/heads/master`
+    # - If not found, it tries:
+    #   `ccache-ubuntu-22.04-gcc-RelWithDebInfo-` (any branch/ref)
+    # - If still not found, it tries:
+    #   `ccache-ubuntu-22.04-gcc-` (any build type, any branch/ref)
+    # - Finally, it tries:
+    #   `ccache-ubuntu-22.04-` (any compiler, build type, branch/ref)
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: ${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.build-type }}-${{ github.ref_name }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.build-type }}-main
+          ${{ runner.os }}-${{ matrix.compiler }}-
+          ${{ runner.os }}-
+
     - name: "[superbuild] Install system dependencies"
       if: matrix.os != 'windows-latest'
       shell: bash
@@ -116,6 +136,10 @@ jobs:
       shell: bash
       run: |
         cmake --build ${TMPDIR-/tmp}/build-mc-rtc --config RelWithDebInfo
+
+    - name: Show ccache stats
+      if: matrix.os == 'ubuntu-22.04'
+      run: ccache -s
 
     # mc-rtc-superbuild does not support windows yet, build manually
     - uses: actions/checkout@v7
