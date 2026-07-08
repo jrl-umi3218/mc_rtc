@@ -182,6 +182,8 @@ add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
 # NOTE: linking against mesh_sampling transitively links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 add_project_dependency(mesh_sampling REQUIRED)
+# Optional ROS compatiblity library
+add_project_dependency(mc_rtc_ros_compat REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 

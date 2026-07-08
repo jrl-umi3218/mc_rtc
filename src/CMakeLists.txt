@@ -158,6 +158,9 @@ target_link_libraries(
          ${YAML_CPP_TARGET} spdlog::spdlog ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
 )
+# link with ros-agnostic functions in mc_rtc_ros_compat
+# this is done to keep mc-rtc ros-agnostic, and allow mc_rtc_ros to link against mc_rtc_utils
+target_link_libraries(mc_rtc_utils PUBLIC mc_rtc_ros_compat::mc_rtc_ros_compat)
 if(TARGET mc_rtc_3rd_party::ROS)
   target_link_libraries(mc_rtc_utils PRIVATE mc_rtc_3rd_party::ROS)
 endif()
