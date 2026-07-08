@@ -86,7 +86,7 @@ var namespacemc__rtc =
     [ "duration_ms", "namespacemc__rtc.html#afd4119022924596532a073fc5a0c6f46", null ],
     [ "duration_us", "namespacemc__rtc.html#adc728153d578b83ef5eef7a24396ffed", null ],
     [ "LTDLHandlePtr", "namespacemc__rtc.html#a04f4430d990b320f494b3a21112c7e3a", null ],
-    [ "NodeHandlePtr", "namespacemc__rtc.html#a34c76f6b1a3b305306e41f6dd4f90c27", null ],
+    [ "NodeHandlePtr", "namespacemc__rtc.html#aad7f814c0af9184ac50d29680f320cfb", null ],
     [ "void_ptr", "namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d", null ],
     [ "convertURI", "namespacemc__rtc.html#a458422180b759429c183c9fe1e6e5e6c", null ],
     [ "debug", "namespacemc__rtc.html#a0bd63387904206fef1971ac84987b3bc", null ],

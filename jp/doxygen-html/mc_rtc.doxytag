@@ -7290,15 +7290,15 @@
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
     <class kind="struct">mc_rtc::ROSBridge</class>
     <class kind="struct">mc_rtc::RobotPublisher</class>
-    <namespace>ros</namespace>
+    <namespace>rclcpp</namespace>
     <namespace>mc_rbdyn</namespace>
     <namespace>mc_control</namespace>
     <namespace>mc_rtc</namespace>
     <member kind="typedef">
-      <type>std::shared_ptr&lt; ros::NodeHandle &gt;</type>
+      <type>std::shared_ptr&lt; rclcpp::Node &gt;</type>
       <name>NodeHandlePtr</name>
       <anchorfile>namespacemc__rtc.html</anchorfile>
-      <anchor>a34c76f6b1a3b305306e41f6dd4f90c27</anchor>
+      <anchor>aad7f814c0af9184ac50d29680f320cfb</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -47284,10 +47284,10 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>std::shared_ptr&lt; ros::NodeHandle &gt;</type>
+      <type>std::shared_ptr&lt; rclcpp::Node &gt;</type>
       <name>NodeHandlePtr</name>
       <anchorfile>namespacemc__rtc.html</anchorfile>
-      <anchor>a34c76f6b1a3b305306e41f6dd4f90c27</anchor>
+      <anchor>aad7f814c0af9184ac50d29680f320cfb</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -49985,8 +49985,8 @@
     </member>
   </compound>
   <compound kind="namespace">
-    <name>ros</name>
-    <filename>namespaceros.html</filename>
+    <name>rclcpp</name>
+    <filename>namespacerclcpp.html</filename>
   </compound>
   <compound kind="namespace">
     <name>sch</name>

@@ -306,7 +306,7 @@ var namespaces_dup =
       [ "vectorToParam", "https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/namespacerbd.html#ae1506b1cecfe2dc93145cdee35024021", null ],
       [ "vectorToParam", "https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/namespacerbd.html#ad81da92788d049e1111ea95aad747d9a", null ]
     ] ],
-    [ "ros", "namespaceros.html", null ],
+    [ "rclcpp", "namespacerclcpp.html", null ],
     [ "sch", "namespacesch.html", "namespacesch" ],
     [ "stateObservation", null, [
       [ "cst", null, [

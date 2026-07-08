@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['how_20to_20create_20a_20new_20task_20dynamics_15361',['How to create a new task dynamics',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/taskDynamicsExample.html',1,'']]],
-  ['how_20to_20create_20new_20tvm_20functions_2e_15362',['How to create new TVM functions.',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/functionWritingExample.html',1,'']]],
-  ['how_20to_20write_20a_20problem_15363',['How to write a problem',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/problemWritingExample.html',1,'']]]
+  ['how_20to_20create_20a_20new_20task_20dynamics_15363',['How to create a new task dynamics',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/taskDynamicsExample.html',1,'']]],
+  ['how_20to_20create_20new_20tvm_20functions_2e_15364',['How to create new TVM functions.',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/functionWritingExample.html',1,'']]],
+  ['how_20to_20write_20a_20problem_15365',['How to write a problem',['https://jrl-umi3218.github.io/tvm/doxygen/HEAD/problemWritingExample.html',1,'']]]
 ];
