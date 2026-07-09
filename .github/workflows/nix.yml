@@ -5,6 +5,18 @@ on:
       - devel
       - master
       - main
+    paths-ignore:
+    - README.md
+    - CHANGELOG.md
+    - ".github/workflows/build.yml"
+    - ".github/workflows/package.yml"
+    - ".pre-commit-config.yaml"
+    - "robots/README.md"
+    - "utils/**/README.md"
+    - "observers/**/README.md"
+    - "controllers/**/README.md"
+    - "binding/**/README.md"
+    - "src/mc_rtc/README.md"
   pull_request:
     branches:
       - devel
