@@ -22,7 +22,7 @@ TMP = $(CURDIR)/debian/tmp
 	dh $@ --no-parallel
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE} -DFETCHCONTENT_FULL_DISCONNECTED=OFF
+	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE} -DFETCHCONTENT_FULLY_DISCONNECTED=OFF
 
 override_dh_auto_install:
 	dh_auto_install
