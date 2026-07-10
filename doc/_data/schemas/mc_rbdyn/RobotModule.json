@@ -156,6 +156,23 @@
         "$ref": "../mc_rbdyn/RobotModule.FrameDescription.json"
       }
     },
+    "baseFrame": {
+      "type": "string"
+    },
+    "mountFrame": {
+      "type": "string"
+    },
+    "collisionLinks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of links that should be considered for collision checking"
+    },
+    "defaultMountingTransform": {
+      "$ref": "../SpaceVecAlg/PTransformd.json",
+      "description": "Default transform to apply to the robot when mounted on a another robot"
+    },
     "flexibilities":
     {
       "type": "array",
