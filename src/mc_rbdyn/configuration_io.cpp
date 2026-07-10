@@ -1126,6 +1126,14 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
 
   rm._frames = config("frames", std::vector<mc_rbdyn::RobotModule::FrameDescription>{});
 
+  rm._baseFrame = config("baseFrame", std::string{});
+
+  rm._mountFrame = config("mountFrame", std::string{});
+
+  rm._collisionLinks = config("collisionLinks", std::vector<std::string>{});
+
+  rm._defaultMountingTransform = config("defaultMountingTransform", sva::PTransformd::Identity());
+
   rm._compoundJoints = config("compoundJoints", mc_rbdyn::CompoundJointConstraintDescriptionVector{});
 
   return rm;
@@ -1156,6 +1164,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
     config.add("fixed", fixed);
   }
   config.add("frames", rm._frames);
+  config.add("baseFrame", rm._baseFrame);
+  config.add("mountFrame", rm._mountFrame);
+  config.add("collisionLinks", rm._collisionLinks);
+  config.add("defaultMountingTransform", rm._defaultMountingTransform);
   if(rm._bounds.size() != 6)
   {
     mc_rtc::log::error_and_throw("Wrong number ({}) of _bounds entries in RobotModule", rm._bounds.size());
