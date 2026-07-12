@@ -346,7 +346,7 @@
 <li class="toc-entry toc-h1"><a href="#before-starting">Before starting</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#required-softwares">Required softwares</a></li>
-<li class="toc-entry toc-h2"><a href="#install-our-blender-addon">Install our Blender addon</a></li>
+<li class="toc-entry toc-h2"><a href="#install-the-rsdf-surface-tool-addon">Install the RSDF Surface Tool addon</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#obtain-your-environment-model">Obtain your environment model</a>
@@ -356,24 +356,29 @@
 </li>
 <li class="toc-entry toc-h1"><a href="#create-a-planar-surface">Create a planar surface</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#creation-of-the-ground-surface">Creation of the Ground surface</a>
-<ul>
 <li class="toc-entry toc-h4"><a href="#a-note-on-naming-conventions">A note on naming conventions</a></li>
-</ul>
-</li>
-<li class="toc-entry toc-h2"><a href="#creation-of-the-groundside-surface">Creation of the GroundSide surface</a></li>
 <li class="toc-entry toc-h2"><a href="#planar-surface-creation-caveats">Planar surface creation caveats</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#create-a-cylindrical-surface">Create a cylindrical surface</a></li>
-<li class="toc-entry toc-h1"><a href="#add-a-collision-hull">Add a collision hull</a></li>
-<li class="toc-entry toc-h1"><a href="#generate-the-environment">Generate the environment</a></li>
+<li class="toc-entry toc-h1"><a href="#export-your-environment-as-a-ros2-package">Export your environment as a ROS2 package</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#a-note-on-joints">A note on joints</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#collision-hulls">Collision hulls</a></li>
+<li class="toc-entry toc-h1"><a href="#export-and-use-your-surfaces">Export and use your surfaces</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#a-note-on-links">A note on links</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#testing-the-environment">Testing the environment</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#common-problems">Common problems</a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#the-surface-location-is-wrong">The surface location is wrong</a></li>
 <li class="toc-entry toc-h4"><a href="#the-surface-orientation-is-wrong">The surface orientation is wrong</a></li>
+<li class="toc-entry toc-h4"><a href="#add-planeadd-cylinder-reports-need-at-least-3-vertices">Add Plane/Add Cylinder reports “Need at least 3 vertices”</a></li>
 </ul>
 </li>
 </ul>
@@ -390,42 +395,35 @@
         <h1>Environment creation for mc_rtc</h1>
         
 
-        <p>This guide will help you to create environment that are compatible with mc_rtc and other JRL/LIRMM softwares.</p>
+        <p>This guide will help you to create environments that are compatible with mc_rtc and other JRL/LIRMM softwares.</p>
 
-<p>The screen captures of this guide are taken from Blender 2.78 but it should apply to any recent enough Blender version.</p>
+<p>Surfaces are created and exported in Blender using the <a href="https://github.com/isri-aist/rsdf_surface_exporter">RSDF Surface Tool</a> addon, which lets you create, visualize and export planar and cylindrical RSDF surfaces directly from a Blender mesh, with no need to hand-edit custom properties.</p>
+
+<p><img src="/mc_rtc/assets/tutorials/advanced/img/rsdf_exporter_demo.gif" alt="rsdf_exporter_demo" class="img-fluid" /></p>
 
 <h1 id="before-starting">Before starting</h1>
 
 <h2 id="required-softwares">Required softwares</h2>
 
 <ol>
-  <li>Blender</li>
-  <li><a href="https://gite.lirmm.fr/multi-contact/robot_script">robot_script</a></li>
+  <li>A recent version of Blender (4.2 or newer)</li>
+  <li>The <a href="https://github.com/isri-aist/rsdf_surface_exporter">RSDF Surface Tool</a> Blender addon, used in this guide to create and export surfaces, as well as to export the bodies and meshes of your environment</li>
 </ol>
 
-<p>Concerning Blender, on Ubuntu systems, it is advised to use <a href="https://launchpad.net/~thomas-schiex/+archive/ubuntu/blender">Thomas Schiex’s PPA</a> in order to get a fully featured Blender installation. In particular, collada (<code class="language-plaintext highlighter-rouge">.dae</code> files) import is not supported in the repository version of Blender.i</p>
-
-<p><code class="language-plaintext highlighter-rouge">robot_script</code> is a collection of Blender and shell scripts we will be using to go from a Blender file to a fully functional environment for mc_rtc.</p>
-
-<h2 id="install-our-blender-addon">Install our Blender addon</h2>
+<h2 id="install-the-rsdf-surface-tool-addon">Install the RSDF Surface Tool addon</h2>
 
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">mkdir -p $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
-  <li>Clone <code class="language-plaintext highlighter-rouge">robot_script</code> and navigate to the <code class="language-plaintext highlighter-rouge">robot_script</code> folder</li>
-  <li><code class="language-plaintext highlighter-rouge">cp -r blender_addons/io_qconvex/ $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
-  <li>Start Blender</li>
-  <li>Activate the addon: “Import-Export: qconvex cloud format” as shown in the image below</li>
+  <li>Download the latest release from the <a href="https://github.com/isri-aist/rsdf_surface_exporter/releases/latest">releases page</a> (or clone the repository and run <code class="language-plaintext highlighter-rouge">blender --command extension build</code> inside it to produce the <code class="language-plaintext highlighter-rouge">.zip</code> yourself)</li>
+  <li>Open Blender → <strong>Edit → Preferences → Add-ons → Install…</strong></li>
+  <li>Select the downloaded <code class="language-plaintext highlighter-rouge">.zip</code> file</li>
+  <li>Enable the addon</li>
 </ol>
 
-<p><img src="/mc_rtc/assets/tutorials/advanced/img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" /></p>
-
-<p>Step 1 creates an empty folder to put our addon in while Step 3 simply copy that addon to that folder.</p>
+<p>Once enabled, a new <strong>RSDF</strong> tab appears in the 3D View sidebar (press <strong>N</strong> to toggle the sidebar if it is hidden).</p>
 
 <h1 id="obtain-your-environment-model">Obtain your environment model</h1>
 
-<p>We will not go into the detail of modeling a 3D environment here. For the remainder of this documentation we will be working on the model provided <a href="/mc_rtc/assets/tutorials/advanced/data/blender_model_start.blend">here</a>. When you open this in Blender you should see a large flat surface (named “ground”) with a vertical cylinder in the middle (named “pole”).</p>
-
-<p><img src="/mc_rtc/assets/tutorials/advanced/img/blender_model_start.png" alt="blender_model_start" class="img-fluid" /></p>
+<p>We will not go into the detail of modeling a 3D environment here. For the remainder of this documentation we will be working on a model with a large flat surface (named “ground”) with a vertical cylinder in the middle (named “pole”), matching the example shown in the animation above.</p>
 
 <h2 id="a-note-on-scale">A note on scale</h2>
 
@@ -439,28 +437,18 @@
 
 <h1 id="create-a-planar-surface">Create a planar surface</h1>
 
-<p>We will create two surfaces in this section, the first will showcase the basics to create a surface, the second will allow us to show an important issue about orientation.</p>
-
-<h2 id="creation-of-the-ground-surface">Creation of the Ground surface</h2>
-
 <p>For this first surface, we will create a surface corresponding to the ground.</p>
 
 <ol>
-  <li>Select the “ground” object (Right click on the ground mesh)</li>
+  <li>Select the “ground” object</li>
   <li>Go into Edit mode (Shortcut: Tab)</li>
-  <li>Select the upper face (Choose the face selection tool then right click on the face)</li>
-  <li>Duplicate the face (Shortcut: Shift + D) then hit escape to keep the face at its original position</li>
-  <li>Separate the face from the “ground” object (Shortcut: P, then choose “Selection”)</li>
-  <li>This should have created a new object named “ground.001”, rename this object Ground</li>
-  <li>Change the origin of the “Ground” object to its geometry</li>
-  <li>Select the “Ground” object then select the “ground” object (First click “Ground” in the scene hierarchy, then click “ground” while holding Shift)</li>
-  <li>Set “ground” as a parent to “Ground” (Shortcut: Ctrl + P, then choose “Keep transform”)</li>
-  <li>Add a custom property named “surface” without any value to the “Ground” object</li>
+  <li>Select the face(s) that should make up the surface (Choose the face selection tool then right click on the face)</li>
+  <li>In the RSDF sidebar tab, click <strong>Add Plane</strong></li>
 </ol>
 
-<p>Congratulations you created you very first surface!</p>
+<p>A new, green, semi-transparent object appears immediately, matching the shape of the face(s) you selected, and a corresponding entry is added to the surface list in the sidebar. There is no more need to duplicate/separate the face, set a custom origin, or parent anything by hand: the addon computes the surface’s origin and orientation for you directly from the selected geometry.</p>
 
-<p>This <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_planar_surface.mp4">movie</a> will show this process.</p>
+<p>Congratulations, you created your very first surface!</p>
 
 <h4 id="a-note-on-naming-conventions">A note on naming conventions</h4>
 
@@ -472,24 +460,7 @@
   <li>Collision hulls should be in lower-case with the “_hull” prefix (e.g. “ground_hull” or “stair_step_1_hull”)</li>
 </ol>
 
-<h2 id="creation-of-the-groundside-surface">Creation of the GroundSide surface</h2>
-
-<p>For this second surface, we will create a surface corresponding to one of the side of the ground. While it does not have any practical purpose, it will serve to illustrate the importance of orientation and how to change it. First, reproduce all the steps above but with a side of the ground mesh to create the surface “GroundSide”.</p>
-
-<p>If you were to generate the environment now, you would notice that surface is not oriented as you expect. This is because the local frame of the object is not correct. We need to make the Z-axis (blue in Blender) match the normal of the surface.</p>
-
-<ol>
-  <li>Select the “GroundSide” object</li>
-  <li>Make sure to enable the local frame display rather than global</li>
-  <li>Rotate the object 90 degrees around the Y-axis (Shortcut: R, then Y to lock the Y axis, then hit 90 on the numeric pad of your keyboard, then hit Enter)</li>
-  <li>Go into Edit mode (Shortcut: Tab)</li>
-  <li>Select all points in the mesh (Shortcut: A)</li>
-  <li>Rotate the points -90 degrees around the Y-axis</li>
-</ol>
-
-<p>Congratulations, you fixed the orientation issue!</p>
-
-<p>This <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_rotate_surface.mp4">movie</a> will show this process.</p>
+<p>Surfaces created by the addon are named “Surface_N” by default. Select the surface in the list and edit its <strong>Name</strong> field in the sidebar to rename it according to these conventions.</p>
 
 <h2 id="planar-surface-creation-caveats">Planar surface creation caveats</h2>
 
@@ -497,62 +468,136 @@
 
 <p>When creating a contact between the surface you designed and another surface, mc_rtc will generate contact forces at the points of your surface. This means that the more points you put into a surface, the more variable will be added to the problem. Thus, it is best to keep your surface design simple (i.e. a single quadrilater), especially when you are designing a robot surface.</p>
 
-<p>The points need to be co-planar otherwise the environment generation will fail.</p>
+<p>The points need to be co-planar otherwise the surface will not be usable.</p>
 
 <h1 id="create-a-cylindrical-surface">Create a cylindrical surface</h1>
 
-<p>In this section we will create a single cylindrical surface. The same orientation issue applies than with planar surface. Here the convention is that the Z-axis is the cylinder’s axis and the X-axis is the cylinder’s polar axis.</p>
+<p>In this section we will create a single cylindrical surface out of the “pole” object. The convention is that the local X-axis is the cylinder’s polar axis; the addon takes care of orienting the surface correctly for you, you no longer need to reason about local frames or apply manual rotations.</p>
 
 <ol>
   <li>Select the “pole” object</li>
-  <li>Snap the cursor to the object origin (Shortcut: Shift + S, then Cursor to selected)</li>
-  <li>Add a plain axes object and rename it “Pole”</li>
-  <li>Make “pole” the parent of “Pole”</li>
-  <li>Add a custom property named “surface” to the object with the value “cylindrical”</li>
-  <li>Add a custom property named “radius”, the value of this property will be the radius of the cylinder</li>
-  <li>Add a custom property named “width”, the value of this property will be the length of the cylinder</li>
+  <li>Go into Edit mode (Shortcut: Tab)</li>
+  <li>Select all the faces that make up the cylindrical band (Shortcut: A to select the whole mesh, if the object only contains the cylinder)</li>
+  <li>In the RSDF sidebar tab, click <strong>Add Cylinder</strong></li>
 </ol>
+
+<p>The addon fits a cylinder (center, axis, radius and width) to your selection and creates the corresponding green surface immediately, with its radius and width computed directly from your selected geometry.</p>
 
 <p>Congratulations, you created your first cylindrical surface!</p>
 
-<p>This <a href="https://gite.lirmm.fr/multi-contact/mc_rtc/wikis/videos/blender_create_cylindrical.mp4">movie</a> will show this process.</p>
+<p>Unlike the previous, custom-property based workflow, the surface’s radius and width are regular numeric fields internally, so there is no risk of them being silently clamped to the [0, 1] range.</p>
 
-<p>Note that by default, Blender constrains custom properties value in the [0, 1] range. Be careful when setting your cylinder “width” property as this might be a problem.</p>
+<h1 id="export-your-environment-as-a-ros2-package">Export your environment as a ROS2 package</h1>
 
-<h1 id="add-a-collision-hull">Add a collision hull</h1>
+<p>You no longer need a separate tool to export your environment’s bodies. Once your bodies are ready in Blender, the RSDF Surface Tool addon can export the whole environment as a ready-to-use ROS2 package.</p>
 
-<p>To add a collision hull simply add a new mesh and add an empty property named “hull”.</p>
+<ol>
+  <li>In the RSDF sidebar tab, click <strong>Export ROS2 Description Package</strong></li>
+  <li>Set the package name, robot name, maintainer info, and whether to include the RSDF surfaces you created (<strong>Include RSDF Surfaces</strong>)</li>
+  <li>Choose a destination folder</li>
+</ol>
 
-<p>Note that the generation script will create convex hulls for each body in the model, you don’t need to create specific hulls for those.</p>
+<p>This generates a full <code class="language-plaintext highlighter-rouge">ament_cmake</code> package with the following layout:</p>
 
-<p>Before going into the next step, you can get the result of the tutorial <a href="/mc_rtc/assets/tutorials/advanced/data/blender_model_final.blend">here</a>.</p>
-
-<h1 id="generate-the-environment">Generate the environment</h1>
-
-<p>Go into the robot_script folder and launch the do_all.sh script as such:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./do_all.sh my_file.blend /path/to/ros/package env_name package_name
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;package_name&gt;/
+  package.xml
+  CMakeLists.txt
+  urdf/&lt;robot_name&gt;.urdf
+  meshes/&lt;link_name&gt;.stl
+  rsdf/&lt;robot_name&gt;.rsdf        (if "Include RSDF Surfaces" is enabled)
+  launch/display.launch.py
+  launch/display.rviz
 </code></pre></div></div>
 
-<p>The package_name is optional if you are adding the environment to the <code class="language-plaintext highlighter-rouge">mc_env_description</code> package.</p>
+<p>Every top-level mesh/empty object in the scene becomes a URDF link named after the object, and parent/child relationships become URDF joints. Mesh geometry is exported as STL in each object’s own local space, so it lines up with the joint origins.</p>
+
+<h4 id="a-note-on-joints">A note on joints</h4>
+
+<p>By default, every joint is <strong>fixed</strong>. To make a joint movable, add custom properties to the child object:</p>
+
+<ol>
+  <li>Select the child object in the 3D viewport</li>
+  <li>In the <strong>Properties editor</strong>, open the <strong>Object Properties</strong> tab (the small orange square icon, not the green triangle “Object Data” tab)</li>
+  <li>Scroll to the bottom of that tab and expand the <strong>Custom Properties</strong> section</li>
+  <li>Click <strong>+ Add</strong> (or <strong>New</strong>) once per property below, rename it to the exact name, and set its value. Every movable joint needs a <code class="language-plaintext highlighter-rouge">joint</code> property naming its type, plus the properties required for that type:</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">joint</code> value</th>
+      <th>Meaning</th>
+      <th>Required properties</th>
+      <th>Optional properties</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">revolute</code></td>
+      <td>Bounded rotation around <code class="language-plaintext highlighter-rouge">axis</code></td>
+      <td><code class="language-plaintext highlighter-rouge">axis</code>, <code class="language-plaintext highlighter-rouge">lower</code>, <code class="language-plaintext highlighter-rouge">upper</code></td>
+      <td><code class="language-plaintext highlighter-rouge">effort</code>, <code class="language-plaintext highlighter-rouge">velocity</code>, <code class="language-plaintext highlighter-rouge">name</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">continuous</code></td>
+      <td>Unbounded rotation around <code class="language-plaintext highlighter-rouge">axis</code> (e.g. a wheel)</td>
+      <td><code class="language-plaintext highlighter-rouge">axis</code></td>
+      <td><code class="language-plaintext highlighter-rouge">effort</code>, <code class="language-plaintext highlighter-rouge">velocity</code>, <code class="language-plaintext highlighter-rouge">name</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">prismatic</code></td>
+      <td>Sliding motion along <code class="language-plaintext highlighter-rouge">axis</code></td>
+      <td><code class="language-plaintext highlighter-rouge">axis</code>, <code class="language-plaintext highlighter-rouge">lower</code>, <code class="language-plaintext highlighter-rouge">upper</code></td>
+      <td><code class="language-plaintext highlighter-rouge">effort</code>, <code class="language-plaintext highlighter-rouge">velocity</code>, <code class="language-plaintext highlighter-rouge">name</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">axis</code>: string <code class="language-plaintext highlighter-rouge">"x y z"</code>, e.g. <code class="language-plaintext highlighter-rouge">"0 0 1"</code> to rotate/slide around Z</li>
+  <li><code class="language-plaintext highlighter-rouge">lower</code>, <code class="language-plaintext highlighter-rouge">upper</code>: floats, joint limits in radians (revolute) or metres (prismatic)</li>
+  <li><code class="language-plaintext highlighter-rouge">effort</code>: float, default <code class="language-plaintext highlighter-rouge">1000</code>, max effort (N or N·m) reported in the URDF <code class="language-plaintext highlighter-rouge">&lt;limit&gt;</code> tag</li>
+  <li><code class="language-plaintext highlighter-rouge">velocity</code>: float, default <code class="language-plaintext highlighter-rouge">1.0</code>, max velocity (rad/s or m/s) reported in the URDF <code class="language-plaintext highlighter-rouge">&lt;limit&gt;</code> tag</li>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: string, optional, overrides the joint’s name in the URDF (defaults to <code class="language-plaintext highlighter-rouge">&lt;link_name&gt;_joint</code>)</li>
+</ul>
+
+<p>If <code class="language-plaintext highlighter-rouge">joint</code> is omitted, the object gets a fixed joint. If <code class="language-plaintext highlighter-rouge">joint</code> is set but a required property for that type is missing, the export falls back to a fixed joint and reports a warning listing the missing property.</p>
+
+<h1 id="collision-hulls">Collision hulls</h1>
+
+<p>You don’t need to create collision hulls by hand: mc_rtc automatically generates convex hulls from the mesh-type collision geometries referenced in the URDF, regardless of how the robot or environment is loaded (<code class="language-plaintext highlighter-rouge">env</code>/<code class="language-plaintext highlighter-rouge">object</code>, <code class="language-plaintext highlighter-rouge">json</code>, or C++ <code class="language-plaintext highlighter-rouge">RobotModule</code>). See <a href="/mc_rtc/tutorials/advanced/new-robot.html">Automatic Convex Hull Generation</a> in the “Integrate a new robot” tutorial for details on how this works and where the generated hulls are cached.</p>
+
+<h1 id="export-and-use-your-surfaces">Export and use your surfaces</h1>
+
+<p>Once you are satisfied with your surfaces, click <strong>Export RSDF</strong> in the sidebar and choose a filename and location; if you forget the <code class="language-plaintext highlighter-rouge">.rsdf</code> extension it will be appended for you automatically.</p>
+
+<p>mc_rtc looks for surfaces in a robot or environment’s <code class="language-plaintext highlighter-rouge">&lt;path&gt;/rsdf/&lt;name&gt;/</code> directory, loading every <code class="language-plaintext highlighter-rouge">*.rsdf</code> file it finds there and merging their surfaces. Place your exported file(s) in that directory.</p>
+
+<h4 id="a-note-on-links">A note on links</h4>
+
+<p>Every surface exported by the addon is currently attached to the body named <code class="language-plaintext highlighter-rouge">base_link</code> (this is a known current limitation of the addon, see its readme). If your environment or robot has several distinct bodies, open the exported <code class="language-plaintext highlighter-rouge">.rsdf</code> file and edit the <code class="language-plaintext highlighter-rouge">link="..."</code> attribute of each <code class="language-plaintext highlighter-rouge">&lt;planar_surface&gt;</code>/<code class="language-plaintext highlighter-rouge">&lt;cylindrical_surface&gt;</code> element so that it matches the actual body name (e.g. “ground” or “pole”) the surface belongs to.</p>
 
 <h1 id="testing-the-environment">Testing the environment</h1>
 
-<p>See the tutorial about <a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">visualizing surfaces</a>.</p>
+<p>See the tutorial about <a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">visualizing surfaces</a>. You can also use the addon’s own <strong>Load RSDF</strong> button to re-import a <code class="language-plaintext highlighter-rouge">.rsdf</code> file into Blender at any time, to double-check that a surface’s position, orientation and type were exported correctly.</p>
 
 <h2 id="common-problems">Common problems</h2>
 
 <h4 id="the-surface-location-is-wrong">The surface location is wrong</h4>
 
-<p>Make sure the origin of the surface object in the Blender project corresponds to what you expect.</p>
+<p>Make sure the origin of the object/face you selected in the Blender project corresponds to what you expect before clicking <strong>Add Plane</strong>/<strong>Add Cylinder</strong>.</p>
 
 <h4 id="the-surface-orientation-is-wrong">The surface orientation is wrong</h4>
 
-<p>Make sure the surface normal is facing the right direction in the Blender project. Make sure that you are viewing the local frame of the object.</p>
+<p>Make sure the mesh normals are consistent (Blender’s face selection uses the face winding to determine orientation).</p>
+
+<h4 id="add-planeadd-cylinder-reports-need-at-least-3-vertices">Add Plane/Add Cylinder reports “Need at least 3 vertices”</h4>
+
+<p>Make sure you are in Edit mode with at least one face selected on the active object before clicking the button.</p>
 
 <h1 id="add-a-surface-to-a-robot">Add a surface to a robot</h1>
 
-<p>To add a surface to a robot, you would follow the same steps as with an environment but the environment model is the robot’s body where you want to add a surface. Then generate the “environment” into a temporary directory and use the generated rsdf file in your original robot’s description folder.</p>
+<p>To add a surface to a robot, follow the same steps as with an environment, but select faces on the robot body’s own mesh instead of an environment mesh, then export and place the resulting <code class="language-plaintext highlighter-rouge">.rsdf</code> file in the robot description’s <code class="language-plaintext highlighter-rouge">rsdf/&lt;robot_name&gt;/</code> directory, making sure the <code class="language-plaintext highlighter-rouge">link</code> attribute of each surface matches the body it belongs to.</p>
 
 
 
