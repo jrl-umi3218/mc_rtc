@@ -215,6 +215,10 @@
                         
                       
                         
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_robot_visualization.html">ロボットの可視化</a></li>
+                        
+                      
+                        
                         <li><a href="/mc_rtc/jp/tutorials/tools/mc_surfaces_visualization.html">サーフェスの可視化</a></li>
                         
                       
@@ -349,7 +353,7 @@
         <h1>凸形状の可視化</h1>
         
 
-        <p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code> は mc_rtc GUI アプリケーションでロボットの凸部を可視化するツールです。</p>
+        <p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code> は mc_rtc GUI アプリケーションでロボットの凸部を可視化するツールです。 これは、利便性のために提供されている <a href="/mc_rtc/jp/tutorials/tools/mc_robot_visualization.html">mc_robot_visualization</a> のサブツールです。</p>
 
 <h3 id="ビジュアライゼーションの起動">ビジュアライゼーションの起動</h3>
 
@@ -357,6 +361,9 @@
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_convex_visualization JVRC1
 </code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">mc_convex_visualization</code> は <code class="language-plaintext highlighter-rouge">mc_rtc gui</code> のみにパブリッシュしますが、<code class="language-plaintext highlighter-rouge">mc_convex_visualization_ros</code> は <code class="language-plaintext highlighter-rouge">mc_rtc gui</code> と <code class="language-plaintext highlighter-rouge">ros</code>（RViZ）の両方にパブリッシュします。
+パッケージからインストールした場合、ROS 非対応バージョンは <code class="language-plaintext highlighter-rouge">mc-rtc-utils</code> によって提供され、ROS 対応バージョンは <code class="language-plaintext highlighter-rouge">ros-&lt;distro&gt;-mc-rtc-utils</code> によって提供されます。</p>
 
 <p>プログラムの引数は <code class="language-plaintext highlighter-rouge">MainRobot</code> のエントリと同じものを指定します。エイリアスも扱えます。例えば</p>
 

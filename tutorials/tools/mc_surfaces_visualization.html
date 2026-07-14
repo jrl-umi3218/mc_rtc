@@ -215,6 +215,10 @@
                         
                       
                         
+                        <li><a href="/mc_rtc/tutorials/tools/mc_robot_visualization.html">Visualizing robots</a></li>
+                        
+                      
+                        
                         <li><strong>Visualizing surfaces</strong></li>
                           
                         
@@ -349,21 +353,24 @@
         <h1>Visualizing surfaces</h1>
         
 
-        <p><code class="language-plaintext highlighter-rouge">mc_surfaces_visualization</code> is a tool that allows you to visualize the surfaces of a robot in the RViZ application. It is part of the <a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a> package.</p>
+        <p><code class="language-plaintext highlighter-rouge">mc_surfaces_visualization</code> is a tool that allows you to visualize the surfaces of a robot in <code class="language-plaintext highlighter-rouge">mc_rtc GUI</code> or the RViZ application. This is a sub-tool of <a href="/mc_rtc/tutorials/tools/mc_robot_visualization.html">mc_robot_visualization</a> provided for convenience.</p>
 
 <h3 id="launching-the-visualization">Launching the visualization</h3>
 
 <p>The tool is launched as follows:</p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_surfaces_visualization JVRC1
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_surfaces_visualization[_ros] JVRC1
 </code></pre></div></div>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">mc_surfaces_visualization</code> only publishes in <code class="language-plaintext highlighter-rouge">mc_rtc gui</code>, while <code class="language-plaintext highlighter-rouge">mc_surfaces_visualization_ros</code> publishes in both <code class="language-plaintext highlighter-rouge">mc_rtc gui</code> and <code class="language-plaintext highlighter-rouge">ros</code> (RViZ).
+If you installed from debian packages, the ros-free version is provided by <code class="language-plaintext highlighter-rouge">mc-rtc-utils</code> while the ros version is provided by <code class="language-plaintext highlighter-rouge">ros-&lt;distro&gt;-mc-rtc-utils</code>.</p>
 
 <p>The arguments to the program should be the same as you would use as a <code class="language-plaintext highlighter-rouge">MainRobot</code> entry. It can also handle aliases. For example:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Specify a vector of arguments</span>
-<span class="nv">$ </span>mc_surfaces_visualization <span class="nb">env</span> <span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span> ground
+<span class="nv">$ </span>mc_surfaces_visualization_ros <span class="nb">env</span> <span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span> ground
 <span class="c"># Or an alias</span>
-<span class="nv">$ </span>mc_surfaces_visualization <span class="nb">env</span>/ground
+<span class="nv">$ </span>mc_surfaces_visualization_ros <span class="nb">env</span>/ground
 </code></pre></div></div>
 
 <p>After launching an mc_rtc GUI, it should look like this:</p>

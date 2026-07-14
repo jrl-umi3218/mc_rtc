@@ -215,6 +215,10 @@
                         
                       
                         
+                        <li><a href="/mc_rtc/jp/tutorials/tools/mc_robot_visualization.html">ロボットの可視化</a></li>
+                        
+                      
+                        
                         <li><strong>サーフェスの可視化</strong></li>
                           
                         
@@ -349,7 +353,7 @@
         <h1>サーフェスの可視化</h1>
         
 
-        <p><code class="language-plaintext highlighter-rouge">mc_surfaces_visualization</code>は、ロボットの表面をRVizで表示するツールです。<a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>パッケージに含まれています。</p>
+        <p><code class="language-plaintext highlighter-rouge">mc_surfaces_visualization</code>は、ロボットの表面をRVizで表示するツールです。<a href="https://github.com/jrl-umi3218/mc_rtc_ros" target="blank_">mc_rtc_ros</a>パッケージに含まれています。 これは、利便性のために提供されている <a href="/mc_rtc/jp/tutorials/tools/mc_robot_visualization.html">mc_robot_visualization</a> のサブツールです。</p>
 
 <h3 id="可視化ツールを起動する">可視化ツールを起動する</h3>
 
@@ -358,12 +362,15 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_surfaces_visualization JVRC1
 </code></pre></div></div>
 
+<p><code class="language-plaintext highlighter-rouge">mc_surfaces_visualization</code> は <code class="language-plaintext highlighter-rouge">mc_rtc gui</code> のみにパブリッシュしますが、<code class="language-plaintext highlighter-rouge">mc_surfaces_visualization_ros</code> は <code class="language-plaintext highlighter-rouge">mc_rtc gui</code> と <code class="language-plaintext highlighter-rouge">ros</code>（RViZ）の両方にパブリッシュします。
+Debian パッケージからインストールした場合、ROS 非対応バージョンは <code class="language-plaintext highlighter-rouge">mc-rtc-utils</code> によって提供され、ROS 対応バージョンは <code class="language-plaintext highlighter-rouge">ros-&lt;distro&gt;-mc-rtc-utils</code> によって提供されます。</p>
+
 <p>プログラムの引数は <code class="language-plaintext highlighter-rouge">MainRobot</code> のエントリと同じものを指定します。エイリアスも扱えます。例えば</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 引数のベクトルを指定する</span>
-<span class="nv">$ </span>mc_surfaces_visualization <span class="nb">env</span> <span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span> ground
+<span class="nv">$ </span>mc_surfaces_visualization_ros <span class="nb">env</span> <span class="sb">`</span>rospack find mc_env_description<span class="sb">`</span> ground
 <span class="c"># またはエイリアス</span>
-<span class="nv">$ </span>mc_surfaces_visualization <span class="nb">env</span>/ground
+<span class="nv">$ </span>mc_surfaces_visualization_ros <span class="nb">env</span>/ground
 </code></pre></div></div>
 
 <p>mc_rtc GUIを起動した後、これが表示されるはずです：</p>
