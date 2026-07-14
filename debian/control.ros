@@ -19,3 +19,16 @@ Description: mc_rtc - ROS plugin
  .
  ROS plugin for mc_rtc. It will enable the publication of the robot's state by
  mc_rtc controllers
+
+Package: ros-@ROS_DISTRO@-mc-rtc-utils
+Section: science
+Architecture: any
+Depends: mc-rtc-utils (= ${binary:Version}),
+         ros-@ROS_DISTRO@-mc-rtc-plugin,
+         ${shlibs:Depends},
+         ${misc:Depends}
+Description: mc-rtc - ROS-enabled Utilities (@ROS_DISTRO@)
+ This package provides the ROS-enabled utilities for mc_rtc, built with ROS @ROS_DISTRO@
+ support. It includes executables with ROS integration (e.g., *_ros variants).
+ .
+ These utilities complement the standard mc-rtc-utils with ROS-specific features.
