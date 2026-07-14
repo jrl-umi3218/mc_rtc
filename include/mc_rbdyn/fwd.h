@@ -30,4 +30,7 @@ using ConstFramePtr = std::shared_ptr<const Frame>;
 
 struct ForceSensor;
 
+struct Contact;
+using ContactPtr = std::shared_ptr<Contact>;
+
 } // namespace mc_rbdyn
