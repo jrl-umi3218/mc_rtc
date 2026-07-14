@@ -55,6 +55,15 @@ else()
   endif()
 endif()
 
+# Force override jrl-cmakemodule default
+set(PYTHON_BINDING_FORCE_PYTHON3
+    ON
+    CACHE BOOL "Force use of Python 3 for bindings" FORCE
+)
+set(PYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3
+    OFF
+    CACHE BOOL "Force use of Python 3 for bindings" FORCE
+)
 include(${JRL_CMAKE_MODULES}/base.cmake)
 include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
 include(${JRL_CMAKE_MODULES}/msvc-specific.cmake)
