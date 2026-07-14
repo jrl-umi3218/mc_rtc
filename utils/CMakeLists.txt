@@ -38,19 +38,36 @@ if(BUILD_MC_RTC_CPP_UTILS)
 
   add_mc_rtc_utils(mc_json_to_yaml)
 
+  # Build RobotVisualizer without ROS
   add_library(RobotVisualizer OBJECT RobotVisualizer.h RobotVisualizer.cpp)
   target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_control)
+
+  # Build RobotVisualizer with ROS if available
   if(TARGET mc_rtc::mc_rtc_ros)
-    target_link_libraries(RobotVisualizer PUBLIC mc_rtc::mc_rtc_ros)
-    target_compile_definitions(RobotVisualizer PUBLIC MC_RTC_HAS_ROS)
+    add_library(RobotVisualizer_ros OBJECT RobotVisualizer.h RobotVisualizer.cpp)
+    target_link_libraries(
+      RobotVisualizer_ros PUBLIC mc_rtc::mc_control mc_rtc::mc_rtc_ros
+    )
+    target_compile_definitions(RobotVisualizer_ros PUBLIC MC_RTC_HAS_ROS)
   endif()
 
+  # Non-ROS executables
   add_mc_rtc_utils(mc_convex_visualization)
   target_link_libraries(mc_convex_visualization PRIVATE RobotVisualizer)
   add_mc_rtc_utils(mc_robot_visualization)
   target_link_libraries(mc_robot_visualization PRIVATE RobotVisualizer)
   add_mc_rtc_utils(mc_surfaces_visualization)
   target_link_libraries(mc_surfaces_visualization PRIVATE RobotVisualizer)
+
+  # ROS executables (with _ros suffix)
+  if(TARGET mc_rtc::mc_rtc_ros)
+    add_mc_rtc_utils(mc_convex_visualization_ros mc_convex_visualization.cpp)
+    target_link_libraries(mc_convex_visualization_ros PRIVATE RobotVisualizer_ros)
+    add_mc_rtc_utils(mc_robot_visualization_ros mc_robot_visualization.cpp)
+    target_link_libraries(mc_robot_visualization_ros PRIVATE RobotVisualizer_ros)
+    add_mc_rtc_utils(mc_surfaces_visualization_ros mc_surfaces_visualization.cpp)
+    target_link_libraries(mc_surfaces_visualization_ros PRIVATE RobotVisualizer_ros)
+  endif()
 
   add_mc_rtc_utils(mc_rtc_ticker)
   target_link_libraries(
@@ -80,18 +97,8 @@ endif() # MC_RTC_BUILD_CPP_UTILS
 # ######################################################################################
 
 if(BUILD_MC_RTC_PYTHON_UTILS)
-  message(STATUS "Building Python utilities (because MC_RTC_BUILD_PYTHON_UTILS is ON)")
-  if(NOT DEFINED MC_LOG_UI_PYTHON_EXECUTABLE)
-    if(PYTHON_BINDING_FORCE_PYTHON3)
-      set(MC_LOG_UI_PYTHON_EXECUTABLE "python3")
-    elseif(PYTHON_BINDING_FORCE_PYTHON2)
-      set(MC_LOG_UI_PYTHON_EXECUTABLE "python2")
-    else()
-      set(MC_LOG_UI_PYTHON_EXECUTABLE "python")
-    endif()
-  endif()
-
-  find_program(PYTHON_PGM ${MC_LOG_UI_PYTHON_EXECUTABLE})
+  message(STATUS "Building Python3 utilities (because MC_RTC_BUILD_PYTHON_UTILS is ON)")
+  find_program(PYTHON_PGM python3)
   if(NOT PYTHON_PGM)
     return()
   endif()
