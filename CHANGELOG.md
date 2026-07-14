@@ -5,6 +5,7 @@
 ## [2.15.1] - 2026-07-14
 
 ### Debian Packaging
+
 - Fix support for both `libmc-rtc-ros-compat[-dev]` or `ros-<distro>-mc-rtc-ros-compat`. Installing the later now removes the former without affecting `libmc-rtc` packages as expected.
 - Fully split ros and non-ros packages, `mc-rtc-utils` is now split in two packages:
   - `mc-rtc-utils` for non-ros utilities. This includes the ros-free `mc_[convex|surface|robot]_visualization`.
