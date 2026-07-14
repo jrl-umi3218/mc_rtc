@@ -75,7 +75,7 @@ tutorials:
             # パッケージをインストールする
             sudo apt install libmc-rtc-dev mc-rtc-utils
             # ROSディストリビューションのミラーがセットアップされているものと仮定
-            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-utils
         - name: 最新版のインストール
           lang: bash
           source: |
@@ -84,7 +84,7 @@ tutorials:
             # パッケージをインストールする
             sudo apt install libmc-rtc-dev mc-rtc-utils
             # ROSディストリビューションのミラーがセットアップされているものと仮定
-            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-utils
     configuration:
       # FIXME Outdated translation
       title: 設定
