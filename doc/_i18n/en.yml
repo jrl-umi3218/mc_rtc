@@ -129,6 +129,8 @@ tutorials:
       title: Log manipulation
     mc_log_ui:
       title: Log plotting
+    mc_robot_visualization:
+      title: Visualizing robots
     mc_surfaces_visualization:
       title: Visualizing surfaces
     mc_convex_visualization:
