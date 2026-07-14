@@ -36,9 +36,9 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
       OFF
       CACHE BOOL "" FORCE
   )
+  # sets rclcpp_FOUND and rclcpp::rclcpp target if found
   find_package(rclcpp QUIET)
   if(NOT TARGET rclcpp::rclcpp)
-    set(ROSCPP_FOUND False)
     return()
   endif()
   add_library(mc_rtc_3rd_party::ROS INTERFACE IMPORTED)
@@ -51,5 +51,6 @@ if(NOT TARGET mc_rtc_3rd_party::ROS)
   target_compile_definitions(
     mc_rtc_3rd_party::ROS INTERFACE MC_RTC_HAS_ROS_SUPPORT MC_RTC_ROS_IS_ROS2
   )
+  # Legacy, we should use rclcpp_FOUND instead
   set(ROSCPP_FOUND True)
 endif()

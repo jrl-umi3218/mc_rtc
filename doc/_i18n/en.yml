@@ -75,7 +75,7 @@ tutorials:
             # Install packages
             sudo apt install libmc-rtc-dev mc-rtc-utils
             # Assuming you have a ROS distribution mirror setup
-            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-utils
         - name: Install head version
           lang: bash
           source: |
@@ -84,7 +84,7 @@ tutorials:
             # Install packages
             sudo apt install libmc-rtc-dev mc-rtc-utils
             # Assuming you have a ROS distribution mirror setup
-            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-utils
     configuration:
       title: Configuring mc_rtc and its components
     running-a-controller:
