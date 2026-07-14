@@ -1,6 +1,6 @@
 Source: mc-rtc
 Priority: optional
-Maintainer: Pierre Gergondet <pierre.gergondet+ppa@gmail.com>
+Maintainer: Arnaud Tanguy <arn.tanguy+ppa@gmail.com>
 Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/jrl-umi3218/mc_rtc
@@ -8,6 +8,7 @@ Vcs-Git: https://github.com/jrl-umi3218/mc_rtc
 Vcs-Browser: https://github.com/jrl-umi3218/mc_rtc
 Build-Depends: debhelper (>= 9),
                cmake,
+               ninja-build,
                doxygen,
                graphviz,
                libboost-filesystem-dev,
@@ -21,7 +22,7 @@ Build-Depends: debhelper (>= 9),
                libtasks-qld-dev|libtasks-dev,
                libtvm-dev,
                libmesh-sampling-dev,
-               libmc-rtc-ros-compat-dev,
+               libmc-rtc-ros-compat-dev | ros-@ROS_DISTRO@-mc-rtc-ros-compat,
                libeigen-quadprog-dev,
                libstate-observation-dev,
                libgeos++-inline-dev|libgeos++-dev,
@@ -37,13 +38,14 @@ Build-Depends: debhelper (>= 9),
                libyaml-cpp-dev,
                libspdlog-dev,
                libnotify-dev,
-# ros-@ROS_DISTRO@-ros-base,
-# ros-@ROS_DISTRO@-roscpp | ros-@ROS_DISTRO@-rclcpp,
-# ros-@ROS_DISTRO@-sensor-msgs,
-# ros-@ROS_DISTRO@-common-msgs | ros-@ROS_DISTRO@-common-interfaces,
-# ros-@ROS_DISTRO@-tf2-ros,
-# ros-@ROS_DISTRO@-rosbag | ros-@ROS_DISTRO@-rosbag2,
-# ros-@ROS_DISTRO@-mc-rtc-msgs,
+                ros-@ROS_DISTRO@-ros-base,
+                ros-@ROS_DISTRO@-rclcpp,
+                ros-@ROS_DISTRO@-sensor-msgs,
+                ros-@ROS_DISTRO@-common-interfaces,
+                ros-@ROS_DISTRO@-tf2-ros,
+                ros-@ROS_DISTRO@-rosbag2,
+                ros-@ROS_DISTRO@-mc-rtc-msgs,
+                ros-@ROS_DISTRO@-ament-package,
                libltdl-dev
 
 Package: libmc-rtc-dev
@@ -58,7 +60,7 @@ Depends: cmake,
          libtasks-qld-dev|libtasks-dev,
          libtvm-dev,
          libmesh-sampling-dev,
-         libmc-rtc-ros-compat-dev,
+         libmc-rtc-ros-compat-dev | ros-@ROS_DISTRO@-mc-rtc-ros-compat,
          libeigen-quadprog-dev,
          libstate-observation-dev,
          libgeos++-dev,
@@ -84,7 +86,8 @@ Package: libmc-rtc
 Section: libs
 Architecture: any
 Replaces: libmc-rtc1
-Depends: ${shlibs:Depends},
+Depends: libmc-rtc-ros-compat | ros-@ROS_DISTRO@-mc-rtc-ros-compat,
+         ${shlibs:Depends},
          ${misc:Depends},
          mc-rtc-data
 Description: mc-rtc - Real-time control of robots

@@ -12,10 +12,14 @@ export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$(CMAKE_PREFIX_PATH)
 TMP = $(CURDIR)/debian/tmp
 
 %:
-	dh $@ --no-parallel
+	dh $@ --parallel
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE} -DFETCHCONTENT_FULLY_DISCONNECTED=OFF
+	if ! command -v ninja >/dev/null 2>&1; then \
+		echo "Ninja is required. Please install it with: sudo apt-get install ninja-build"; \
+		exit 1; \
+	fi
+	dh_auto_configure --buildsystem=cmake+ninja -- -DPYTHON_DEB_ROOT=$(TMP) -DFETCHCONTENT_FULLY_DISCONNECTED=OFF
 
 override_dh_auto_install:
 	dh_auto_install
