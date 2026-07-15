@@ -1,3 +1,9 @@
+mc-rtc (2.15.2-1debian1) unstable; urgency=medium
+
+  * New release: version 2.15.2
+
+ -- Arnaud TANGUY <arn.tanguy@gmail.com>  Wed, 15 Jul 2026 12:22:19 +0200
+
 mc-rtc (2.15.1-1debian1) unstable; urgency=medium
 
   * New release: version 2.15.1
