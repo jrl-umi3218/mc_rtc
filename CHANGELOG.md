@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Debian Packaging
+
+- Add Ubuntu 26.04 resolute packaging
+
 ## [2.15.1] - 2026-07-14
 
 ### Debian Packaging
