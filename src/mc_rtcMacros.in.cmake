@@ -236,6 +236,62 @@ else()
   set(MC_ROBOTS_USER_ALIASES_DIRECTORY "$ENV{HOME}/.config/mc_rtc/aliases/")
 endif()
 
+# Macro: install_robot_specific_configurations
+# ----------------------------------------
+# Installs a robot-specific config files (named <ROBOT>.yaml) from controllers/ and observers/
+# subfolders located in the specified ETC_FOLDER. If ETC_FOLDER is not provided or is
+# empty, defaults to the current source directory (${CMAKE_CURRENT_SOURCE_DIR}).
+#
+# Usage:
+#   install_config_files(ROBOT [ETC_FOLDER])
+#
+# Example:
+#   install_config_files(hrp4)                       # Installs hrp4.yaml from current source directory
+#   install_config_files(jvrc1 path/to/etc)          # Installs jvrc1.yaml from specified etc folder
+#
+# For each controller or observer subfolder, if <ROBOT>.yaml exists, it will be
+# installed to the appropriate destination under the install prefix.
+macro(install_robot_specific_configurations ROBOT ETC_FOLDER)
+  if(${ARGC} GREATER 1)
+    set(ETC_FOLDER "${ARGV1}")
+  else()
+    set(ETC_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}")
+  endif()
+  set(CONFIG_FILE "${ROBOT}.yaml")
+  if(EXISTS "${ETC_FOLDER}/controllers")
+    file(
+      GLOB CONTROLLERS
+      RELATIVE "${ETC_FOLDER}/controllers"
+      "${ETC_FOLDER}/controllers/*"
+    )
+    foreach(CTL ${CONTROLLERS})
+      if(EXISTS "${ETC_FOLDER}/controllers/${CTL}/${CONFIG_FILE}")
+        install(
+          FILES "${ETC_FOLDER}/controllers/${CTL}/${CONFIG_FILE}"
+          DESTINATION
+            "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>/etc/controllers/${CTL}"
+        )
+      endif()
+    endforeach()
+  endif()
+  if(EXISTS "${ETC_FOLDER}/observers")
+    file(
+      GLOB OBSERVERS
+      RELATIVE "${ETC_FOLDER}/observers"
+      "${ETC_FOLDER}/observers/*"
+    )
+    foreach(OBS ${OBSERVERS})
+      if(EXISTS "${ETC_FOLDER}/observers/${OBS}/${CONFIG_FILE}")
+        install(
+          FILES "${ETC_FOLDER}/observers/${OBS}/${CONFIG_FILE}"
+          DESTINATION
+            "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>/etc/observers/${OBS}"
+        )
+      endif()
+    endforeach()
+  endif()
+endmacro()
+
 # -- Observers --
 mc_rtc_set_prefix(OBSERVERS mc_observers)
 
