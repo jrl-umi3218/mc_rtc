@@ -230,6 +230,7 @@ set(mc_rbdyn_SRC
     mc_rbdyn/RobotLoader.cpp
     mc_rbdyn/RobotConverter.cpp
     mc_rbdyn/Collision.cpp
+    mc_rbdyn/MaxDist.cpp
     mc_rbdyn/ForceSensor.cpp
     mc_rbdyn/RobotModule.cpp
     mc_rbdyn/RobotModule_visual.cpp
@@ -270,6 +271,7 @@ set(mc_rbdyn_HDR
     ../include/mc_rbdyn/surface_hull.h
     ../include/mc_rbdyn/surface_utils.h
     ../include/mc_rbdyn/Collision.h
+    ../include/mc_rbdyn/MaxDist.h
     ../include/mc_rbdyn/CompoundJointConstraintDescription.h
     ../include/mc_rbdyn/ForceSensor.h
     ../include/mc_rbdyn/Flexibility.h
@@ -291,6 +293,7 @@ set(mc_tvm_HDR_DIR ../include/mc_tvm)
 set(mc_tvm_HDR
     ${mc_tvm_HDR_DIR}/api.h
     ${mc_tvm_HDR_DIR}/CollisionFunction.h
+    ${mc_tvm_HDR_DIR}/MaxDistanceFunction.h
     ${mc_tvm_HDR_DIR}/CoM.h
     ${mc_tvm_HDR_DIR}/CoMFunction.h
     ${mc_tvm_HDR_DIR}/CoMInConvexFunction.h
@@ -316,6 +319,7 @@ set(mc_tvm_HDR
 )
 set(mc_tvm_SRC
     mc_tvm/CollisionFunction.cpp
+    mc_tvm/MaxDistanceFunction.cpp
     mc_tvm/CoM.cpp
     mc_tvm/CoMFunction.cpp
     mc_tvm/CoMInConvexFunction.cpp
@@ -428,6 +432,7 @@ add_subdirectory(mc_robots)
 set(mc_solver_SRC
     mc_solver/BoundedSpeedConstr.cpp
     mc_solver/CollisionsConstraint.cpp
+    mc_solver/MaxDistanceConstraint.cpp
     mc_solver/CoMIncPlaneConstr.cpp
     mc_solver/ConstraintSet.cpp
     mc_solver/CompoundJointConstraint.cpp
@@ -452,6 +457,7 @@ set(mc_solver_HDR
     ../include/mc_solver/utils/UpdateNrVars.h
     ../include/mc_solver/BoundedSpeedConstr.h
     ../include/mc_solver/CollisionsConstraint.h
+    ../include/mc_solver/MaxDistanceConstraint.h
     ../include/mc_solver/CoMIncPlaneConstr.h
     ../include/mc_solver/CompoundJointConstraint.h
     ../include/mc_solver/ConstraintSet.h
