@@ -211,6 +211,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   kinematicsConstraint.reset(new mc_solver::KinematicsConstraint(robots(), 0, dt, damper, 0.5));
   selfCollisionConstraint.reset(new mc_solver::CollisionsConstraint(robots(), 0, 0, dt));
   selfCollisionConstraint->addCollisions(solver(), robot_modules[0]->minimalSelfCollisions());
+  maxDistanceConstraint.reset(new mc_solver::MaxDistanceConstraint(robots(), 0, 0, dt));
+  maxDistanceConstraint->addMaxDists(solver(), robot_modules[0]->commonMaxDistances());
   compoundJointConstraint.reset(new mc_solver::CompoundJointConstraint(robots(), 0, timeStep));
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
   /** Load additional robots from the configuration */
