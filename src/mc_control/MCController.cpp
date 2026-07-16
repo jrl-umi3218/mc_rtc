@@ -1104,7 +1104,15 @@ mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) 
 mc_rtc::Configuration MCController::robot_config(const std::string & robot) const
 {
   mc_rtc::Configuration result;
-  fs::path system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
+
+  // First try to load robot-specific path from the robot module's folder
+  const auto & rm = this->robot(robot).module();
+  auto robot_module_system_path =
+      fs::path{rm.get_loading_location()} / "etc" / "controllers" / this->name_ / (robot + ".conf");
+  // Legacy fallback: look for the controller-specific configuration file in the controller's library's install folder.
+  // This is impossible in Nix as it would imply that the robot module installs the robot-specific controller
+  // configurations into the controller's install path (forbidden).
+  fs::path controller_system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
   fs::path user_path = mc_rtc::user_config_directory_path("controllers");
   user_path = user_path / name_ / (robot + ".conf");
   auto load_conf = [&result](const std::string & path)
@@ -1114,13 +1122,35 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
   };
   auto load_conf_or_yaml = [&load_conf](fs::path & in)
   {
-    if(fs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in))
+    {
+      load_conf(in.string());
+      return true;
+    }
     in.replace_extension(".yaml");
-    if(fs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in))
+    {
+      load_conf(in.string());
+      return true;
+    }
     in.replace_extension(".yml");
-    if(fs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in))
+    {
+      load_conf(in.string());
+      return true;
+    }
+    return false;
   };
-  load_conf_or_yaml(system_path);
+  if(!load_conf_or_yaml(robot_module_system_path))
+  {
+    // Try fallback if we did not find it in the robot module path
+    if(load_conf_or_yaml(controller_system_path))
+    {
+      mc_rtc::log::deprecated(
+          "MCController::robot_config", "Loading robot configuration from controller's install path is deprecated.",
+          fmt::format("Please move the configuration to the robot module's etc/controllers/{} folder.", name_));
+    }
+  }
   load_conf_or_yaml(user_path);
   return result;
 }

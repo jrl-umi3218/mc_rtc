@@ -15,6 +15,13 @@ namespace fs = std::filesystem;
 namespace mc_rbdyn
 {
 
+static thread_local std::string MC_ROBOT_MODULE_LOADING_LOCATION = "";
+
+void RobotModule::set_loading_location(std::string_view location)
+{
+  MC_ROBOT_MODULE_LOADING_LOCATION = location;
+}
+
 // Repeat static constexpr declarations
 // See also https://stackoverflow.com/q/8016780
 constexpr double RobotModule::Gripper::Safety::DEFAULT_PERCENT_VMAX;
@@ -42,6 +49,12 @@ RobotModule::RobotModule(const std::string & name, const rbd::parsers::ParserRes
   rsdf_dir = "";
   convex_dir = "";
   init(res);
+}
+
+RobotModule::RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
+: loading_location_(MC_ROBOT_MODULE_LOADING_LOCATION), path(path), name(name), urdf_path(urdf_path), convex_dir(""),
+  rsdf_dir(path + "/rsdf/" + name), calib_dir(path + "/calib/" + name), _real_urdf(urdf_path)
+{
 }
 
 void RobotModule::init(const rbd::parsers::ParserResult & res)
