@@ -158,6 +158,9 @@ target_link_libraries(
          ${YAML_CPP_TARGET} spdlog::spdlog ${CMAKE_DL_LIBS}
   PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>
 )
+# link with ros-agnostic functions in mc_rtc_ros_compat
+# this is done to keep mc-rtc ros-agnostic, and allow mc_rtc_ros to link against mc_rtc_utils
+target_link_libraries(mc_rtc_utils PUBLIC mc_rtc_ros_compat::mc_rtc_ros_compat)
 if(TARGET mc_rtc_3rd_party::ROS)
   target_link_libraries(mc_rtc_utils PRIVATE mc_rtc_3rd_party::ROS)
 endif()
@@ -347,24 +350,28 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR} ${mc_tvm_SRC} ${mc_t
 target_compile_definitions(mc_rbdyn PRIVATE "-DMC_RBDYN_EXPORTS" "-DMC_TVM_EXPORTS")
 target_link_libraries(
   mc_rbdyn
-  PUBLIC RBDyn::Parsers
-         Tasks::Tasks
-         mc_rtc_loader
-         mc_rtc_utils
-         mc_filter
-         GEOS::geos
-         TVM::TVM
-         mesh_sampling::mesh_sampling
+  PUBLIC
+    RBDyn::Parsers
+    Tasks::Tasks
+    mc_rtc_loader
+    mc_rtc_utils
+    mc_filter
+    GEOS::geos
+    TVM::TVM
+    mesh_sampling::mesh_sampling # transitively links against Qhull::qhull_r Qhull::qhullcpp
 )
 target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
-# qhull
+
+# TODO: restore static qhull build
 if(MC_RTC_BUILD_STATIC)
-  target_link_libraries(
-    mc_rbdyn PRIVATE "-Wl,--no-whole-archive" qhullstatic_r "-Wl,--no-whole-archive"
-                     qhullcpp
+  message(
+    FATAL_ERROR
+      "MC_RTC_BUILD_STATIC: building against a static qhull version is no longer supported since the introductin of mesh_sampling. To fix it, you need to compile mesh_sampling against a static (reentrant) version of qhull as well."
   )
-else()
-  target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
+  # target_link_libraries(
+  #   mc_rbdyn PRIVATE "-Wl,--no-whole-archive" Qhull::qhullstatic_r
+  #                    "-Wl,--no-whole-archive" Qhull::qhullcpp
+  # )
 endif()
 
 if(TARGET mc_rtc_3rd_party::ROS)

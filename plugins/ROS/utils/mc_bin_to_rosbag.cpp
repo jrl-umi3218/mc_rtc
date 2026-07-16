@@ -4,29 +4,27 @@
 
 #include <mc_rtc/logging.h>
 
-#ifdef MC_RTC_ROS_IS_ROS2
+#include <geometry_msgs/msg/quaternion.hpp>
+#include <geometry_msgs/msg/transform.hpp>
+#include <geometry_msgs/msg/twist.hpp>
+#include <geometry_msgs/msg/vector3.hpp>
+#include <geometry_msgs/msg/wrench.hpp>
+#include <std_msgs/msg/bool.hpp>
+#include <std_msgs/msg/float32.hpp>
+#include <std_msgs/msg/float64.hpp>
+#include <std_msgs/msg/float64_multi_array.hpp>
+#include <std_msgs/msg/int16.hpp>
+#include <std_msgs/msg/int32.hpp>
+#include <std_msgs/msg/int64.hpp>
+#include <std_msgs/msg/int8.hpp>
+#include <std_msgs/msg/string.hpp>
+#include <std_msgs/msg/u_int16.hpp>
+#include <std_msgs/msg/u_int32.hpp>
+#include <std_msgs/msg/u_int64.hpp>
+#include <std_msgs/msg/u_int8.hpp>
 
-#  include <geometry_msgs/msg/quaternion.hpp>
-#  include <geometry_msgs/msg/transform.hpp>
-#  include <geometry_msgs/msg/twist.hpp>
-#  include <geometry_msgs/msg/vector3.hpp>
-#  include <geometry_msgs/msg/wrench.hpp>
-#  include <std_msgs/msg/bool.hpp>
-#  include <std_msgs/msg/float32.hpp>
-#  include <std_msgs/msg/float64.hpp>
-#  include <std_msgs/msg/float64_multi_array.hpp>
-#  include <std_msgs/msg/int16.hpp>
-#  include <std_msgs/msg/int32.hpp>
-#  include <std_msgs/msg/int64.hpp>
-#  include <std_msgs/msg/int8.hpp>
-#  include <std_msgs/msg/string.hpp>
-#  include <std_msgs/msg/u_int16.hpp>
-#  include <std_msgs/msg/u_int32.hpp>
-#  include <std_msgs/msg/u_int64.hpp>
-#  include <std_msgs/msg/u_int8.hpp>
-
-#  include <rclcpp/rclcpp.hpp>
-#  include <rosbag2_cpp/writer.hpp>
+#include <rclcpp/rclcpp.hpp>
+#include <rosbag2_cpp/writer.hpp>
 
 using Bool = std_msgs::msg::Bool;
 using Int8 = std_msgs::msg::Int8;
@@ -47,51 +45,6 @@ using Transform = geometry_msgs::msg::Transform;
 using Twist = geometry_msgs::msg::Twist;
 using Vector3 = geometry_msgs::msg::Vector3;
 using Wrench = geometry_msgs::msg::Wrench;
-
-#else
-
-#  include <geometry_msgs/Quaternion.h>
-#  include <geometry_msgs/Transform.h>
-#  include <geometry_msgs/Twist.h>
-#  include <geometry_msgs/Vector3.h>
-#  include <geometry_msgs/Wrench.h>
-#  include <std_msgs/Bool.h>
-#  include <std_msgs/Float32.h>
-#  include <std_msgs/Float64.h>
-#  include <std_msgs/Float64MultiArray.h>
-#  include <std_msgs/Int16.h>
-#  include <std_msgs/Int32.h>
-#  include <std_msgs/Int64.h>
-#  include <std_msgs/Int8.h>
-#  include <std_msgs/String.h>
-#  include <std_msgs/UInt16.h>
-#  include <std_msgs/UInt32.h>
-#  include <std_msgs/UInt64.h>
-#  include <std_msgs/UInt8.h>
-
-#  include <rosbag/bag.h>
-
-using Bool = std_msgs::Bool;
-using Int8 = std_msgs::Int8;
-using Int16 = std_msgs::Int16;
-using Int32 = std_msgs::Int32;
-using Int64 = std_msgs::Int64;
-using UInt8 = std_msgs::UInt8;
-using UInt16 = std_msgs::UInt16;
-using UInt32 = std_msgs::UInt32;
-using UInt64 = std_msgs::UInt64;
-using Float32 = std_msgs::Float32;
-using Float64 = std_msgs::Float64;
-using Float64MultiArray = std_msgs::Float64MultiArray;
-using String = std_msgs::String;
-
-using Quaternion = geometry_msgs::Quaternion;
-using Transform = geometry_msgs::Transform;
-using Twist = geometry_msgs::Twist;
-using Vector3 = geometry_msgs::Vector3;
-using Wrench = geometry_msgs::Wrench;
-
-#endif
 
 #include "mc_bin_utils.h"
 #include <fstream>
@@ -274,35 +227,18 @@ struct DataToROS<sva::MotionVecd>
 };
 
 template<typename T>
-#ifdef MC_RTC_ROS_IS_ROS2
 void write(rosbag2_cpp::Writer & bag,
            const rclcpp::Time & now,
-#else
-void write(rosbag::Bag & bag,
-           const ros::Time & now,
-#endif
            const mc_rtc::log::FlatLog & log,
            const std::string & entry,
            size_t idx)
 {
   const T * data = log.getRaw<T>(entry, idx);
-  if(data)
-  {
-#ifdef MC_RTC_ROS_IS_ROS2
-    bag.write(DataToROS<T>::convert(*data), entry, now);
-#else
-    bag.write(entry, now, DataToROS<T>::convert(*data));
-#endif
-  }
+  if(data) { bag.write(DataToROS<T>::convert(*data), entry, now); }
 }
 
-#ifdef MC_RTC_ROS_IS_ROS2
 void write(rosbag2_cpp::Writer & bag,
            const rclcpp::Time & now,
-#else
-void write(rosbag::Bag & bag,
-           const ros::Time & now,
-#endif
            const mc_rtc::log::FlatLog & log,
            const std::string & entry,
            mc_rtc::log::LogType type,
@@ -382,25 +318,15 @@ void mc_bin_to_rosbag(const std::string & in, const std::string & out, double dt
 {
   mc_rtc::log::FlatLog log(in);
   auto entries = utils::entries(log);
-#ifdef MC_RTC_ROS_IS_ROS2
   rclcpp::init(0, nullptr);
   auto node = rclcpp::Node::make_shared("mc_bin_to_rosbag");
   auto now = node->now();
   rosbag2_cpp::Writer bag;
   bag.open(out);
-#else
-  ros::Time::init();
-  auto now = ros::Time::now();
-  rosbag::Bag bag(out, rosbag::bagmode::Write);
-#endif
   for(size_t i = 0; i < log.size(); ++i)
   {
     for(const auto & e : entries) { write(bag, now, log, e.first, e.second, i); }
-#ifdef MC_RTC_ROS_IS_ROS2
     now += rclcpp::Duration(std::chrono::duration<double>(dt));
-#else
-    now += ros::Duration(dt);
-#endif
   }
   bag.close();
 }

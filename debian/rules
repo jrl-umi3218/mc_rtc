@@ -2,32 +2,24 @@
 # -*- makefile -*-
 
 export ROS_DISTRO:=@ROS_DISTRO@
-export ROS_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_VERSION)
-export ROS_PYTHON_VERSION:=$(shell . /opt/ros/${ROS_DISTRO}/setup.sh && echo $$ROS_PYTHON_VERSION)
-ifeq (${ROS_PYTHON_VERSION}, 3)
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python3/dist-packages:${PYTHONPATH}
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/site-packages:${PYTHONPATH}
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/local/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/dist-packages:${PYTHONPATH}
-	export MC_LOG_UI_PYTHON_EXECUTABLE:=python3
-else
-	export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python2.7/dist-packages:${PYTHONPATH}
-	export MC_LOG_UI_PYTHON_EXECUTABLE:=python
-endif
-export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:$PKG_CONFIG_PATH
-export ROS_MASTER_URI:=http://localhost:11311
-ifeq (${ROS_VERSION}, 2)
-	export AMENT_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}
-else
-	export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$CMAKE_PREFIX_PATH
-endif
+export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python3/dist-packages:${PYTHONPATH}
+export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/site-packages:${PYTHONPATH}
+export PYTHONPATH:=/opt/ros/${ROS_DISTRO}/local/lib/python$(shell python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}');")/dist-packages:${PYTHONPATH}
+export PKG_CONFIG_PATH:=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:${PKG_CONFIG_PATH}
+export AMENT_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}
+export CMAKE_PREFIX_PATH:=/opt/ros/${ROS_DISTRO}:$(CMAKE_PREFIX_PATH)
 
 TMP = $(CURDIR)/debian/tmp
 
 %:
-	dh $@ --no-parallel
+	dh $@ --parallel
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=${MC_LOG_UI_PYTHON_EXECUTABLE}
+	if ! command -v ninja >/dev/null 2>&1; then \
+		echo "Ninja is required. Please install it with: sudo apt-get install ninja-build"; \
+		exit 1; \
+	fi
+	dh_auto_configure --buildsystem=cmake+ninja -- -DPYTHON_DEB_ROOT=$(TMP) -DFETCHCONTENT_FULLY_DISCONNECTED=OFF
 
 override_dh_auto_install:
 	dh_auto_install

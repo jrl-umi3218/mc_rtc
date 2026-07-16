@@ -12,7 +12,7 @@ endif()
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_VERSION 2.14.0)
+set(PROJECT_VERSION 2.15.2)
 set(PROJECT_URL https://github.com/jrl-umi3218/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
@@ -28,6 +28,7 @@ set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
 
 # Check if the submodule cmake have been initialized
 set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -54,6 +55,15 @@ else()
   endif()
 endif()
 
+# Force override jrl-cmakemodule default
+set(PYTHON_BINDING_FORCE_PYTHON3
+    ON
+    CACHE BOOL "Force use of Python 3 for bindings" FORCE
+)
+set(PYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3
+    OFF
+    CACHE BOOL "Force use of Python 3 for bindings" FORCE
+)
 include(${JRL_CMAKE_MODULES}/base.cmake)
 include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
 include(${JRL_CMAKE_MODULES}/msvc-specific.cmake)
@@ -61,7 +71,11 @@ include(${JRL_CMAKE_MODULES}/version-script.cmake)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-project(${PROJECT_NAME} C CXX)
+project(
+  ${PROJECT_NAME}
+  LANGUAGES C CXX
+  VERSION ${PROJECT_VERSION}
+)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
@@ -179,7 +193,10 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
+# NOTE: linking against mesh_sampling transitively links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 add_project_dependency(mesh_sampling REQUIRED)
+# Optional ROS compatiblity library
+add_project_dependency(mc_rtc_ros_compat REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -230,9 +247,6 @@ if(NOT HOST_IS_WSL AND NOT WIN32)
 elseif(NOT HOST_IS_WSL AND WIN32)
   message("-- Use WinToast for notifications")
 endif()
-
-# qhull (build re-entrant static version)
-add_subdirectory(3rd-party/qhull)
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)

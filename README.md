@@ -5,6 +5,8 @@
 [![CI](https://github.com/jrl-umi3218/mc_rtc/workflows/CI%20of%20mc_rtc/badge.svg?branch=master)](https://github.com/jrl-umi3218/mc_rtc/actions?query=workflow%3A%22CI+of+mc_rtc%22)
 [![Website](https://img.shields.io/badge/website-online-brightgreen?logo=read-the-docs&style=flat)](https://jrl-umi3218.github.io/mc_rtc/)
 
+**NOTICE**: https://jrl.cnrs.fr/mc_rtc is currently down. Please use https://jrl-umi3218.github.io/mc_rtc while we work on a fix.
+
 ## Introduction
 
 `mc_rtc` is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints' values, sensor readings...) and in return `mc_rtc` will provide the desired robot's state (command). This is done through the `mc_control::MCGlobalController` class. This class does not perform control by itself but rather delegates this task to the `mc_control::MCController` derived objects that it holds. Writing a controller within the `mc_rtc` framework is done by writing a class that inherits from the `mc_control::MCController` base class and implements the required functionnality. The details of this process can be found in the project documentation.
