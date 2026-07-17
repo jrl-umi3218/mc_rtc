@@ -153,8 +153,10 @@ publish:
 <p>For a given controller {% ihighlight bash %}NAME{% endihighlight %} and a given robot's module named {% ihighlight bash %}ROBOT{% endihighlight %}, the following configuration files are loaded:</p>
 
 <ol>
-  <li>{% ihighlight bash %}${NAME_RUNTIME_LOCATION}/${NAME}/${ROBOT}.yaml{% endihighlight %}</li>
+  <li>One provided by the robot module: {% ihighlight bash %}${ROBOT_MODULE_RUNTIME_LOCATION}/etc/controllers/${NAME}/${ROBOT}.yaml{% endihighlight %}</li>
+  <li>One provided by the controller: {% ihighlight bash %}${NAME_RUNTIME_LOCATION}/${NAME}/${ROBOT}.yaml{% endihighlight %}</li>
   <li>
+    A user-specific configuration:
     <ul>
       <li>Linux/MacOS: {% ihighlight bash %}${HOME}/.config/mc_rtc/controllers/${NAME}/${ROBOT}.yaml{% endihighlight %}</li>
       <li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/controllers/%NAME%/%ROBOT%.yaml{% endihighlight %}</li>

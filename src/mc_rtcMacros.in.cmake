@@ -251,7 +251,7 @@ endif()
 #
 # For each controller or observer subfolder, if <ROBOT>.yaml exists, it will be
 # installed to the appropriate destination under the install prefix.
-macro(install_robot_specific_configurations ROBOT ETC_FOLDER)
+macro(install_robot_specific_configurations ROBOT)
   if(${ARGC} GREATER 1)
     set(ETC_FOLDER "${ARGV1}")
   else()
