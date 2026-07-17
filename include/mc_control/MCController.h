@@ -739,9 +739,13 @@ public:
   /** Load a robot specific configuration (if any)
    *
    * The following files are loaded (in that order):
-   * - ${loading_location}/${name()}/${robot_name}.conf|yaml
-   * - ${HOME}/.config/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Linux/macOS)
-   * - ${APPDATA}/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Windows)
+   * - Robot module's per-robot controller configuration:
+   *    ${robot_module loading_location}/etc/controllers/${name()}/${robot_name}.conf|yaml|yml
+   * - Controller's per-robot configuration:
+   *    ${loading_location}/${name()}/${robot_name}.conf|yaml|yml
+   * - User's configuration:
+   *   - ${HOME}/.config/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Linux/macOS)
+   *   - ${APPDATA}/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Windows)
    */
   mc_rtc::Configuration robot_config(const std::string & robot_name) const;
 

@@ -1105,14 +1105,17 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
 {
   mc_rtc::Configuration result;
 
-  // First try to load robot-specific path from the robot module's folder
+  // Controller's per-robot controller configuration
+  // These are installed under
+  //    <controller library folder>/etc/<controller name>/<robot name>.[conf|yaml|yml]
+  fs::path controller_system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
+
+  // Robot module's per-robot controller configuration
+  // These are installed by the robot module under
+  //    <robot module library folder>/etc/controllers/<controller name>/<robot name>.[conf|yaml|yml]
   const auto & rm = this->robot(robot).module();
   auto robot_module_system_path =
       fs::path{rm.get_loading_location()} / "etc" / "controllers" / this->name_ / (robot + ".conf");
-  // Legacy fallback: look for the controller-specific configuration file in the controller's library's install folder.
-  // This is impossible in Nix as it would imply that the robot module installs the robot-specific controller
-  // configurations into the controller's install path (forbidden).
-  fs::path controller_system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
   fs::path user_path = mc_rtc::user_config_directory_path("controllers");
   user_path = user_path / name_ / (robot + ".conf");
   auto load_conf = [&result](const std::string & path)
@@ -1141,16 +1144,11 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
     }
     return false;
   };
-  if(!load_conf_or_yaml(robot_module_system_path))
-  {
-    // Try fallback if we did not find it in the robot module path
-    if(load_conf_or_yaml(controller_system_path))
-    {
-      mc_rtc::log::deprecated(
-          "MCController::robot_config", "Loading robot configuration from controller's install path is deprecated.",
-          fmt::format("Please move the configuration to the robot module's etc/controllers/{} folder.", name_));
-    }
-  }
+  // Load per-robot controller config from the robot module
+  load_conf_or_yaml(robot_module_system_path);
+  // Merge with controller's per-robot config
+  load_conf_or_yaml(controller_system_path);
+  // Merge with user config
   load_conf_or_yaml(user_path);
   return result;
 }

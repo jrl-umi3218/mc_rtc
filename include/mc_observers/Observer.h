@@ -49,7 +49,7 @@ namespace mc_observers
  */
 struct MC_OBSERVERS_DLLAPI Observer
 {
-  Observer(const std::string & type, double dt) : type_(type), dt_(dt) {}
+  Observer(const std::string & type, double dt);
   virtual ~Observer() = default;
 
   /**
@@ -153,6 +153,15 @@ struct MC_OBSERVERS_DLLAPI Observer
   /*! Controller timestep */
   inline double dt() const noexcept { return dt_; }
 
+  /** Called by \ref mc_rtc::ObjectLoader to inform the robot module of its loading location
+   * For example, if the JVRC1 module is loaded from the library in /usr/local/lib/mc_robots/jvrc1.so then this is
+   * /usr/local/lib/mc_robots/
+   *
+   * The value is stored in a thread_local variable and is meant to be used in the constructor of RobotModule
+   */
+  static void set_loading_location(std::string_view location);
+  inline const std::string & get_loading_location() const noexcept { return loading_location_; }
+
 protected:
   /*! \brief Add observer from logger
    *
@@ -195,6 +204,7 @@ protected:
   virtual void removeFromGUI(mc_rtc::gui::StateBuilder &, const std::vector<std::string> & category);
 
 protected:
+  std::string loading_location_; ///< Path to the folder containing the observer library
   std::string name_; ///< Observer name
   std::string type_; ///< Observer type
   std::string desc_; ///< Short description of the observer and its configuration

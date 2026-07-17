@@ -776,7 +776,7 @@ public:
    * The value is stored in a thread_local variable and is meant to be used in the constructor of RobotModule
    */
   static void set_loading_location(std::string_view location);
-  inline std::string_view get_loading_location() const noexcept { return loading_location_; }
+  inline const std::string & get_loading_location() const noexcept { return loading_location_; }
 
   /* Path to the folder containing the robot module library */
   std::string loading_location_;
