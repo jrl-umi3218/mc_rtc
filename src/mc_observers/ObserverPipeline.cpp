@@ -35,18 +35,30 @@ static inline void load_config(mc_rtc::Configuration & out, const std::string & 
 }
 
 static inline mc_rtc::Configuration get_observer_config(const std::string & observerType,
-                                                        const std::string & robot,
+                                                        const mc_observers::Observer & observer,
+                                                        const mc_rbdyn::RobotModule & rm,
                                                         mc_rtc::Configuration config)
 {
+  const auto & robot = rm.name;
   mc_rtc::Configuration out;
   // Load observer configuration
-  auto runtime_dir = mc_observers::ObserverLoader::get_observer_runtime_directory(observerType);
-  if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/etc", observerType); }
+  auto observers_runtime_dir = observer.get_loading_location();
+  // Load default observer's configuration
+  load_config(out, observers_runtime_dir + "/etc", observerType);
+
+  // Load robot specific configuration in the observer's runtime path
+  load_config(out, observers_runtime_dir + "/" + observerType, robot);
+
+  const auto & rm_runtime_dir = rm.get_loading_location();
+  // Load robot specific configuration in the robot module's runtime path
+  load_config(out, rm_runtime_dir + "/etc/observers", observerType);
+
+  // Load user configuration
   fs::path user_path = mc_rtc::user_config_directory_path("observers");
   load_config(out, user_path.string(), observerType);
-  // Load robot specific configuration
-  if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/" + observerType, robot); }
+  // Load user's per-robot configuration
   load_config(out, (user_path / observerType).string(), robot);
+
   // Finally load the configuration provided in the pipeline
   out.load(config);
   return out;
@@ -96,8 +108,13 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
       // override deprecated "config" object if provided in the new format
       config.load(observerConf);
       std::string robot = config("robot", ctl_.robot().name());
-      if(ctl_.hasRobot(robot)) { robot = ctl_.robot(robot).module().name; }
-      observer->configure(ctl_, get_observer_config(observerType, robot, config));
+      if(!ctl_.hasRobot(robot))
+      {
+        mc_rtc::log::error_and_throw("[ObserverPipeline::{}] Observer {} requires robot {} but it is not available",
+                                     name_, observerName, robot);
+      }
+      auto & rm = ctl_.robot(robot).module();
+      observer->configure(ctl_, get_observer_config(observerType, *observer, rm, config));
       pipelineObservers_.emplace_back(observer, observerConf);
     }
     else if(!observerConf("required", true))

@@ -251,11 +251,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \param urdf_path Path to the robot URDF
    */
-  RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
-  : path(path), name(name), urdf_path(urdf_path), convex_dir(""), rsdf_dir(path + "/rsdf/" + name),
-    calib_dir(path + "/calib/" + name), _real_urdf(urdf_path)
-  {
-  }
+  RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path);
 
   /** Construct from a parser result */
   RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
@@ -773,6 +769,17 @@ struct MC_RBDYN_DLLAPI RobotModule
   inline const std::vector<FrameDescription> & frames() const noexcept { return _frames; }
 
 public:
+  /** Called by \ref mc_rtc::ObjectLoader to inform the robot module of its loading location
+   * For example, if the JVRC1 module is loaded from the library in /usr/local/lib/mc_robots/jvrc1.so then this is
+   * /usr/local/lib/mc_robots/
+   *
+   * The value is stored in a thread_local variable and is meant to be used in the constructor of RobotModule
+   */
+  static void set_loading_location(std::string_view location);
+  inline const std::string & get_loading_location() const noexcept { return loading_location_; }
+
+  /* Path to the folder containing the robot module library */
+  std::string loading_location_;
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */

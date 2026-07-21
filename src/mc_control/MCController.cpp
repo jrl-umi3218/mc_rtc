@@ -1104,7 +1104,18 @@ mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) 
 mc_rtc::Configuration MCController::robot_config(const std::string & robot) const
 {
   mc_rtc::Configuration result;
-  fs::path system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
+
+  // Controller's per-robot controller configuration
+  // These are installed under
+  //    <controller library folder>/etc/<controller name>/<robot name>.[conf|yaml|yml]
+  fs::path controller_system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
+
+  // Robot module's per-robot controller configuration
+  // These are installed by the robot module under
+  //    <robot module library folder>/etc/controllers/<controller name>/<robot name>.[conf|yaml|yml]
+  const auto & rm = this->robot(robot).module();
+  auto robot_module_system_path =
+      fs::path{rm.get_loading_location()} / "etc" / "controllers" / this->name_ / (robot + ".conf");
   fs::path user_path = mc_rtc::user_config_directory_path("controllers");
   user_path = user_path / name_ / (robot + ".conf");
   auto load_conf = [&result](const std::string & path)
@@ -1114,13 +1125,30 @@ mc_rtc::Configuration MCController::robot_config(const std::string & robot) cons
   };
   auto load_conf_or_yaml = [&load_conf](fs::path & in)
   {
-    if(fs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in))
+    {
+      load_conf(in.string());
+      return true;
+    }
     in.replace_extension(".yaml");
-    if(fs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in))
+    {
+      load_conf(in.string());
+      return true;
+    }
     in.replace_extension(".yml");
-    if(fs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in))
+    {
+      load_conf(in.string());
+      return true;
+    }
+    return false;
   };
-  load_conf_or_yaml(system_path);
+  // Load per-robot controller config from the robot module
+  load_conf_or_yaml(robot_module_system_path);
+  // Merge with controller's per-robot config
+  load_conf_or_yaml(controller_system_path);
+  // Merge with user config
   load_conf_or_yaml(user_path);
   return result;
 }
