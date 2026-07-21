@@ -1,16 +1,9 @@
 var searchData=
 [
-  ['y_7112',['Y',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/classrbd_1_1IDIM.html#aa99e315c9da1c0ef6da65e226dfd24cb',1,'rbd::IDIM::Y()'],['../namespacemc__rtc_1_1gui_1_1plot.html#a09e783ef208faafb14fb04a4d269619a',1,'mc_rtc::gui::plot::Y(std::string_view name, GetT get_fn, Color color, Style style=Style::Solid, Side side=Side::Left)'],['../namespacemc__rtc_1_1gui_1_1plot.html#a6c606d5a78632224ad064015a385e81c',1,'mc_rtc::gui::plot::Y(std::string_view name, GetT get_fn, GetColor get_color, Style style=Style::Solid, Side side=Side::Left)']]],
-  ['y_5f_7113',['y_',['/usr/local/share/doc/state-observation/doxygen-html/classstateObservation_1_1DynamicalSystemSimulator.html#a7112fbce947baf5891a9682b1f132770',1,'stateObservation::DynamicalSystemSimulator::y_()'],['/usr/local/share/doc/state-observation/doxygen-html/classstateObservation_1_1ZeroDelayObserver.html#a6c19c097d2780bb922eee1da1cd15b35',1,'stateObservation::ZeroDelayObserver::y_()']]],
-  ['yaml_7114',['YAML',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/namespaceYAML.html',1,'']]],
-  ['yaml_2eh_7115',['yaml.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/yaml_8h.html',1,'']]],
-  ['yaw_5f_7116',['yaw_',['/usr/local/share/doc/state-observation/doxygen-html/classstateObservation_1_1ZmpTrackingGainEstimator.html#a5c531edcf132b9efc6c0b3020f4c5957',1,'stateObservation::ZmpTrackingGainEstimator']]],
-  ['ybar_5f_7117',['ybar_',['/usr/local/share/doc/state-observation/doxygen-html/classstateObservation_1_1KalmanFilterBase.html#a93641ed97aec1924351d56efc01b0980',1,'stateObservation::KalmanFilterBase']]],
-  ['yellow_7118',['Yellow',['../structmc__rtc_1_1gui_1_1Color.html#aea41af05139ca52503e824b2021d372a',1,'mc_rtc::gui::Color']]],
-  ['yk_7119',['yk',['/usr/local/share/doc/state-observation/doxygen-html/structstateObservation_1_1flexibilityEstimation_1_1IMUElasticLocalFrameDynamicalSystem_1_1Optimization.html#a761e7051c39e6033429f1dd954aa1a77',1,'stateObservation::flexibilityEstimation::IMUElasticLocalFrameDynamicalSystem::Optimization']]],
-  ['yk_5f_7120',['yk_',['/usr/local/share/doc/state-observation/doxygen-html/classstateObservation_1_1flexibilityEstimation_1_1IMUElasticLocalFrameDynamicalSystem.html#a4c44695621bbf92e751c4e2f2ee5df22',1,'stateObservation::flexibilityEstimation::IMUElasticLocalFrameDynamicalSystem']]],
-  ['ykdy_7121',['ykdy',['/usr/local/share/doc/state-observation/doxygen-html/structstateObservation_1_1flexibilityEstimation_1_1IMUElasticLocalFrameDynamicalSystem_1_1Optimization.html#a2df63f5393dd31b439af4331183ed8cd',1,'stateObservation::flexibilityEstimation::IMUElasticLocalFrameDynamicalSystem::Optimization']]],
-  ['ymax_7122',['ymax',['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a1ce5eeed46427c049da3050580e1456f',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
-  ['ymin_7123',['ymin',['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a16f8c6cb34189692495e7afafb0b2ced',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
-  ['yp_5f_7124',['yp_',['/usr/local/share/doc/state-observation/doxygen-html/structstateObservation_1_1ExtendedKalmanFilter_1_1Optimization.html#ae100734f224c2b34840e33938749affa',1,'stateObservation::ExtendedKalmanFilter::Optimization']]]
+  ['y_5815',['Y',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/classrbd_1_1IDIM.html#aa99e315c9da1c0ef6da65e226dfd24cb',1,'rbd::IDIM::Y()'],['../namespacemc__rtc_1_1gui_1_1plot.html#a09e783ef208faafb14fb04a4d269619a',1,'mc_rtc::gui::plot::Y(std::string_view name, GetT get_fn, Color color, Style style=Style::Solid, Side side=Side::Left)'],['../namespacemc__rtc_1_1gui_1_1plot.html#a6c606d5a78632224ad064015a385e81c',1,'mc_rtc::gui::plot::Y(std::string_view name, GetT get_fn, GetColor get_color, Style style=Style::Solid, Side side=Side::Left)']]],
+  ['yaml_5816',['YAML',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/namespaceYAML.html',1,'']]],
+  ['yaml_2eh_5817',['yaml.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/yaml_8h.html',1,'']]],
+  ['yellow_5818',['Yellow',['../structmc__rtc_1_1gui_1_1Color.html#aea41af05139ca52503e824b2021d372a',1,'mc_rtc::gui::Color']]],
+  ['ymax_5819',['ymax',['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a1ce5eeed46427c049da3050580e1456f',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
+  ['ymin_5820',['ymin',['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a16f8c6cb34189692495e7afafb0b2ced',1,'mc_tasks::lipm_stabilizer::internal::Contact']]]
 ];
