@@ -2,7 +2,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore
+from .mc_qt_compat import QtCore
 
 
 class Data(QtCore.QObject):

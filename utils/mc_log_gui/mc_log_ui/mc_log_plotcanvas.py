@@ -5,24 +5,35 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QComboBox
+from .mc_qt_compat import (
+    QT_VERSION,
+    QtCore,
+    QtGui,
+    QtWidgets,
+    configure_matplotlib,
+)
 
 import os
 import copy
 import math
 import matplotlib
 
+configure_matplotlib()
 import matplotlib.pyplot
 
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
 
-from matplotlib.backends.backend_qt5agg import (
-    FigureCanvasQTAgg as FigureCanvas,
-    NavigationToolbar2QT as NavigationToolbar,
-)
+if QT_VERSION == 6:
+    from matplotlib.backends.backend_qt6agg import (
+        FigureCanvasQTAgg as FigureCanvas,
+        NavigationToolbar2QT as NavigationToolbar,
+    )
+else:
+    from matplotlib.backends.backend_qt5agg import (
+        FigureCanvasQTAgg as FigureCanvas,
+        NavigationToolbar2QT as NavigationToolbar,
+    )
 
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
@@ -40,11 +51,6 @@ import sys
 
 matplotlib.rcParams["pdf.fonttype"] = 42
 matplotlib.rcParams["ps.fonttype"] = 42
-# This might fail if mc_log_ui is imported in a headless environment
-try:
-    matplotlib.use("Qt5Agg")
-except:  # noqa: E722
-    pass
 
 
 if sys.version_info[0] > 2:
@@ -1274,15 +1280,15 @@ class SaveAnimationDialog(QtWidgets.QDialog):
         event.ignore()
 
 
-class PlotCanvasWithToolbar(PlotFigure, QWidget):
+class PlotCanvasWithToolbar(PlotFigure, QtWidgets.QWidget):
     def __init__(self, parent=None, mode=PlotType.TIME):
         PlotFigure.__init__(self, mode, True)
-        QWidget.__init__(self, parent)
+        QtWidgets.QWidget.__init__(self, parent)
 
         self.canvas.mpl_connect("draw_event", self.on_draw)
         self.toolbar = NavigationToolbar(self.canvas, self)
 
-        self.layout = QVBoxLayout(self)
+        self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.canvas)
         self.layout.addWidget(self.toolbar)
 
@@ -1296,9 +1302,9 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
         self.saveAnimationDialog = SaveAnimationDialog(self)
 
     def setupLockButtons(self):
-        layout = QHBoxLayout()
+        layout = QtWidgets.QHBoxLayout()
 
-        self.xSelector = QComboBox(self)
+        self.xSelector = QtWidgets.QComboBox(self)
         self.xSelector.activated.connect(
             lambda: self.parent().on_xSelector_activated(
                 self, self.xSelector.currentText()
@@ -1619,4 +1625,4 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
             self.draw()
 
     def show(self):
-        return QWidget.show(self)
+        return QtWidgets.QWidget.show(self)

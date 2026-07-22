@@ -4,7 +4,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore, QtWidgets, QtGui
+from .mc_qt_compat import QtCore, QtGui, QtWidgets
 
 try:
     from . import ui
