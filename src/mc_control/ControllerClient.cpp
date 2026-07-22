@@ -1055,7 +1055,7 @@ void ControllerClient::handle_table(const ElementId & id,
     {
       try
       {
-        return fmt::format(f, entry.at(i, entry[i].dump()));
+        return fmt::format(fmt::runtime(f), entry.at(i, entry[i].dump()));
       }
       catch(const fmt::format_error & error)
       {
@@ -1067,14 +1067,14 @@ void ControllerClient::handle_table(const ElementId & id,
     {
       try
       {
-        return fmt::format(f, static_cast<double>(entry[i]));
+        return fmt::format(fmt::runtime(f), static_cast<double>(entry[i]));
       }
       catch(mc_rtc::Configuration::Exception & exc)
       {
         exc.silence();
         try
         {
-          return fmt::format(f, entry[i].dump());
+          return fmt::format(fmt::runtime(f), entry[i].dump());
         }
         catch(const fmt::format_error & error)
         {

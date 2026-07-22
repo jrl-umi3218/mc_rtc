@@ -1,3 +1,21 @@
+mc-rtc (2.15.2-1debian1) unstable; urgency=medium
+
+  * New release: version 2.15.2
+
+ -- Arnaud TANGUY <arn.tanguy@gmail.com>  Wed, 15 Jul 2026 12:22:19 +0200
+
+mc-rtc (2.15.1-1debian1) unstable; urgency=medium
+
+  * New release: version 2.15.1
+
+ -- Arnaud TANGUY <arn.tanguy@gmail.com>  Tue, 14 Jul 2026 14:42:45 +0200
+
+mc-rtc (2.15.0-1debian1) unstable; urgency=medium
+
+  * New release: version 2.15.0
+
+ -- Arnaud TANGUY <arn.tanguy@gmail.com>  Thu, 09 Jul 2026 07:44:44 +0200
+
 mc-rtc (2.14.0-1debian1) unstable; urgency=medium
 
   * Upstream update: see CHANGELOG.md
@@ -8,7 +26,7 @@ mc-rtc (2.13.0-1debian1) unstable; urgency=medium
 
   * Upstream update: see CHANGELOG.md
 
- -- Arnaud TANGUY <arn.tanguy+ppa@gmail.com>  Mon, 19 Mai 2025 14:00:00 +0000
+ -- Arnaud TANGUY <arn.tanguy+ppa@gmail.com>  Mon, 19 May 2025 14:00:00 +0000
 
 mc-rtc (2.12.0-1debian1) unstable; urgency=medium
 

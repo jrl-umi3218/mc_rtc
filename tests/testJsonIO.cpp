@@ -5,10 +5,11 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rtc/Configuration.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
-namespace bfs = boost::filesystem;
 
 #include "utils.h"
 #include <fstream>
@@ -328,11 +329,11 @@ bool compareHulls(const std::map<std::string, std::pair<std::string, std::string
   {
     const auto & name = itm.first;
     const auto & body = itm.second.first;
-    const auto & path = bfs::path(itm.second.second);
+    const auto & path = fs::path(itm.second.second);
     if(!rhs.count(name)) { return false; }
     const auto & ritm = rhs.at(name);
     const auto & rbody = ritm.first;
-    const auto & rpath = bfs::path(ritm.second);
+    const auto & rpath = fs::path(ritm.second);
     if(rbody != body || path != rpath) { return false; }
   }
   return true;
@@ -340,9 +341,9 @@ bool compareHulls(const std::map<std::string, std::pair<std::string, std::string
 
 bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule & rhs)
 {
-  return bfs::path(lhs.path) == bfs::path(rhs.path) && lhs.name == rhs.name
-         && bfs::path(lhs.urdf_path) == bfs::path(rhs.urdf_path) && bfs::path(lhs.rsdf_dir) == bfs::path(rhs.rsdf_dir)
-         && bfs::path(lhs.calib_dir) == bfs::path(rhs.calib_dir) && lhs._bounds == rhs._bounds
+  return fs::path(lhs.path) == fs::path(rhs.path) && lhs.name == rhs.name
+         && fs::path(lhs.urdf_path) == fs::path(rhs.urdf_path) && fs::path(lhs.rsdf_dir) == fs::path(rhs.rsdf_dir)
+         && fs::path(lhs.calib_dir) == fs::path(rhs.calib_dir) && lhs._bounds == rhs._bounds
          && lhs._accelerationBounds == rhs._accelerationBounds && lhs._jerkBounds == rhs._jerkBounds
          && lhs._torqueDerivativeBounds == rhs._torqueDerivativeBounds && lhs._stance == rhs._stance
          && compareHulls(lhs._convexHull, rhs._convexHull) && compareHulls(lhs._stpbvHull, rhs._stpbvHull)

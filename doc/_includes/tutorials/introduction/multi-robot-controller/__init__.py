@@ -1,1 +1,1 @@
-from my_first_controller import MyFirstController
+from dual_arm_controller import DualArmController

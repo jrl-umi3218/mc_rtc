@@ -15,7 +15,7 @@ file(
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/TestReplayController_Play.in.yaml
 )
 
-add_library(TestReplayController TestReplayController.cpp)
+add_library(TestReplayController SHARED TestReplayController.cpp)
 target_link_libraries(TestReplayController PUBLIC mc_control Boost::unit_test_framework)
 if(NOT Boost_USE_STATIC_LIBS)
   target_link_libraries(TestReplayController PUBLIC Boost::dynamic_linking)

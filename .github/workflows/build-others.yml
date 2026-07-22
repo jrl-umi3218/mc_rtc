@@ -24,6 +24,10 @@ on:
     branches:
       - '**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   # Branch that triggered this workflow
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
@@ -53,11 +57,11 @@ jobs:
     - name: Use repository name
       shell: bash
       run: echo "The triggering repository is $GITHUB_REPO_TRIGGER"
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
         submodules: recursive
     - name: Clone superbuild
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         submodules: recursive
         repository: mc-rtc/mc-rtc-superbuild

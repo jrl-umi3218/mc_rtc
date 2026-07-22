@@ -2,7 +2,7 @@
 # Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
 if(POLICY CMP0063)
   cmake_policy(SET CMP0063 NEW)
 endif()
@@ -12,7 +12,7 @@ endif()
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_VERSION 2.14.0)
+set(PROJECT_VERSION 2.15.2)
 set(PROJECT_URL https://github.com/jrl-umi3218/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
@@ -28,15 +28,54 @@ set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
 
-include(cmake/base.cmake)
-include(cmake/cython/cython.cmake)
-include(cmake/msvc-specific.cmake)
-include(cmake/version-script.cmake)
+# Check if the submodule cmake have been initialized
+set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
+if(EXISTS "${JRL_CMAKE_MODULES}/base.cmake")
+  message(STATUS "JRL cmakemodules found in 'cmake/' git submodule")
+else()
+  find_package(jrl-cmakemodules QUIET CONFIG)
+  if(jrl-cmakemodules_FOUND)
+    get_property(
+      JRL_CMAKE_MODULES
+      TARGET jrl-cmakemodules::jrl-cmakemodules
+      PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+    )
+    message(STATUS "JRL cmakemodules found on system at ${JRL_CMAKE_MODULES}")
+  else()
+    message(STATUS "JRL cmakemodules not found. Let's fetch it.")
+    include(FetchContent)
+    FetchContent_Declare(
+      "jrl-cmakemodules"
+      GIT_REPOSITORY "https://github.com/jrl-umi3218/jrl-cmakemodules.git"
+    )
+    FetchContent_MakeAvailable("jrl-cmakemodules")
+    FetchContent_GetProperties("jrl-cmakemodules" SOURCE_DIR JRL_CMAKE_MODULES)
+  endif()
+endif()
+
+# Force override jrl-cmakemodule default
+set(PYTHON_BINDING_FORCE_PYTHON3
+    ON
+    CACHE BOOL "Force use of Python 3 for bindings" FORCE
+)
+set(PYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3
+    OFF
+    CACHE BOOL "Force use of Python 3 for bindings" FORCE
+)
+include(${JRL_CMAKE_MODULES}/base.cmake)
+include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
+include(${JRL_CMAKE_MODULES}/msvc-specific.cmake)
+include(${JRL_CMAKE_MODULES}/version-script.cmake)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-project(${PROJECT_NAME} C CXX)
+project(
+  ${PROJECT_NAME}
+  LANGUAGES C CXX
+  VERSION ${PROJECT_VERSION}
+)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
@@ -145,7 +184,7 @@ if(BOOST_STACKTRACE STREQUAL "")
   )
 endif()
 
-add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
+add_project_dependency(Boost REQUIRED COMPONENTS timer ${BOOST_STACKTRACE})
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(TVM REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
@@ -154,7 +193,10 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
+# NOTE: linking against mesh_sampling transitively links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 add_project_dependency(mesh_sampling REQUIRED)
+# Optional ROS compatiblity library
+add_project_dependency(mc_rtc_ros_compat REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -165,8 +207,6 @@ endif()
 
 # GEOS (defines/imports target: GEOS::geos)
 find_package(mc_rtc_3rd_party_geos REQUIRED)
-
-find_package(mc_rtc_3rd_party_eigen-fmt REQUIRED)
 
 if(NOT MC_RTC_DISABLE_NETWORK)
   # nanomsg (defines/imports target: nanomsg)
@@ -207,9 +247,6 @@ if(NOT HOST_IS_WSL AND NOT WIN32)
 elseif(NOT HOST_IS_WSL AND WIN32)
   message("-- Use WinToast for notifications")
 endif()
-
-# qhull (build re-entrant static version)
-add_subdirectory(3rd-party/qhull)
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)
@@ -316,7 +353,7 @@ mc_rtc_set_prefix(CONTROLLER mc_controller)
 
 set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
 set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
-set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_DOCDIR}/json/schemas")
+set(MC_RTC_JSON_SCHEMA_PATH "${CMAKE_INSTALL_FULL_DOCDIR}/json/schemas")
 
 find_package(mc_rtc_3rd_party_ros QUIET)
 if(TARGET mc_rtc_3rd_party::ROS)

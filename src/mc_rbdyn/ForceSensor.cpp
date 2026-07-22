@@ -7,9 +7,9 @@
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/logging.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <fstream>
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_rbdyn
 {
@@ -119,7 +119,7 @@ void ForceSensor::loadCalibrator(const detail::ForceSensorCalibData & data) noex
 
 void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity)
 {
-  if(!bfs::exists(calib_file))
+  if(!fs::exists(calib_file))
   {
     mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file, name());
     return;

@@ -15,6 +15,10 @@
       id: ef-controller
     -
       id: multi-robot-controller
+    -
+      id: dual-arm-controller
+    -
+      id: mobile-arm-controller
 -
   id: usage
   tutorials:
@@ -43,6 +47,8 @@
       id: mc_log_utils
     -
       id: mc_log_ui
+    -
+      id: mc_robot_visualization
     -
       id: mc_surfaces_visualization
     -

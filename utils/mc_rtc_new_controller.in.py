@@ -254,7 +254,8 @@ void {controller_class_name}::reset(const mc_control::ControllerResetData & rese
     # VSCode extension recommendations
     vscode_extensions = {
         "recommendations": [
-            "redhat.vscode-yaml" "twxs.cmake",
+            "redhat.vscode-yaml",
+            "twxs.cmake",
             "ms-vscode.cmake-tools",
             "josetr.cmake-language-support-vscode",
             "ms-vscode.cpptools",

@@ -6,8 +6,8 @@
 
 #include <thread>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace mc_control
 {
@@ -161,7 +161,7 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
   auto & replay_c = config_.replay_configuration;
   if(!replay_c.log.empty())
   {
-    replay_c.log = bfs::system_complete(replay_c.log).string();
+    replay_c.log = fs::absolute(replay_c.log).string();
     std::map<std::string, std::string> log_to_datastore;
     if(!replay_c.with_datastore_config.empty())
     {

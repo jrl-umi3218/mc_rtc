@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.22)
 
 if(NOT DEFINED PROJECT_VERSION)
   set(PROJECT_VERSION 1.0.0)
@@ -26,7 +26,10 @@ endif()
 set(TARGETS_EXPORT_NAME "mc_rtc_rosTargets")
 
 find_package(mc_rtc_3rd_party_ros REQUIRED)
-if(NOT ${ROSCPP_FOUND})
+if(NOT rclcpp_FOUND)
+  if(NOT DISABLE_ROS)
+    message(STATUS "ROS2 not found, skipping mc_rtc_ros plugin")
+  endif()
   return()
 endif()
 

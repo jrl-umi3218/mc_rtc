@@ -21,7 +21,7 @@ install(FILES _plugins/include_raw.rb _plugins/link.rb _plugins/pretty_json.rb
 )
 
 install(
-  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_data/schemas
+  DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/_data/schemas/
   DESTINATION ${MC_RTC_JSON_SCHEMA_PATH}
   FILES_MATCHING
   PATTERN "*.json"

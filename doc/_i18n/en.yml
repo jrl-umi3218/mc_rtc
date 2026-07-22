@@ -75,7 +75,7 @@ tutorials:
             # Install packages
             sudo apt install libmc-rtc-dev mc-rtc-utils
             # Assuming you have a ROS distribution mirror setup
-            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-utils
         - name: Install head version
           lang: bash
           source: |
@@ -84,7 +84,7 @@ tutorials:
             # Install packages
             sudo apt install libmc-rtc-dev mc-rtc-utils
             # Assuming you have a ROS distribution mirror setup
-            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-utils
     configuration:
       title: Configuring mc_rtc and its components
     running-a-controller:
@@ -97,6 +97,10 @@ tutorials:
       title: Controlling an end-effector (and loading)
     multi-robot-controller:
       title: Multi-robot controller
+    dual-arm-controller:
+      title: Dual arm controller
+    mobile-arm-controller:
+      title: Mobile arm controller
   usage:
     title: Framework usage
     desc: The following tutorials cover broad topics concerning the framework that are not specifically related to a controller's implementation
@@ -125,6 +129,8 @@ tutorials:
       title: Log manipulation
     mc_log_ui:
       title: Log plotting
+    mc_robot_visualization:
+      title: Visualizing robots
     mc_surfaces_visualization:
       title: Visualizing surfaces
     mc_convex_visualization:

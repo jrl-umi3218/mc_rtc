@@ -2,12 +2,11 @@
 #include <mc_rtc/logging.h>
 #include <mc_rtc/path.h>
 #include <fmt/format.h>
+#include <mc_rtc_ros_compat/path.h> // no dependency on ROS when built without ros-support
 
-#include <boost/filesystem.hpp>
 #include <filesystem>
+#include <random>
 #include <string_view>
-namespace fs = std::filesystem;
-namespace bfs = boost::filesystem;
 
 namespace mc_rtc
 {
@@ -45,73 +44,105 @@ std::string filename(const fs::path & path, bool keepExtension)
 
 fs::path convertURI(const std::string & uri, std::string_view default_dir)
 {
-  const std::string package = "package://";
-  if(uri.size() >= package.size() && uri.find(package) == 0)
+  try
   {
-    size_t split = uri.find('/', package.size());
-    std::string pkg = uri.substr(package.size(), split - package.size());
-    auto leaf = fs::path(uri.substr(split + 1));
-    fs::path MC_ENV_DESCRIPTION_PATH(mc_rtc::MC_ENV_DESCRIPTION_PATH);
-#ifndef __EMSCRIPTEN__
-#  ifdef MC_RTC_HAS_ROS_SUPPORT
-    try
+    const auto [resolved, resolved_package_path] = mc_rtc_ros_compat::resolve_package_path(uri);
+    if(resolved) { return resolved_package_path; }
+    else
+    { // it was not a package path, try with file:// instead
+      const std::string file = "file://";
+      if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
+      // it does not start with package:// nor file://
+      return uri;
+    }
+  }
+  catch(std::runtime_error & resolve_package_path_error)
+  {
+    // The path is a package:// but it failed to resolve, fallback to:
+    // - mc_rtc default paths for known packages (mc_env_description, mc_int_obj_description, jvrc_description)
+    // - the provided default_dir if it exists there
+    const std::string package = "package://";
+    if(uri.size() >= package.size() && uri.find(package) == 0)
     {
-#    ifdef MC_RTC_ROS_IS_ROS2
-      pkg = ament_index_cpp::get_package_share_directory(pkg);
-#    else
-      pkg = ros::package::getPath(pkg);
-      if(pkg.empty()) { throw std::runtime_error("Package not found"); }
-#    endif
+      // Extract package name
+      size_t split = uri.find('/', package.size());
+      std::string pkg = uri.substr(package.size(), split - package.size());
+      auto leaf = fs::path(uri.substr(split + 1));
+#ifndef __EMSCRIPTEN__
+      // Use the default path baked into mc_rtc at compile time
+      if(pkg == "jvrc_description") { pkg = mc_rtc::JVRC_DESCRIPTION_PATH; }
+      else if(pkg == "mc_env_description") { pkg = mc_rtc::MC_ENV_DESCRIPTION_PATH; }
+      else if(pkg == "mc_int_obj_description") { pkg = mc_rtc::MC_INT_OBJ_DESCRIPTION_PATH; }
+      else
+      { // could not resolve path using ament index, check for default_dir
+        if(default_dir.empty())
+        {
+          mc_rtc::log::error_and_throw(
+              "[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
+              "URI '{}', and no default_dir was provided",
+              pkg, uri);
+        }
+        else if(!fs::exists(default_dir) || !fs::is_directory(default_dir))
+        {
+          mc_rtc::log::error_and_throw(
+              "[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
+              "URI '{}', and default_dir '{}' does not exist or is not a directory",
+              pkg, uri, default_dir);
+        }
+        else
+        { // default_dir exists
+          pkg = default_dir;
+        }
+      }
+#else // __EMSCRIPTEN__
+      pkg = "/assets/" + pkg;
+#endif
       return pkg / leaf;
     }
-    catch(...)
-    {
-      // ROS package not found or other error, fall through to fallback logic
-    }
-#  endif
-    // Fallback for non-ROS builds or when ROS package is not found
-    if(pkg == "jvrc_description") { pkg = mc_rtc::JVRC_DESCRIPTION_PATH; }
-    else if(pkg == "mc_env_description") { pkg = mc_rtc::MC_ENV_DESCRIPTION_PATH; }
-    else if(pkg == "mc_int_obj_description") { pkg = mc_rtc::MC_INT_OBJ_DESCRIPTION_PATH; }
-    else
-    { // could not resolve path using ament index, check for default_dir
-      if(default_dir.empty())
-      {
-        mc_rtc::log::error_and_throw("[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
-                                     "URI '{}', and no default_dir was provided",
-                                     pkg, uri);
-        return uri;
-      }
-      else if(!fs::exists(default_dir) || !fs::is_directory(default_dir))
-      {
-        mc_rtc::log::error_and_throw("[mc_rtc::convertURI] Could not resolve path to ROS package path package '{}' in "
-                                     "URI '{}', and default_dir '{}' does not exist or is not a directory",
-                                     pkg, uri, default_dir);
-        return uri;
-      }
-      else
-      { // default_dir exists
-        pkg = default_dir;
-      }
-    }
-#else
-    pkg = "/assets/" + pkg;
-#endif
-    return pkg / leaf;
+
+    mc_rtc::log::error_and_throw(
+        "[mc_rtc::convertURI] Could not resolve path to ROS package path in URI, and no fallback was suitable '{}': {}",
+        uri, resolve_package_path_error.what());
   }
   const std::string file = "file://";
   if(uri.size() >= file.size() && uri.find(file) == 0) { return fs::path(uri.substr(file.size())); }
   return uri;
 }
 
+/**
+ * @brief Generates a unique path string by replacing placeholder '%' characters with random hex digits.
+ * * This function models the behavior of `boost::filesystem::unique_path`. It scans the input
+ * pattern and replaces every occurrence of the percent sign (`%`) with a cryptographically
+ * pseudo-random hexadecimal character `[0-9a-f]`.
+ * * @param pattern The model string containing `%` placeholders (e.g., "temp_dir/file_%%%%.tmp").
+ * * @return A new `std::string` with all placeholders substituted with random hex characters.
+ * * @threadsafe Yes. Utilizes a `thread_local` pseudo-random number generator (`std::mt19937`),
+ * ensuring thread isolation without the concurrency overhead of a mutex lock.
+ */
+std::string unique_path(std::string pattern)
+{
+  // each thread owns its own generator
+  thread_local std::mt19937 gen(
+      []()
+      {
+        std::random_device rd;
+        return rd();
+      }());
+
+  static constexpr std::string_view hex = "0123456789abcdef";
+  std::uniform_int_distribution<size_t> dist(0, hex.size() - 1);
+  // replace '%' by one of the chars from "hex"
+  std::transform(pattern.begin(), pattern.end(), pattern.begin(),
+                 [&](char c) { return (c == '%') ? hex[dist(gen)] : c; });
+
+  return pattern;
+}
+
 std::string make_temporary_path(const std::string & prefix)
 {
-  auto tmp = bfs::temp_directory_path();
   auto pattern = fmt::format("{}-%%%%-%%%%-%%%%-%%%%", prefix);
-  // std::filesystem does not have a unique_path function in c++17
-  // keep boost around for now
-  auto out = tmp / bfs::unique_path(pattern).string();
-  bfs::create_directories(out);
+  auto out = fs::temp_directory_path() / unique_path(pattern);
+  fs::create_directories(out);
   return out.string();
 }
 

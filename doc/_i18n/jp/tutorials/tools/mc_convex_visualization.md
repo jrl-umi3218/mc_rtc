@@ -1,4 +1,4 @@
-`mc_convex_visualization` は mc_rtc GUI アプリケーションでロボットの凸部を可視化するツールです。
+`mc_convex_visualization` は mc_rtc GUI アプリケーションでロボットの凸部を可視化するツールです。 これは、利便性のために提供されている [mc_robot_visualization]({{site.baseurl}}/tutorials/tools/mc_robot_visualization.html) のサブツールです。
 
 ### ビジュアライゼーションの起動
 
@@ -7,6 +7,9 @@
 ```bash
 $ mc_convex_visualization JVRC1
 ```
+
+`mc_convex_visualization` は `mc_rtc gui` のみにパブリッシュしますが、`mc_convex_visualization_ros` は `mc_rtc gui` と `ros`（RViZ）の両方にパブリッシュします。
+パッケージからインストールした場合、ROS 非対応バージョンは `mc-rtc-utils` によって提供され、ROS 対応バージョンは `ros-<distro>-mc-rtc-utils` によって提供されます。
 
 プログラムの引数は `MainRobot` のエントリと同じものを指定します。エイリアスも扱えます。例えば
 

@@ -27,8 +27,8 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <array>
 #include <fstream>
@@ -820,7 +820,7 @@ bool MCController::run(mc_solver::FeedbackType fType)
   auto startUpdateContacts = mc_rtc::clock::now();
   updateContacts();
   updateContacts_dt_ = mc_rtc::clock::now() - startUpdateContacts;
-  if(!qpsolver->run(fType))
+  if(fType != mc_solver::FeedbackType::SkipQP && !qpsolver->run(fType))
   {
     mc_rtc::log::error("QP failed to run()");
     return false;
@@ -1104,21 +1104,21 @@ mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) 
 mc_rtc::Configuration MCController::robot_config(const std::string & robot) const
 {
   mc_rtc::Configuration result;
-  bfs::path system_path = bfs::path(loading_location_) / this->name_ / (robot + ".conf");
-  bfs::path user_path = mc_rtc::user_config_directory_path("controllers");
+  fs::path system_path = fs::path(loading_location_) / this->name_ / (robot + ".conf");
+  fs::path user_path = mc_rtc::user_config_directory_path("controllers");
   user_path = user_path / name_ / (robot + ".conf");
   auto load_conf = [&result](const std::string & path)
   {
     result.load(path);
     mc_rtc::log::info("Controller's robot configuration loaded from {}", path);
   };
-  auto load_conf_or_yaml = [&load_conf](bfs::path & in)
+  auto load_conf_or_yaml = [&load_conf](fs::path & in)
   {
-    if(bfs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in)) { return load_conf(in.string()); }
     in.replace_extension(".yaml");
-    if(bfs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in)) { return load_conf(in.string()); }
     in.replace_extension(".yml");
-    if(bfs::exists(in)) { return load_conf(in.string()); }
+    if(fs::exists(in)) { return load_conf(in.string()); }
   };
   load_conf_or_yaml(system_path);
   load_conf_or_yaml(user_path);

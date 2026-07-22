@@ -1,0 +1,131 @@
+<p>The objective in this section is to coordinate two arms, specifying collision constraints between them, achieving cooperative motion.</p>
+
+<p><em>Note: this article assumes you are able to run and visualize the controller using ROS.</em></p>
+
+{% include h3.html title="Example" %}
+
+<p>We will build a simple controller that will load UR5e as the main robot and Kinova as the second robot, which is provided as mc_rtc robot module {% link mc_ur5e %}, {% link mc_ur5e_description %} and {% link mc_kinova %} respectively.
+The robot module is the interface software, allowing `mc_rtc` to communicate - sending commands and receiving feedback - with that specific robot type.
+While the robot's description contains lists of joints, links, and other physical attribute of the robots that is necessary to to simulate and control the robot.
+{% link mc_kinova %} contains both module and description of the Kinova robot.</p>
+
+<p>To load UR5e as the main robot, mc_rtc configuration file need to be modified as follows:</p>
+
+{% highlight yaml %}
+MainRobot: UR5e
+Enabled: DualArmController
+{% endhighlight %}
+
+<p>Now, let's build a controller that takes dual arm robots as input:</p>
+
+<ul>
+  <li>UR5e</li>
+  <li>Kinova</li>
+</ul>
+
+<p>To do so, we will modify the constructor:</p>
+
+{% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
+
+<p>
+If you installed <code>mc_rtc</code> and <code>mc_kinova</code> and build the project using {% link mc-rtc-superbuild %},
+the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("KinovaDefault")</code>.
+</p>
+
+{% include h4.html title="Robot index" %}
+
+<p>In this new example, we have loaded an extra robot: kinova. We have done so by providing a list of robot modules to load. The loaded robots are then indexed according to the order in which the modules were provided. It means that our main robot UR5e still has the index 0, however we now have the Kinova robot at index 1.</p>
+<p>You can also adding multiple robots by following <a href="https://jrl.cnrs.fr/mc_rtc/tutorials/introduction/multi-robot-controller.html">this tutorial</a>.</p>
+
+{% include h4.html title="Initial position of the Kinova robot" %}
+
+<p>If you start the controller now, you will notice that the Kinova and the UR5e are in the same location, for the purpose of this tutorial, we will manually reposition the Kinova:</p>
+
+{% include show_sources.html sources=page.reposition_kinova_sources copy=false id="reposition_kinova" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_initial.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="Tasks and constraints" %}
+
+<p>For each robot, we will add tasks and constraints. To demonstrate different possibilities, we will add end-effector task for UR5e and posture task for Kinova robot. Moreover, we will add collision constraint between two robots to avoid collision during motion. First we will add tasks and constraints for UR5e robot:</p>
+
+{% include show_sources.html sources=page.add_ur5e_tasks_sources copy=false id="add_ur5e_tasks" %}
+
+<p>Then we will add tasks for Kinova robot:</p>
+
+{% include show_sources.html sources=page.add_kinova_tasks_sources copy=false id="add_kinova_tasks" %}
+
+<p>Finally we will add collision constraint between two robots:</p>
+
+{% include show_sources.html sources=page.add_collision_constraint_sources copy=false id="add_collision_constraint" %}
+
+{% include h4.html title="Setting up the controller logic" %}
+
+<p>In that part of the tutorial we will setup the logic of our controller. We want to:</p>
+
+<ol>
+  <li>Move the UR5e to standby pose using posture task</li>
+  <li>Enable end-effector task on UR5e</li>
+  <li>Start repetitive motion for both arms</li>
+</ol>
+
+<p>So, our code will reflect that:</p>
+
+{% include show_sources.html sources=page.logic_setup_sources copy=false id="logic_setup" %}
+
+{% include h4.html title="Phase 1: Move the UR5e to standby pose" %}
+
+<p>For this phase, we move the main robot UR5e to a predefined standby pose using a posture task. In order not to conflict with the end-effector task, we temporarily disable the end-effector task during this phase then re-enable it once the posture task is achieved.</p>
+
+<p><em>Note: if we don't disable the end-effector task, both tasks will compete against each other and the robot won't be able to reach the desired pose.</em></p>
+
+{% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_standby.png" alt="architecture_overview" class="img-fluid" />
+
+{% include h4.html title="Phase 2: Enable end-effector task on UR5e" %}
+
+<p>In this phase, we will check if the posture task of UR5e is achieved to reset the target of end-effector task and enable it.</p>
+
+{% include show_sources.html sources=page.p2_sources copy=false id="p2" %}
+
+{% include h4.html title="Phase 3: Start repetitive motion for both arms" %}
+
+<p>This phase is the main phase where both arms will perform repetitive motions. For UR5e, we will move the end-effector in a straight line, while for Kinova, we will make it's second joints to oscillate back and forth.</p>
+
+{% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
+
+<p>At this point, both arms should be performing repetitive motions.
+If UR5e fails to perform the task, it might be because the <code>PostureTask</code> is overpowering the <code>EndEffectorTask</code>.
+You can solve this problem by tuning task's gains (weight, stiffness, damping).</p>
+
+<p><code>weight</code> sets the priority of each task.
+By default, weight of <code>EndEffectorTask</code> is already higher than of <code>PostureTask</code>.</p>
+
+<p>
+On the other hand, <code>stiffness</code> and <code>damping</code> controls the speed and smoothness of the motion.
+The usual procedure when setting up a controller is to set the weight and then tune to <code>stiffness</code> and <code>damping</code> gains.
+Note that <code>damping = 2*sqrt(stiffness)</code>
+</p>
+
+<p>
+Tuning these gains can be done using the task constructor or available methods,
+such as <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight ( double w )</a>
+or <a href="https://jrl.cnrs.fr/mc_rtc/doxygen-html/structmc__tasks_1_1PostureTask.html#abefc10be93897ca14825c9124ec415e9">setGains ( double stiffness, double damping )</a>
+</p>
+
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_1.png" alt="dual_arm_collision_avoidance_1" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/dual_arm_collision_avoidance_2.png" alt="dual_arm_collision_avoidance_2" class="img-fluid" />
+
+{% include h3.html title="Play time" %}
+
+<p>At this point you can play around with this setup of dual arm controller by modifying tasks, constraints and target motion for each arm. You can for example change:</p>
+
+<ul>
+  <li>Change tasks for UR5e</li>
+  <li>Change tasks for Kinova</li>
+  <li>Change the motion of UR5e in phase 3</li>
+  <li>Change the motion of Kinova in phase 3</li>
+</ul>
+
+<p>The full sources for this controller are available <a href="sources/dual-arm-controller.html">here</a>. Also, the source code including environment setup can be found in {% link mc_rtc_tutorials %} repository.</p>

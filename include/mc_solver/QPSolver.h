@@ -67,7 +67,9 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   ClosedLoop = ObservedRobots,
   /** Run in closed loop w.r.t realRobots using the observation pipeline and integrate over the real state of the system
    */
-  ClosedLoopIntegrateReal
+  ClosedLoopIntegrateReal,
+  /** Skip the QP entirely */
+  SkipQP
 };
 
 MC_RTC_diagnostic_pop
