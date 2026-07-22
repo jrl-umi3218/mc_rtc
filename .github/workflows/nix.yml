@@ -27,11 +27,12 @@ concurrency:
   cancel-in-progress: true
 jobs:
   nix:
-    runs-on: "${{ matrix.os }}-latest"
+    runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu]
+        os: [ubuntu-latest]
+        ccache: [true, false]
     steps:
       - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
@@ -40,8 +41,36 @@ jobs:
           name: mc-rtc-nix
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: "ros,gepetto"
-      - run: nix flake check -L
-      - run: nix build -L
+      - name: "Determine Variant Arguments"
+        id: flags
+        run: |
+          ARGS=""
+          # Handle ccache trigger
+          if [ "${{ matrix.ccache }}" = "true" ]; then
+            ARGS="$ARGS --override-input ccache-trigger github:boolean-option/true"
+          else
+            ARGS="$ARGS --override-input ccache-trigger github:boolean-option/false"
+          fi
+          # Trim leading space and export
+          echo "args=$(echo "$ARGS" | xargs)" >> "$GITHUB_OUTPUT"
+      - if: ${{ matrix.ccache == true }}
+        name: Setup ccache environment
+        run: |
+          sudo mkdir -m0770 -p '/var/cache/ccache'
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            owner_group=$(stat -f "%Su:%Sg" /nix/store)
+          else
+            owner_group=$(stat -c "%U:%G" /nix/store)
+          fi
+          sudo chown "$owner_group" /var/cache/ccache
+          mkdir -p ~/.config/nix
+          echo 'extra-sandbox-paths = /var/cache/ccache' | sudo tee -a /etc/nix/nix.conf
+          if command -v systemctl &> /dev/null; then
+            sudo systemctl restart nix-daemon.service
+          fi
+          sudo ls -ld /var/cache/ccache
+      - run: nix flake check -L ${{ steps.flags.outputs.args }}
+      - run: nix build -L ${{ steps.flags.outputs.args }}
   check:
     if: always()
     name: check-macos-linux-nix
