@@ -1731,11 +1731,11 @@
         "with-ros-trigger": "with-ros-trigger_3"
       },
       "locked": {
-        "lastModified": 1783496603,
-        "narHash": "sha256-hOMnkjBtIzGvjVYwYvPgXgtclw0bESt1mInQHoksu5g=",
+        "lastModified": 1784050251,
+        "narHash": "sha256-c9/fBGbFQ61Na7kDWJNf0VEvpXc+ZGjXj+Uaw9fjbhc=",
         "owner": "jrl-umi3218",
         "repo": "mc_rtc_ros_compat",
-        "rev": "41ce7a328ed431f2209360e729f0dbd1928d7ec1",
+        "rev": "d294d5d7a7526db1c2d5ab4605569255dc3a459e",
         "type": "github"
       },
       "original": {
