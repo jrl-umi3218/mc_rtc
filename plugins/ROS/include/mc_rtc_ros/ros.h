@@ -113,6 +113,9 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    */
   static void stop_robot_publisher(const std::string & publisher);
 
+  /** Stop the publication of all robots */
+  static void stop_robot_publishers();
+
   /** Return number of robot publisher
    *
    * @return size_t
