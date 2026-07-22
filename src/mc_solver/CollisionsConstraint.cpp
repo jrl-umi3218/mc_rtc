@@ -125,7 +125,7 @@ struct TVMCollisionConstraint
 } // namespace details
 
 /** Helper to cast the constraint */
-static inline mc_rtc::void_ptr_caster<tasks::qp::CollisionConstr> tasks_constraint{};
+static inline mc_rtc::void_ptr_caster<tasks::qp::DistanceConstr> tasks_constraint{};
 static inline mc_rtc::void_ptr_caster<details::TVMCollisionConstraint> tvm_constraint{};
 
 /** Helper for wildcard
@@ -159,11 +159,11 @@ static mc_rtc::void_ptr make_constraint(QPSolver::Backend backend, const mc_rbdy
   switch(backend)
   {
     case QPSolver::Backend::Tasks:
-      return mc_rtc::make_void_ptr<tasks::qp::CollisionConstr>(robots.mbs(), timeStep);
+      return mc_rtc::make_void_ptr<tasks::qp::DistanceConstr>(robots.mbs(), timeStep);
     case QPSolver::Backend::TVM:
       return mc_rtc::make_void_ptr<details::TVMCollisionConstraint>();
     default:
-      mc_rtc::log::error_and_throw("[CollisionConstr] Not implemented for solver backend: {}", backend);
+      mc_rtc::log::error_and_throw("[DistanceConstr] Not implemented for solver backend: {}", backend);
   }
 }
 
