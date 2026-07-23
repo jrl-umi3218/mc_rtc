@@ -216,6 +216,70 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rb
   return config;
 }
 
+mc_rbdyn::MaxDist ConfigurationLoader<mc_rbdyn::MaxDist>::load(const mc_rtc::Configuration & config)
+{
+  auto body1 = config("body1");
+  auto body2 = config("body2");
+  auto loadActiveJoints = [&](std::string prefix) -> std::tuple<std::optional<std::vector<std::string>>, bool>
+  {
+    auto active_joints = config.find(prefix + "ActiveJoints");
+    auto joints = config.find(prefix + "Joints");
+    auto inactive_joints = config.find(prefix + "InactiveJoints");
+    if((active_joints || joints) && inactive_joints)
+    {
+      mc_rtc::log::warning(
+          "MaxDist ({} - {}) has both {}ActiveJoints and {}InactiveJoints, {}ActiveJoints will be used", body1, body2,
+          prefix);
+    }
+
+    if(joints)
+    {
+      mc_rtc::log::deprecated(fmt::format("MaxDist ({} - {})", body1, body2), prefix + "Joints",
+                              prefix + "ActiveJoints");
+      auto jointsV = joints->operator std::vector<std::string>();
+      if(jointsV.empty())
+      {
+        mc_rtc::log::warning(
+            "[MaxDist][breaking change] The meaning of an empty joint vector has changed from all joints active to "
+            "no joints active. Remove {}Joints from your configuration to restore the former behaviour.",
+            prefix);
+      }
+      return {jointsV, false};
+    }
+    if(active_joints) { return {active_joints->operator std::vector<std::string>(), false}; }
+    if(inactive_joints) { return {inactive_joints->operator std::vector<std::string>(), true}; }
+    return {std::nullopt, false};
+  };
+  const auto & [r1Joints, r1Inactive] = loadActiveJoints("r1");
+  const auto & [r2Joints, r2Inactive] = loadActiveJoints("r2");
+  return mc_rbdyn::MaxDist(body1, body2, config("iDist", 0.05), config("sDist", 0.01), config("damping", 0.0), r1Joints,
+                           r2Joints, r1Inactive, r2Inactive);
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::MaxDist>::save(const mc_rbdyn::MaxDist & c)
+{
+  mc_rtc::Configuration config;
+  config.add("body1", c.body1);
+  config.add("body2", c.body2);
+  config.add("iDist", c.iDist);
+  config.add("sDist", c.sDist);
+  config.add("damping", c.damping);
+  auto saveActiveJoints = [&](std::string prefix, const std::optional<std::vector<std::string>> & joints, bool inactive)
+  {
+    if(joints)
+    {
+      if(inactive) { config.add(prefix + "InactiveJoints", *c.r1Joints); }
+      else
+      {
+        config.add(prefix + "ActiveJoints", *c.r1Joints);
+      }
+    }
+  };
+  saveActiveJoints("r1", c.r1Joints, c.r1JointsInactive);
+  saveActiveJoints("r2", c.r2Joints, c.r2JointsInactive);
+  return config;
+}
+
 std::shared_ptr<mc_rbdyn::Surface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(
     const mc_rtc::Configuration & config)
 {

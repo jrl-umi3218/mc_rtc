@@ -22,6 +22,7 @@
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
+#include <mc_solver/MaxDistanceConstraint.h>
 #include <mc_solver/QPSolver.h>
 
 #include <mc_tasks/PostureTask.h>
@@ -729,6 +730,8 @@ public:
   mc_rtc::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
   /** Compound joint constraint for the main robot */
   mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
+  /** Max distance constraint for the main robot */
+  mc_rtc::unique_ptr<mc_solver::MaxDistanceConstraint> maxDistanceConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
   /* Controller's name */

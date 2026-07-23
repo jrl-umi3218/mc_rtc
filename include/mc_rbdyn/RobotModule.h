@@ -10,6 +10,7 @@
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/JointSensor.h>
+#include <mc_rbdyn/MaxDist.h>
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/RobotConverterConfig.h>
 #include <mc_rbdyn/Springs.h>
@@ -662,6 +663,15 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
 
+  /** Return a common max-distances set
+   *
+   * This set of maximum distances describe max distance constraints that you want to enable for
+   * general applications
+   *
+   * \see mc_rbdyn::Collision for details on the expected data
+   */
+  const std::vector<mc_rbdyn::MaxDist> & commonMaxDistances() const { return _commonMaxDistances; }
+
   /** Return the grippers in the robot
    *
    * \see mc_rbdyn::Gripper for details on the expected data
@@ -827,6 +837,8 @@ public:
   std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
   /** \see commonSelfCollisions() */
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
+  /** \see _commonMaxDistances() */
+  std::vector<mc_rbdyn::MaxDist> _commonMaxDistances;
   /** \see grippers() */
   std::vector<Gripper> _grippers;
   /** \see gripperSafety() */
