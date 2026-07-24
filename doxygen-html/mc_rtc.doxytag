@@ -37482,6 +37482,13 @@
       <arglist>(const std::string &amp;publisher)</arglist>
     </member>
     <member kind="function" static="yes">
+      <type>static void</type>
+      <name>stop_robot_publishers</name>
+      <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
+      <anchor>acf097a5a5ab46eb01ff951d155e2a138</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
       <type>static size_t</type>
       <name>nb_robot_publisher</name>
       <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
