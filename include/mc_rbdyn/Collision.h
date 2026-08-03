@@ -28,9 +28,11 @@ struct MC_RBDYN_DLLAPI Collision
             const std::optional<std::vector<std::string>> & r1Joints = {},
             const std::optional<std::vector<std::string>> & r2Joints = {},
             bool r1JointsInactive = false,
-            bool r2JointsInactive = false)
+            bool r2JointsInactive = false,
+            double m = 0,
+            double lambda = 0)
   : body1(b1), body2(b2), iDist(i), sDist(s), damping(d), r1Joints(r1Joints), r2Joints(r2Joints),
-    r1JointsInactive(r1JointsInactive), r2JointsInactive(r2JointsInactive)
+    r1JointsInactive(r1JointsInactive), r2JointsInactive(r2JointsInactive), overDamping(m), lambda(lambda)
   {
   }
   std::string body1; /** First body in the constraint */
@@ -50,6 +52,13 @@ struct MC_RBDYN_DLLAPI Collision
       r2Joints; /** Active/Inactive joints in the second robot, ignored if r1 == r2 */
   bool r1JointsInactive = false; /** When true the selected joints in r1ActiveJoints are considered inactive */
   bool r2JointsInactive = false; /** When true the selected joints in r2ActiveJoints are considered inactive */
+
+  /**
+   * CBF parameters, see details in Safe Execution of RL Policies via Acceleration-based CBF-QP Constraint Enforcement
+   * for Real-World Robotic Deployments, B.Muraccioli et al. (2026)
+   */
+  double overDamping; /** Over-damping */
+  double lambda; /** Lambda */
   inline bool isNone() { return body1 == "NONE" && body2 == "NONE"; }
 
   bool operator==(const Collision & rhs) const;

@@ -17,6 +17,7 @@
 #include <RBDyn/MultiBodyConfig.h>
 #include <RBDyn/MultiBodyGraph.h>
 
+#include <Eigen/src/Core/Matrix.h>
 #include <memory>
 #include <optional>
 #include <unordered_map>
@@ -1114,6 +1115,42 @@ public:
    */
   mc_tvm::Convex & tvmConvex(const std::string & name) const;
 
+  /** @name External Torques
+   *
+   * These functions are used to get or set:
+   * - The estimation of external torques being applied on the robot and its 'equivalent' acceleration
+   * - The additional feedforward compensation torque and its 'equivalent' acceleration
+   *
+   * @{
+   */
+
+  /** Set the external torques */
+  void setExternalTorques(const Eigen::VectorXd & torques);
+
+  /** Get the external torques */
+  const Eigen::VectorXd & externalTorques(void) const;
+
+  /** Set the external torques equivalent accelerations */
+  void setExternalTorquesAcc(const Eigen::VectorXd & accelerations);
+
+  /** Get the external torques equivalent accelerations */
+  const Eigen::VectorXd & externalTorquesAcc(void) const;
+
+  /** Set the compensation torques */
+  void setCompensationTorques(const Eigen::VectorXd & torques);
+
+  /** Get the compensation torques */
+  const std::optional<Eigen::VectorXd> & compensationTorques(void) const;
+
+  /** Set the compensation torques equivalent accelerations */
+  void setCompensationTorquesAcc(const Eigen::VectorXd & accelerations);
+
+  /** Get the compensation torques equivalent accelerations */
+  const std::optional<Eigen::VectorXd> & compensationTorquesAcc(void) const;
+
+  /** @} */
+  /* End of External Forces group */
+
 private:
   Robots * robots_;
   unsigned int robots_idx_;
@@ -1149,6 +1186,14 @@ private:
   std::unordered_map<std::string, RobotFramePtr> frames_;
   /** Mass of this robot */
   double mass_ = 0.0;
+  /** Non modeled external forces acting on the robot **/
+  Eigen::VectorXd externalTorques_;
+  /** Joint accelerations from external forces acting on the robot **/
+  Eigen::VectorXd externalTorquesEquivalentAcc_;
+  /** External forces to be compensated in the commanded torque **/
+  std::optional<Eigen::VectorXd> externalTorqueCompensation_ = std::nullopt;
+  /** Joint accelerations from the compensation in the commanded torque **/
+  std::optional<Eigen::VectorXd> compensationEquivalentAcc_ = std::nullopt;
 
 protected:
   struct NewRobotToken
