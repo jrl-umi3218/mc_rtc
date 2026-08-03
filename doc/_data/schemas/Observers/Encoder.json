@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "mc_observers::EncoderObserver",
-  "description": "The Encoder Observer updates the state of a robot kinematic properties (body positions and velocities) using joint sensor values. It can use various sources as sensor input: encoder position, encoder velocity, values from another robot, and can also estimate joint velocities from encoder position by finite differences.",
+  "description": "The Encoder Observer updates the state of a robot kinematic properties (body positions and velocities) using joint sensor values. It can use various sources as sensor input: encoder position, encoder velocity, encoder torque, values from another robot, and can also estimate joint velocities from encoder position by finite differences.",
   "properties":
   {
     "type": { "const": "Encoder" },
@@ -9,6 +9,7 @@
     "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "position": { "enum": ["encoderValues", "control", "none"], "default": "encoderValues", "description": "Sensor/method used to observe joint position" },
     "velocity": { "enum": ["encoderFiniteDifferences", "encoderVelocities", "control", "none"], "default": "encoderFiniteDifferences", "description": "Sensor/method used to observe joint velocity" },
+    "torque": { "enum": ["jointTorques", "control", "none"], "default": "jointTorques", "description": "Sensor/method used to observe joint torque" },
     "computeFK": { "type": "boolean", "default": true, "description": "When true, the update computes forward kinematics" },
     "computeFV": { "type": "boolean", "default": true, "description": "When true, the update computes forward velocity" },
     "log":
@@ -18,7 +19,8 @@
       "properties":
       {
         "position": { "type": "boolean", "default": false, "description": "When true, logs the estimated position of all actuated joints" },
-        "velocity": { "type": "boolean", "default": true, "description": "When true, logs the estimated velocity of all actuated joints" }
+        "velocity": { "type": "boolean", "default": true, "description": "When true, logs the estimated velocity of all actuated joints" },
+        "torque": { "type": "boolean", "default": false, "description": "When true, logs the estimated torque of all actuated joints" }
       }
     }
   }

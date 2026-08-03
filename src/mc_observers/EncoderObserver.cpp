@@ -48,6 +48,17 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
     ;
   }
 
+  const std::string & torque = config("torque", std::string("jointTorques"));
+  if(torque == "control") { torqueUpdate_ = TorqueUpdate::Control; }
+  else if(torque == "jointTorques") { torqueUpdate_ = TorqueUpdate::JointTorques; }
+  else if(torque == "none") { torqueUpdate_ = TorqueUpdate::None; }
+  else
+  {
+    mc_rtc::log::error_and_throw("[EncoderObserver::{}] Invalid configuration value \"{}\" for field \"torque\" (valid "
+                                 "values are [control, jointTorques, none])",
+                                 name_, torque);
+  }
+
   config("computeFK", computeFK_);
   config("computeFV", computeFV_);
 
@@ -56,9 +67,10 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
     auto lConfig = config("log");
     lConfig("position", logPosition_);
     lConfig("velocity", logVelocity_);
+    lConfig("torque", logTorque_);
   }
 
-  desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ")";
+  desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ",torque=" + torque + ")";
 }
 
 void EncoderObserver::reset(const mc_control::MCController &)
@@ -115,9 +127,13 @@ void EncoderObserver::update(mc_control::MCController & ctl)
   const auto & robot = ctl.robots().robot(robot_);
   auto & realRobot = realRobots.robot(updateRobot_);
   const auto & q = robot.encoderValues();
+  const auto & tau = robot.jointTorques();
 
   // Set all joint values and velocities from encoders
   size_t nJoints = realRobot.refJointOrder().size();
+
+  bool tauValid = (tau.size() == nJoints);
+
   for(size_t i = 0; i < nJoints; ++i)
   {
     const auto joint_index = robot.jointIndexInMBC(i);
@@ -137,6 +153,16 @@ void EncoderObserver::update(mc_control::MCController & ctl)
       else if(velUpdate_ == VelUpdate::EncoderVelocities)
       {
         realRobot.mbc().alpha[jidx][0] = robot.encoderVelocities()[i];
+      }
+
+      // Update torque
+      if(torqueUpdate_ == TorqueUpdate::Control)
+      {
+        realRobot.mbc().jointTorque[jidx][0] = robot.mbc().jointTorque[jidx][0];
+      }
+      else if(torqueUpdate_ == TorqueUpdate::JointTorques)
+      {
+        realRobot.mbc().jointTorque[jidx][0] = tauValid ? tau[i] : 0.0;
       }
     }
   }
@@ -204,6 +230,36 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
                              }
                            }
                            return alpha;
+                         });
+    }
+  }
+  if(logTorque_)
+  {
+    if(torqueUpdate_ == TorqueUpdate::JointTorques)
+    {
+      logger.addLogEntry(category + "_jointTorques", this,
+                         [this, &ctl]() -> const std::vector<double> & { return ctl.robot(robot_).jointTorques(); });
+    }
+    else if(torqueUpdate_ == TorqueUpdate::Control)
+    {
+      std::vector<double> tau(ctl.robot(robot_).refJointOrder().size(), 0);
+      logger.addLogEntry(category + "_controlTorques", this,
+                         [this, &ctl, tau]() mutable -> const std::vector<double> &
+                         {
+                           tau.resize(ctl.robot(robot_).refJointOrder().size());
+                           for(size_t i = 0; i < tau.size(); ++i)
+                           {
+                             auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
+                             if(jIdx != -1)
+                             {
+                               tau[i] = ctl.robot(robot_).mbc().jointTorque[static_cast<size_t>(jIdx)][0];
+                             }
+                             else
+                             {
+                               tau[i] = 0.0;
+                             }
+                           }
+                           return tau;
                          });
     }
   }
