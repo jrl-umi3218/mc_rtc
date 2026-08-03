@@ -179,6 +179,11 @@ Protected Types</h2></td></tr>
 , <a class="el" href="structmc__observers_1_1EncoderObserver.html#aac0902eb5fa7af1436db7cc9ff06dff9a6adf97f83acf6453d4a6a4b1070f3754">None</a>
  }</td></tr>
 <tr class="separator:aac0902eb5fa7af1436db7cc9ff06dff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc58b09fdb9badddc6836f2b62471757"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757">TorqueUpdate</a> { <a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757aa1595abbb4c3a326636dd178757cd6c1">Control</a>
+, <a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757a33e1849d6bf8b194b07329e747ce5f5d">JointTorques</a>
+, <a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757a6adf97f83acf6453d4a6a4b1070f3754">None</a>
+ }</td></tr>
+<tr class="separator:acc58b09fdb9badddc6836f2b62471757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -202,6 +207,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a12831fe5df2163a7f517b95c3158a5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a088c5ec59d2288b6a3499c8aae54853b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__observers_1_1EncoderObserver.html#aac0902eb5fa7af1436db7cc9ff06dff9">VelUpdate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1EncoderObserver.html#a088c5ec59d2288b6a3499c8aae54853b">velUpdate_</a> = <a class="el" href="structmc__observers_1_1EncoderObserver.html#aac0902eb5fa7af1436db7cc9ff06dff9af36b285527c0884c23e8dd6da1ec899f">VelUpdate::EncoderFiniteDifferences</a></td></tr>
 <tr class="separator:a088c5ec59d2288b6a3499c8aae54853b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fdb71502ea72373e585dd2cf86605d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757">TorqueUpdate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1EncoderObserver.html#a0fdb71502ea72373e585dd2cf86605d8">torqueUpdate_</a> = <a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757a33e1849d6bf8b194b07329e747ce5f5d">TorqueUpdate::JointTorques</a></td></tr>
+<tr class="separator:a0fdb71502ea72373e585dd2cf86605d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f2b9fff6335475ffe98509249181e02"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1EncoderObserver.html#a7f2b9fff6335475ffe98509249181e02">computeFK_</a> = true</td></tr>
 <tr class="memdesc:a7f2b9fff6335475ffe98509249181e02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to compute forward kinematics.  <a href="structmc__observers_1_1EncoderObserver.html#a7f2b9fff6335475ffe98509249181e02">More...</a><br /></td></tr>
 <tr class="separator:a7f2b9fff6335475ffe98509249181e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,6 +234,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a2aded6c41596d4fdb15732a615b44307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a2ec1dcb1a36e2b0cef5c1e8f5a489d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1EncoderObserver.html#a8a2ec1dcb1a36e2b0cef5c1e8f5a489d">logVelocity_</a> = true</td></tr>
 <tr class="separator:a8a2ec1dcb1a36e2b0cef5c1e8f5a489d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14ed75647c1326acd9f39330daa06327"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1EncoderObserver.html#a14ed75647c1326acd9f39330daa06327">logTorque_</a> = false</td></tr>
+<tr class="separator:a14ed75647c1326acd9f39330daa06327"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_structmc__observers_1_1Observer"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__observers_1_1Observer')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__observers_1_1Observer.html">mc_observers::Observer</a></td></tr>
 <tr class="memitem:a2e3f65fb8549873b71b1eeda29c1b363 inherit pro_attribs_structmc__observers_1_1Observer"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td></tr>
 <tr class="memdesc:a2e3f65fb8549873b71b1eeda29c1b363 inherit pro_attribs_structmc__observers_1_1Observer"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structmc__observers_1_1Observer.html" title="State observation API.">Observer</a> name.  <a href="structmc__observers_1_1Observer.html#a2e3f65fb8549873b71b1eeda29c1b363">More...</a><br /></td></tr>
@@ -246,7 +255,7 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Estimator of floating base position and velocity</p>
-<p>Position is directly obtained from sensor values Velocity is then computed by finite differences</p>
+<p>Position is directly obtained from sensor values Velocity is then computed by finite differences Joint torque is synced from robot.jointTorques()</p>
 <p>The default behaviour is to update the real robot from the estimated position and velocity.</p>
 <p>You can configure the estimator with the following JSON configuration</p>
 <div class="fragment"><div class="line">&quot;Encoder&quot;:</div>
@@ -284,6 +293,37 @@ Protected Attributes</h2></td></tr>
 <tr><td class="fieldname"><a id="a2477d2b4531716700f65cea898a74274a5d2acfcccfdd535f49b67144392ae508"></a>EncoderValues&#160;</td><td class="fielddoc"><p>Encoder values from robot.encoderValues (encoder sensor) </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a2477d2b4531716700f65cea898a74274a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Do not compute/update value. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="acc58b09fdb9badddc6836f2b62471757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc58b09fdb9badddc6836f2b62471757">&#9670;&nbsp;</a></span>TorqueUpdate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757">mc_observers::EncoderObserver::TorqueUpdate</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Torque update type </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acc58b09fdb9badddc6836f2b62471757aa1595abbb4c3a326636dd178757cd6c1"></a>Control&#160;</td><td class="fielddoc"><p>Use joint torques from robot.mbc.jointTorque (control) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acc58b09fdb9badddc6836f2b62471757a33e1849d6bf8b194b07329e747ce5f5d"></a>JointTorques&#160;</td><td class="fielddoc"><p>Joint torque from robot.jointTorques (torque sensor) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acc58b09fdb9badddc6836f2b62471757a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"><p>Do not compute/update value. </p>
 </td></tr>
 </table>
 
@@ -669,6 +709,28 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a14ed75647c1326acd9f39330daa06327"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14ed75647c1326acd9f39330daa06327">&#9670;&nbsp;</a></span>logTorque_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::EncoderObserver::logTorque_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a8a2ec1dcb1a36e2b0cef5c1e8f5a489d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8a2ec1dcb1a36e2b0cef5c1e8f5a489d">&#9670;&nbsp;</a></span>logVelocity_</h2>
 
@@ -758,6 +820,28 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Robot estimated by this observer. </p>
+
+</div>
+</div>
+<a id="a0fdb71502ea72373e585dd2cf86605d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fdb71502ea72373e585dd2cf86605d8">&#9670;&nbsp;</a></span>torqueUpdate_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757">TorqueUpdate</a> mc_observers::EncoderObserver::torqueUpdate_ = <a class="el" href="structmc__observers_1_1EncoderObserver.html#acc58b09fdb9badddc6836f2b62471757a33e1849d6bf8b194b07329e747ce5f5d">TorqueUpdate::JointTorques</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

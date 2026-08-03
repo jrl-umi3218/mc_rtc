@@ -1,5 +1,11 @@
 var NAVTREEINDEX15 =
 {
+"structmc__rbdyn_1_1CompoundJointConstraintDescription.html#a0cc1f94178b76862c60dd6d6c86ddb07":[6,0,5,6,3],
+"structmc__rbdyn_1_1CompoundJointConstraintDescription.html#a4fc963a5996bfafc4e1e0675e9db6b6a":[6,0,5,6,0],
+"structmc__rbdyn_1_1CompoundJointConstraintDescription.html#a8c937c01687684763d1d040626ca9dcb":[6,0,5,6,2],
+"structmc__rbdyn_1_1CompoundJointConstraintDescription.html#ac9819775fec0daea6ce39b6979ef153d":[6,0,5,6,1],
+"structmc__rbdyn_1_1Contact.html":[6,0,5,7],
+"structmc__rbdyn_1_1Contact.html#a061feb41f009a96d124833706c144af0":[6,0,5,7,11],
 "structmc__rbdyn_1_1Contact.html#a0b96511b7c48d57215b888b1e6d24d50":[6,0,5,7,10],
 "structmc__rbdyn_1_1Contact.html#a1e88a7e40daa8d2b1b1eb703681eec3c":[6,0,5,7,4],
 "structmc__rbdyn_1_1Contact.html#a24d2d5e3381e4e863bea3c3d5f66b9c5":[6,0,5,7,35],
@@ -243,11 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__rbdyn_1_1Robot.html#a4dce036249f32a7cd0f0257956be990e":[6,0,5,22,95],
 "structmc__rbdyn_1_1Robot.html#a4e3272e412d22bf6d382117300c9ee42":[6,0,5,22,62],
 "structmc__rbdyn_1_1Robot.html#a4e858c693b7e94ded9704e13463e1ae5":[6,0,5,22,48],
-"structmc__rbdyn_1_1Robot.html#a50f3f6250f68bac91a2594e9e6383b2f":[6,0,5,22,164],
-"structmc__rbdyn_1_1Robot.html#a52b9f6334096f8f9534d4dfab3a89495":[6,0,5,22,73],
-"structmc__rbdyn_1_1Robot.html#a52d953d97ba1f0fbeed5e208e78e3d97":[6,0,5,22,91],
-"structmc__rbdyn_1_1Robot.html#a5309b5ef9bb5b91bf0f1adb59813bde4":[6,0,5,22,30],
-"structmc__rbdyn_1_1Robot.html#a54b38b6bbe93a7b6cc48d9091e9ee8b5":[6,0,5,22,40],
-"structmc__rbdyn_1_1Robot.html#a54fe0da3fe099906b79cb20de8076659":[6,0,5,22,130],
-"structmc__rbdyn_1_1Robot.html#a5773f91f2a9d0eb5cb4b6a0943551a1b":[6,0,5,22,16]
+"structmc__rbdyn_1_1Robot.html#a50f3f6250f68bac91a2594e9e6383b2f":[6,0,5,22,164]
 };

@@ -1,5 +1,11 @@
 var NAVTREEINDEX26 =
 {
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1debc60c12375bc8ebb3dad18a4bf3a6":[6,0,8,2,2,137],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1e3c88734782aa1eb4106db410ade131":[6,0,8,2,2,130],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a207abdb63fcc13968352a6c7fffd47fb":[6,0,8,2,2,182],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a22569ac33f8c0e99bb674520373c41c6":[6,0,8,2,2,150],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2284666da172e5bc40f90525f800a0c0":[6,0,8,2,2,77],
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a23a5f961e6993f20ebe16f246736e1cc":[6,0,8,2,2,173],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a255c7b9c2e0434e97d450f4089908299":[6,0,8,2,2,35],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2747ce4f19500c9313bd38400d6c4c3a":[6,0,8,2,2,159],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a291e8bd69f054b3cce5117e721356185":[6,0,8,2,2,80],
@@ -243,11 +249,5 @@ var NAVTREEINDEX26 =
 "structmc__trajectory_1_1InterpolatedRotation.html#aa0cdeef0cd6d5a0f7daea52f53bac171":[6,0,9,2,5],
 "structmc__trajectory_1_1InterpolatedRotation.html#acbce3f9de05b28314ad0f61bb753d940":[6,0,9,2,0],
 "structmc__trajectory_1_1LinearInterpolation.html":[6,0,9,3],
-"structmc__trajectory_1_1LinearInterpolation.html#a283b5bb138c051d1a3e3ef6d7690dedf":[6,0,9,3,0],
-"structmc__trajectory_1_1SequenceInterpolator.html":[6,0,9,4],
-"structmc__trajectory_1_1SequenceInterpolator.html#a0b03ecdb30393152c9e511862aad9571":[6,0,9,4,6],
-"structmc__trajectory_1_1SequenceInterpolator.html#a0d4784e10957d3cb31d93ecde6351037":[6,0,9,4,12],
-"structmc__trajectory_1_1SequenceInterpolator.html#a1e7f700dad0f42a95a4980ae99add4c1":[6,0,9,4,2],
-"structmc__trajectory_1_1SequenceInterpolator.html#a2cc31644575f3808fdf244d453e6b37c":[6,0,9,4,1],
-"structmc__trajectory_1_1SequenceInterpolator.html#a35a012cae5bebda697cc20a56f12a0b6":[6,0,9,4,11]
+"structmc__trajectory_1_1LinearInterpolation.html#a283b5bb138c051d1a3e3ef6d7690dedf":[6,0,9,3,0]
 };

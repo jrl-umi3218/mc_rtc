@@ -380,7 +380,7 @@
 <p>The framework provides a mechanism, refered to as <strong>State Observation Pipelines</strong>, to simplify and generalize the observation of a robot, or multiple robots states. The concept is to view state observation as a pipelines, where each pipeline is composed of multiple observers executed sequentially. Each observer is a component responsible for estimating part of the robot state. When combined together, all observers in a pipeline contribute to provide a full estimation of the desired robot state. Multiple pipelines can be defined and executed allowing to estimate the state of multiple robots, or to perform comparisons between multiple estimation methods. The observers themselves are, as is the case for controller, tasks, plugins, loaded from libraries with a simple interface, allowing to conveniently define your own. The framework currently provides the following observers by default:</p>
 
 <ul>
-  <li><strong>Encoder Observer</strong>: estimates a robot’s joint state (position and velocity) and computes forward kinematics and velocities to obtain body positions and velocities. Various inputs may be used: encoder position, encoder velocity (obtained from a velocity sensor or by finite differences of position), another robot’s joint values, etc.</li>
+  <li><strong>Encoder Observer</strong>: estimates a robot’s joint state (position, velocity and torque) and computes forward kinematics and velocities to obtain body positions and velocities. Various inputs may be used: encoder position, encoder velocity (obtained from a velocity sensor or by finite differences of position), another robot’s joint values, etc.</li>
   <li><strong>BodySensor Observer</strong>: sets a robot’s floating base state from measurements provided by a sensor attached to a robot body and the kinematics between the sensor and the floating base. This is typically be used to exploit ground truth measurement from a simulator, or exploit the results of an external component providing information about the floating base (MOCAP, embedded estimator on the robot plateform, etc).</li>
   <li><strong>KinematicInertial Observer</strong>: estimates a robot’s floating base pose (position + orientation) and velocity (low-pass filtered finite differences of position) from a <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_"><code>mc_rbdyn::BodySensor</code></a> (IMU orientation) and a kinematic anchor frame.</li>
 </ul>
@@ -450,14 +450,14 @@
 <p>When creating a controller with the above pipeline, the framework will display a short summary as</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ObserverPipelines:
-- ExamplePipeline: Encoder (position=encoderValues,velocity=encoderFiniteDifferences) -&gt; [BodySensor (sensor=FloatingBase,update=sensor)] -&gt;  KinematicInertial (sensor=Accelerometer,cutoff=0.010000)
+- ExamplePipeline: Encoder (position=encoderValues,velocity=encoderFiniteDifferences, torque=jointTorques) -&gt; [BodySensor (sensor=FloatingBase,update=sensor)] -&gt;  KinematicInertial (sensor=Accelerometer,cutoff=0.010000)
 </code></pre></div></div>
 
 <p>This displays information about the running pipelines, and their sequence of observers. Observers displayed between <code class="language-plaintext highlighter-rouge">[..]</code> brackets are run but do not affect the state of the <code class="language-plaintext highlighter-rouge">realRobots</code> instance. After running the pipelines, the <code class="language-plaintext highlighter-rouge">realRobots</code> instances now contain the estimated robot states, and can be used in the controller.</p>
 
 <p>For instance, with the above pipeline you can:</p>
 <ul>
-  <li>Get joint position <code class="language-plaintext highlighter-rouge">readRobot().mbc().q()</code> and velocity <code class="language-plaintext highlighter-rouge">realRobot().mbc().alpha()</code></li>
+  <li>Get joint position <code class="language-plaintext highlighter-rouge">readRobot().mbc().q()</code>, velocity <code class="language-plaintext highlighter-rouge">realRobot().mbc().alpha()</code> and torque <code class="language-plaintext highlighter-rouge">realRobot().mbc().jointTorque()</code></li>
   <li>Get the floating base pose <code class="language-plaintext highlighter-rouge">realRobot().posW()</code></li>
   <li>Get the floating base velocity <code class="language-plaintext highlighter-rouge">realRobot().velW()</code></li>
   <li>Get the pose of a body: <code class="language-plaintext highlighter-rouge">realRobot().bodyPosW("bodyName");</code></li>
@@ -498,11 +498,12 @@
   <li><a href="../../json.html#Observers/Encoder">JSON Schema</a></li>
 </ul>
 
-<p>The encoder observer may be used to obtain the position and velocity of all actuated joints.</p>
+<p>The encoder observer may be used to obtain the position, velocity and torque of all actuated joints.</p>
 
 <ul>
   <li>Joint values can be obtained from sensor as provided by <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a1da8134deea10a32f7d35fc381649606" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a> or using the joint state of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>.</li>
   <li>Joint velocities can be obtained from a joint velocity sensor <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a8a2e3e0b4b0e226712007e9fe905f9e9" target="blank_"><code>mc_rbdyn::Robot::encoderVelocities()</code></a>, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a></li>
+  <li>Joint torques can be obtained from a joint torque sensor <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#af65b1b51c93d319952e2ae3965e204c8" target="blank_"><code>mc_rbdyn::Robot::jointTorques()</code></a> or using the joint torques of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a></li>
   <li>The observer will compute forward kinematics <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ae46b693d4431e61db9f1d4a05f66dd5e" target="blank_"><code>mc_rbdyn::Robot::forwardKinematics()</code></a> and forward velocity <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#afd93342dd86da6803288346a3798d374" target="blank_"><code>mc_rbdyn::Robot::forwardVelocity()</code></a> to update the corresponding body positions and velocities (which may be required by subsequent observers).</li>
 </ul>
 

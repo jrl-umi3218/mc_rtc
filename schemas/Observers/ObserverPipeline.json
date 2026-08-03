@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "mc_observers::ObserverPipeline",
-  "description": "State observation pipeline.<br/>Observers are responsible for estimating some of the robot properties from sensor measurements and/or fusing several source of information (e.g the Encoder observer estimates the joint position and velocity based on joint sensors, the KinematicInertial observers the state of the floating base from kinematics and IMU information, etc).<br/>These observers may be grouped into a \"State observation pipeline\", that will run each observer sequentially. Some observers may be used to update the state of the real robots instances used by the controller, while others may only be used for logging estimated values for comparison purposes.",
+  "description": "State observation pipeline.<br/>Observers are responsible for estimating some of the robot properties from sensor measurements and/or fusing several source of information (e.g the Encoder observer estimates the joint position, velocity and torque based on joint sensors, the KinematicInertial observers the state of the floating base from kinematics and IMU information, etc).<br/>These observers may be grouped into a \"State observation pipeline\", that will run each observer sequentially. Some observers may be used to update the state of the real robots instances used by the controller, while others may only be used for logging estimated values for comparison purposes.",
   "properties": {
     "name": {
       "type": "string",
@@ -36,7 +36,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "description": "Name of the observer. This is the name exported by each observer library, for default observers see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position and velocity)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"
+            "description": "Name of the observer. This is the name exported by each observer library, for default observers see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position, velocity, torque)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"
           },
           "name": {
             "type": "string",

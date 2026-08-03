@@ -16646,6 +16646,16 @@
       <enumvalue file="structmc__observers_1_1EncoderObserver.html" anchor="aac0902eb5fa7af1436db7cc9ff06dff9af36b285527c0884c23e8dd6da1ec899f">EncoderFiniteDifferences</enumvalue>
       <enumvalue file="structmc__observers_1_1EncoderObserver.html" anchor="aac0902eb5fa7af1436db7cc9ff06dff9a6adf97f83acf6453d4a6a4b1070f3754">None</enumvalue>
     </member>
+    <member kind="enumeration" protection="protected">
+      <type></type>
+      <name>TorqueUpdate</name>
+      <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
+      <anchor>acc58b09fdb9badddc6836f2b62471757</anchor>
+      <arglist></arglist>
+      <enumvalue file="structmc__observers_1_1EncoderObserver.html" anchor="acc58b09fdb9badddc6836f2b62471757aa1595abbb4c3a326636dd178757cd6c1">Control</enumvalue>
+      <enumvalue file="structmc__observers_1_1EncoderObserver.html" anchor="acc58b09fdb9badddc6836f2b62471757a33e1849d6bf8b194b07329e747ce5f5d">JointTorques</enumvalue>
+      <enumvalue file="structmc__observers_1_1EncoderObserver.html" anchor="acc58b09fdb9badddc6836f2b62471757a6adf97f83acf6453d4a6a4b1070f3754">None</enumvalue>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>addToLogger</name>
@@ -16665,6 +16675,13 @@
       <name>velUpdate_</name>
       <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
       <anchor>a088c5ec59d2288b6a3499c8aae54853b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>TorqueUpdate</type>
+      <name>torqueUpdate_</name>
+      <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
+      <anchor>a0fdb71502ea72373e585dd2cf86605d8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -16728,6 +16745,13 @@
       <name>logVelocity_</name>
       <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
       <anchor>a8a2ec1dcb1a36e2b0cef5c1e8f5a489d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>logTorque_</name>
+      <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
+      <anchor>a14ed75647c1326acd9f39330daa06327</anchor>
       <arglist></arglist>
     </member>
   </compound>
