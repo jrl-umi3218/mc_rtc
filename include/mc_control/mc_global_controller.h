@@ -956,6 +956,7 @@ private:
     ~PluginHandle();
     std::string name;
     GlobalPluginPtr plugin;
+    std::vector<std::string> datastore_entries;
   };
   std::vector<PluginHandle> plugins_;
   std::vector<PluginHandle> controller_plugins_;
@@ -1001,10 +1002,29 @@ private:
   /** Load a plugin
    *
    * \param name Name of the plugin
+   * \param requiredBy Which context requested this plugin load
+   * \param controllerSpecific Whether the plugin is controller-specific
    *
    * \returns nullptr if the loading fails
    */
-  GlobalPlugin * loadPlugin(const std::string & name, const char * requiredBy);
+  GlobalPlugin * loadPlugin(const std::string & name, const char * requiredBy, bool controllerSpecific = false);
+
+  /*! \brief Track datastore entries created by a plugin call
+   *
+   * Used after plugin init/reset to identify entries to remove when
+   * unloading a controller-specific plugin.
+   *
+   * \param plugin Plugin handle that owns the tracked entries
+   * \param beforeKeys Datastore keys snapshot taken before plugin init/reset
+   */
+  void trackPluginDatastoreEntries(PluginHandle & plugin, const std::vector<std::string> & beforeKeys);
+
+  /*! \brief Remove tracked datastore entries for a plugin from a datastore
+   *
+   * \param plugin Plugin handle with previously tracked datastore keys
+   * \param datastore Datastore to clean
+   */
+  void cleanupPluginDatastoreEntries(PluginHandle & plugin, mc_rtc::DataStore & datastore);
 };
 
 } // namespace mc_control
