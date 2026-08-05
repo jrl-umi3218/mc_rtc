@@ -174,7 +174,7 @@ cdef class QPSolver(object):
   def contacts(self):
     ret = []
     for i in range(self.impl.contacts().size()):
-      ret.append(mc_rbdyn.ContactFromC(self.impl.contacts()[i]))
+      ret.append(mc_rbdyn.ContactFromPtr(self.impl.contacts()[i], copy=False))
     return ret
   def addTask(self, mc_tasks.MetaTask task):
     self.impl.addTask(task.mt_base)
