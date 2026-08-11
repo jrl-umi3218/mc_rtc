@@ -3,9 +3,11 @@
   "updateRobot": "jvrc1",
   "position": "encoderValues",
   "velocity": "encoderFiniteDifferences",
+  "torque": "jointTorques",
   "log":
   {
     "position": false,
-    "velocity": true
+    "velocity": true,
+    "torque": false
   }
 }

@@ -61,13 +61,8 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
 
 ROSPlugin::~ROSPlugin()
 {
-  mc_rtc::ROSBridge::stop_robot_publisher("control");
-  mc_rtc::ROSBridge::stop_robot_publisher("real");
-  for(size_t i = 0; i < published_topics; ++i)
-  {
-    mc_rtc::ROSBridge::stop_robot_publisher("control/env_" + std::to_string(i + 1));
-    mc_rtc::ROSBridge::stop_robot_publisher("real/env_" + std::to_string(i + 1));
-  }
+  mc_rtc::ROSBridge::stop_robot_publishers();
+  mc_rtc::ROSBridge::shutdown();
 }
 
 } // namespace mc_plugin

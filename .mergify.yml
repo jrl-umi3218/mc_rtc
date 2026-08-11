@@ -26,3 +26,6 @@ queue_rules:
       - check-success = "check-build"
       - check-success = "check-package"
       - check-success = "pre-commit.ci - pr"
+
+merge_queue:
+  queue_controls_comment: false
