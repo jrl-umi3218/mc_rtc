@@ -394,7 +394,7 @@ Robot::Robot(NewRobotToken,
       else if(visuals.size() > 1 && hasBody(body))
       {
         // only convexes built from multiple <collision> elements carry the
-        // "<body>_<i>" naming => a body with several <visual> but a single <collision> 
+        // "<body>_<i>" naming => a body with several <visual> but a single <collision>
         // keeps the plain body name => removing indexed keys unconditionally create collision
         // transforms matching neither a convex nor a body, and fixCollisionTransforms() throws
         size_t added = 0;
