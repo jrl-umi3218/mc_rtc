@@ -152,6 +152,52 @@ cdef CollisionsConstraint CollisionsConstraintFromPtr(c_mc_solver.CollisionsCons
     ret.impl = ret.cs_base = p
     return ret
 
+cdef class DistanceConstraint(ConstraintSet):
+  defaultDampingOffset = c_mc_solver.DistanceConstraintDefaultDampingOffset
+  def __dealloc__(self):
+    if self.own_impl__:
+      del self.impl
+  def __cinit__(self, mc_rbdyn.Robots robots, r1Index, r2Index, timeStep, skip_alloc = False):
+    self.own_impl__ = True
+    if not skip_alloc:
+      self.impl = self.cs_base = new c_mc_solver.DistanceConstraint(deref(robots.impl), r1Index, r2Index, timeStep)
+  def removeCollision(self, QPSolver solver, mc_rbdyn.Collision col):
+    return self.impl.removeCollision(deref(solver.impl), col.impl)
+  def removeCollisionByBody(self, QPSolver solver, b1Name, b2Name):
+    if isinstance(b1Name, unicode):
+        b1Name = b1Name.encode(u'ascii')
+    if isinstance(b2Name, unicode):
+        b2Name = b2Name.encode(u'ascii')
+    return self.impl.removeCollisionByBody(deref(solver.impl), b1Name, b2Name)
+  def addCollision(self, QPSolver solver, mc_rbdyn.Collision col):
+    self.impl.addCollision(deref(solver.impl), col.impl)
+  def addCollisions(self, QPSolver solver, cols):
+    for c in cols:
+      self.addCollision(solver, c)
+  def reset(self):
+    self.impl.reset()
+  property r1Index:
+    def __get__(self):
+      return self.impl.r1Index
+  property r2Index:
+    def __get__(self):
+      return self.impl.r2Index
+  property cols:
+    def __get__(self):
+      end = deref(self.impl).cols.end()
+      it = deref(self.impl).cols.begin()
+      ret = []
+      while it != end:
+        ret.append(mc_rbdyn.CollisionFromC(deref(it)))
+        preinc(it)
+      return ret
+
+cdef DistanceConstraint DistanceConstraintFromPtr(c_mc_solver.DistanceConstraint * p):
+    cdef DistanceConstraint ret = DistanceConstraint(None, None, None, None, skip_alloc = True)
+    ret.own_impl__ = False
+    ret.impl = ret.cs_base = p
+    return ret
+
 cdef qp.BilateralContact BilateralContactFromC(const c_qp.BilateralContact & bc):
   cdef qp.BilateralContact ret = qp.BilateralContact()
   ret.impl = bc

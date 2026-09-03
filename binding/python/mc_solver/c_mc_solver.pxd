@@ -70,6 +70,22 @@ cdef extern from "<mc_solver/CollisionsConstraint.h>" namespace "mc_solver":
     unsigned int r2Index
     vector[Collision] cols
 
+cdef extern from "<mc_solver/DistanceConstraint.h>" namespace "mc_solver":
+  cdef double DistanceConstraintDefaultDampingOffset "mc_solver::DistanceConstraint::defaultDampingOffset"
+
+  cdef cppclass DistanceConstraint(ConstraintSet):
+    DistanceConstraint(const Robots&, unsigned int, unsigned int, double)
+
+    cppbool removeCollision(const QPSolver&, const Collision&)
+    cppbool removeCollisionByBody(const QPSolver&, string, string)
+    void addCollision(const QPSolver&, const Collision&) except+
+    void addCollisions(const QPSolver& robots, const vector[Collision]&)
+    void reset()
+
+    unsigned int r1Index
+    unsigned int r2Index
+    vector[Collision] cols
+
 cdef extern from "<mc_solver/TasksQPSolver.h>" namespace "mc_solver":
   cdef cppclass QPSolver:
     void addConstraintSet(const ConstraintSet&)

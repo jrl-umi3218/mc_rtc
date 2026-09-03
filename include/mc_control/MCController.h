@@ -20,6 +20,7 @@
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CompoundJointConstraint.h>
 #include <mc_solver/ContactConstraint.h>
+#include <mc_solver/DistanceConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 #include <mc_solver/QPSolver.h>
@@ -701,7 +702,7 @@ protected:
 
   /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
    * effectively a self-collision manager */
-  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::CollisionsConstraint>> collision_constraints_;
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::DistanceConstraint>> collision_constraints_;
 
   /** FSM contacts */
   ContactSet contacts_;
@@ -726,7 +727,7 @@ public:
   /** Kinematics constraints for the main robot */
   mc_rtc::unique_ptr<mc_solver::KinematicsConstraint> kinematicsConstraint;
   /** Self collisions constraint for the main robot */
-  mc_rtc::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
+  mc_rtc::unique_ptr<mc_solver::DistanceConstraint> selfCollisionConstraint;
   /** Compound joint constraint for the main robot */
   mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */

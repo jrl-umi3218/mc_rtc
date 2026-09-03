@@ -209,7 +209,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   std::array<double, 3> damper{0.1, 0.01, 0.5};
   dynamicsConstraint.reset(new mc_solver::DynamicsConstraint(robots(), 0, dt, damper, 0.5));
   kinematicsConstraint.reset(new mc_solver::KinematicsConstraint(robots(), 0, dt, damper, 0.5));
-  selfCollisionConstraint.reset(new mc_solver::CollisionsConstraint(robots(), 0, 0, dt));
+  selfCollisionConstraint.reset(new mc_solver::DistanceConstraint(robots(), 0, 0, dt));
   selfCollisionConstraint->addCollisions(solver(), robot_modules[0]->minimalSelfCollisions());
   compoundJointConstraint.reset(new mc_solver::CompoundJointConstraint(robots(), 0, timeStep));
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
@@ -319,13 +319,26 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
           std::shared_ptr<mc_solver::ContactConstraint>(contactConstraint.get(), [](mc_solver::ContactConstraint *) {});
     }
   }
+  /** Load distance constraint managers */
+  {
+    auto config_collisions = config("distances", std::vector<mc_rtc::Configuration>{});
+    for(auto & config_cc : config_collisions)
+    {
+      if(!config_cc.has("type")) { config_cc.add("type", "distance"); }
+      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_cc);
+      auto & r1 = robots().robot(cc->r1Index);
+      auto & r2 = robots().robot(cc->r2Index);
+      collision_constraints_[{r1.name(), r2.name()}] = cc;
+      solver().addConstraintSet(*cc);
+    }
+  }
   /** Load collision managers */
   {
     auto config_collisions = config("collisions", std::vector<mc_rtc::Configuration>{});
     for(auto & config_cc : config_collisions)
     {
       if(!config_cc.has("type")) { config_cc.add("type", "collision"); }
-      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::CollisionsConstraint>(solver(), config_cc);
+      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_cc);
       auto & r1 = robots().robot(cc->r1Index);
       auto & r2 = robots().robot(cc->r2Index);
       collision_constraints_[{r1.name(), r2.name()}] = cc;
@@ -961,7 +974,7 @@ void MCController::addCollisions(const std::string & r1,
     auto r1Index = robot(r1).robotIndex();
     auto r2Index = robot(r2).robotIndex();
     collision_constraints_[{r1, r2}] =
-        std::make_shared<mc_solver::CollisionsConstraint>(robots(), r1Index, r2Index, solver().dt());
+        std::make_shared<mc_solver::DistanceConstraint>(robots(), r1Index, r2Index, solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];

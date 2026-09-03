@@ -78,7 +78,7 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     unique_ptr[ContactConstraint] contactConstraint
     unique_ptr[DynamicsConstraint] dynamicsConstraint
     unique_ptr[KinematicsConstraint] kinematicsConstraint
-    unique_ptr[CollisionsConstraint] selfCollisionConstraint
+    unique_ptr[DistanceConstraint] selfCollisionConstraint
     shared_ptr[c_mc_tasks.PostureTask] postureTask
     QPSolver & solver()
 

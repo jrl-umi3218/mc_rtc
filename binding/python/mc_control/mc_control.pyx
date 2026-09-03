@@ -156,7 +156,7 @@ cdef class MCController(object):
       return mc_solver.KinematicsConstraintFromPtr(self.base.kinematicsConstraint.get())
   property selfCollisionConstraint:
     def __get__(self):
-      return mc_solver.CollisionsConstraintFromPtr(self.base.selfCollisionConstraint.get())
+      return mc_solver.DistanceConstraintFromPtr(self.base.selfCollisionConstraint.get())
   property postureTask:
     def __get__(self):
       return mc_tasks.PostureTaskFromPtr(self.base.postureTask.get())
