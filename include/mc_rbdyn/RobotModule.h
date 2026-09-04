@@ -5,8 +5,8 @@
 #pragma once
 
 #include <mc_rbdyn/BodySensor.h>
-#include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/CompoundJointConstraintDescription.h>
+#include <mc_rbdyn/DistanceLimit.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/JointSensor.h>
@@ -21,6 +21,7 @@
 
 #include <RBDyn/parsers/common.h>
 
+#include "mc_rbdyn/DistanceLimit.h"
 #include <sch/S_Object/S_Object.h>
 
 /* This is an interface designed to provide additionnal information about a robot */
@@ -648,9 +649,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    * This set of collision describe self-collisions that you always want to
    * enable regardless of the application
    *
-   * \see mc_rbdyn::Collision for details on the expected data
+   * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
+  const std::vector<mc_rbdyn::DistanceLimit> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
 
   /** Return a common self-collision set
    *
@@ -658,9 +659,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    * general applications. Generally this is a super-set of \ref
    * minimalSelfCollisions
    *
-   * \see mc_rbdyn::Collision for details on the expected data
+   * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
+  const std::vector<mc_rbdyn::DistanceLimit> & commonSelfCollisions() const { return _commonSelfCollisions; }
 
   /** Return the grippers in the robot
    *
@@ -824,9 +825,9 @@ public:
   /** \see springs() */
   Springs _springs;
   /** \see minimalSelfCollisions() */
-  std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
+  std::vector<mc_rbdyn::DistanceLimit> _minimalSelfCollisions;
   /** \see commonSelfCollisions() */
-  std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
+  std::vector<mc_rbdyn::DistanceLimit> _commonSelfCollisions;
   /** \see grippers() */
   std::vector<Gripper> _grippers;
   /** \see gripperSafety() */

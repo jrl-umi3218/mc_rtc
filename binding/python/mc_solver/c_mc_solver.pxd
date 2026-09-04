@@ -7,7 +7,7 @@ from sva.c_sva cimport *
 from rbdyn.c_rbdyn cimport *
 cimport sch.c_sch as sch
 cimport tasks.qp.c_qp as c_qp
-from mc_rbdyn.c_mc_rbdyn cimport Robots, Collision
+from mc_rbdyn.c_mc_rbdyn cimport Robots, Collision, DistanceLimit
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 cimport mc_tasks.c_mc_tasks as c_mc_tasks
 
@@ -62,13 +62,13 @@ cdef extern from "<mc_solver/CollisionsConstraint.h>" namespace "mc_solver":
 
     cppbool removeCollision(const QPSolver&, string, string)
     cppbool removeCollisionByBody(const QPSolver&, string, string)
-    void addCollision(const QPSolver&, const Collision&) except+
-    void addCollisions(const QPSolver& robots, const vector[Collision]&)
+    void addCollision(const QPSolver&, const DistanceLimit&) except+
+    void addCollisions(const QPSolver& robots, const vector[DistanceLimit]&)
     void reset()
 
     unsigned int r1Index
     unsigned int r2Index
-    vector[Collision] cols
+    vector[DistanceLimit] cols
 
 cdef extern from "<mc_solver/DistanceConstraint.h>" namespace "mc_solver":
   cdef double DistanceConstraintDefaultDampingOffset "mc_solver::DistanceConstraint::defaultDampingOffset"
@@ -76,15 +76,15 @@ cdef extern from "<mc_solver/DistanceConstraint.h>" namespace "mc_solver":
   cdef cppclass DistanceConstraint(ConstraintSet):
     DistanceConstraint(const Robots&, unsigned int, unsigned int, double)
 
-    cppbool removeCollision(const QPSolver&, const Collision&)
-    cppbool removeCollisionByBody(const QPSolver&, string, string)
-    void addCollision(const QPSolver&, const Collision&) except+
-    void addCollisions(const QPSolver& robots, const vector[Collision]&)
+    cppbool removeDistanceLimit(const QPSolver&, const DistanceLimit&)
+    cppbool removeDistanceLimitByBody(const QPSolver&, string, string)
+    void addDistanceLimit(const QPSolver&, const DistanceLimit&) except+
+    void addDistanceLimits(const QPSolver& robots, const vector[DistanceLimit]&)
     void reset()
 
     unsigned int r1Index
     unsigned int r2Index
-    vector[Collision] cols
+    vector[DistanceLimit] dls
 
 cdef extern from "<mc_solver/TasksQPSolver.h>" namespace "mc_solver":
   cdef cppclass QPSolver:

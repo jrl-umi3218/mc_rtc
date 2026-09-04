@@ -183,17 +183,17 @@ cdef class MCController(object):
       preinc(it)
     return ret
   def addCollisions(self, r1, r2, collisions):
-    assert(all([isinstance(col, mc_rbdyn.Collision) for col in collisions]))
-    cdef vector[c_mc_rbdyn.Collision] cols
+    assert(all([isinstance(col, mc_rbdyn.DistanceLimit) for col in collisions]))
+    cdef vector[c_mc_rbdyn.DistanceLimit] cols
     if isinstance(r1, unicode):
       r1 = r1.encode(u'ascii')
     if isinstance(r2, unicode):
       r2 = r2.encode(u'ascii')
     for col in collisions:
-      cols.push_back((<mc_rbdyn.Collision>col).impl)
+      cols.push_back((<mc_rbdyn.DistanceLimit>col).impl)
     self.base.addCollisions(r1, r2, cols)
   def removeCollisions(self, r1, r2, collisions = None):
-    cdef vector[c_mc_rbdyn.Collision] cols
+    cdef vector[c_mc_rbdyn.DistanceLimit] cols
     if isinstance(r1, unicode):
       r1 = r1.encode(u'ascii')
     if isinstance(r2, unicode):
@@ -202,7 +202,7 @@ cdef class MCController(object):
       self.base.removeCollisions(r1, r2)
     else:
       for col in collisions:
-        cols.push_back((<mc_rbdyn.Collision>col).impl)
+        cols.push_back((<mc_rbdyn.DistanceLimit>col).impl)
       self.base.removeCollisions(r1, r2, cols)
   def hasRobot(self, name):
     if isinstance(name, unicode):

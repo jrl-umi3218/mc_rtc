@@ -19,6 +19,7 @@
 
 #include <Tasks/QPConstr.h>
 
+#include "mc_rbdyn/DistanceLimit.h"
 #include <tvm/task_dynamics/VelocityDamper.h>
 
 #include "utils/jointsToSelector.h"
@@ -33,9 +34,9 @@ struct TVMCollisionConstraint
 {
   struct CollisionData
   {
-    CollisionData(int id, const mc_rbdyn::Collision & col) : id(id), collision(col) {}
+    CollisionData(int id, const mc_rbdyn::DistanceLimit & col) : id(id), collision(col) {}
     int id;
-    mc_rbdyn::Collision collision;
+    mc_rbdyn::DistanceLimit collision;
     mc_tvm::CollisionFunctionPtr function;
     tvm::TaskWithRequirementsPtr task;
   };
@@ -44,7 +45,7 @@ struct TVMCollisionConstraint
   /** Solver this has been added to */
   mc_solver::TVMQPSolver * solver;
 
-  auto getData(const mc_rbdyn::Collision & col)
+  auto getData(const mc_rbdyn::DistanceLimit & col)
   {
     return std::find_if(data_.begin(), data_.end(), [&](const auto & d) { return d.collision == col; });
   }
@@ -71,7 +72,7 @@ struct TVMCollisionConstraint
     }
   }
 
-  void deleteCollision(TVMQPSolver & solver, const mc_rbdyn::Collision & col)
+  void deleteCollision(TVMQPSolver & solver, const mc_rbdyn::DistanceLimit & col)
   {
     removeOrDeleteCollision<true>(solver, getData(col));
   }
@@ -97,7 +98,7 @@ struct TVMCollisionConstraint
   CollisionData & createCollision(TVMQPSolver & solver,
                                   const mc_rbdyn::Robot & r1,
                                   const mc_rbdyn::Robot & r2,
-                                  const mc_rbdyn::Collision & col,
+                                  const mc_rbdyn::DistanceLimit & col,
                                   int id,
                                   const Eigen::VectorXd & r1Selector,
                                   const Eigen::VectorXd & r2Selector)
@@ -216,7 +217,7 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
   return false;
 }
 
-void CollisionsConstraint::removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
+void CollisionsConstraint::removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols)
 {
   for(const auto & c : cols) { removeCollision(solver, c.body1, c.body2); }
 }
@@ -227,7 +228,7 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
 {
   const auto & r1 = solver.robots().robot(r1Index);
   const auto & r2 = solver.robots().robot(r2Index);
-  std::vector<mc_rbdyn::Collision> toRm;
+  std::vector<mc_rbdyn::DistanceLimit> toRm;
   for(const auto & col : cols)
   {
     if(r1.convex(col.body1).first == b1Name && r2.convex(col.body2).first == b2Name)
@@ -277,7 +278,7 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
   return toRm.size() > 0;
 }
 
-void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col)
+void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::DistanceLimit & col)
 {
   const auto & robots = solver.robots();
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
@@ -370,7 +371,7 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
   addMonitorButton(collId, col);
 }
 
-void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collision & col)
+void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::DistanceLimit & col)
 {
   if(gui_ && inSolver_)
   {
@@ -384,7 +385,7 @@ void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collisio
   }
 }
 
-void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col_p)
+void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::DistanceLimit * col_p)
 {
   auto findCollisionById = [this, collId, &col_p]()
   {
@@ -449,12 +450,12 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Co
   }
 }
 
-void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
+void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::DistanceLimit & col)
 {
   addCollisions(solver, {col});
 }
 
-void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
+void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols)
 {
   for(const auto & c : cols) { __addCollision(solver, c); }
   switch(backend_)
@@ -580,28 +581,28 @@ std::string CollisionsConstraint::__keyByNames(const std::string & name1, const 
   return name1 + name2;
 }
 
-int CollisionsConstraint::__createCollId(const mc_rbdyn::Collision & col)
+int CollisionsConstraint::__createCollId(const mc_rbdyn::DistanceLimit & col)
 {
   std::string key = __keyByNames(col.body1, col.body2);
   auto it = collIdDict.find(key);
   if(it != collIdDict.end()) { return -1; }
   int collId = this->collId;
-  collIdDict[key] = std::pair<int, mc_rbdyn::Collision>(collId, col);
+  collIdDict[key] = std::pair<int, mc_rbdyn::DistanceLimit>(collId, col);
   this->collId += 1;
   return collId;
 }
 
-std::pair<int, mc_rbdyn::Collision> CollisionsConstraint::__popCollId(const std::string & name1,
-                                                                      const std::string & name2)
+std::pair<int, mc_rbdyn::DistanceLimit> CollisionsConstraint::__popCollId(const std::string & name1,
+                                                                          const std::string & name2)
 {
   std::string key = __keyByNames(name1, name2);
   if(collIdDict.count(key))
   {
-    std::pair<int, mc_rbdyn::Collision> p = collIdDict[key];
+    std::pair<int, mc_rbdyn::DistanceLimit> p = collIdDict[key];
     collIdDict.erase(key);
     return p;
   }
-  return std::pair<unsigned int, mc_rbdyn::Collision>(0, mc_rbdyn::Collision());
+  return std::pair<unsigned int, mc_rbdyn::DistanceLimit>(0, mc_rbdyn::DistanceLimit());
 }
 
 bool CollisionsConstraint::hasCollision(const std::string & c1, const std::string & c2) const noexcept
@@ -634,7 +635,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
           ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }
-      std::vector<mc_rbdyn::Collision> collisions = config("collisions", std::vector<mc_rbdyn::Collision>{});
+      std::vector<mc_rbdyn::DistanceLimit> collisions = config("collisions", std::vector<mc_rbdyn::DistanceLimit>{});
       ret->addCollisions(solver, collisions);
       return ret;
     });

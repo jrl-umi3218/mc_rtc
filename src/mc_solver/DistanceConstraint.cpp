@@ -19,6 +19,7 @@
 
 #include <Tasks/QPConstr.h>
 
+#include "mc_rbdyn/DistanceLimit.h"
 #include <tvm/task_dynamics/VelocityDamper.h>
 
 #include "utils/jointsToSelector.h"
@@ -31,22 +32,22 @@ namespace details
 
 struct TVMDistanceConstraint
 {
-  struct DistanceData
+  struct DistanceLimitData
   {
-    DistanceData(int id, const mc_rbdyn::Collision & col) : id(id), collision(col) {}
+    DistanceLimitData(int id, const mc_rbdyn::DistanceLimit & dl) : id(id), distLim(dl) {}
     int id;
-    mc_rbdyn::Collision collision;
+    mc_rbdyn::DistanceLimit distLim;
     mc_tvm::DistanceFunctionPtr function;
     tvm::TaskWithRequirementsPtr task;
   };
   /** All distances handled by this constraint */
-  std::vector<DistanceData> data_;
+  std::vector<DistanceLimitData> data_;
   /** Solver this has been added to */
   mc_solver::TVMQPSolver * solver;
 
-  auto getData(const mc_rbdyn::Collision & col)
+  auto getData(const mc_rbdyn::DistanceLimit & dl)
   {
-    return std::find_if(data_.begin(), data_.end(), [&](const auto & d) { return d.collision == col; });
+    return std::find_if(data_.begin(), data_.end(), [&](const auto & d) { return d.distLim == dl; });
   }
 
   auto getData(int id)
@@ -55,8 +56,8 @@ struct TVMDistanceConstraint
   }
 
   template<bool Delete>
-  std::vector<DistanceData>::iterator removeOrDeleteDistance(TVMQPSolver & solver,
-                                                             std::vector<DistanceData>::iterator it)
+  std::vector<DistanceLimitData>::iterator removeOrDeleteDistanceLimit(TVMQPSolver & solver,
+                                                                       std::vector<DistanceLimitData>::iterator it)
   {
     if(it == data_.end()) { return data_.end(); }
     if(it->task)
@@ -71,16 +72,16 @@ struct TVMDistanceConstraint
     }
   }
 
-  void deleteDistance(TVMQPSolver & solver, const mc_rbdyn::Collision & col)
+  void deleteDistanceLimit(TVMQPSolver & solver, const mc_rbdyn::DistanceLimit & dl)
   {
-    removeOrDeleteDistance<true>(solver, getData(col));
+    removeOrDeleteDistanceLimit<true>(solver, getData(dl));
   }
 
-  void deleteDistance(TVMQPSolver & solver, int id) { removeOrDeleteDistance<true>(solver, getData(id)); }
+  void deleteDistanceLimit(TVMQPSolver & solver, int id) { removeOrDeleteDistanceLimit<true>(solver, getData(id)); }
 
-  void deleteDistances(mc_solver::TVMQPSolver & solver)
+  void deleteDistanceLimits(mc_solver::TVMQPSolver & solver)
   {
-    for(auto it = data_.begin(); it != data_.end(); ++it) { removeOrDeleteDistance<false>(solver, it); }
+    for(auto it = data_.begin(); it != data_.end(); ++it) { removeOrDeleteDistanceLimit<false>(solver, it); }
   }
 
   void clear()
@@ -91,44 +92,46 @@ struct TVMDistanceConstraint
       return;
     }
     auto it = data_.begin();
-    while(it != data_.end()) { it = removeOrDeleteDistance<true>(*solver, it); }
+    while(it != data_.end()) { it = removeOrDeleteDistanceLimit<true>(*solver, it); }
   }
 
-  DistanceData & createDistance(TVMQPSolver & solver,
-                                const mc_rbdyn::Robot & r1,
-                                const mc_rbdyn::Robot & r2,
-                                const mc_rbdyn::Collision & col,
-                                int id,
-                                const Eigen::VectorXd & r1Selector,
-                                const Eigen::VectorXd & r2Selector)
+  DistanceLimitData & createDistanceLimit(TVMQPSolver & solver,
+                                          const mc_rbdyn::Robot & r1,
+                                          const mc_rbdyn::Robot & r2,
+                                          const mc_rbdyn::DistanceLimit & dl,
+                                          int id,
+                                          const Eigen::VectorXd & r1Selector,
+                                          const Eigen::VectorXd & r2Selector)
   {
-    data_.push_back({id, col});
+    data_.push_back({id, dl});
     auto & data = data_.back();
-    auto & c1 = r1.tvmConvex(col.body1);
-    auto & c2 = r2.tvmConvex(col.body2);
+    auto & c1 = r1.tvmConvex(dl.body1);
+    auto & c2 = r2.tvmConvex(dl.body2);
     data.function = std::make_shared<mc_tvm::DistanceFunction>(c1, c2, r1Selector, r2Selector, solver.dt());
     return data;
   }
 
-  void addDistance(TVMQPSolver & solver, DistanceData & data)
+  void addDistanceLimit(TVMQPSolver & solver, DistanceLimitData & data)
   {
-    const auto & col = data.collision;
+    const auto & dl = data.distLim;
 
-    if(col.iDist > col.sDist)
+    if(dl.iDist > dl.sDist)
     {
+      // Lower distance bound: distance > sDist
       data.task = solver.problem().add(
           data.function >= 0.,
           tvm::task_dynamics::VelocityDamper(
-              solver.dt(), {col.iDist, col.sDist, col.damping, mc_solver::DistanceConstraint::defaultDampingOffset},
+              solver.dt(), {dl.iDist, dl.sDist, dl.damping, mc_solver::DistanceConstraint::defaultDampingOffset},
               tvm::constant::big_number),
           {tvm::requirements::PriorityLevel(0)});
     }
     else
     {
+      // Upper distance bound: distance < sDist
       data.task = solver.problem().add(
           data.function <= 0.,
           tvm::task_dynamics::VelocityDamper(
-              solver.dt(), {-col.iDist, -col.sDist, col.damping, mc_solver::DistanceConstraint::defaultDampingOffset},
+              solver.dt(), {-dl.iDist, -dl.sDist, dl.damping, mc_solver::DistanceConstraint::defaultDampingOffset},
               tvm::constant::big_number),
           {tvm::requirements::PriorityLevel(0)});
     }
@@ -163,7 +166,10 @@ bool handle_wildcard(const mc_rbdyn::Robot & robot, const std::string & body, Ca
       cb(cName);
     }
   }
-  if(!match) { mc_rtc::log::error_and_throw("No match found for collision wildcard {} in {}", body, robot.name()); }
+  if(!match)
+  {
+    mc_rtc::log::error_and_throw("No match found for distance limit wildcard {} in {}", body, robot.name());
+  }
   return true;
 }
 
@@ -184,11 +190,11 @@ DistanceConstraint::DistanceConstraint(const mc_rbdyn::Robots & robots,
                                        unsigned int r1Index,
                                        unsigned int r2Index,
                                        double timeStep)
-: constraint_(make_constraint(backend_, robots, timeStep)), r1Index(r1Index), r2Index(r2Index), collId(0), collIdDict()
+: constraint_(make_constraint(backend_, robots, timeStep)), r1Index(r1Index), r2Index(r2Index), dlId(0), dlIdDict()
 {
 }
 
-bool DistanceConstraint::removeCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
+bool DistanceConstraint::removeDistanceLimit(QPSolver & solver, const mc_rbdyn::DistanceLimit & dl)
 {
   const auto & robots = solver.robots();
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
@@ -196,44 +202,44 @@ bool DistanceConstraint::removeCollision(QPSolver & solver, const mc_rbdyn::Coll
 
   auto on_b1_wildcard = [&](const std::string & nb1)
   {
-    auto nCol = col;
-    nCol.body1 = nb1;
-    removeCollision(solver, nCol);
+    auto nDl = dl;
+    nDl.body1 = nb1;
+    removeDistanceLimit(solver, nDl);
   };
 
   auto on_b2_wildcard = [&](const std::string & nb2)
   {
-    auto nCol = col;
-    nCol.body2 = nb2;
-    removeCollision(solver, nCol);
+    auto nDl = dl;
+    nDl.body2 = nb2;
+    removeDistanceLimit(solver, nDl);
   };
 
-  if(handle_wildcard(r1, col.body1, on_b1_wildcard) || handle_wildcard(r2, col.body2, on_b2_wildcard)) { return true; }
+  if(handle_wildcard(r1, dl.body1, on_b1_wildcard) || handle_wildcard(r2, dl.body2, on_b2_wildcard)) { return true; }
 
-  auto p = __popCollId(col);
+  auto p = __popDistanceLimitId(dl);
 
   if(!p.second.isNone())
   {
-    if(monitored_.count(p.first)) { toggleCollisionMonitor(p.first, &p.second); }
+    if(monitored_.count(p.first)) { toggleDistanceLimitMonitor(p.first, &p.second); }
 
     category_.push_back("Monitors");
     std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
     gui_->removeElement(category_, name);
     category_.pop_back();
 
-    cols.erase(std::find(cols.begin(), cols.end(), p.second));
+    dls.erase(std::find(dls.begin(), dls.end(), p.second));
 
     switch(backend_)
     {
       case QPSolver::Backend::Tasks:
       {
-        auto collConstr = tasks_constraint(constraint_);
+        auto distConstr = tasks_constraint(constraint_);
         auto & qpsolver = tasks_solver(solver);
-        bool ret = collConstr->rmCollision(p.first);
+        bool ret = distConstr->rmCollision(p.first); // need Tasks change? Yep
 
         if(ret)
         {
-          collConstr->updateNrVars({}, qpsolver.data());
+          distConstr->updateNrVars({}, qpsolver.data());
           qpsolver.updateConstrSize();
         }
 
@@ -241,7 +247,7 @@ bool DistanceConstraint::removeCollision(QPSolver & solver, const mc_rbdyn::Coll
       }
 
       case QPSolver::Backend::TVM:
-        tvm_constraint(constraint_)->deleteDistance(tvm_solver(solver), p.second);
+        tvm_constraint(constraint_)->deleteDistanceLimit(tvm_solver(solver), p.second);
         break;
 
       default:
@@ -252,55 +258,55 @@ bool DistanceConstraint::removeCollision(QPSolver & solver, const mc_rbdyn::Coll
   return false;
 }
 
-void DistanceConstraint::removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
+void DistanceConstraint::removeDistanceLimits(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & dls)
 {
-  for(const auto & c : cols) { removeCollision(solver, c); }
+  for(const auto & dl : dls) { removeDistanceLimit(solver, dl); }
 }
 
-bool DistanceConstraint::removeCollisionByBody(QPSolver & solver,
-                                               const std::string & b1Name,
-                                               const std::string & b2Name)
+bool DistanceConstraint::removeDistanceLimitByBody(QPSolver & solver,
+                                                   const std::string & b1Name,
+                                                   const std::string & b2Name)
 {
   const auto & r1 = solver.robots().robot(r1Index);
   const auto & r2 = solver.robots().robot(r2Index);
-  std::vector<mc_rbdyn::Collision> toRm;
-  for(const auto & col : cols)
+  std::vector<mc_rbdyn::DistanceLimit> toRm;
+  for(const auto & dl : dls)
   {
-    if(r1.convex(col.body1).first == b1Name && r2.convex(col.body2).first == b2Name)
+    if(r1.convex(dl.body1).first == b1Name && r2.convex(dl.body2).first == b2Name)
     {
-      auto out = __popCollId(col);
+      auto out = __popDistanceLimitId(dl);
       toRm.push_back(out.second);
       switch(backend_)
       {
         case QPSolver::Backend::Tasks:
         {
-          auto collConstr = tasks_constraint(constraint_);
-          collConstr->rmCollision(out.first);
+          auto distConstr = tasks_constraint(constraint_);
+          distConstr->rmCollision(out.first);
           break;
         }
         case QPSolver::Backend::TVM:
-          tvm_constraint(constraint_)->deleteDistance(tvm_solver(solver), out.first);
+          tvm_constraint(constraint_)->deleteDistanceLimit(tvm_solver(solver), out.first);
           break;
         default:
           break;
       }
-      if(monitored_.count(out.first)) { toggleCollisionMonitor(out.first, &out.second); }
+      if(monitored_.count(out.first)) { toggleDistanceLimitMonitor(out.first, &out.second); }
       category_.push_back("Monitors");
       std::string name = "Monitor " + __keyByNames(out.second);
       gui_->removeElement(category_, name);
       category_.pop_back();
     }
   }
-  for(const auto & it : toRm) { cols.erase(std::find(cols.begin(), cols.end(), it)); }
+  for(const auto & it : toRm) { dls.erase(std::find(dls.begin(), dls.end(), it)); }
   if(toRm.size())
   {
     switch(backend_)
     {
       case QPSolver::Backend::Tasks:
       {
-        auto collConstr = tasks_constraint(constraint_);
+        auto distConstr = tasks_constraint(constraint_);
         auto & qpsolver = tasks_solver(solver);
-        collConstr->updateNrVars({}, qpsolver.data());
+        distConstr->updateNrVars({}, qpsolver.data());
         qpsolver.updateConstrSize();
         break;
       }
@@ -313,32 +319,32 @@ bool DistanceConstraint::removeCollisionByBody(QPSolver & solver,
   return toRm.size() > 0;
 }
 
-void DistanceConstraint::__addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col)
+void DistanceConstraint::__addDistanceLimit(mc_solver::QPSolver & solver, const mc_rbdyn::DistanceLimit & dl)
 {
   const auto & robots = solver.robots();
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
-  if(col.body1.size() == 0 || col.body2.size() == 0)
+  if(dl.body1.size() == 0 || dl.body2.size() == 0)
   {
-    mc_rtc::log::error("Attempted to add a collision without a specific body");
+    mc_rtc::log::error("Attempted to add a distance limit without a specific body");
     return;
   }
   auto on_b1_wildcard = [&](const std::string & nb1)
   {
-    auto nCol = col;
-    nCol.body1 = nb1;
-    __addCollision(solver, nCol);
+    auto nDl = dl;
+    nDl.body1 = nb1;
+    __addDistanceLimit(solver, nDl);
   };
   auto on_b2_wildcard = [&](const std::string & nb2)
   {
-    auto nCol = col;
-    nCol.body2 = nb2;
-    __addCollision(solver, nCol);
+    auto nDl = dl;
+    nDl.body2 = nb2;
+    __addDistanceLimit(solver, nDl);
   };
-  if(handle_wildcard(r1, col.body1, on_b1_wildcard) || handle_wildcard(r2, col.body2, on_b2_wildcard)) { return; }
-  int collId = __createCollId(col);
-  if(collId < 0) { return; }
-  cols.push_back(col);
+  if(handle_wildcard(r1, dl.body1, on_b1_wildcard) || handle_wildcard(r2, dl.body2, on_b2_wildcard)) { return; }
+  int dlId = __createDistanceLimitId(dl);
+  if(dlId < 0) { return; }
+  dls.push_back(dl);
 
   auto computeJointsSelector =
       [&robots](const std::optional<std::vector<std::string>> & joints, bool inactive, auto rIndex)
@@ -366,87 +372,88 @@ void DistanceConstraint::__addCollision(mc_solver::QPSolver & solver, const mc_r
     }
   };
 
-  auto r1Selector = computeJointsSelector(col.r1Joints, col.r1JointsInactive, r1Index);
+  auto r1Selector = computeJointsSelector(dl.r1Joints, dl.r1JointsInactive, r1Index);
   auto r2Selector = r1Index == r2Index ? Eigen::VectorXd::Zero(0).eval()
-                                       : computeJointsSelector(col.r2Joints, col.r2JointsInactive, r2Index);
+                                       : computeJointsSelector(dl.r2Joints, dl.r2JointsInactive, r2Index);
 
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
     {
-      auto collConstr = tasks_constraint(constraint_);
-      const auto & body1 = r1.convex(col.body1);
-      const auto & body2 = r2.convex(col.body2);
-      const sva::PTransformd & X_b1_c = r1.collisionTransform(col.body1);
-      const sva::PTransformd & X_b2_c = r2.collisionTransform(col.body2);
+      auto distConstr = tasks_constraint(constraint_);
+      const auto & body1 = r1.convex(dl.body1);
+      const auto & body2 = r2.convex(dl.body2);
+      const sva::PTransformd & X_b1_c = r1.collisionTransform(dl.body1); // why is it called collisionTransform
+      const sva::PTransformd & X_b2_c = r2.collisionTransform(dl.body2);
       if(r1.mb().nrDof() == 0)
       {
-        collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r2Index), body2.first, body2.second.get(),
-                                 X_b2_c, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c, col.iDist,
-                                 col.sDist, col.damping, defaultDampingOffset, r2Selector, r1Selector);
+        distConstr->addCollision(robots.mbs(), dlId, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c,
+                                 static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c, dl.iDist, dl.sDist,
+                                 dl.damping, defaultDampingOffset, r2Selector, r1Selector);
       }
       else
       {
-        collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, body1.second.get(),
-                                 X_b1_c, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, col.iDist,
-                                 col.sDist, col.damping, defaultDampingOffset, r1Selector, r2Selector);
+        distConstr->addCollision(robots.mbs(), dlId, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
+                                 static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, dl.iDist, dl.sDist,
+                                 dl.damping, defaultDampingOffset, r1Selector, r2Selector);
       }
       break;
     }
     case QPSolver::Backend::TVM:
     {
-      auto & data =
-          tvm_constraint(constraint_)->createDistance(tvm_solver(solver), r1, r2, col, collId, r1Selector, r2Selector);
-      if(inSolver_) { tvm_constraint(constraint_)->addDistance(tvm_solver(solver), data); }
+      auto & data = tvm_constraint(constraint_)
+                        ->createDistanceLimit(tvm_solver(solver), r1, r2, dl, dlId, r1Selector, r2Selector);
+      if(inSolver_) { tvm_constraint(constraint_)->addDistanceLimit(tvm_solver(solver), data); }
       break;
     }
     default:
       break;
   }
-  addMonitorButton(collId, col);
+  addMonitorButton(dlId, dl);
 }
 
-void DistanceConstraint::addMonitorButton(int collId, const mc_rbdyn::Collision & col)
+void DistanceConstraint::addMonitorButton(int dlId, const mc_rbdyn::DistanceLimit & dl)
 {
   if(gui_ && inSolver_)
   {
     auto & gui = *gui_;
-    std::string name = col.body1 + "/" + col.body2;
+    std::string name = dl.body1 + "/" + dl.body2;
     category_.push_back("Monitors");
     gui.addElement(category_, mc_rtc::gui::Checkbox(
-                                  "Monitor " + name, [collId, this]() { return monitored_.count(collId) != 0; },
-                                  [collId, this]() { toggleCollisionMonitor(collId); }));
+                                  "Monitor " + name, [dlId, this]() { return monitored_.count(dlId) != 0; },
+                                  [dlId, this]() { toggleDistanceLimitMonitor(dlId); }));
     category_.pop_back();
   }
 }
 
-void DistanceConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col_p)
+void DistanceConstraint::toggleDistanceLimitMonitor(int dlId, const mc_rbdyn::DistanceLimit * dl_p)
 {
-  auto findCollisionById = [this, collId, &col_p]()
+  auto findDistanceLimitById = [this, dlId, &dl_p]()
   {
-    if(col_p) { return; }
-    for(const auto & c : collIdDict)
+    if(dl_p) { return; }
+    for(const auto & c : dlIdDict)
     {
-      if(c.second.first == collId)
+      if(c.second.first == dlId)
       {
-        col_p = &c.second.second;
+        dl_p = &c.second.second;
         return;
       }
     }
-    mc_rtc::log::error_and_throw("[CollisionConstraint] Attempted to toggleCollisionMonitor on non-existent collision");
+    mc_rtc::log::error_and_throw(
+        "[DistanceConstraint] Attempted to toggleDistanceLimitMonitor on non-existent distance limit");
   };
-  findCollisionById();
-  const auto & col = *col_p;
+  findDistanceLimitById();
+  const auto & dl = *dl_p;
   auto & gui = *gui_;
-  std::string label = col.body1 + "::" + col.body2;
-  if(monitored_.count(collId))
+  std::string label = dl.body1 + "::" + dl.body2;
+  if(monitored_.count(dlId))
   {
     // Remove the monitor
     gui.removeElement(category_, label);
     category_.push_back("Arrows");
     gui.removeElement(category_, label);
     category_.pop_back();
-    monitored_.erase(collId);
+    monitored_.erase(dlId);
   }
   else
   {
@@ -463,17 +470,16 @@ void DistanceConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Coll
     {
       case QPSolver::Backend::Tasks:
       {
-        auto collConstr = tasks_constraint(constraint_);
-        addMonitor(
-            [collConstr, collId]() { return collConstr->getCollisionData(collId).distance; },
-            [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p1; },
-            [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p2; });
+        auto distConstr = tasks_constraint(constraint_);
+        addMonitor([distConstr, dlId]() { return distConstr->getCollisionData(dlId).distance; }, // needs Tasks change?
+                   [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getCollisionData(dlId).p1; },
+                   [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getCollisionData(dlId).p2; });
         break;
       }
       case QPSolver::Backend::TVM:
       {
-        auto collConstr = tvm_constraint(constraint_);
-        auto fn = collConstr->getData(collId)->function;
+        auto distConstr = tvm_constraint(constraint_);
+        auto fn = distConstr->getData(dlId)->function;
         addMonitor([fn]() { return fn->distance(); }, [fn]() -> const Eigen::Vector3d & { return fn->p1(); },
                    [fn]() -> const Eigen::Vector3d & { return fn->p2(); });
         break;
@@ -481,25 +487,25 @@ void DistanceConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Coll
       default:
         break;
     }
-    monitored_.insert(collId);
+    monitored_.insert(dlId);
   }
 }
 
-void DistanceConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
+void DistanceConstraint::addDistanceLimit(QPSolver & solver, const mc_rbdyn::DistanceLimit & dl)
 {
-  addCollisions(solver, {col});
+  addDistanceLimits(solver, {dl});
 }
 
-void DistanceConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
+void DistanceConstraint::addDistanceLimits(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & dls)
 {
-  for(const auto & c : cols) { __addCollision(solver, c); }
+  for(const auto & dl : dls) { __addDistanceLimit(solver, dl); }
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
     {
-      auto & collConstr = *tasks_constraint(constraint_);
+      auto & distConstr = *tasks_constraint(constraint_);
       auto & qpsolver = tasks_solver(solver);
-      collConstr.updateNrVars({}, qpsolver.data());
+      distConstr.updateNrVars({}, qpsolver.data());
       qpsolver.updateConstrSize();
       break;
     }
@@ -521,66 +527,54 @@ void DistanceConstraint::addToSolverImpl(QPSolver & solver)
   {
     case QPSolver::Backend::Tasks:
     {
-      auto & collConstr = *tasks_constraint(constraint_);
+      auto & distConstr = *tasks_constraint(constraint_);
       auto & qpsolver = tasks_solver(solver);
-      collConstr.addToSolver(solver.robots().mbs(), qpsolver.solver());
+      distConstr.addToSolver(solver.robots().mbs(), qpsolver.solver());
       break;
     }
     case QPSolver::Backend::TVM:
     {
       auto cstr = tvm_constraint(constraint_);
-      for(auto & c : cstr->data_) { tvm_constraint(constraint_)->addDistance(tvm_solver(solver), c); }
+      for(auto & c : cstr->data_) { tvm_constraint(constraint_)->addDistanceLimit(tvm_solver(solver), c); }
       tvm_constraint(constraint_)->solver = &tvm_solver(solver);
       break;
     }
     default:
       break;
   }
-  for(const auto & cols : collIdDict) { addMonitorButton(cols.second.first, cols.second.second); }
+  for(const auto & dl : dlIdDict) { addMonitorButton(dl.second.first, dl.second.second); }
 }
 
 void DistanceConstraint::update(QPSolver &)
 {
   if(!autoMonitor_) { return; }
-  auto getDistance = [this](int collId)
+  auto getDistance = [this](int dlId)
   {
     switch(backend_)
     {
       case QPSolver::Backend::Tasks:
       {
-        auto collConstr = tasks_constraint(constraint_);
-        return collConstr->getCollisionData(collId).distance;
+        auto distConstr = tasks_constraint(constraint_);
+        return distConstr->getCollisionData(dlId).distance;
       }
       case QPSolver::Backend::TVM:
       {
-        auto collConstr = tvm_constraint(constraint_);
-        auto & fn = collConstr->getData(collId)->function;
+        auto distConstr = tvm_constraint(constraint_);
+        auto & fn = distConstr->getData(dlId)->function;
         return fn->distance();
       }
       default:
         mc_rtc::log::error_and_throw("Not implemented for this backend");
     }
   };
-  for(const auto & [name, info] : collIdDict)
+  for(const auto & [name, info] : dlIdDict)
   {
-    const auto & [collId, coll] = info;
-    auto distance = getDistance(collId);
-    if(distance < coll.iDist && coll.iDist > coll.sDist && !monitored_.count(collId))
-    {
-      toggleCollisionMonitor(collId, &coll);
-    }
-    if(distance > coll.iDist && coll.iDist > coll.sDist && monitored_.count(collId))
-    {
-      toggleCollisionMonitor(collId, &coll);
-    }
-    if(distance > coll.iDist && coll.iDist < coll.sDist && !monitored_.count(collId))
-    {
-      toggleCollisionMonitor(collId, &coll);
-    }
-    if(distance < coll.iDist && coll.iDist < coll.sDist && monitored_.count(collId))
-    {
-      toggleCollisionMonitor(collId, &coll);
-    }
+    const auto & [dlId, dl] = info;
+    auto distance = getDistance(dlId);
+    if(distance < dl.iDist && dl.iDist > dl.sDist && !monitored_.count(dlId)) { toggleDistanceLimitMonitor(dlId, &dl); }
+    if(distance > dl.iDist && dl.iDist > dl.sDist && monitored_.count(dlId)) { toggleDistanceLimitMonitor(dlId, &dl); }
+    if(distance > dl.iDist && dl.iDist < dl.sDist && !monitored_.count(dlId)) { toggleDistanceLimitMonitor(dlId, &dl); }
+    if(distance < dl.iDist && dl.iDist < dl.sDist && monitored_.count(dlId)) { toggleDistanceLimitMonitor(dlId, &dl); }
   }
 }
 
@@ -590,14 +584,14 @@ void DistanceConstraint::removeFromSolverImpl(QPSolver & solver)
   {
     case QPSolver::Backend::Tasks:
     {
-      auto & collConstr = *tasks_constraint(constraint_);
+      auto & distConstr = *tasks_constraint(constraint_);
       auto & qpsolver = tasks_solver(solver);
-      collConstr.removeFromSolver(qpsolver.solver());
+      distConstr.removeFromSolver(qpsolver.solver());
       break;
     }
     case QPSolver::Backend::TVM:
     {
-      tvm_constraint(constraint_)->deleteDistances(tvm_solver(solver));
+      tvm_constraint(constraint_)->deleteDistanceLimits(tvm_solver(solver));
       tvm_constraint(constraint_)->solver = nullptr;
       break;
     }
@@ -609,8 +603,8 @@ void DistanceConstraint::removeFromSolverImpl(QPSolver & solver)
 
 void DistanceConstraint::reset()
 {
-  cols.clear();
-  collIdDict.clear();
+  dls.clear();
+  dlIdDict.clear();
   switch(backend_)
   {
     case QPSolver::Backend::Tasks:
@@ -625,42 +619,42 @@ void DistanceConstraint::reset()
   if(gui_) { gui_->removeCategory(category_); }
 }
 
-std::string DistanceConstraint::__keyByNames(const mc_rbdyn::Collision & col)
+std::string DistanceConstraint::__keyByNames(const mc_rbdyn::DistanceLimit & dl)
 {
-  return col.body1 + "/" + col.body2 + (col.iDist > col.sDist ? "_min" : "_max");
+  return dl.body1 + "/" + dl.body2 + (dl.iDist > dl.sDist ? "_min" : "_max");
 }
 
-int DistanceConstraint::__createCollId(const mc_rbdyn::Collision & col)
+int DistanceConstraint::__createDistanceLimitId(const mc_rbdyn::DistanceLimit & dl)
 {
-  std::string key = __keyByNames(col);
+  std::string key = __keyByNames(dl);
 
-  auto it = collIdDict.find(key);
-  if(it != collIdDict.end()) { return -1; }
+  auto it = dlIdDict.find(key);
+  if(it != dlIdDict.end()) { return -1; }
 
-  int collId = this->collId;
-  collIdDict[key] = std::pair<int, mc_rbdyn::Collision>(collId, col);
-  this->collId += 1;
-  return collId;
+  int dlId = this->dlId;
+  dlIdDict[key] = std::pair<int, mc_rbdyn::DistanceLimit>(dlId, dl);
+  this->dlId += 1;
+  return dlId;
 }
 
-std::pair<int, mc_rbdyn::Collision> DistanceConstraint::__popCollId(const mc_rbdyn::Collision & col)
+std::pair<int, mc_rbdyn::DistanceLimit> DistanceConstraint::__popDistanceLimitId(const mc_rbdyn::DistanceLimit & dl)
 {
-  std::string key = __keyByNames(col);
+  std::string key = __keyByNames(dl);
 
-  if(collIdDict.count(key))
+  if(dlIdDict.count(key))
   {
-    std::pair<int, mc_rbdyn::Collision> p = collIdDict[key];
-    collIdDict.erase(key);
+    std::pair<int, mc_rbdyn::DistanceLimit> p = dlIdDict[key];
+    dlIdDict.erase(key);
     return p;
   }
 
-  return std::pair<unsigned int, mc_rbdyn::Collision>(0, mc_rbdyn::Collision());
+  return std::pair<unsigned int, mc_rbdyn::DistanceLimit>(0, mc_rbdyn::DistanceLimit());
 }
 
-bool DistanceConstraint::hasCollision(const std::string & c1, const std::string & c2) const noexcept
+bool DistanceConstraint::hasDistanceLimit(const std::string & c1, const std::string & c2) const noexcept
 {
-  auto it = std::find_if(cols.begin(), cols.end(), [&](const auto & c) { return c.body1 == c1 && c.body2 == c2; });
-  return it != cols.end();
+  auto it = std::find_if(dls.begin(), dls.end(), [&](const auto & c) { return c.body1 == c1 && c.body2 == c2; });
+  return it != dls.end();
 }
 
 } // namespace mc_solver
@@ -680,15 +674,16 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       {
         if(config("useCommon", false))
         {
-          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
+          ret->addDistanceLimits(
+              solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions()); // create commonDistanceLimits
         }
         else if(config("useMinimal", false))
         {
-          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
+          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }
-      std::vector<mc_rbdyn::Collision> collisions = config("distances", std::vector<mc_rbdyn::Collision>{});
-      ret->addCollisions(solver, collisions);
+      std::vector<mc_rbdyn::DistanceLimit> distLims = config("distances", std::vector<mc_rbdyn::DistanceLimit>{});
+      ret->addDistanceLimits(solver, distLims);
       return ret;
     });
 } // namespace

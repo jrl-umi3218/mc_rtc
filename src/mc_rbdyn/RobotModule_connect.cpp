@@ -12,6 +12,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/parsers/urdf.h>
 
+#include "mc_rbdyn/DistanceLimit.h"
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -403,7 +404,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
 
   /** Update self-collisions set */
   auto updateSelfCollisions =
-      [&](const std::vector<mc_rbdyn::Collision> & colsIn, std::vector<mc_rbdyn::Collision> & colsOut)
+      [&](const std::vector<mc_rbdyn::DistanceLimit> & colsIn, std::vector<mc_rbdyn::DistanceLimit> & colsOut)
   {
     for(const auto & c : colsIn)
     {
@@ -750,11 +751,11 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
 
   /** Update self-collisions set */
   auto updateSelfCollisions =
-      [&](const std::vector<mc_rbdyn::Collision> & colsIn, std::vector<mc_rbdyn::Collision> & colsOut)
+      [&](const std::vector<mc_rbdyn::DistanceLimit> & colsIn, std::vector<mc_rbdyn::DistanceLimit> & colsOut)
   {
     for(const auto & c : colsIn)
     {
-      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const Collision & col)
+      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const DistanceLimit & col)
                              { return col.body1 == convexName(c.body1) && col.body2 == convexName(c.body2); });
       if(it != colsOut.end()) { colsOut.erase(it); }
     }

@@ -6,7 +6,7 @@
 
 #include <mc_solver/ConstraintSet.h>
 
-#include <mc_rbdyn/Collision.h>
+#include <mc_rbdyn/DistanceLimit.h>
 
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/void_ptr.h>
@@ -18,17 +18,17 @@ struct QPSolver;
 
 /** \class DistanceConstraint
  *
- * Creates a collision constraint manager between two robots.
+ * Creates a distance constraint manager between two robots.
  *
- * If the two robots are the same, this effectively creates a self-collision constraint
+ * If the two robots are the same, this effectively creates a self-distance constraint (e.g. self-collision).
  *
- * Each collision is assigned an internal identity based on its two convex names and
+ * Each distance limit is assigned an internal identity based on its two convex names and
  * its distance constraint type. The identity is suffixed with:
- * - "_min" when iDist > sDist
- * - "_max" otherwise
+ * - "_min" when iDist > sDist, this is minimum distance constraint mostly used for collision avoidance
+ * - "_max" otherwise, this is maximum distance constraint when two links should not move too far apart
  *
  * This allows minimum-distance and maximum-distance constraints between the same
- * pair of convexes to coexist as distinct collisions.
+ * pair of convexes to coexist as distinct distance constraints.
  */
 struct MC_SOLVER_DLLAPI DistanceConstraint : public ConstraintSet
 {
@@ -46,75 +46,75 @@ public:
    */
   DistanceConstraint(const mc_rbdyn::Robots & robots, unsigned int r1Index, unsigned int r2Index, double timeStep);
 
-  /** Remove a collision between two convexes
+  /** Remove a distance limit between two convexes
    *
-   * The collision identity is determined from the two convex names and the
+   * The distance limit identity is determined from the two convex names and the
    * distance constraint type (see __keyByNames).
    *
    * \param solver The solver into which this constraint was added
-   * \param col The collision to remove
-   * \return True if the collision was found and removed, false otherwise
+   * \param dl The distance limit to remove
+   * \return True if the distance limit was found and removed, false otherwise
    */
-  bool removeCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
+  bool removeDistanceLimit(QPSolver & solver, const mc_rbdyn::DistanceLimit & dl);
 
-  /** Remove a set of collisions
+  /** Remove a set of distance limits
    *
    * \param solver The solver into which this constraint was added
-   * \param cols List of collisions to remove
+   * \param dls List of distance limits to remove
    */
-  void removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
+  void removeDistanceLimits(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & dls);
 
-  /** Remove all collisions between two bodies
+  /** Remove all distance limits between two bodies
    *
-   * This removes every collision between the specified pair of bodies,
-   * including both minimum-distance and maximum-distance collision constraints.
+   * This removes every distance limit between the specified pair of bodies,
+   * including both minimum-distance and maximum-distance constraints.
    *
    * \param solver The solver into which this constraint was added
    * \param b1Name Name of the first body
    * \param b2Name Name of the second body
-   * \return True if at least one collision was removed, false otherwise
+   * \return True if at least one distance limit was removed, false otherwise
    */
-  bool removeCollisionByBody(QPSolver & solver, const std::string & b1Name, const std::string & b2Name);
+  bool removeDistanceLimitByBody(QPSolver & solver, const std::string & b1Name, const std::string & b2Name);
 
-  /** Add a collision represented by mc_rbdyn::Collision
+  /** Add a distance limit represented by mc_rbdyn::DistanceLimit
    *
-   * The collision object is allowed to specify wildcard names to add multiple
-   * collisions at once, if body1 is named bodyA* and body2 is named bodyB*
-   * then collision constraints will be added for all convex objects in robot1
+   * The distance limit object is allowed to specify wildcard names to add multiple
+   * distance limits at once, if body1 is named bodyA* and body2 is named bodyB*
+   * then distance constraints will be added for all convex objects in robot1
    * (resp. robot2) that start with bodyA (resp. bodyB)
    *
-   * The collision identity is based on the two convex names and the distance
+   * The distance limit identity is based on the two convex names and the distance
    * constraint type:
    * - "_min" is appended when iDist > sDist
    * - "_max" is appended otherwise
    *
-   * Therefore, two collisions involving the same pair of convexes can coexist
+   * Therefore, two distance limits involving the same pair of convexes can coexist
    * when one is a minimum-distance constraint and the other is a
    * maximum-distance constraint.
    *
    * \param solver The solver into which this constraint was added
-   * \param col The collision that should be added
+   * \param dl The distance limit that should be added
    */
-  void addCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
+  void addDistanceLimit(QPSolver & solver, const mc_rbdyn::DistanceLimit & dl);
 
-  /** Add a set of collisions
+  /** Add a set of distance limits
    *
-   * \see addCollision for details on wildcard collision specification and
-   * collision identity.
+   * \see addDistanceLimit for details on wildcard distance limit specification and
+   * distance limit identity.
    *
    * \param solver The solver into which this constraint was added
-   * \param cols The set of collisions that should be added
+   * \param dls The set of distance limits that should be added
    */
-  void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
+  void addDistanceLimits(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & dls);
 
-  /** Returns true if a collision between the given pair of convexes is in this constraint.
+  /** Returns true if a distance limit between the given pair of convexes is in this constraint.
    *
    * This checks the convex names only and does not distinguish between
-   * "_min" and "_max" collision identities.
+   * "_min" and "_max" distance limit identities.
    */
-  bool hasCollision(const std::string & c1, const std::string & c2) const noexcept;
+  bool hasDistanceLimit(const std::string & c1, const std::string & c2) const noexcept;
 
-  /** Remove all collisions from the constraint */
+  /** Remove all distance limits from the constraint */
   void reset();
 
   /** Get the automated monitoring setting */
@@ -122,7 +122,7 @@ public:
 
   /** Set the automated monitoring setting
    *
-   * If true, collision monitors are automatically added/removed depending on the collision activation.
+   * If true, distance limit monitors are automatically added/removed depending on the distance limit activation.
    *
    * If false, monitors are managed by the user
    */
@@ -138,10 +138,10 @@ public:
   /** Holds the constraint implementation
    *
    * In Tasks backend:
-   * - tasks::qp::CollisionConstr
+   * - tasks::qp::DistanceConstr
    *
    * In TVM backend:
-   * - details::TVMCollisionConstraint
+   * - details::TVMDistanceConstraint
    */
   mc_rtc::void_ptr constraint_;
 
@@ -151,47 +151,47 @@ public:
   /** Index of the second robot affected by the constraint */
   unsigned int r2Index;
 
-  /** Current set of collisions */
-  std::vector<mc_rbdyn::Collision> cols;
+  /** Current set of distance limits */
+  std::vector<mc_rbdyn::DistanceLimit> dls;
 
 private:
-  /** Internal state used to manage collision identities */
-  int collId;
+  /** Internal state used to manage distance limit identities */
+  int dlId;
 
-  /** Maps a collision identity to its internal ID and collision data */
-  std::map<std::string, std::pair<int, mc_rbdyn::Collision>> collIdDict;
+  /** Maps a distance limit identity to its internal ID and distance limit data */
+  std::map<std::string, std::pair<int, mc_rbdyn::DistanceLimit>> dlIdDict;
 
-  /** Build the unique identity key for a collision.
+  /** Build the unique identity key for a distance limit.
    *
    * The key is composed of the two convex names followed by:
    * - "_min" when iDist > sDist
    * - "_max" otherwise
    */
-  std::string __keyByNames(const mc_rbdyn::Collision & col);
+  std::string __keyByNames(const mc_rbdyn::DistanceLimit & dl);
 
-  /** Create an internal ID for a collision.
+  /** Create an internal ID for a distance limit.
    *
-   * Returns -1 if a collision with the same identity already exists.
+   * Returns -1 if a distance limit with the same identity already exists.
    */
-  int __createCollId(const mc_rbdyn::Collision & col);
+  int __createDistanceLimitId(const mc_rbdyn::DistanceLimit & dl);
 
-  /** Remove and return the internal ID and collision data associated with a collision.
+  /** Remove and return the internal ID and distance limit data associated with a distance limit.
    *
-   * The collision identity is computed using __keyByNames.
+   * The distance limit identity is computed using __keyByNames.
    */
-  std::pair<int, mc_rbdyn::Collision> __popCollId(const mc_rbdyn::Collision & col);
+  std::pair<int, mc_rbdyn::DistanceLimit> __popDistanceLimitId(const mc_rbdyn::DistanceLimit & dl);
 
-  /** Actually adds the collision to the constraint, handles ID creation and wildcard support */
-  void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
+  /** Actually adds the distance limit to the constraint, handles ID creation and wildcard support */
+  void __addDistanceLimit(mc_solver::QPSolver & solver, const mc_rbdyn::DistanceLimit & dl);
 
-  /* Internal management for collision display */
+  /* Internal management for distance limit display */
   bool autoMonitor_ = true;
   std::unordered_set<int> monitored_;
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
   std::vector<std::string> category_;
 
-  void addMonitorButton(int collId, const mc_rbdyn::Collision & col);
-  void toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col = nullptr);
+  void addMonitorButton(int dlId, const mc_rbdyn::DistanceLimit & dl);
+  void toggleDistanceLimitMonitor(int dlId, const mc_rbdyn::DistanceLimit * dl = nullptr);
 };
 
 } // namespace mc_solver

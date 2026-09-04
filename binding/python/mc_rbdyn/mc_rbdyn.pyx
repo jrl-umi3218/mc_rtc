@@ -110,6 +110,11 @@ cdef Collision CollisionFromC(const c_mc_rbdyn.Collision & col):
   ret.impl = c_mc_rbdyn.Collision(col)
   return ret
 
+cdef DistanceLimit DistanceLimitFromC(const c_mc_rbdyn.DistanceLimit & col):
+  cdef DistanceLimit ret = DistanceLimit()
+  ret.impl = c_mc_rbdyn.DistanceLimit(col)
+  return ret
+
 cdef class Flexibility(object):
   def __cinit__(self, *args):
     if len(args) == 4:
@@ -351,7 +356,7 @@ cdef class RobotModule(object):
     it = deref(self.impl)._minimalSelfCollisions.begin()
     ret = []
     while it != end:
-      ret.append(CollisionFromC(deref(it)))
+      ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
   def commonSelfCollisions(self):
@@ -360,7 +365,7 @@ cdef class RobotModule(object):
     it = deref(self.impl)._commonSelfCollisions.begin()
     ret = []
     while it != end:
-      ret.append(CollisionFromC(deref(it)))
+      ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
   def ref_joint_order(self):

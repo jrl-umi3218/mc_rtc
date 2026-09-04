@@ -6,7 +6,7 @@
 
 #include <mc_solver/ConstraintSet.h>
 
-#include <mc_rbdyn/Collision.h>
+#include <mc_rbdyn/DistanceLimit.h>
 
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/void_ptr.h>
@@ -52,7 +52,7 @@ public:
    *
    * \param cols List of collisions to remove
    */
-  void removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
+  void removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols);
 
   /** Remove all collisions between two bodies
    * \param solver The solver into which this constraint was added
@@ -62,7 +62,7 @@ public:
    */
   bool removeCollisionByBody(QPSolver & solver, const std::string & byName, const std::string & b2Name);
 
-  /** Add a collision represented by mc_rbdyn::Collision
+  /** Add a collision represented by mc_rbdyn::DistanceLimit
    *
    * The collision object is allowed to specify wildcard names to add multiple
    * collisions at once, if body1 is named bodyA* and body2 is named bodyB*
@@ -72,7 +72,7 @@ public:
    * \param solver The solver into which this constraint was added \param col
    * The collision that should be added
    */
-  void addCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
+  void addCollision(QPSolver & solver, const mc_rbdyn::DistanceLimit & col);
 
   /** Add a set of collisions
    *
@@ -81,7 +81,7 @@ public:
    * \param solver The solver into which this constraint was added
    * \param cols The set of collisions that should be added
    */
-  void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
+  void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols);
 
   /** Returns true if the given collision is in this constraint */
   bool hasCollision(const std::string & c1, const std::string & c2) const noexcept;
@@ -121,25 +121,25 @@ public:
   /** Index of the second robot affected by the constraint */
   unsigned int r2Index;
   /** Curent set of collisions */
-  std::vector<mc_rbdyn::Collision> cols;
+  std::vector<mc_rbdyn::DistanceLimit> cols;
 
 private:
   /* Internal sauce to manage collisions */
   int collId;
-  std::map<std::string, std::pair<int, mc_rbdyn::Collision>> collIdDict;
+  std::map<std::string, std::pair<int, mc_rbdyn::DistanceLimit>> collIdDict;
   std::string __keyByNames(const std::string & name1, const std::string & name2);
-  int __createCollId(const mc_rbdyn::Collision & col);
-  std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
+  int __createCollId(const mc_rbdyn::DistanceLimit & col);
+  std::pair<int, mc_rbdyn::DistanceLimit> __popCollId(const std::string & name1, const std::string & name2);
   /** Actually adds the collision to the constraint, handles id creation and wildcard support */
-  void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
+  void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::DistanceLimit & col);
 
   /* Internal management for collision display */
   bool autoMonitor_ = true;
   std::unordered_set<int> monitored_;
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
   std::vector<std::string> category_;
-  void addMonitorButton(int collId, const mc_rbdyn::Collision & col);
-  void toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col = nullptr);
+  void addMonitorButton(int collId, const mc_rbdyn::DistanceLimit & col);
+  void toggleCollisionMonitor(int collId, const mc_rbdyn::DistanceLimit * col = nullptr);
 };
 
 } // namespace mc_solver

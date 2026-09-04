@@ -88,10 +88,10 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     vector[c_mc_observers.ObserverPipeline] & observerPipelines()
 
     void addCollisions(const string&, const string&,
-                       const vector[Collision] &)
+                       const vector[DistanceLimit] &)
     void removeCollisions(const string&, const string&)
     void removeCollisions(const string&, const string&,
-                          const vector[Collision] &)
+                          const vector[DistanceLimit] &)
     cppbool hasRobot(const string&)
     Robot& robot(const string&)
     void addContact(const Contact&)

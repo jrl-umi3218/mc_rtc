@@ -11,6 +11,7 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_rbdyn/configuration_io.h>
+#include "mc_rbdyn/DistanceLimit.h"
 
 namespace mc_control
 {
@@ -66,7 +67,7 @@ void State::start_(Controller & ctl)
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
       if(c.has("collisions"))
       {
-        std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+        std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
         ctl.removeCollisions(r1, r2, collisions);
       }
       else
@@ -82,7 +83,7 @@ void State::start_(Controller & ctl)
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
-      std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+      std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
       ctl.addCollisions(r1, r2, collisions);
     }
   }
@@ -164,7 +165,7 @@ void State::teardown_(Controller & ctl)
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
       if(c.has("collisions"))
       {
-        std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+        std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
         ctl.removeCollisions(r1, r2, collisions);
       }
       else
@@ -180,7 +181,7 @@ void State::teardown_(Controller & ctl)
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
-      std::vector<mc_rbdyn::Collision> collisions = c("collisions");
+      std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
       ctl.addCollisions(r1, r2, collisions);
     }
   }

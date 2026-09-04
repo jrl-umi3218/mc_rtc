@@ -18,6 +18,11 @@ cdef class Collision(object):
 
 cdef Collision CollisionFromC(const c_mc_rbdyn.Collision&)
 
+cdef class DistanceLimit(object):
+  cdef c_mc_rbdyn.DistanceLimit impl
+
+cdef DistanceLimit DistanceLimitFromC(const c_mc_rbdyn.DistanceLimit&)
+
 cdef class BodySensor(object):
   cdef cppbool own_impl__
   cdef const c_mc_rbdyn.BodySensor * impl

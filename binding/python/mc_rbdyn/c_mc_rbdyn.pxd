@@ -39,6 +39,23 @@ cdef extern from "<mc_rbdyn/Collision.h>" namespace "mc_rbdyn":
     cppbool operator==(const Collision&)
     cppbool operator!=(const Collision&)
 
+cdef extern from "<mc_rbdyn/DistanceLimit.h>" namespace "mc_rbdyn":
+  cdef cppclass DistanceLimit:
+    DistanceLimit()
+    DistanceLimit(const string&, const string&, double, double, double)
+    DistanceLimit(const DistanceLimit&)
+
+    cppbool isNone()
+
+    string body1
+    string body2
+    double iDist
+    double sDist
+    double damping
+
+    cppbool operator==(const DistanceLimit&)
+    cppbool operator!=(const DistanceLimit&)
+
 cdef extern from "<mc_rbdyn/BodySensor.h>" namespace "mc_rbdyn":
   cdef cppclass BodySensor:
     BodySensor()
@@ -106,8 +123,8 @@ cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
     vector[Flexibility] _flexibility
     vector[ForceSensor] _forceSensors
     const Springs & springs()
-    vector[Collision] _minimalSelfCollisions
-    vector[Collision] _commonSelfCollisions
+    vector[DistanceLimit] _minimalSelfCollisions
+    vector[DistanceLimit] _commonSelfCollisions
     const vector[string]& ref_joint_order()
     map[string, vector[Visual]] _visual
     map[string, vector[Visual]] _collision

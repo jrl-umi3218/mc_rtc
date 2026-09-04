@@ -233,6 +233,7 @@ set(mc_rbdyn_SRC
     mc_rbdyn/RobotLoader.cpp
     mc_rbdyn/RobotConverter.cpp
     mc_rbdyn/Collision.cpp
+    mc_rbdyn/DistanceLimit.cpp
     mc_rbdyn/ForceSensor.cpp
     mc_rbdyn/RobotModule.cpp
     mc_rbdyn/RobotModule_visual.cpp
@@ -273,6 +274,7 @@ set(mc_rbdyn_HDR
     ../include/mc_rbdyn/surface_hull.h
     ../include/mc_rbdyn/surface_utils.h
     ../include/mc_rbdyn/Collision.h
+    ../include/mc_rbdyn/DistanceLimit.h
     ../include/mc_rbdyn/CompoundJointConstraintDescription.h
     ../include/mc_rbdyn/ForceSensor.h
     ../include/mc_rbdyn/Flexibility.h
