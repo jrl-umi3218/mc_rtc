@@ -183,7 +183,7 @@ bool VisualToConvex(const std::string & robot,
                     const std::string & bName,
                     const rbd::parsers::Visual & visual,
                     std::map<std::string, mc_rbdyn::Robot::convex_pair_t> & convexes,
-                    std::map<std::string, sva::PTransformd> & collisionTransforms)
+                    std::map<std::string, sva::PTransformd> & convexTransforms)
 {
   // Ignore visual types that we cannot easily map to SCH
   if(visual.geometry.type == rbd::parsers::Geometry::Type::UNKNOWN
@@ -237,7 +237,7 @@ bool VisualToConvex(const std::string & robot,
     default:
       return false;
   }
-  collisionTransforms[cName] = visual.origin;
+  convexTransforms[cName] = visual.origin;
   return true;
 }
 
@@ -351,20 +351,20 @@ Robot::Robot(NewRobotToken,
 
   if(loadFiles)
   {
-    loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_, collisionTransforms_);
+    loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_, convexTransforms_);
     for(const auto & c : module_._collision)
     {
       const auto & body = c.first;
       const auto & collisions = c.second;
       if(collisions.size() == 1)
       {
-        VisualToConvex(name_, body, body, collisions[0], convexes_, collisionTransforms_);
+        VisualToConvex(name_, body, body, collisions[0], convexes_, convexTransforms_);
         continue;
       }
       size_t added = 0;
       for(const auto & col : collisions)
       {
-        if(VisualToConvex(name_, body + "_" + std::to_string(added), body, col, convexes_, collisionTransforms_))
+        if(VisualToConvex(name_, body + "_" + std::to_string(added), body, col, convexes_, convexTransforms_))
         {
           added++;
         }
@@ -380,30 +380,30 @@ Robot::Robot(NewRobotToken,
         continue;
       }
       convexes_[o.first] = {o.second.first, S_ObjectPtr(o.second.second->clone())};
-      auto it = module_.collisionTransforms().find(o.first);
-      if(it != module_.collisionTransforms().end()) { collisionTransforms_[o.first] = it->second; }
+      auto it = module_.convexTransforms().find(o.first);
+      if(it != module_.convexTransforms().end()) { convexTransforms_[o.first] = it->second; }
       else
       {
-        collisionTransforms_[o.first] = sva::PTransformd::Identity();
+        convexTransforms_[o.first] = sva::PTransformd::Identity();
       }
     }
-    for(const auto & b : mb().bodies()) { collisionTransforms_[b.name()] = sva::PTransformd::Identity(); }
+    for(const auto & b : mb().bodies()) { convexTransforms_[b.name()] = sva::PTransformd::Identity(); }
     for(const auto & [body, visuals] : module_._visual)
     {
-      if(visuals.size() == 1 && hasBody(body)) { collisionTransforms_[body] = visuals[0].origin; }
+      if(visuals.size() == 1 && hasBody(body)) { convexTransforms_[body] = visuals[0].origin; }
       else if(visuals.size() > 1 && hasBody(body))
       {
         size_t added = 0;
         for(const auto & visual : visuals)
         {
-          collisionTransforms_[body + "_" + std::to_string(added)] = visual.origin;
+          convexTransforms_[body + "_" + std::to_string(added)] = visual.origin;
           added++;
         }
       }
     }
-    for(const auto & p : module_.collisionTransforms()) { collisionTransforms_[p.first] = p.second; }
-    fixCollisionTransforms();
-    fixSCH(*this, this->convexes_, this->collisionTransforms_);
+    for(const auto & p : module_.convexTransforms()) { convexTransforms_[p.first] = p.second; }
+    fixConvexTransforms();
+    fixSCH(*this, this->convexes_, this->convexTransforms_);
   }
 
   if(!params.data_)
@@ -1100,7 +1100,7 @@ void Robot::addConvex(const std::string & cName,
     return;
   }
   convexes_[cName] = {body, convex};
-  collisionTransforms_[cName] = X_b_c;
+  convexTransforms_[cName] = X_b_c;
   sch::mc_rbdyn::transform(*convex, X_b_c * bodyPosW(body));
 }
 
@@ -1109,7 +1109,7 @@ void Robot::removeConvex(const std::string & cName)
   if(convexes_.count(cName))
   {
     convexes_.erase(cName);
-    collisionTransforms_.erase(cName);
+    convexTransforms_.erase(cName);
   }
 }
 
@@ -1129,13 +1129,13 @@ const std::vector<sva::PTransformd> & Robot::bodyTransforms() const
   return bodyTransforms_;
 }
 
-const sva::PTransformd & Robot::collisionTransform(const std::string & cName) const
+const sva::PTransformd & Robot::convexTransform(const std::string & cName) const
 {
-  if(collisionTransforms_.count(cName) == 0)
+  if(convexTransforms_.count(cName) == 0)
   {
     mc_rtc::log::error_and_throw("No collision transform with name {} found in this robot", cName);
   }
-  return collisionTransforms_.at(cName);
+  return convexTransforms_.at(cName);
 }
 
 void Robot::fixSurfaces()
@@ -1180,9 +1180,9 @@ void Robot::makeFrames(std::vector<mc_rbdyn::RobotModule::FrameDescription> fram
   }
 }
 
-void Robot::fixCollisionTransforms()
+void Robot::fixConvexTransforms()
 {
-  for(auto & ct : collisionTransforms_)
+  for(auto & ct : convexTransforms_)
   {
     if(convexes_.count(ct.first))
     {
@@ -1248,8 +1248,8 @@ void Robot::forwardKinematics(rbd::MultiBodyConfig & mbc) const
     auto get_cvx_tf = [&]()
     {
       unsigned int index = static_cast<unsigned int>(mb().bodyIndexByName(cvx.second.first));
-      auto tfs_it = collisionTransforms_.find(cvx.first);
-      if(tfs_it != collisionTransforms_.end()) { return tfs_it->second * mbc.bodyPosW[index]; }
+      auto tfs_it = convexTransforms_.find(cvx.first);
+      if(tfs_it != convexTransforms_.end()) { return tfs_it->second * mbc.bodyPosW[index]; }
       return mbc.bodyPosW[index];
     };
     sch::mc_rbdyn::transform(*cvx.second.second, get_cvx_tf());
@@ -1305,7 +1305,7 @@ void Robot::posW(const sva::PTransformd & pt)
     pt_.rotation() = Eigen::Quaterniond(pt.rotation()).normalized().toRotationMatrix();
     mb().transform(0, pt_);
     forwardKinematics();
-    fixSCH(*this, this->convexes_, this->collisionTransforms_);
+    fixSCH(*this, this->convexes_, this->convexTransforms_);
   }
   else
   {
@@ -1372,9 +1372,9 @@ void Robot::copyLoadedData(Robot & robot) const
   {
     robot.convexes_[cH.first] = {cH.second.first, S_ObjectPtr(cH.second.second->clone())};
   }
-  robot.collisionTransforms_ = collisionTransforms_;
-  robot.fixCollisionTransforms();
-  fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
+  robot.convexTransforms_ = convexTransforms_;
+  robot.fixConvexTransforms();
+  fixSCH(robot, robot.convexes_, robot.convexTransforms_);
   for(size_t i = 0; i < data_->forceSensors.size(); ++i)
   {
     robot.data_->forceSensors[i].copyCalibrator(data_->forceSensors[i]);
@@ -1571,7 +1571,7 @@ mc_tvm::Convex & Robot::tvmConvex(const std::string & name) const
     const auto & cvx = convex(name);
     std::tie(it, std::ignore) = tvm_convexes_.insert(
         {name, std::unique_ptr<mc_tvm::Convex>{new mc_tvm::Convex(mc_tvm::Convex::NewConvexToken{}, cvx.second,
-                                                                  frame(cvx.first), collisionTransform(name))}});
+                                                                  frame(cvx.first), convexTransform(name))}});
   }
   return *it->second;
 }

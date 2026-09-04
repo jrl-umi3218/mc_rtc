@@ -353,7 +353,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   }
 
   /** Update collision transforms */
-  for(const auto & ct : other._collisionTransforms) { out._collisionTransforms[convexName(ct.first)] = ct.second; }
+  for(const auto & ct : other._convexTransforms) { out._convexTransforms[convexName(ct.first)] = ct.second; }
 
   /** Update flexibility */
   for(const auto & f : other._flexibility) { out._flexibility.push_back({jointName(f.jointName), f.K, f.C, f.O}); }
@@ -700,7 +700,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   for(const auto & co : other._collisionObjects) { out._collisionObjects.erase(convexName(co.first)); }
 
   /** Update collision transforms */
-  for(const auto & ct : other._collisionTransforms) { out._collisionTransforms.erase(convexName(ct.first)); }
+  for(const auto & ct : other._convexTransforms) { out._convexTransforms.erase(convexName(ct.first)); }
 
   /** Update flexibilities */
   for(const auto & flex : other._flexibility)

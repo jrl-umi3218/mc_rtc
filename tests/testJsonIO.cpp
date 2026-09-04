@@ -347,7 +347,7 @@ bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule &
          && lhs._accelerationBounds == rhs._accelerationBounds && lhs._jerkBounds == rhs._jerkBounds
          && lhs._torqueDerivativeBounds == rhs._torqueDerivativeBounds && lhs._stance == rhs._stance
          && compareHulls(lhs._convexHull, rhs._convexHull) && compareHulls(lhs._stpbvHull, rhs._stpbvHull)
-         && compare_vector_maps(lhs._visual, rhs._visual) && lhs._collisionTransforms == rhs._collisionTransforms
+         && compare_vector_maps(lhs._visual, rhs._visual) && lhs._convexTransforms == rhs._convexTransforms
          && compare_vectors(lhs._flexibility, rhs._flexibility) && compare_vectors(lhs._forceSensors, rhs._forceSensors)
          && compare_vectors(lhs._bodySensors, rhs._bodySensors) && lhs._springs == rhs._springs
          && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions

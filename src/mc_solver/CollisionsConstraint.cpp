@@ -197,12 +197,12 @@ bool CollisionsConstraint::removeCollision(QPSolver & solver, const std::string 
     {
       case QPSolver::Backend::Tasks:
       {
-        auto collConstr = tasks_constraint(constraint_);
+        auto distConstr = tasks_constraint(constraint_);
         auto & qpsolver = tasks_solver(solver);
-        bool ret = collConstr->rmCollision(p.first);
+        bool ret = distConstr->rmDistanceLimit(p.first);
         if(ret)
         {
-          collConstr->updateNrVars({}, qpsolver.data());
+          distConstr->updateNrVars({}, qpsolver.data());
           qpsolver.updateConstrSize();
         }
         return ret;
@@ -239,8 +239,8 @@ bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
       {
         case QPSolver::Backend::Tasks:
         {
-          auto collConstr = tasks_constraint(constraint_);
-          collConstr->rmCollision(out.first);
+          auto distConstr = tasks_constraint(constraint_);
+          distConstr->rmDistanceLimit(out.first);
           break;
         }
         case QPSolver::Backend::TVM:
@@ -339,22 +339,22 @@ void CollisionsConstraint::__addCollision(mc_solver::QPSolver & solver, const mc
   {
     case QPSolver::Backend::Tasks:
     {
-      auto collConstr = tasks_constraint(constraint_);
+      auto distConstr = tasks_constraint(constraint_);
       const auto & body1 = r1.convex(col.body1);
       const auto & body2 = r2.convex(col.body2);
-      const sva::PTransformd & X_b1_c = r1.collisionTransform(col.body1);
-      const sva::PTransformd & X_b2_c = r2.collisionTransform(col.body2);
+      const sva::PTransformd & X_b1_c = r1.convexTransform(col.body1);
+      const sva::PTransformd & X_b2_c = r2.convexTransform(col.body2);
       if(r1.mb().nrDof() == 0)
       {
-        collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r2Index), body2.first, body2.second.get(),
-                                 X_b2_c, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c, col.iDist,
-                                 col.sDist, col.damping, defaultDampingOffset, r2Selector, r1Selector);
+        distConstr->addDistanceLimit(robots.mbs(), collId, static_cast<int>(r2Index), body2.first, body2.second.get(),
+                                     X_b2_c, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
+                                     col.iDist, col.sDist, col.damping, defaultDampingOffset, r2Selector, r1Selector);
       }
       else
       {
-        collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, body1.second.get(),
-                                 X_b1_c, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, col.iDist,
-                                 col.sDist, col.damping, defaultDampingOffset, r1Selector, r2Selector);
+        distConstr->addDistanceLimit(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, body1.second.get(),
+                                     X_b1_c, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c,
+                                     col.iDist, col.sDist, col.damping, defaultDampingOffset, r1Selector, r2Selector);
       }
       break;
     }
@@ -429,10 +429,10 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Di
       case QPSolver::Backend::Tasks:
       {
         auto collConstr = tasks_constraint(constraint_);
-        addMonitor(
-            [collConstr, collId]() { return collConstr->getCollisionData(collId).distance; },
-            [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p1; },
-            [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getCollisionData(collId).p2; });
+        addMonitor([collConstr, collId]() { return collConstr->getDistanceData(collId).distance; },
+                   [collConstr, collId]() -> const Eigen::Vector3d & { return collConstr->getDistanceData(collId).p1; },
+                   [collConstr, collId]() -> const Eigen::Vector3d &
+                   { return collConstr->getDistanceData(collId).p2; });
         break;
       }
       case QPSolver::Backend::TVM:
@@ -513,8 +513,8 @@ void CollisionsConstraint::update(QPSolver &)
     {
       case QPSolver::Backend::Tasks:
       {
-        auto collConstr = tasks_constraint(constraint_);
-        return collConstr->getCollisionData(collId).distance;
+        auto distConstr = tasks_constraint(constraint_);
+        return distConstr->getDistanceData(collId).distance;
       }
       case QPSolver::Backend::TVM:
       {

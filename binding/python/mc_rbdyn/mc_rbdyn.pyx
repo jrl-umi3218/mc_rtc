@@ -313,10 +313,10 @@ cdef class RobotModule(object):
   def stpbvHull(self):
     assert(self.impl.get())
     return deref(self.impl).stpbvHull()
-  def collisionTransforms(self):
+  def convexTransforms(self):
     assert(self.impl.get())
-    end = deref(self.impl)._collisionTransforms.end()
-    it = deref(self.impl)._collisionTransforms.begin()
+    end = deref(self.impl)._convexTransforms.end()
+    it = deref(self.impl)._convexTransforms.begin()
     ret = {}
     while it != end:
       ret[deref(it).first] = sva.PTransformdFromC(deref(it).second)
@@ -812,11 +812,11 @@ cdef class Robot(object):
       bName = bName.encode(u'ascii')
     return sva.PTransformdFromC(self.impl.bodyTransform(bName), False)
 
-  def collisionTransform(self, bName):
+  def convexTransform(self, bName):
     self.__is_valid()
     if isinstance(bName, unicode):
       bName = bName.encode(u'ascii')
-    return sva.PTransformdFromC(self.impl.collisionTransform(bName), False)
+    return sva.PTransformdFromC(self.impl.convexTransform(bName), False)
 
   def loadRSDFFromDir(self, surfaceDir):
     self.__is_valid()

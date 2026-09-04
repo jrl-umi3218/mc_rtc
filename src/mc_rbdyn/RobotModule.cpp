@@ -53,7 +53,7 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   {
     const auto & body = col.first;
     const auto & cols = col.second;
-    if(cols.size()) { _collisionTransforms[body] = cols[0].origin; }
+    if(cols.size()) { _convexTransforms[body] = cols[0].origin; }
   }
   boundsFromURDF(res.limits);
   _visual = res.visual;

@@ -1093,7 +1093,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm.mbc = config("mbc");
     rm._bounds = config("bounds");
     rm._visual = static_cast<std::map<std::string, std::vector<rbd::parsers::Visual>>>(config("visuals"));
-    rm._collisionTransforms = config("collisionTransforms");
+    rm._convexTransforms = config("convexTransforms");
   }
   else
   {
@@ -1104,17 +1104,17 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
       mc_rtc::log::error_and_throw("Could not open model for {} at {}", rm.name, rm.urdf_path);
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
-    auto ctfs = config("collisionTransforms", std::map<std::string, sva::PTransformd>{});
+    auto ctfs = config("convexTransforms", std::map<std::string, sva::PTransformd>{});
     for(const auto & ctf : ctfs)
     {
-      if(rm._collisionTransforms.count(ctf.first))
+      if(rm._convexTransforms.count(ctf.first))
       {
         mc_rtc::log::warning("The collision transform for {} was already loaded from the URDF, the one specified in "
                              "the module will be ignored",
                              ctf.first);
         continue;
       }
-      rm._collisionTransforms[ctf.first] = ctf.second;
+      rm._convexTransforms[ctf.first] = ctf.second;
     }
   }
   if(config.has("accelerationBounds"))
@@ -1212,7 +1212,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   {
     config.add("mb", rm.mb);
     config.add("mbc", rm.mbc);
-    config.add("collisionTransforms", rm._collisionTransforms);
+    config.add("convexTransforms", rm._convexTransforms);
     config.add("bounds", rm._bounds);
     config.add("visuals", rm._visual);
   }

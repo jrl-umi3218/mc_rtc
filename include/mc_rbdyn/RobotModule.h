@@ -451,7 +451,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * - Initialize mb, mbc and mbg
    * - Initial limits
-   * - Initialize _collisionTransforms
+   * - Initialize _convexTransforms
    * - Initialize _visual
    * - Create a default joint order
    * - Create a default stance
@@ -571,7 +571,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * 2. the path to the file containing the convex description
    *
    * The transformation between the convex and the body it's attached to are
-   * provided in a separate map see \ref collisionTransforms()
+   * provided in a separate map see \ref convexTransforms()
    */
   const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const { return _convexHull; }
 
@@ -586,7 +586,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * 2. the collision object
    *
    * The transformation between the convex and the body it's attached to are
-   * provided in a separate map see \ref collisionTransforms()
+   * provided in a separate map see \ref convexTransforms()
    */
   const std::map<std::string, std::pair<std::string, S_ObjectPtr>> & collisionObjects() const
   {
@@ -602,7 +602,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * 2. the path to the file containing the STPBV description
    *
    * The transformation between the STPBV and the body it's attached to are
-   * provided in a separate map see \ref collisionTransforms()
+   * provided in a separate map see \ref convexTransforms()
    */
   const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const { return _stpbvHull; }
 
@@ -612,7 +612,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * A key defines the collision name. The value is the transformation between
    * this collision object and its parent body
    */
-  const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
+  const std::map<std::string, sva::PTransformd> & convexTransforms() const { return _convexTransforms; }
 
   /** Return the flexibilities of the robot
    *
@@ -812,8 +812,8 @@ public:
   VisualMap _visual;
   /** Holds collision representation of bodies in the robot */
   VisualMap _collision;
-  /** \see collisionTransforms() */
-  std::map<std::string, sva::PTransformd> _collisionTransforms;
+  /** \see convexTransforms() */
+  std::map<std::string, sva::PTransformd> _convexTransforms;
   /** \see flexibility() */
   std::vector<Flexibility> _flexibility;
   /** \see forceSensors() */

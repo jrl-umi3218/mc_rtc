@@ -235,7 +235,7 @@ bool DistanceConstraint::removeDistanceLimit(QPSolver & solver, const mc_rbdyn::
       {
         auto distConstr = tasks_constraint(constraint_);
         auto & qpsolver = tasks_solver(solver);
-        bool ret = distConstr->rmCollision(p.first); // need Tasks change? Yep
+        bool ret = distConstr->rmDistanceLimit(p.first);
 
         if(ret)
         {
@@ -281,7 +281,7 @@ bool DistanceConstraint::removeDistanceLimitByBody(QPSolver & solver,
         case QPSolver::Backend::Tasks:
         {
           auto distConstr = tasks_constraint(constraint_);
-          distConstr->rmCollision(out.first);
+          distConstr->rmDistanceLimit(out.first);
           break;
         }
         case QPSolver::Backend::TVM:
@@ -383,19 +383,19 @@ void DistanceConstraint::__addDistanceLimit(mc_solver::QPSolver & solver, const 
       auto distConstr = tasks_constraint(constraint_);
       const auto & body1 = r1.convex(dl.body1);
       const auto & body2 = r2.convex(dl.body2);
-      const sva::PTransformd & X_b1_c = r1.collisionTransform(dl.body1); // why is it called collisionTransform
-      const sva::PTransformd & X_b2_c = r2.collisionTransform(dl.body2);
+      const sva::PTransformd & X_b1_c = r1.convexTransform(dl.body1);
+      const sva::PTransformd & X_b2_c = r2.convexTransform(dl.body2);
       if(r1.mb().nrDof() == 0)
       {
-        distConstr->addCollision(robots.mbs(), dlId, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c,
-                                 static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c, dl.iDist, dl.sDist,
-                                 dl.damping, defaultDampingOffset, r2Selector, r1Selector);
+        distConstr->addDistanceLimit(robots.mbs(), dlId, static_cast<int>(r2Index), body2.first, body2.second.get(),
+                                     X_b2_c, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
+                                     dl.iDist, dl.sDist, dl.damping, defaultDampingOffset, r2Selector, r1Selector);
       }
       else
       {
-        distConstr->addCollision(robots.mbs(), dlId, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
-                                 static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, dl.iDist, dl.sDist,
-                                 dl.damping, defaultDampingOffset, r1Selector, r2Selector);
+        distConstr->addDistanceLimit(robots.mbs(), dlId, static_cast<int>(r1Index), body1.first, body1.second.get(),
+                                     X_b1_c, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c,
+                                     dl.iDist, dl.sDist, dl.damping, defaultDampingOffset, r1Selector, r2Selector);
       }
       break;
     }
@@ -471,9 +471,9 @@ void DistanceConstraint::toggleDistanceLimitMonitor(int dlId, const mc_rbdyn::Di
       case QPSolver::Backend::Tasks:
       {
         auto distConstr = tasks_constraint(constraint_);
-        addMonitor([distConstr, dlId]() { return distConstr->getCollisionData(dlId).distance; }, // needs Tasks change?
-                   [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getCollisionData(dlId).p1; },
-                   [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getCollisionData(dlId).p2; });
+        addMonitor([distConstr, dlId]() { return distConstr->getDistanceData(dlId).distance; }, // needs Tasks change?
+                   [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getDistanceData(dlId).p1; },
+                   [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getDistanceData(dlId).p2; });
         break;
       }
       case QPSolver::Backend::TVM:
@@ -521,7 +521,7 @@ void DistanceConstraint::addToSolverImpl(QPSolver & solver)
   gui_ = solver.gui();
   const mc_rbdyn::Robot & r1 = solver.robots().robot(r1Index);
   const mc_rbdyn::Robot & r2 = solver.robots().robot(r2Index);
-  category_ = {"Collisions", r1.name() + "/" + r2.name()};
+  category_ = {"DistanceLimits", r1.name() + "/" + r2.name()};
   gui_->addElement(category_, mc_rtc::gui::Checkbox("Automatic monitor", autoMonitor_));
   switch(backend_)
   {
@@ -555,7 +555,7 @@ void DistanceConstraint::update(QPSolver &)
       case QPSolver::Backend::Tasks:
       {
         auto distConstr = tasks_constraint(constraint_);
-        return distConstr->getCollisionData(dlId).distance;
+        return distConstr->getDistanceData(dlId).distance;
       }
       case QPSolver::Backend::TVM:
       {
@@ -674,8 +674,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       {
         if(config("useCommon", false))
         {
-          ret->addDistanceLimits(
-              solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions()); // create commonDistanceLimits
+          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
         }
         else if(config("useMinimal", false))
         {

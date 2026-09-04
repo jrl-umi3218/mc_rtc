@@ -988,8 +988,8 @@ public:
   /** Access body transform vector */
   const std::vector<sva::PTransformd> & bodyTransforms() const;
 
-  /** Access transformation between the collision mesh and the body */
-  const sva::PTransformd & collisionTransform(const std::string & cName) const;
+  /** Access transformation between the convex mesh and the body */
+  const sva::PTransformd & convexTransform(const std::string & cName) const;
 
   /** Load surfaces from the directory \p surfaceDir */
   void loadRSDFFromDir(const std::string & surfaceDir);
@@ -1133,7 +1133,7 @@ private:
   std::vector<std::vector<double>> tdl_;
   std::vector<std::vector<double>> tdu_;
   std::map<std::string, convex_pair_t> convexes_;
-  std::map<std::string, sva::PTransformd> collisionTransforms_;
+  std::map<std::string, sva::PTransformd> convexTransforms_;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
   std::map<std::string, std::vector<double>> stance_;
   /** Data (optionally) shared with other instances of a similar robot */
@@ -1191,7 +1191,7 @@ protected:
   void fixSurface(Surface & surface);
 
   /** Used to set the collision transforms correctly */
-  void fixCollisionTransforms();
+  void fixConvexTransforms();
 
   /**
    * @brief Finds the name of the body to which a force sensor is attached,

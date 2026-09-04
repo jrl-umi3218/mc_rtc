@@ -119,7 +119,7 @@ cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
     const map[string, vector[double]] & stance()
     const map[string, pair[string, string]] & convexHull()
     const map[string, pair[string, string]] & stpbvHull()
-    map[string, PTransformd] _collisionTransforms
+    map[string, PTransformd] _convexTransforms
     vector[Flexibility] _flexibility
     vector[ForceSensor] _forceSensors
     const Springs & springs()
@@ -225,7 +225,7 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     const PTransformd& bodyTransform(const string&)
 
-    const PTransformd& collisionTransform(const string&)
+    const PTransformd& convexTransform(const string&)
 
     void loadRSDFFromDir(string)
 
