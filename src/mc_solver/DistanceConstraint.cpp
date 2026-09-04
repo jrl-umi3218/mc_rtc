@@ -471,7 +471,7 @@ void DistanceConstraint::toggleDistanceLimitMonitor(int dlId, const mc_rbdyn::Di
       case QPSolver::Backend::Tasks:
       {
         auto distConstr = tasks_constraint(constraint_);
-        addMonitor([distConstr, dlId]() { return distConstr->getDistanceData(dlId).distance; }, // needs Tasks change?
+        addMonitor([distConstr, dlId]() { return distConstr->getDistanceData(dlId).distance; },
                    [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getDistanceData(dlId).p1; },
                    [distConstr, dlId]() -> const Eigen::Vector3d & { return distConstr->getDistanceData(dlId).p2; });
         break;
