@@ -322,8 +322,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   }
   /** Load distance constraint managers */
   {
-    auto config_collisions = config("distances", std::vector<mc_rtc::Configuration>{});
-    for(auto & config_cc : config_collisions)
+    auto config_distance_limits = config("distances", std::vector<mc_rtc::Configuration>{});
+    for(auto & config_cc : config_distance_limits)
     {
       if(!config_cc.has("type")) { config_cc.add("type", "distance"); }
       auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_cc);
