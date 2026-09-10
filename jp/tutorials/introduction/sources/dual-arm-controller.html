@@ -412,6 +412,11 @@
 41
 42
 43
+44
+45
+46
+47
+48
 </pre></td><td class="code"><pre><span class="cp">#pragma once
 </span>
 <span class="cp">#include</span> <span class="cpf">&lt;mc_control/mc_controller.h&gt;</span><span class="cp">
@@ -443,17 +448,22 @@
   <span class="kt">void</span> <span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">reset_data</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
 <span class="nl">private:</span>
-  <span class="kt">void</span> <span class="n">runUr</span><span class="p">();</span>
-  <span class="kt">void</span> <span class="n">runKinova</span><span class="p">();</span>
-  <span class="n">ControllerPhase</span> <span class="n">phase_</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
-  <span class="n">ControllerState</span> <span class="n">urState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
-  <span class="n">ControllerState</span> <span class="n">kinovaState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">kinovaPostureTask_</span><span class="p">;</span>
   <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">urEndEffectorTask_</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">kinovaPostureTask_</span><span class="p">;</span>
   <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">KinematicsConstraint</span><span class="o">&gt;</span> <span class="n">kinovaKinematics_</span><span class="p">;</span>
 
   <span class="k">const</span> <span class="kt">double</span> <span class="n">iDist</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
   <span class="k">const</span> <span class="kt">double</span> <span class="n">sDist</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">double</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+
+  <span class="n">ControllerPhase</span> <span class="n">phase_</span> <span class="o">=</span> <span class="n">IDLE</span><span class="p">;</span>
+
+  <span class="n">ControllerState</span> <span class="n">urState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
+  <span class="n">ControllerState</span> <span class="n">kinovaState_</span> <span class="o">=</span> <span class="n">RETURN</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">runUr</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="n">runKinova</span><span class="p">();</span>
 <span class="p">};</span>
 </pre></td></tr></tbody></table></code></pre></figure>
         <h3><code>DualArmController.cpp</code></h3>
@@ -543,19 +553,20 @@
 84
 85
 86
-87
 </pre></td><td class="code"><pre><span class="cp">#include</span> <span class="cpf">"DualArmController.h"</span><span class="cp">
 </span>
 <span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
 </span>
 <span class="n">DualArmController</span><span class="o">::</span><span class="n">DualArmController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
-<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"KinovaDefault"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span>
+<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"Kinova"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinematicsConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">selfCollisionConstraint</span><span class="p">);</span>
 
-  <span class="n">addCollisions</span><span class="p">(</span><span class="s">"ur5e"</span><span class="p">,</span> <span class="s">"kinova_default"</span><span class="p">,</span> <span class="p">{{</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="mi">0</span><span class="p">}});</span>
+  <span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="s">"kinova"</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span>
+
+  <span class="n">addCollisions</span><span class="p">(</span><span class="s">"ur5e"</span><span class="p">,</span> <span class="s">"kinova"</span><span class="p">,</span> <span class="p">{{</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">}});</span>
 
   <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
   <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">weight</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
@@ -623,11 +634,8 @@
 
   <span class="n">kinovaPostureTask_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">kinovaPostureTask_</span><span class="p">);</span>
-
   <span class="n">kinovaKinematics_</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">KinematicsConstraint</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinovaKinematics_</span><span class="p">);</span>
-
-  <span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span>
 <span class="p">}</span>
 
 <span class="n">CONTROLLER_CONSTRUCTOR</span><span class="p">(</span><span class="s">"DualArmController"</span><span class="p">,</span> <span class="n">DualArmController</span><span class="p">)</span>
@@ -792,7 +800,7 @@
         <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">addCollisions</span><span class="p">(</span>
             <span class="s">"ur5e"</span><span class="p">,</span>
-            <span class="s">"kinova_default"</span><span class="p">,</span>
+            <span class="s">"kinova"</span><span class="p">,</span>
             <span class="p">[</span><span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Collision</span><span class="p">(</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">)],</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -843,7 +851,7 @@
 
     <span class="o">@</span><span class="nb">staticmethod</span>
     <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-        <span class="n">kinova</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"KinovaDefault"</span><span class="p">)</span>
+        <span class="n">kinova</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"Kinova"</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">DualArmController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">kinova</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_run_kinova</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

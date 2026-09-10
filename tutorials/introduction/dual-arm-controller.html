@@ -416,8 +416,7 @@ While the robot's description contains lists of joints, links, and other physica
   <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include</span> <span class="cpf">&lt;mc_rbdyn/RobotLoader.h&gt;</span><span class="cp">
 </span>
 <span class="n">DualArmController</span><span class="o">::</span><span class="n">DualArmController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
-<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span>
-    <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"KinovaDefault"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
+<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">({</span><span class="n">rm</span><span class="p">,</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"Kinova"</span><span class="p">)},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
   
   </div>
@@ -437,7 +436,7 @@ While the robot's description contains lists of joints, links, and other physica
 
   <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">@</span><span class="nb">staticmethod</span>
 <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
-    <span class="n">kinova</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"KinovaDefault"</span><span class="p">)</span>
+    <span class="n">kinova</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"Kinova"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">DualArmController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">kinova</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
   
@@ -565,6 +564,7 @@ the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova
 <span class="k">struct</span> <span class="nc">DualArmController_DLLAPI</span> <span class="n">DualArmController</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span>
 <span class="p">{</span>
   <span class="c1">// ...</span>
+<span class="nl">private:</span>
   <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span> <span class="n">urEndEffectorTask_</span><span class="p">;</span>
   <span class="c1">// ...</span>
 <span class="p">}</span>
@@ -706,7 +706,7 @@ the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova
 <span class="kt">double</span> <span class="n">iDist</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">sDist</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">;</span>
 <span class="kt">double</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
-<span class="n">addCollisions</span><span class="p">(</span><span class="s">"ur5e"</span><span class="p">,</span> <span class="s">"kinova_default"</span><span class="p">,</span> <span class="p">{{</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">}});</span></code></pre></figure>
+<span class="n">addCollisions</span><span class="p">(</span><span class="s">"ur5e"</span><span class="p">,</span> <span class="s">"kinova"</span><span class="p">,</span> <span class="p">{{</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">}});</span></code></pre></figure>
 
   
   </div>
@@ -728,7 +728,7 @@ the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova
 </span><span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.0</span>
 <span class="bp">self</span><span class="p">.</span><span class="n">addCollisions</span><span class="p">(</span>
     <span class="s">"ur5e"</span><span class="p">,</span>
-    <span class="s">"kinova_default"</span><span class="p">,</span>
+    <span class="s">"kinova"</span><span class="p">,</span>
     <span class="p">[</span><span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Collision</span><span class="p">(</span><span class="s">"*"</span><span class="p">,</span> <span class="s">"*"</span><span class="p">,</span> <span class="n">iDist</span><span class="p">,</span> <span class="n">sDist</span><span class="p">,</span> <span class="n">damping</span><span class="p">)],</span>
 <span class="p">)</span></code></pre></figure>
 
@@ -1064,7 +1064,7 @@ the function can simply be <code>mc_rbdyn::RobotLoader::get_robot_module("Kinova
 <div class="card bg-light card-source">
   <div class="card-body">
 
-  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// ヘッダー内</span>
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the header</span>
 <span class="k">enum</span> <span class="n">ControllerState</span>
 <span class="p">{</span>
   <span class="n">GO</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
