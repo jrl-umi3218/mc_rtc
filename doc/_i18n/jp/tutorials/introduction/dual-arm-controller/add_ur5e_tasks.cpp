@@ -4,6 +4,7 @@
 struct DualArmController_DLLAPI DualArmController : public mc_control::MCController
 {
   // ...
+private:
   std::shared_ptr<mc_tasks::EndEffectorTask> urEndEffectorTask_;
   // ...
 }

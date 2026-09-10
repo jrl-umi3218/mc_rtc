@@ -8,14 +8,13 @@ constructor_sources:
       #include <mc_rbdyn/RobotLoader.h>
 
       DualArmController::DualArmController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
-      : mc_control::MCController({rm,
-          mc_rbdyn::RobotLoader::get_robot_module("KinovaDefault")}, dt)
+      : mc_control::MCController({rm, mc_rbdyn::RobotLoader::get_robot_module("Kinova")}, dt)
   - name: Python
     lang: python
     source: |
       @staticmethod
       def create(robot, dt):
-          kinova = mc_rbdyn.get_robot_module("KinovaDefault")
+          kinova = mc_rbdyn.get_robot_module("Kinova")
           return DualArmController([robot, kinova], dt)
 reposition_kinova_sources:
   - name: C++
@@ -46,7 +45,7 @@ add_collision_constraint_sources:
         double iDist = 0.1;
         double sDist = 0.05;
         double damping = 0.0;
-        addCollisions("ur5e", "kinova_default", {{"*", "*", iDist, sDist, damping}});
+        addCollisions("ur5e", "kinova", {{"*", "*", iDist, sDist, damping}});
   - name: Python
     lang: python
     translate: tutorials/introduction/dual-arm-controller/add_collision_constraint.py

@@ -26,7 +26,7 @@ class DualArmController(mc_control.MCPythonController):
         iDist, sDist, damping = 0.1, 0.05, 0.1
         self.addCollisions(
             "ur5e",
-            "kinova_default",
+            "kinova",
             [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
         )
         self.postureTask.stiffness(1)
@@ -77,7 +77,7 @@ class DualArmController(mc_control.MCPythonController):
 
     @staticmethod
     def create(robot, dt):
-        kinova = mc_rbdyn.get_robot_module("KinovaDefault")
+        kinova = mc_rbdyn.get_robot_module("Kinova")
         return DualArmController([robot, kinova], dt)
 
     def _run_kinova(self):
