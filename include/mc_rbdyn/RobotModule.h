@@ -772,6 +772,18 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Returns a list of robot frames supported by this module */
   inline const std::vector<FrameDescription> & frames() const noexcept { return _frames; }
 
+  /** Return base frame of this module to be connected to the parent robot */
+  inline const std::string & baseFrame() const noexcept { return _baseFrame; }
+
+  /** Return mounting frame of this module used for further downstream attachments */
+  inline const std::string & mountFrame() const noexcept { return _mountFrame; }
+
+  /** Return list of links to add to collision pairs */
+  inline const std::vector<std::string> & collisionLinks() const noexcept { return _collisionLinks; }
+
+  /** Return default mounting transform when attached to a parent robot */
+  inline const sva::PTransformd & defaultMountingTransform() const noexcept { return _defaultMountingTransform; }
+
 public:
   /** Path to the robot's description package */
   std::string path;
@@ -849,6 +861,14 @@ public:
   DevicePtrVector _devices;
   /** \see frames() */
   std::vector<FrameDescription> _frames;
+  /** \see baseFrame() */
+  std::string _baseFrame{};
+  /** \see mountFrame() */
+  std::string _mountFrame{};
+  /** \see collisionLinks() */
+  std::vector<std::string> _collisionLinks{};
+  /** \see defaultMountingTransform() */
+  sva::PTransformd _defaultMountingTransform{sva::PTransformd::Identity()};
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
