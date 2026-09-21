@@ -77,7 +77,6 @@ DECLARE_IO(mc_rbdyn::S_ObjectPtr)
 DECLARE_IO(mc_rbdyn::Base)
 DECLARE_IO(mc_rbdyn::BodySensor)
 DECLARE_IO(mc_rbdyn::JointSensor)
-DECLARE_IO(mc_rbdyn::Collision) // can be omited, replaced by DistanceLimit?
 DECLARE_IO(mc_rbdyn::DistanceLimit)
 DECLARE_IO(std::shared_ptr<mc_rbdyn::Surface>)
 DECLARE_IO(std::shared_ptr<mc_rbdyn::PlanarSurface>)

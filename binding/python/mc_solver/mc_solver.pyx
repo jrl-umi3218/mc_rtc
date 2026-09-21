@@ -182,10 +182,10 @@ cdef class DistanceConstraint(ConstraintSet):
   property r2Index:
     def __get__(self):
       return self.impl.r2Index
-  property dls:
+  property cols:
     def __get__(self):
-      end = deref(self.impl).dls.end()
-      it = deref(self.impl).dls.begin()
+      end = deref(self.impl).cols.end()
+      it = deref(self.impl).cols.begin()
       ret = []
       while it != end:
         ret.append(mc_rbdyn.DistanceLimitFromC(deref(it)))

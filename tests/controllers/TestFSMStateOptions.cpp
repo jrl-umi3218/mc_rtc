@@ -153,7 +153,7 @@ public:
   bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::DistanceLimit & col)
   {
     if(!collision_constraints_.count({r1, r2})) { return false; }
-    const auto & cols = collision_constraints_.at({r1, r2})->dls;
+    const auto & cols = collision_constraints_.at({r1, r2})->cols;
     return std::find(cols.begin(), cols.end(), col) != cols.end();
   }
 

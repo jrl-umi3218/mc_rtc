@@ -232,7 +232,6 @@ set(mc_rbdyn_SRC
     mc_rbdyn/polygon_utils.cpp
     mc_rbdyn/RobotLoader.cpp
     mc_rbdyn/RobotConverter.cpp
-    mc_rbdyn/Collision.cpp
     mc_rbdyn/DistanceLimit.cpp
     mc_rbdyn/ForceSensor.cpp
     mc_rbdyn/RobotModule.cpp

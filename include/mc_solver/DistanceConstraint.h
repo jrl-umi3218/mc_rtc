@@ -151,8 +151,12 @@ public:
   /** Index of the second robot affected by the constraint */
   unsigned int r2Index;
 
-  /** Current set of distance limits */
-  std::vector<mc_rbdyn::DistanceLimit> dls;
+  /** Current set of distance limits.
+   *
+   * \note The name \c cols is retained for backward compatibility with CollisionsConstraint.
+   * cols can be renaimed to dls (distance limits) once CollisionsConstraint is fully ommited.
+   */
+  std::vector<mc_rbdyn::DistanceLimit> cols;
 
 private:
   /** Internal state used to manage distance limit identities */

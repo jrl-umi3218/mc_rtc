@@ -227,7 +227,7 @@ bool DistanceConstraint::removeDistanceLimit(QPSolver & solver, const mc_rbdyn::
     gui_->removeElement(category_, name);
     category_.pop_back();
 
-    dls.erase(std::find(dls.begin(), dls.end(), p.second));
+    cols.erase(std::find(cols.begin(), cols.end(), p.second));
 
     switch(backend_)
     {
@@ -270,7 +270,7 @@ bool DistanceConstraint::removeDistanceLimitByBody(QPSolver & solver,
   const auto & r1 = solver.robots().robot(r1Index);
   const auto & r2 = solver.robots().robot(r2Index);
   std::vector<mc_rbdyn::DistanceLimit> toRm;
-  for(const auto & dl : dls)
+  for(const auto & dl : cols)
   {
     if(r1.convex(dl.body1).first == b1Name && r2.convex(dl.body2).first == b2Name)
     {
@@ -297,7 +297,7 @@ bool DistanceConstraint::removeDistanceLimitByBody(QPSolver & solver,
       category_.pop_back();
     }
   }
-  for(const auto & it : toRm) { dls.erase(std::find(dls.begin(), dls.end(), it)); }
+  for(const auto & it : toRm) { cols.erase(std::find(cols.begin(), cols.end(), it)); }
   if(toRm.size())
   {
     switch(backend_)
@@ -344,7 +344,7 @@ void DistanceConstraint::__addDistanceLimit(mc_solver::QPSolver & solver, const 
   if(handle_wildcard(r1, dl.body1, on_b1_wildcard) || handle_wildcard(r2, dl.body2, on_b2_wildcard)) { return; }
   int dlId = __createDistanceLimitId(dl);
   if(dlId < 0) { return; }
-  dls.push_back(dl);
+  cols.push_back(dl);
 
   auto computeJointsSelector =
       [&robots](const std::optional<std::vector<std::string>> & joints, bool inactive, auto rIndex)
@@ -603,7 +603,7 @@ void DistanceConstraint::removeFromSolverImpl(QPSolver & solver)
 
 void DistanceConstraint::reset()
 {
-  dls.clear();
+  cols.clear();
   dlIdDict.clear();
   switch(backend_)
   {
@@ -653,8 +653,8 @@ std::pair<int, mc_rbdyn::DistanceLimit> DistanceConstraint::__popDistanceLimitId
 
 bool DistanceConstraint::hasDistanceLimit(const std::string & c1, const std::string & c2) const noexcept
 {
-  auto it = std::find_if(dls.begin(), dls.end(), [&](const auto & c) { return c.body1 == c1 && c.body2 == c2; });
-  return it != dls.end();
+  auto it = std::find_if(cols.begin(), cols.end(), [&](const auto & c) { return c.body1 == c1 && c.body2 == c2; });
+  return it != cols.end();
 }
 
 } // namespace mc_solver

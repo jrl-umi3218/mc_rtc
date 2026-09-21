@@ -84,7 +84,7 @@ cdef extern from "<mc_solver/DistanceConstraint.h>" namespace "mc_solver":
 
     unsigned int r1Index
     unsigned int r2Index
-    vector[DistanceLimit] dls
+    vector[DistanceLimit] cols
 
 cdef extern from "<mc_solver/TasksQPSolver.h>" namespace "mc_solver":
   cdef cppclass QPSolver:
