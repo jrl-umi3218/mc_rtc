@@ -413,6 +413,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   };
   updateSelfCollisions(other._minimalSelfCollisions, out._minimalSelfCollisions);
   updateSelfCollisions(other._commonSelfCollisions, out._commonSelfCollisions);
+  updateSelfCollisions(other._minimalDistanceLimits, out._minimalDistanceLimits);
 
   /** Merge the two ref_joint_order */
   if(connectJoint.dof() > 0) { out._ref_joint_order.push_back(connectJointName); }

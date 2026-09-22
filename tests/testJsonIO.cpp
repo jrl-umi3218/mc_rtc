@@ -351,7 +351,8 @@ bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule &
          && compare_vectors(lhs._flexibility, rhs._flexibility) && compare_vectors(lhs._forceSensors, rhs._forceSensors)
          && compare_vectors(lhs._bodySensors, rhs._bodySensors) && lhs._springs == rhs._springs
          && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions
-         && lhs._commonSelfCollisions == rhs._commonSelfCollisions && compare_vectors(lhs._grippers, rhs._grippers)
+         && lhs._commonSelfCollisions == rhs._commonSelfCollisions
+         && lhs._minimalDistanceLimits == rhs._minimalDistanceLimits && compare_vectors(lhs._grippers, rhs._grippers)
          && lhs._ref_joint_order == rhs._ref_joint_order && lhs._default_attitude == rhs._default_attitude
          && lhs._gripperSafety == rhs._gripperSafety;
 }

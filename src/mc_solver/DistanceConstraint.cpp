@@ -674,10 +674,12 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       {
         if(config("useCommon", false))
         {
+          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).commonDistanceLimits());
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
         }
         else if(config("useMinimal", false))
         {
+          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).minimalDistanceLimits());
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }

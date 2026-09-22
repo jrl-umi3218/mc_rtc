@@ -1107,6 +1107,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("springs", rm._springs);
   config("minimalSelfCollisions", rm._minimalSelfCollisions);
   config("commonSelfCollisions", rm._commonSelfCollisions);
+  config("minimalDistanceLimits", rm._minimalDistanceLimits);
   config("default_attitude", rm._default_attitude);
 
   /* Those cannot be empty */

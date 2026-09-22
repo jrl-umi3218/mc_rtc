@@ -368,6 +368,24 @@ cdef class RobotModule(object):
       ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
+  def minimalDistanceLimits(self):
+    assert(self.impl.get())
+    end = deref(self.impl)._minimalDistanceLimits.end()
+    it = deref(self.impl)._minimalDistanceLimits.begin()
+    ret = []
+    while it != end:
+      ret.append(DistanceLimitFromC(deref(it)))
+      preinc(it)
+    return ret
+  def commonDistanceLimits(self):
+    assert(self.impl.get())
+    end = deref(self.impl)._commonDistanceLimits.end()
+    it = deref(self.impl)._commonDistanceLimits.begin()
+    ret = []
+    while it != end:
+      ret.append(DistanceLimitFromC(deref(it)))
+      preinc(it)
+    return ret
   def ref_joint_order(self):
     assert(self.impl.get())
     cdef vector[string] joints = deref(self.impl).ref_joint_order()

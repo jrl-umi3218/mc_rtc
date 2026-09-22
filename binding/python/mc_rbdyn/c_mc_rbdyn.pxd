@@ -125,6 +125,8 @@ cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
     const Springs & springs()
     vector[DistanceLimit] _minimalSelfCollisions
     vector[DistanceLimit] _commonSelfCollisions
+    vector[DistanceLimit] _minimalDistanceLimits
+    vector[DistanceLimit] _commonDistanceLimits
     const vector[string]& ref_joint_order()
     map[string, vector[Visual]] _visual
     map[string, vector[Visual]] _collision

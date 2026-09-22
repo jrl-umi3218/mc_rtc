@@ -646,7 +646,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Return a minimal self-collision set
    *
-   * This set of collision describe self-collisions that you always want to
+   * This set of collision describes self-collisions that you always want to
    * enable regardless of the application
    *
    * \see mc_rbdyn::DistanceLimit for details on the expected data
@@ -655,13 +655,32 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Return a common self-collision set
    *
-   * This set of collision describe self-collisions that you want to enable for
+   * This set of collisions describes self-collisions that you want to enable for
    * general applications. Generally this is a super-set of \ref
    * minimalSelfCollisions
    *
    * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
   const std::vector<mc_rbdyn::DistanceLimit> & commonSelfCollisions() const { return _commonSelfCollisions; }
+
+  /** Return a minimal distance limits set
+   *
+   * This set describes distance limits that you always want to
+   * enable regardless of the application
+   *
+   * \see mc_rbdyn::DistanceLimit for details on the expected data
+   */
+  const std::vector<mc_rbdyn::DistanceLimit> & minimalDistanceLimits() const { return _minimalDistanceLimits; }
+
+  /** Return a common distance limits set
+   *
+   * This set describes distance limits that you want to enable for
+   * general applications. Generally this is a super-set of \ref
+   * minimalDistanceLimits
+   *
+   * \see mc_rbdyn::DistanceLimit for details on the expected data
+   */
+  const std::vector<mc_rbdyn::DistanceLimit> & commonDistanceLimits() const { return _commonDistanceLimits; }
 
   /** Return the grippers in the robot
    *
@@ -828,6 +847,10 @@ public:
   std::vector<mc_rbdyn::DistanceLimit> _minimalSelfCollisions;
   /** \see commonSelfCollisions() */
   std::vector<mc_rbdyn::DistanceLimit> _commonSelfCollisions;
+  /** \see minimalDistanceLimits() */
+  std::vector<mc_rbdyn::DistanceLimit> _minimalDistanceLimits;
+  /** \see commonDistanceLimits() */
+  std::vector<mc_rbdyn::DistanceLimit> _commonDistanceLimits;
   /** \see grippers() */
   std::vector<Gripper> _grippers;
   /** \see gripperSafety() */
