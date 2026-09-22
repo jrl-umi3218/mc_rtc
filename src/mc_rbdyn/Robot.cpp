@@ -1138,6 +1138,11 @@ const sva::PTransformd & Robot::convexTransform(const std::string & cName) const
   return convexTransforms_.at(cName);
 }
 
+const sva::PTransformd & Robot::collisionTransform(const std::string & cName) const
+{
+  return convexTransform(cName);
+}
+
 void Robot::fixSurfaces()
 {
   for(auto & surface : surfaces_) { fixSurface(*surface.second); }

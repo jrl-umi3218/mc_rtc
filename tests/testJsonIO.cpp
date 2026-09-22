@@ -360,6 +360,7 @@ bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule &
 typedef boost::mpl::list<mc_rbdyn::Base,
                          mc_rbdyn::BodySensor,
                          mc_rbdyn::Collision,
+                         mc_rbdyn::DistanceLimit,
                          std::shared_ptr<mc_rbdyn::PlanarSurface>,
                          std::shared_ptr<mc_rbdyn::CylindricalSurface>,
                          std::shared_ptr<mc_rbdyn::GripperSurface>,

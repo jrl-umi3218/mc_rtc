@@ -34,7 +34,6 @@
 #include <mc_rbdyn/Contact.h>
 #include <mc_rtc/logging.h>
 
-#include "mc_rbdyn/DistanceLimit.h"
 #include <fstream>
 
 namespace mc_rtc
