@@ -2,7 +2,6 @@
  * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include "mc_rbdyn/DistanceLimit.h"
 #ifdef BOOST_TEST_MAIN
 #  undef BOOST_TEST_MAIN
 #endif

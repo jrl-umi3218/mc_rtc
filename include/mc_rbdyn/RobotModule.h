@@ -21,7 +21,6 @@
 
 #include <RBDyn/parsers/common.h>
 
-#include "mc_rbdyn/DistanceLimit.h"
 #include <sch/S_Object/S_Object.h>
 
 /* This is an interface designed to provide additionnal information about a robot */

@@ -11,7 +11,6 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_rbdyn/configuration_io.h>
-#include "mc_rbdyn/DistanceLimit.h"
 
 namespace mc_control
 {
