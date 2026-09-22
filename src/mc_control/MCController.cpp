@@ -27,7 +27,6 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include "mc_rbdyn/DistanceLimit.h"
 #include <filesystem>
 namespace fs = std::filesystem;
 

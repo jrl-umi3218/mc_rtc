@@ -19,7 +19,6 @@
 #include <sch-core/S_Superellipsoid.h>
 
 #include <mc_rtc/deprecated.h>
-#include "mc_rbdyn/DistanceLimit.h"
 #include <filesystem>
 namespace fs = std::filesystem;
 
