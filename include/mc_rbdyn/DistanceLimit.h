@@ -46,8 +46,8 @@ struct MC_RBDYN_DLLAPI DistanceLimit
    *   - if r1JointsInactive = true : specified joints are treated as inactive
    */
   std::optional<std::vector<std::string>> r1Joints;
-  std::optional<std::vector<std::string>>
-      r2Joints; /** Active/Inactive joints in the second robot, ignored if r1 == r2 */
+  /** Active/Inactive joints in the second robot, ignored if r1 == r2 */
+  std::optional<std::vector<std::string>> r2Joints;
   bool r1JointsInactive = false; /** When true the selected joints in r1ActiveJoints are considered inactive */
   bool r2JointsInactive = false; /** When true the selected joints in r2ActiveJoints are considered inactive */
   inline bool isNone() { return body1 == "NONE" && body2 == "NONE"; }
