@@ -1028,7 +1028,12 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm.mbc = config("mbc");
     rm._bounds = config("bounds");
     rm._visual = static_cast<std::map<std::string, std::vector<rbd::parsers::Visual>>>(config("visuals"));
-    rm._convexTransforms = config("convexTransforms");
+    if(auto convexTransforms = config("convexTransforms")) { rm._convexTransforms = convexTransforms; }
+    else if(auto collisionTransforms = config("collisionTransforms"))
+    {
+      mc_rtc::log::deprecated("RobotModule", "collisionTransforms", "convexTransforms");
+      rm._convexTransforms = collisionTransforms;
+    }
   }
   else
   {
@@ -1039,7 +1044,13 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
       mc_rtc::log::error_and_throw("Could not open model for {} at {}", rm.name, rm.urdf_path);
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
-    auto ctfs = config("convexTransforms", std::map<std::string, sva::PTransformd>{});
+    auto ctfs = std::map<std::string, sva::PTransformd>{};
+    if(auto convexTransforms = config.find("convexTransforms")) { ctfs = *convexTransforms; }
+    else if(auto collisionTransforms = config.find("collisionTransforms"))
+    {
+      mc_rtc::log::deprecated("RobotModule", "collisionTransforms", "convexTransforms");
+      ctfs = *collisionTransforms;
+    }
     for(const auto & ctf : ctfs)
     {
       if(rm._convexTransforms.count(ctf.first))

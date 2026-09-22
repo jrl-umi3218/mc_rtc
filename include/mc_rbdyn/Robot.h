@@ -988,6 +988,10 @@ public:
   /** Access body transform vector */
   const std::vector<sva::PTransformd> & bodyTransforms() const;
 
+  /** Access transformation between the collision mesh and the body */
+  [[deprecated("Use convexTransform instead.")]]
+  const sva::PTransformd & collisionTransform(const std::string & cName) const;
+
   /** Access transformation between the convex mesh and the body */
   const sva::PTransformd & convexTransform(const std::string & cName) const;
 
