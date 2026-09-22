@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2022 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_solver/DistanceConstraint.h>
