@@ -453,7 +453,7 @@ BOOST_AUTO_TEST_CASE(TestCollisionLoad)
 {
   mc_rtc::Configuration config(R"(collision: [Body1, Body2, 0.05, 0.01, 0.123])");
 
-  const auto collision = config("collision");
+  const auto collision = static_cast<mc_rbdyn::Collision>(config("collision"));
 
   const auto ref = make_ref<mc_rbdyn::Collision>();
   BOOST_CHECK(collision == ref);
