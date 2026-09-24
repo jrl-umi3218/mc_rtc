@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['geometrytype_12281',['GeometryType',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/structsch_1_1Geometry.html#a589fcbf549a272b3a643c861b284d27f',1,'sch::Geometry']]]
+  ['elements_12314',['Elements',['../namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06',1,'mc_rtc::gui']]],
+  ['elementsstacking_12315',['ElementsStacking',['../namespacemc__rtc_1_1gui.html#a649ddcaedb769dede3922fa845e71ca4',1,'mc_rtc::gui']]]
 ];
