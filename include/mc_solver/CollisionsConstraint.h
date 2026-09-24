@@ -16,8 +16,7 @@ namespace mc_solver
  *
  * \deprecated Use DistanceConstraint instead.
  */
-struct MC_SOLVER_DLLAPI [[deprecated("Use DistanceConstraint instead.")]] CollisionsConstraint
-: public DistanceConstraint
+struct MC_SOLVER_DLLAPI CollisionsConstraint : public DistanceConstraint
 {
 public:
   using DistanceConstraint::DistanceConstraint;

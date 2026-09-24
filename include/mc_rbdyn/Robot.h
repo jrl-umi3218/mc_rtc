@@ -8,6 +8,7 @@
 #include <mc_rbdyn/RobotFrame.h>
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
+#include <mc_rtc/deprecated.h>
 
 #include <mc_control/generic_gripper.h>
 
@@ -989,8 +990,7 @@ public:
   const std::vector<sva::PTransformd> & bodyTransforms() const;
 
   /** Access transformation between the collision mesh and the body */
-  [[deprecated("Use convexTransform instead.")]]
-  const sva::PTransformd & collisionTransform(const std::string & cName) const;
+  MC_RTC_DEPRECATED const sva::PTransformd & collisionTransform(const std::string & cName) const;
 
   /** Access transformation between the convex mesh and the body */
   const sva::PTransformd & convexTransform(const std::string & cName) const;
