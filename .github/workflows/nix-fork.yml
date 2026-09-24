@@ -1,0 +1,18 @@
+# Maintainers can add a push-cachix label to a PR to trigger a nix build and
+# push the result to the binary cache (with CACHIX_AUTH_TOKEN secret)
+name: CI Nix Fork PR
+on:
+  pull_request_target:
+    types:
+      - labeled
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  build:
+    if: github.event.label.name == 'push-cachix'
+    uses: ./.github/workflows/nix-build.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha }}
+    secrets:
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
