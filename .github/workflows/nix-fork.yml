@@ -1,3 +1,5 @@
+# Maintainers can add a push-cachix label to a PR to trigger a nix build and
+# push the result to the binary cache (with CACHIX_AUTH_TOKEN secret)
 name: CI Nix Fork PR
 on:
   pull_request_target:
