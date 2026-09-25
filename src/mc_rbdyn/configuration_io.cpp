@@ -152,16 +152,6 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_
   return config;
 }
 
-mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc::Configuration & config)
-{
-  return ConfigurationLoader<mc_rbdyn::DistanceLimit>::load(config);
-}
-
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rbdyn::Collision & c)
-{
-  return ConfigurationLoader<mc_rbdyn::DistanceLimit>::save(static_cast<mc_rbdyn::DistanceLimit>(c));
-}
-
 mc_rbdyn::DistanceLimit ConfigurationLoader<mc_rbdyn::DistanceLimit>::load(const mc_rtc::Configuration & config)
 {
   auto body1 = config("body1");

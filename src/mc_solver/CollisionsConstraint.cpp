@@ -19,11 +19,6 @@ void CollisionsConstraint::removeCollisions(QPSolver & solver, const std::vector
   removeDistanceLimits(solver, cols);
 }
 
-void CollisionsConstraint::removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
-{
-  for(const auto & col : cols) { removeDistanceLimit(solver, col); }
-}
-
 bool CollisionsConstraint::removeCollisionByBody(QPSolver & solver,
                                                  const std::string & b1Name,
                                                  const std::string & b2Name)
@@ -39,11 +34,6 @@ void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Dista
 void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols)
 {
   addDistanceLimits(solver, cols);
-}
-
-void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
-{
-  for(const auto & col : cols) { addDistanceLimit(solver, col); }
 }
 
 bool CollisionsConstraint::hasCollision(const std::string & c1, const std::string & c2) const noexcept

@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/Collision.h>
 #include <mc_solver/DistanceConstraint.h>
+#include "mc_rbdyn/DistanceLimit.h"
 
 namespace mc_solver
 {
@@ -25,12 +26,10 @@ public:
   bool removeCollision(QPSolver & solver, const std::string & b1Name, const std::string & b2Name);
 
   void removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols);
-  void removeCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & dls);
 
   bool removeCollisionByBody(QPSolver & solver, const std::string & b1Name, const std::string & b2Name);
 
   void addCollision(QPSolver & solver, const mc_rbdyn::DistanceLimit & col);
-  void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
   void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & cols);
 
   bool hasCollision(const std::string & c1, const std::string & c2) const noexcept;

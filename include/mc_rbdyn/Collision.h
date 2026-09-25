@@ -10,10 +10,6 @@
 namespace mc_rbdyn
 {
 
-struct Collision : public DistanceLimit
-{
-  using DistanceLimit::DistanceLimit;
-  Collision(const DistanceLimit & dl) : DistanceLimit(dl) {}
-};
+using Collision = DistanceLimit;
 
 } // namespace mc_rbdyn
