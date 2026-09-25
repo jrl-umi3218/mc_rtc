@@ -352,7 +352,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   }
 
   /** Update collision transforms */
-  for(const auto & ct : other._collisionTransforms) { out._collisionTransforms[convexName(ct.first)] = ct.second; }
+  for(const auto & ct : other._convexTransforms) { out._convexTransforms[convexName(ct.first)] = ct.second; }
 
   /** Update flexibility */
   for(const auto & f : other._flexibility) { out._flexibility.push_back({jointName(f.jointName), f.K, f.C, f.O}); }
@@ -403,7 +403,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
 
   /** Update self-collisions set */
   auto updateSelfCollisions =
-      [&](const std::vector<mc_rbdyn::Collision> & colsIn, std::vector<mc_rbdyn::Collision> & colsOut)
+      [&](const std::vector<mc_rbdyn::DistanceLimit> & colsIn, std::vector<mc_rbdyn::DistanceLimit> & colsOut)
   {
     for(const auto & c : colsIn)
     {
@@ -412,6 +412,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   };
   updateSelfCollisions(other._minimalSelfCollisions, out._minimalSelfCollisions);
   updateSelfCollisions(other._commonSelfCollisions, out._commonSelfCollisions);
+  updateSelfCollisions(other._minimalDistanceLimits, out._minimalDistanceLimits);
 
   /** Merge the two ref_joint_order */
   if(connectJoint.dof() > 0) { out._ref_joint_order.push_back(connectJointName); }
@@ -699,7 +700,7 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
   for(const auto & co : other._collisionObjects) { out._collisionObjects.erase(convexName(co.first)); }
 
   /** Update collision transforms */
-  for(const auto & ct : other._collisionTransforms) { out._collisionTransforms.erase(convexName(ct.first)); }
+  for(const auto & ct : other._convexTransforms) { out._convexTransforms.erase(convexName(ct.first)); }
 
   /** Update flexibilities */
   for(const auto & flex : other._flexibility)
@@ -750,11 +751,11 @@ RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
 
   /** Update self-collisions set */
   auto updateSelfCollisions =
-      [&](const std::vector<mc_rbdyn::Collision> & colsIn, std::vector<mc_rbdyn::Collision> & colsOut)
+      [&](const std::vector<mc_rbdyn::DistanceLimit> & colsIn, std::vector<mc_rbdyn::DistanceLimit> & colsOut)
   {
     for(const auto & c : colsIn)
     {
-      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const Collision & col)
+      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const DistanceLimit & col)
                              { return col.body1 == convexName(c.body1) && col.body2 == convexName(c.body2); });
       if(it != colsOut.end()) { colsOut.erase(it); }
     }

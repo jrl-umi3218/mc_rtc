@@ -209,8 +209,9 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   std::array<double, 3> damper{0.1, 0.01, 0.5};
   dynamicsConstraint.reset(new mc_solver::DynamicsConstraint(robots(), 0, dt, damper, 0.5));
   kinematicsConstraint.reset(new mc_solver::KinematicsConstraint(robots(), 0, dt, damper, 0.5));
-  selfCollisionConstraint.reset(new mc_solver::CollisionsConstraint(robots(), 0, 0, dt));
-  selfCollisionConstraint->addCollisions(solver(), robot_modules[0]->minimalSelfCollisions());
+  selfCollisionConstraint.reset(new mc_solver::DistanceConstraint(robots(), 0, 0, dt));
+  selfCollisionConstraint->addDistanceLimits(solver(), robot_modules[0]->minimalDistanceLimits());
+  selfCollisionConstraint->addDistanceLimits(solver(), robot_modules[0]->minimalSelfCollisions());
   compoundJointConstraint.reset(new mc_solver::CompoundJointConstraint(robots(), 0, timeStep));
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
   /** Load additional robots from the configuration */
@@ -319,13 +320,26 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
           std::shared_ptr<mc_solver::ContactConstraint>(contactConstraint.get(), [](mc_solver::ContactConstraint *) {});
     }
   }
+  /** Load distance constraint managers */
+  {
+    auto config_distance_limits = config("distances", std::vector<mc_rtc::Configuration>{});
+    for(auto & config_cc : config_distance_limits)
+    {
+      if(!config_cc.has("type")) { config_cc.add("type", "distance"); }
+      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_cc);
+      auto & r1 = robots().robot(cc->r1Index);
+      auto & r2 = robots().robot(cc->r2Index);
+      collision_constraints_[{r1.name(), r2.name()}] = cc;
+      solver().addConstraintSet(*cc);
+    }
+  }
   /** Load collision managers */
   {
     auto config_collisions = config("collisions", std::vector<mc_rtc::Configuration>{});
     for(auto & config_cc : config_collisions)
     {
-      if(!config_cc.has("type")) { config_cc.add("type", "collision"); }
-      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::CollisionsConstraint>(solver(), config_cc);
+      config_cc.add("type", "distance");
+      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_cc);
       auto & r1 = robots().robot(cc->r1Index);
       auto & r2 = robots().robot(cc->r2Index);
       collision_constraints_[{r1.name(), r2.name()}] = cc;
@@ -941,11 +955,11 @@ void MCController::updateContacts()
 
 void MCController::addCollisions(const std::string & r1,
                                  const std::string & r2,
-                                 const std::vector<mc_rbdyn::Collision> & collisions)
+                                 const std::vector<mc_rbdyn::DistanceLimit> & collisions)
 {
   if(r1 != r2 && collision_constraints_.count({r2, r1}))
   {
-    std::vector<mc_rbdyn::Collision> swapped;
+    std::vector<mc_rbdyn::DistanceLimit> swapped;
     swapped.reserve(collisions.size());
     for(const auto & c : collisions) { swapped.push_back({c.body2, c.body1, c.iDist, c.sDist, c.damping}); }
     addCollisions(r2, r1, swapped);
@@ -961,18 +975,18 @@ void MCController::addCollisions(const std::string & r1,
     auto r1Index = robot(r1).robotIndex();
     auto r2Index = robot(r2).robotIndex();
     collision_constraints_[{r1, r2}] =
-        std::make_shared<mc_solver::CollisionsConstraint>(robots(), r1Index, r2Index, solver().dt());
+        std::make_shared<mc_solver::DistanceConstraint>(robots(), r1Index, r2Index, solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
   mc_rtc::log::info("Add collisions {}/{}", r1, r2);
   for(const auto & c : collisions) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  cc->addCollisions(solver(), collisions);
+  cc->addDistanceLimits(solver(), collisions);
 }
 
 bool MCController::hasCollision(const std::string & r1,
                                 const std::string & r2,
-                                const mc_rbdyn::Collision & col) const noexcept
+                                const mc_rbdyn::DistanceLimit & col) const noexcept
 {
   return hasCollision(r1, r2, col.body1, col.body2);
 }
@@ -983,24 +997,24 @@ bool MCController::hasCollision(const std::string & r1,
                                 const std::string & c2) const noexcept
 {
   auto it = collision_constraints_.find({r1, r2});
-  if(it != collision_constraints_.end()) { return it->second->hasCollision(c1, c2); }
+  if(it != collision_constraints_.end()) { return it->second->hasDistanceLimit(c1, c2); }
   if(r1 != r2)
   {
     it = collision_constraints_.find({r2, r1});
-    if(it != collision_constraints_.end()) { return it->second->hasCollision(c2, c1); }
+    if(it != collision_constraints_.end()) { return it->second->hasDistanceLimit(c2, c1); }
   }
   return false;
 }
 
 void MCController::removeCollisions(const std::string & r1,
                                     const std::string & r2,
-                                    const std::vector<mc_rbdyn::Collision> & collisions)
+                                    const std::vector<mc_rbdyn::DistanceLimit> & collisions)
 {
   if(!collision_constraints_.count({r1, r2})) { return; }
   auto & cc = collision_constraints_[{r1, r2}];
   mc_rtc::log::info("Remove collisions {}/{}", r1, r2);
   for(const auto & c : collisions) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  cc->removeCollisions(solver(), collisions);
+  cc->removeDistanceLimits(solver(), collisions);
 }
 
 void MCController::removeCollisions(const std::string & r1, const std::string & r2)

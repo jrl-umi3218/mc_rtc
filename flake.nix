@@ -33,6 +33,27 @@
                 shells.defaultShells.devel = false;
               };
             flakoboros = {
+              overrideAttrs.tasks = { pkgs-final, ... }: {
+                src = pkgs-final.fetchFromGitHub {
+                  owner = "jrl-umi3218";
+                  repo = "Tasks";
+                  tag = "v1.9.1";
+                  hash = "sha256-9eioOZus6LYE5WZCKeA3r2h2cqSbq8Qyg6qSHVLc0yM=";
+                };
+                version = "1.9.1";
+              };
+              overrideAttrs.tvm =
+                { pkgs-final, ... }:
+                {
+                  src = pkgs-final.fetchgit {
+                    url = "https://github.com/jrl-umi3218/TVM";
+                    tag = "v0.9.7";
+                    hash = "sha256-ohXrbyf1oobBIL1lMx6yxS3GtRsslJIus8fozSeTRxU=";
+                    fetchSubmodules = true;
+                  };
+                  version = "0.9.7";
+                };
+
               overrideAttrs.mc-rtc =
                 { drv-prev, pkgs-final, ... }:
                 {

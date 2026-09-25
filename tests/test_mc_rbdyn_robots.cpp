@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(TestRobotLoadingWithCollisionObjects)
   configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   rm->_collisionObjects["L_HAND_SPHERE"] = {"L_WRIST_Y_S", std::make_shared<sch::S_Sphere>(0.09)};
-  rm->_collisionTransforms["L_HAND_SPHERE"] = sva::PTransformd::Identity();
+  rm->_convexTransforms["L_HAND_SPHERE"] = sva::PTransformd::Identity();
   auto envrm = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
                                                        std::string("ground"));
   TestRobotLoadingCommon(rm, envrm);

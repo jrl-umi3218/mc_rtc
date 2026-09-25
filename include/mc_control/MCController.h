@@ -20,11 +20,13 @@
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CompoundJointConstraint.h>
 #include <mc_solver/ContactConstraint.h>
+#include <mc_solver/DistanceConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 #include <mc_solver/QPSolver.h>
 
 #include <mc_tasks/PostureTask.h>
+#include "mc_rbdyn/DistanceLimit.h"
 
 namespace mc_rbdyn
 {
@@ -235,10 +237,10 @@ public:
    */
   void addCollisions(const std::string & r1,
                      const std::string & r2,
-                     const std::vector<mc_rbdyn::Collision> & collisions);
+                     const std::vector<mc_rbdyn::DistanceLimit> & collisions);
 
   /** Returns true if the given collision is active */
-  bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col) const noexcept;
+  bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::DistanceLimit & col) const noexcept;
 
   /** Returns true if the given collision is active */
   bool hasCollision(const std::string & r1,
@@ -253,7 +255,7 @@ public:
    */
   void removeCollisions(const std::string & r1,
                         const std::string & r2,
-                        const std::vector<mc_rbdyn::Collision> & collisions);
+                        const std::vector<mc_rbdyn::DistanceLimit> & collisions);
 
   /** Remove all collision-pair between two robots
    *
@@ -701,7 +703,7 @@ protected:
 
   /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
    * effectively a self-collision manager */
-  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::CollisionsConstraint>> collision_constraints_;
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::DistanceConstraint>> collision_constraints_;
 
   /** FSM contacts */
   ContactSet contacts_;
@@ -726,7 +728,7 @@ public:
   /** Kinematics constraints for the main robot */
   mc_rtc::unique_ptr<mc_solver::KinematicsConstraint> kinematicsConstraint;
   /** Self collisions constraint for the main robot */
-  mc_rtc::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
+  mc_rtc::unique_ptr<mc_solver::DistanceConstraint> selfCollisionConstraint;
   /** Compound joint constraint for the main robot */
   mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */

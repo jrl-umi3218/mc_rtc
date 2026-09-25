@@ -347,18 +347,19 @@ bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule &
          && lhs._accelerationBounds == rhs._accelerationBounds && lhs._jerkBounds == rhs._jerkBounds
          && lhs._torqueDerivativeBounds == rhs._torqueDerivativeBounds && lhs._stance == rhs._stance
          && compareHulls(lhs._convexHull, rhs._convexHull) && compareHulls(lhs._stpbvHull, rhs._stpbvHull)
-         && compare_vector_maps(lhs._visual, rhs._visual) && lhs._collisionTransforms == rhs._collisionTransforms
+         && compare_vector_maps(lhs._visual, rhs._visual) && lhs._convexTransforms == rhs._convexTransforms
          && compare_vectors(lhs._flexibility, rhs._flexibility) && compare_vectors(lhs._forceSensors, rhs._forceSensors)
          && compare_vectors(lhs._bodySensors, rhs._bodySensors) && lhs._springs == rhs._springs
          && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions
-         && lhs._commonSelfCollisions == rhs._commonSelfCollisions && compare_vectors(lhs._grippers, rhs._grippers)
+         && lhs._commonSelfCollisions == rhs._commonSelfCollisions
+         && lhs._minimalDistanceLimits == rhs._minimalDistanceLimits && compare_vectors(lhs._grippers, rhs._grippers)
          && lhs._ref_joint_order == rhs._ref_joint_order && lhs._default_attitude == rhs._default_attitude
          && lhs._gripperSafety == rhs._gripperSafety;
 }
 
 typedef boost::mpl::list<mc_rbdyn::Base,
                          mc_rbdyn::BodySensor,
-                         mc_rbdyn::Collision,
+                         mc_rbdyn::DistanceLimit,
                          std::shared_ptr<mc_rbdyn::PlanarSurface>,
                          std::shared_ptr<mc_rbdyn::CylindricalSurface>,
                          std::shared_ptr<mc_rbdyn::GripperSurface>,
@@ -445,4 +446,21 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
   config.add("rmV", rmV, false, std::vector<std::string>{}, true);
   std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
   config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});
+}
+
+BOOST_AUTO_TEST_CASE(TestCollisionLoad)
+{
+  auto config = mc_rtc::Configuration::fromYAMLData(R"(
+    collision:
+      body1: Body1
+      body2: Body2
+      iDist: 0.05
+      sDist: 0.01
+      damping: 0.123
+                                                    )");
+
+  const auto collision = static_cast<mc_rbdyn::Collision>(config("collision"));
+
+  const auto ref = make_ref<mc_rbdyn::Collision>();
+  BOOST_CHECK(collision == ref);
 }

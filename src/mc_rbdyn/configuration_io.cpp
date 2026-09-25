@@ -152,7 +152,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_
   return config;
 }
 
-mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc::Configuration & config)
+mc_rbdyn::DistanceLimit ConfigurationLoader<mc_rbdyn::DistanceLimit>::load(const mc_rtc::Configuration & config)
 {
   auto body1 = config("body1");
   auto body2 = config("body2");
@@ -164,19 +164,20 @@ mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc:
     if((active_joints || joints) && inactive_joints)
     {
       mc_rtc::log::warning(
-          "Collision ({} - {}) has both {}ActiveJoints and {}InactiveJoints, {}ActiveJoints will be used", body1, body2,
-          prefix);
+          "DistanceLimit ({} - {}) has both {}ActiveJoints and {}InactiveJoints, {}ActiveJoints will be used", body1,
+          body2, prefix);
     }
 
     if(joints)
     {
-      mc_rtc::log::deprecated(fmt::format("Collision ({} - {})", body1, body2), prefix + "Joints",
+      mc_rtc::log::deprecated(fmt::format("DistanceLimit ({} - {})", body1, body2), prefix + "Joints",
                               prefix + "ActiveJoints");
       auto jointsV = joints->operator std::vector<std::string>();
       if(jointsV.empty())
       {
         mc_rtc::log::warning(
-            "[Collision][breaking change] The meaning of an empty joint vector has changed from all joints active to "
+            "[DistanceLimit][breaking change] The meaning of an empty joint vector has changed from all joints active "
+            "to "
             "no joints active. Remove {}Joints from your configuration to restore the former behaviour.",
             prefix);
       }
@@ -188,11 +189,11 @@ mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc:
   };
   const auto & [r1Joints, r1Inactive] = loadActiveJoints("r1");
   const auto & [r2Joints, r2Inactive] = loadActiveJoints("r2");
-  return mc_rbdyn::Collision(body1, body2, config("iDist", 0.05), config("sDist", 0.01), config("damping", 0.0),
-                             r1Joints, r2Joints, r1Inactive, r2Inactive);
+  return mc_rbdyn::DistanceLimit(body1, body2, config("iDist", 0.05), config("sDist", 0.01), config("damping", 0.0),
+                                 r1Joints, r2Joints, r1Inactive, r2Inactive);
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rbdyn::Collision & c)
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::DistanceLimit>::save(const mc_rbdyn::DistanceLimit & c)
 {
   mc_rtc::Configuration config;
   config.add("body1", c.body1);
@@ -1027,7 +1028,12 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm.mbc = config("mbc");
     rm._bounds = config("bounds");
     rm._visual = static_cast<std::map<std::string, std::vector<rbd::parsers::Visual>>>(config("visuals"));
-    rm._collisionTransforms = config("collisionTransforms");
+    if(auto convexTransforms = config.find("convexTransforms")) { rm._convexTransforms = *convexTransforms; }
+    else if(auto collisionTransforms = config.find("collisionTransforms"))
+    {
+      mc_rtc::log::deprecated("RobotModule", "collisionTransforms", "convexTransforms");
+      rm._convexTransforms = *collisionTransforms;
+    }
   }
   else
   {
@@ -1038,17 +1044,23 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
       mc_rtc::log::error_and_throw("Could not open model for {} at {}", rm.name, rm.urdf_path);
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
-    auto ctfs = config("collisionTransforms", std::map<std::string, sva::PTransformd>{});
+    auto ctfs = std::map<std::string, sva::PTransformd>{};
+    if(auto convexTransforms = config.find("convexTransforms")) { ctfs = *convexTransforms; }
+    else if(auto collisionTransforms = config.find("collisionTransforms"))
+    {
+      mc_rtc::log::deprecated("RobotModule", "collisionTransforms", "convexTransforms");
+      ctfs = *collisionTransforms;
+    }
     for(const auto & ctf : ctfs)
     {
-      if(rm._collisionTransforms.count(ctf.first))
+      if(rm._convexTransforms.count(ctf.first))
       {
         mc_rtc::log::warning("The collision transform for {} was already loaded from the URDF, the one specified in "
                              "the module will be ignored",
                              ctf.first);
         continue;
       }
-      rm._collisionTransforms[ctf.first] = ctf.second;
+      rm._convexTransforms[ctf.first] = ctf.second;
     }
   }
   if(config.has("accelerationBounds"))
@@ -1105,6 +1117,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("springs", rm._springs);
   config("minimalSelfCollisions", rm._minimalSelfCollisions);
   config("commonSelfCollisions", rm._commonSelfCollisions);
+  config("minimalDistanceLimits", rm._minimalDistanceLimits);
   config("default_attitude", rm._default_attitude);
 
   /* Those cannot be empty */
@@ -1146,7 +1159,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   {
     config.add("mb", rm.mb);
     config.add("mbc", rm.mbc);
-    config.add("collisionTransforms", rm._collisionTransforms);
+    config.add("convexTransforms", rm._convexTransforms);
     config.add("bounds", rm._bounds);
     config.add("visuals", rm._visual);
   }

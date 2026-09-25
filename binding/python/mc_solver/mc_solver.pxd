@@ -32,6 +32,12 @@ cdef class CollisionsConstraint(ConstraintSet):
 
 cdef CollisionsConstraint CollisionsConstraintFromPtr(c_mc_solver.CollisionsConstraint*)
 
+cdef class DistanceConstraint(ConstraintSet):
+  cdef c_mc_solver.DistanceConstraint * impl
+  cdef cppbool own_impl__
+
+cdef DistanceConstraint DistanceConstraintFromPtr(c_mc_solver.DistanceConstraint*)
+
 cdef class QPSolver(object):
   cdef c_mc_solver.QPSolver * impl
   cdef cppbool own_impl__
