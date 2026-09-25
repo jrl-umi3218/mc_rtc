@@ -10,9 +10,10 @@
 namespace mc_rbdyn
 {
 
-MC_RTC_DEPRECATED struct Collision : public DistanceLimit
+struct Collision : public DistanceLimit
 {
   using DistanceLimit::DistanceLimit;
+  Collision(const DistanceLimit & dl) : DistanceLimit(dl) {}
 };
 
 } // namespace mc_rbdyn

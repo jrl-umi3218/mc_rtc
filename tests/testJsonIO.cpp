@@ -451,7 +451,14 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
 
 BOOST_AUTO_TEST_CASE(TestCollisionLoad)
 {
-  mc_rtc::Configuration config(R"(collision: [Body1, Body2, 0.05, 0.01, 0.123])");
+  auto config = mc_rtc::Configuration::fromYAMLData(R"(
+    collision:
+      body1: Body1
+      body2: Body2
+      iDist: 0.05
+      sDist: 0.01
+      damping: 0.123
+                                                    )");
 
   const auto collision = static_cast<mc_rbdyn::Collision>(config("collision"));
 

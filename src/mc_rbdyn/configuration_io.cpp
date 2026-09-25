@@ -152,6 +152,16 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_
   return config;
 }
 
+mc_rbdyn::Collision ConfigurationLoader<mc_rbdyn::Collision>::load(const mc_rtc::Configuration & config)
+{
+  return ConfigurationLoader<mc_rbdyn::DistanceLimit>::load(config);
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Collision>::save(const mc_rbdyn::Collision & c)
+{
+  return ConfigurationLoader<mc_rbdyn::DistanceLimit>::save(static_cast<mc_rbdyn::DistanceLimit>(c));
+}
+
 mc_rbdyn::DistanceLimit ConfigurationLoader<mc_rbdyn::DistanceLimit>::load(const mc_rtc::Configuration & config)
 {
   auto body1 = config("body1");
@@ -1028,11 +1038,11 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm.mbc = config("mbc");
     rm._bounds = config("bounds");
     rm._visual = static_cast<std::map<std::string, std::vector<rbd::parsers::Visual>>>(config("visuals"));
-    if(auto convexTransforms = config("convexTransforms")) { rm._convexTransforms = convexTransforms; }
-    else if(auto collisionTransforms = config("collisionTransforms"))
+    if(auto convexTransforms = config.find("convexTransforms")) { rm._convexTransforms = *convexTransforms; }
+    else if(auto collisionTransforms = config.find("collisionTransforms"))
     {
       mc_rtc::log::deprecated("RobotModule", "collisionTransforms", "convexTransforms");
-      rm._convexTransforms = collisionTransforms;
+      rm._convexTransforms = *collisionTransforms;
     }
   }
   else
