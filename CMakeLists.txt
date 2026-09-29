@@ -30,6 +30,8 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
 
+option(PYTHON_BINDING "Build the python bindings" ON)
+
 # Check if the submodule cmake have been initialized
 set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
 if(EXISTS "${JRL_CMAKE_MODULES}/base.cmake")
@@ -132,8 +134,6 @@ option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
 option(BUILD_MC_RTC_PYTHON_UTILS
        "Build python utilities (e.g mc_log_ui, mc_rtc_new_controller, etc)" ON
 )
-option(PYTHON_BINDING "Build the python bindings" ON)
-
 if(NOT BUILD_MC_RTC)
   if(NOT BUILD_MC_RTC_CPP_UTILS AND NOT BUILD_MC_RTC_PYTHON_UTILS)
     message(STATUS "Nothing to build, exiting.")
@@ -377,7 +377,7 @@ add_subdirectory(src)
 add_subdirectory(plugins)
 add_subdirectory(utils)
 
-if(${PYTHON_BINDING})
+if(PYTHON_BINDING)
   add_subdirectory(binding/python)
 endif()
 
