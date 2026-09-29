@@ -51,7 +51,7 @@ static auto registered_collision = mc_solver::ConstraintSetLoader::register_load
     {
       auto ret = std::make_shared<mc_solver::CollisionsConstraint>(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "collision", false, "r1Index", "r1", ""),
-          robotIndexFromConfig(config, solver.robots(), "distance", false, "r2Index", "r2", ""), solver.dt());
+          robotIndexFromConfig(config, solver.robots(), "collision", false, "r2Index", "r2", ""), solver.dt());
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
