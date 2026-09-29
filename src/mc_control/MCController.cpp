@@ -1033,10 +1033,10 @@ void MCController::removeDistanceLimits(const std::string & r1,
                                         const std::vector<mc_rbdyn::DistanceLimit> & limits)
 {
   if(!distance_constraints_.count({r1, r2})) { return; }
-  auto & cc = distance_constraints_[{r1, r2}];
-  mc_rtc::log::info("Remove collisions {}/{}", r1, r2);
+  auto & dc = distance_constraints_[{r1, r2}];
+  mc_rtc::log::info("Remove distance constraint {}/{}", r1, r2);
   for(const auto & c : limits) { mc_rtc::log::info("- {}::{}/{}::{}", r1, c.body1, r2, c.body2); }
-  cc->removeDistanceLimits(solver(), limits);
+  dc->removeDistanceLimits(solver(), limits);
 }
 
 void MCController::removeCollisions(const std::string & r1,
