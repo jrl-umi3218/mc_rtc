@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/api.h>
 
+#include <iosfwd>
 #include <optional>
 #include <string>
 #include <vector>
