@@ -370,8 +370,8 @@ cdef class RobotModule(object):
     return ret
   def minimalDistanceLimits(self):
     assert(self.impl.get())
-    end = deref(self.impl)._minimalDistanceLimits.end()
-    it = deref(self.impl)._minimalDistanceLimits.begin()
+    end = deref(self.impl)._essentialDistanceLimits.end()
+    it = deref(self.impl)._essentialDistanceLimits.begin()
     ret = []
     while it != end:
       ret.append(DistanceLimitFromC(deref(it)))

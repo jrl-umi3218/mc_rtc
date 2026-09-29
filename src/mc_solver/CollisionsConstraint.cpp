@@ -62,7 +62,7 @@ static auto registered_collision = mc_solver::ConstraintSetLoader::register_load
         }
         else if(config("useMinimal", false))
         {
-          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalDistanceLimits());
+          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
           ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }

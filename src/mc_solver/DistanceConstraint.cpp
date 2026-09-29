@@ -679,7 +679,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
         }
         else if(config("useMinimal", false))
         {
-          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).minimalDistanceLimits());
+          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }

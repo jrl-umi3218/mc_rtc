@@ -662,20 +662,20 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   const std::vector<mc_rbdyn::DistanceLimit> & commonSelfCollisions() const { return _commonSelfCollisions; }
 
-  /** Return a minimal distance limits set
+  /** Return an essential distance limits set
    *
    * This set describes distance limits that you always want to
    * enable regardless of the application
    *
    * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::DistanceLimit> & minimalDistanceLimits() const { return _minimalDistanceLimits; }
+  const std::vector<mc_rbdyn::DistanceLimit> & essentialDistanceLimits() const { return _essentialDistanceLimits; }
 
   /** Return a common distance limits set
    *
    * This set describes distance limits that you want to enable for
    * general applications. Generally this is a super-set of \ref
-   * minimalDistanceLimits
+   * essentialDistanceLimits
    *
    * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
@@ -846,8 +846,8 @@ public:
   std::vector<mc_rbdyn::DistanceLimit> _minimalSelfCollisions;
   /** \see commonSelfCollisions() */
   std::vector<mc_rbdyn::DistanceLimit> _commonSelfCollisions;
-  /** \see minimalDistanceLimits() */
-  std::vector<mc_rbdyn::DistanceLimit> _minimalDistanceLimits;
+  /** \see essentialDistanceLimits() */
+  std::vector<mc_rbdyn::DistanceLimit> _essentialDistanceLimits;
   /** \see commonDistanceLimits() */
   std::vector<mc_rbdyn::DistanceLimit> _commonDistanceLimits;
   /** \see grippers() */
