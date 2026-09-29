@@ -132,6 +132,7 @@ option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
 option(BUILD_MC_RTC_PYTHON_UTILS
        "Build python utilities (e.g mc_log_ui, mc_rtc_new_controller, etc)" ON
 )
+option(PYTHON_BINDING "Build the python bindings" ON)
 
 if(NOT BUILD_MC_RTC)
   if(NOT BUILD_MC_RTC_CPP_UTILS AND NOT BUILD_MC_RTC_PYTHON_UTILS)
