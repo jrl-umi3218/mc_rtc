@@ -110,9 +110,15 @@ public:
   /** Returns true if a distance limit between the given pair of convexes is in this constraint.
    *
    * This checks the convex names only and does not distinguish between
-   * "_min" and "_max" distance limit identities.
+   * "_min" and "_max" distance limit identities. Use the overload taking a
+   * full mc_rbdyn::DistanceLimit when the min/max direction matters.
    */
   bool hasDistanceLimit(const std::string & c1, const std::string & c2) const noexcept;
+
+  /** Returns true if a distance limit with the exact identity of \p dl (convex names
+   * and "_min"/"_max" direction) is in this constraint.
+   */
+  bool hasDistanceLimit(const mc_rbdyn::DistanceLimit & dl) const noexcept;
 
   /** Remove all distance limits from the constraint */
   void reset();
@@ -171,7 +177,7 @@ private:
    * - "_min" when iDist > sDist
    * - "_max" otherwise
    */
-  std::string __keyByNames(const mc_rbdyn::DistanceLimit & dl);
+  std::string __keyByNames(const mc_rbdyn::DistanceLimit & dl) const;
 
   /** Create an internal ID for a distance limit.
    *

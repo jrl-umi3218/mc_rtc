@@ -995,7 +995,19 @@ bool MCController::hasDistanceLimit(const std::string & r1,
                                     const std::string & r2,
                                     const mc_rbdyn::DistanceLimit & dl) const noexcept
 {
-  return hasDistanceLimit(r1, r2, dl.body1, dl.body2);
+  auto it = distance_constraints_.find({r1, r2});
+  if(it != distance_constraints_.end()) { return it->second->hasDistanceLimit(dl); }
+  if(r1 != r2)
+  {
+    it = distance_constraints_.find({r2, r1});
+    if(it != distance_constraints_.end())
+    {
+      auto swapped = dl;
+      std::swap(swapped.body1, swapped.body2);
+      return it->second->hasDistanceLimit(swapped);
+    }
+  }
+  return false;
 }
 
 bool MCController::hasCollision(const std::string & r1,

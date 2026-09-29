@@ -619,7 +619,7 @@ void DistanceConstraint::reset()
   if(gui_) { gui_->removeCategory(category_); }
 }
 
-std::string DistanceConstraint::__keyByNames(const mc_rbdyn::DistanceLimit & dl)
+std::string DistanceConstraint::__keyByNames(const mc_rbdyn::DistanceLimit & dl) const
 {
   return dl.body1 + "/" + dl.body2 + (dl.iDist > dl.sDist ? "_min" : "_max");
 }
@@ -655,6 +655,11 @@ bool DistanceConstraint::hasDistanceLimit(const std::string & c1, const std::str
 {
   auto it = std::find_if(cols.begin(), cols.end(), [&](const auto & c) { return c.body1 == c1 && c.body2 == c2; });
   return it != cols.end();
+}
+
+bool DistanceConstraint::hasDistanceLimit(const mc_rbdyn::DistanceLimit & dl) const noexcept
+{
+  return dlIdDict.count(__keyByNames(dl)) != 0;
 }
 
 } // namespace mc_solver
