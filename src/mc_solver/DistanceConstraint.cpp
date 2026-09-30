@@ -223,7 +223,7 @@ bool DistanceConstraint::removeDistanceLimit(QPSolver & solver, const mc_rbdyn::
     if(monitored_.count(p.first)) { toggleDistanceLimitMonitor(p.first, &p.second); }
 
     category_.push_back("Monitors");
-    std::string name = "Monitor " + p.second.body1 + "/" + p.second.body2;
+    std::string name = "Monitor " + __keyByNames(p.second);
     gui_->removeElement(category_, name);
     category_.pop_back();
 
@@ -417,7 +417,7 @@ void DistanceConstraint::addMonitorButton(int dlId, const mc_rbdyn::DistanceLimi
   if(gui_ && inSolver_)
   {
     auto & gui = *gui_;
-    std::string name = dl.body1 + "/" + dl.body2;
+    std::string name = __keyByNames(dl);
     category_.push_back("Monitors");
     gui.addElement(category_, mc_rtc::gui::Checkbox(
                                   "Monitor " + name, [dlId, this]() { return monitored_.count(dlId) != 0; },
