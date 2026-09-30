@@ -322,7 +322,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   }
   /** Load distance constraint managers */
   {
-    auto config_distance_limits = config("distances", std::vector<mc_rtc::Configuration>{});
+    bool useDeprecatedKey = !config.has("distances") && config.has("collisions");
+    if(useDeprecatedKey) { mc_rtc::log::deprecated("MCController", "collisions", "distances"); }
+    auto config_distance_limits =
+        config(useDeprecatedKey ? "collisions" : "distances", std::vector<mc_rtc::Configuration>{});
     for(auto & config_dc : config_distance_limits)
     {
       if(!config_dc.has("type")) { config_dc.add("type", "distance"); }
@@ -331,19 +334,6 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
       auto & r2 = robots().robot(dc->r2Index);
       distance_constraints_[{r1.name(), r2.name()}] = dc;
       solver().addConstraintSet(*dc);
-    }
-  }
-  /** Load collision managers */
-  {
-    auto config_collisions = config("collisions", std::vector<mc_rtc::Configuration>{});
-    for(auto & config_cc : config_collisions)
-    {
-      config_cc.add("type", "distance");
-      auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_cc);
-      auto & r1 = robots().robot(cc->r1Index);
-      auto & r2 = robots().robot(cc->r2Index);
-      distance_constraints_[{r1.name(), r2.name()}] = cc;
-      solver().addConstraintSet(*cc);
     }
   }
   /** Create contacts */
