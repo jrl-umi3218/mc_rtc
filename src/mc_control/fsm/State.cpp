@@ -24,10 +24,20 @@ void State::configure_(const mc_rtc::Configuration & config)
   if(config.has("AddContacts")) { add_contacts_config_.load(config("AddContacts")); }
   if(config.has("RemoveContactsAfter")) { remove_contacts_after_config_.load(config("RemoveContactsAfter")); }
   if(config.has("AddContactsAfter")) { add_contacts_after_config_.load(config("AddContactsAfter")); }
-  if(config.has("RemoveCollisions")) { remove_collisions_config_.load(config("RemoveCollisions")); }
-  if(config.has("AddCollisions")) { add_collisions_config_.load(config("AddCollisions")); }
-  if(config.has("RemoveCollisionsAfter")) { remove_collisions_after_config_.load(config("RemoveCollisionsAfter")); }
-  if(config.has("AddCollisionsAfter")) { add_collisions_after_config_.load(config("AddCollisionsAfter")); }
+  if(config.has("RemoveDistanceLimits")) { remove_distance_limits_config_.load(config("RemoveDistanceLimits")); }
+  else if(config.has("RemoveCollisions")) { remove_distance_limits_config_.load(config("RemoveCollisions")); }
+  if(config.has("AddDistanceLimits")) { add_distance_limits_config_.load(config("AddDistanceLimits")); }
+  else if(config.has("AddCollisions")) { add_distance_limits_config_.load(config("AddCollisions")); }
+  if(config.has("RemoveDistanceLimitsAfter"))
+  {
+    remove_distance_limits_after_config_.load(config("RemoveDistanceLimitsAfter"));
+  }
+  else if(config.has("RemoveCollisionsAfter"))
+  {
+    remove_distance_limits_after_config_.load(config("RemoveCollisionsAfter"));
+  }
+  if(config.has("AddDistanceLimitsAfter")) { add_distance_limits_after_config_.load(config("AddDistanceLimitsAfter")); }
+  else if(config.has("AddCollisionsAfter")) { add_distance_limits_after_config_.load(config("AddCollisionsAfter")); }
   if(config.has("constraints")) { constraints_config_.load(config("constraints")); }
   if(config.has("tasks")) { tasks_config_.load(config("tasks")); }
   if(config.has("RemovePostureTask"))
@@ -57,9 +67,9 @@ void State::start_(Controller & ctl)
     ContactSet addContacts = add_contacts_config_;
     for(const auto & c : addContacts) { ctl.addContact(c); }
   }
-  if(remove_collisions_config_.size())
+  if(remove_distance_limits_config_.size())
   {
-    for(const auto & c : remove_collisions_config_)
+    for(const auto & c : remove_distance_limits_config_)
     {
       std::string r1 = c("r1");
       std::string r2 = r1;
@@ -67,23 +77,23 @@ void State::start_(Controller & ctl)
       if(c.has("collisions"))
       {
         std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-        ctl.removeCollisions(r1, r2, collisions);
+        ctl.removeDistanceLimits(r1, r2, collisions);
       }
       else
       {
-        ctl.removeCollisions(r1, r2);
+        ctl.removeDistanceLimits(r1, r2);
       }
     }
   }
-  if(add_collisions_config_.size())
+  if(add_distance_limits_config_.size())
   {
-    for(const auto & c : add_collisions_config_)
+    for(const auto & c : add_distance_limits_config_)
     {
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
       std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-      ctl.addCollisions(r1, r2, collisions);
+      ctl.addDistanceLimits(r1, r2, collisions);
     }
   }
   if(!remove_posture_task_.empty())
@@ -155,9 +165,9 @@ void State::teardown_(Controller & ctl)
     ContactSet addContacts = add_contacts_after_config_;
     for(const auto & c : addContacts) { ctl.addContact(c); }
   }
-  if(remove_collisions_after_config_.size())
+  if(remove_distance_limits_after_config_.size())
   {
-    for(const auto & c : remove_collisions_after_config_)
+    for(const auto & c : remove_distance_limits_after_config_)
     {
       std::string r1 = c("r1");
       std::string r2 = r1;
@@ -165,23 +175,23 @@ void State::teardown_(Controller & ctl)
       if(c.has("collisions"))
       {
         std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-        ctl.removeCollisions(r1, r2, collisions);
+        ctl.removeDistanceLimits(r1, r2, collisions);
       }
       else
       {
-        ctl.removeCollisions(r1, r2);
+        ctl.removeDistanceLimits(r1, r2);
       }
     }
   }
-  if(add_collisions_after_config_.size())
+  if(add_distance_limits_after_config_.size())
   {
-    for(const auto & c : add_collisions_after_config_)
+    for(const auto & c : add_distance_limits_after_config_)
     {
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
       std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-      ctl.addCollisions(r1, r2, collisions);
+      ctl.addDistanceLimits(r1, r2, collisions);
     }
   }
   for(const auto & c : constraints_) { ctl.solver().removeConstraintSet(*c); }
