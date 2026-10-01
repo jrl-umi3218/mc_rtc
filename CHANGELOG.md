@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+**Changes:**
+
+- Generalize self-collision/collision-avoidance API into a `DistanceLimit` abstraction, usable beyond collision avoidance:
+  - `mc_control::MCController::addDistanceLimits`/`hasDistanceLimit`/`removeDistanceLimits` replace `addCollisions`/`hasCollision`/`removeCollisions` (kept as deprecated aliases)
+  - FSM `AddDistanceLimits`/`RemoveDistanceLimits`/`AddDistanceLimitsAfter`/`RemoveDistanceLimitsAfter` replace `AddCollisions`/`RemoveCollisions`/`AddCollisionsAfter`/`RemoveCollisionsAfter` (kept as deprecated aliases)
+  - `mc_rbdyn::RobotModule::essentialDistanceLimits`/`extraDistanceLimits` replace `minimalSelfCollisions`/`commonSelfCollisions` (kept as deprecated aliases; both now read/write a deduplicated merge of the old and new underlying sets)
+  - `mc_solver::DistanceConstraint` (`"type": "distanceLimit"`) replaces `mc_solver::CollisionsConstraint` (`"type": "collision"`, now deprecated)
+- Config keys:
+  - `distanceConstraints` replaces the `collisions` top-level key in `MCController`/FSM configuration
+  - `distanceLimits` replaces the `distances`/`collisions` per-entry array key
+  - `useEssential`/`useExtra` replace `useMinimal`/`useCommon`
+- Python bindings: expose `addDistanceLimits`/`hasDistanceLimit`/`removeDistanceLimits` and `RobotModule.essentialDistanceLimits`/`extraDistanceLimits` (getter and setter)
+- Update tutorials, samples and JSON schemas (English and Japanese) to the new names
+
+**Fixes**:
+
+- `DistanceConstraint::hasDistanceLimit` incorrectly ignored whether a limit was a minimum or maximum distance bound
+- GUI: fix a "Monitor ... already exists" error caused by distance limit monitor names not disambiguating minimum/maximum bounds
+
 ## [2.15.2] - 2026-07-15
 
 ### Debian Packaging
