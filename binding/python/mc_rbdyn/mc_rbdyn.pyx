@@ -351,41 +351,61 @@ cdef class RobotModule(object):
     assert(self.impl.get())
     return SpringsFromC(deref(self.impl).springs())
   def minimalSelfCollisions(self):
+    """Deprecated, see minimalDistanceLimits"""
     assert(self.impl.get())
-    end = deref(self.impl)._minimalSelfCollisions.end()
-    it = deref(self.impl)._minimalSelfCollisions.begin()
+    cdef vector[c_mc_rbdyn.DistanceLimit] limits = deref(self.impl).minimalSelfCollisions()
     ret = []
+    it = limits.begin()
+    end = limits.end()
     while it != end:
       ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
   def commonSelfCollisions(self):
+    """Deprecated, see extraDistanceLimits"""
     assert(self.impl.get())
-    end = deref(self.impl)._commonSelfCollisions.end()
-    it = deref(self.impl)._commonSelfCollisions.begin()
+    cdef vector[c_mc_rbdyn.DistanceLimit] limits = deref(self.impl).commonSelfCollisions()
     ret = []
+    it = limits.begin()
+    end = limits.end()
     while it != end:
       ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
-  def minimalDistanceLimits(self):
+  def minimalDistanceLimits(self, limits = None):
     assert(self.impl.get())
-    end = deref(self.impl)._essentialDistanceLimits.end()
-    it = deref(self.impl)._essentialDistanceLimits.begin()
-    ret = []
-    while it != end:
-      ret.append(DistanceLimitFromC(deref(it)))
-      preinc(it)
-    return ret
-  def extraDistanceLimits(self):
+    cdef vector[c_mc_rbdyn.DistanceLimit] out
+    cdef vector[c_mc_rbdyn.DistanceLimit] dls
+    if limits is None:
+      out = deref(self.impl).essentialDistanceLimits()
+      ret = []
+      it = out.begin()
+      end = out.end()
+      while it != end:
+        ret.append(DistanceLimitFromC(deref(it)))
+        preinc(it)
+      return ret
+    assert(all([isinstance(dl, DistanceLimit) for dl in limits]))
+    for dl in limits:
+      dls.push_back((<DistanceLimit>dl).impl)
+    deref(self.impl).essentialDistanceLimits(dls)
+  def extraDistanceLimits(self, limits = None):
     assert(self.impl.get())
-    end = deref(self.impl)._extraDistanceLimits.end()
-    it = deref(self.impl)._extraDistanceLimits.begin()
-    ret = []
-    while it != end:
-      ret.append(DistanceLimitFromC(deref(it)))
-      preinc(it)
-    return ret
+    cdef vector[c_mc_rbdyn.DistanceLimit] out
+    cdef vector[c_mc_rbdyn.DistanceLimit] dls
+    if limits is None:
+      out = deref(self.impl).extraDistanceLimits()
+      ret = []
+      it = out.begin()
+      end = out.end()
+      while it != end:
+        ret.append(DistanceLimitFromC(deref(it)))
+        preinc(it)
+      return ret
+    assert(all([isinstance(dl, DistanceLimit) for dl in limits]))
+    for dl in limits:
+      dls.push_back((<DistanceLimit>dl).impl)
+    deref(self.impl).extraDistanceLimits(dls)
   def ref_joint_order(self):
     assert(self.impl.get())
     cdef vector[string] joints = deref(self.impl).ref_joint_order()

@@ -87,8 +87,17 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     c_mc_observers.ObserverPipeline & observerPipeline(const string&)
     vector[c_mc_observers.ObserverPipeline] & observerPipelines()
 
+    void addDistanceLimits(const string&, const string&,
+                           const vector[DistanceLimit] &)
     void addCollisions(const string&, const string&,
                        const vector[DistanceLimit] &)
+    cppbool hasDistanceLimit(const string&, const string&, const DistanceLimit&)
+    cppbool hasDistanceLimit(const string&, const string&, const string&, const string&)
+    cppbool hasCollision(const string&, const string&, const DistanceLimit&)
+    cppbool hasCollision(const string&, const string&, const string&, const string&)
+    void removeDistanceLimits(const string&, const string&)
+    void removeDistanceLimits(const string&, const string&,
+                              const vector[DistanceLimit] &)
     void removeCollisions(const string&, const string&)
     void removeCollisions(const string&, const string&,
                           const vector[DistanceLimit] &)

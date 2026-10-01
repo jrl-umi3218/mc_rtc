@@ -182,28 +182,50 @@ cdef class MCController(object):
       ret.append(mc_observers.ObserverPipelineFromRef(deref(it)))
       preinc(it)
     return ret
+  def addDistanceLimits(self, r1, r2, limits):
+    assert(all([isinstance(dl, mc_rbdyn.DistanceLimit) for dl in limits]))
+    cdef vector[c_mc_rbdyn.DistanceLimit] dls
+    if isinstance(r1, unicode):
+      r1 = r1.encode(u'ascii')
+    if isinstance(r2, unicode):
+      r2 = r2.encode(u'ascii')
+    for dl in limits:
+      dls.push_back((<mc_rbdyn.DistanceLimit>dl).impl)
+    self.base.addDistanceLimits(r1, r2, dls)
   def addCollisions(self, r1, r2, collisions):
-    assert(all([isinstance(col, mc_rbdyn.DistanceLimit) for col in collisions]))
-    cdef vector[c_mc_rbdyn.DistanceLimit] cols
+    """Deprecated, use addDistanceLimits"""
+    self.addDistanceLimits(r1, r2, collisions)
+  def hasDistanceLimit(self, r1, r2, c1, c2 = None):
     if isinstance(r1, unicode):
       r1 = r1.encode(u'ascii')
     if isinstance(r2, unicode):
       r2 = r2.encode(u'ascii')
-    for col in collisions:
-      cols.push_back((<mc_rbdyn.DistanceLimit>col).impl)
-    self.base.addCollisions(r1, r2, cols)
-  def removeCollisions(self, r1, r2, collisions = None):
-    cdef vector[c_mc_rbdyn.DistanceLimit] cols
+    if c2 is None:
+      assert(isinstance(c1, mc_rbdyn.DistanceLimit))
+      return self.base.hasDistanceLimit(r1, r2, (<mc_rbdyn.DistanceLimit>c1).impl)
+    if isinstance(c1, unicode):
+      c1 = c1.encode(u'ascii')
+    if isinstance(c2, unicode):
+      c2 = c2.encode(u'ascii')
+    return self.base.hasDistanceLimit(r1, r2, c1, c2)
+  def hasCollision(self, r1, r2, c1, c2 = None):
+    """Deprecated, use hasDistanceLimit"""
+    return self.hasDistanceLimit(r1, r2, c1, c2)
+  def removeDistanceLimits(self, r1, r2, limits = None):
+    cdef vector[c_mc_rbdyn.DistanceLimit] dls
     if isinstance(r1, unicode):
       r1 = r1.encode(u'ascii')
     if isinstance(r2, unicode):
       r2 = r2.encode(u'ascii')
-    if collisions is None:
-      self.base.removeCollisions(r1, r2)
+    if limits is None:
+      self.base.removeDistanceLimits(r1, r2)
     else:
-      for col in collisions:
-        cols.push_back((<mc_rbdyn.DistanceLimit>col).impl)
-      self.base.removeCollisions(r1, r2, cols)
+      for dl in limits:
+        dls.push_back((<mc_rbdyn.DistanceLimit>dl).impl)
+      self.base.removeDistanceLimits(r1, r2, dls)
+  def removeCollisions(self, r1, r2, collisions = None):
+    """Deprecated, use removeDistanceLimits"""
+    self.removeDistanceLimits(r1, r2, collisions)
   def hasRobot(self, name):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
