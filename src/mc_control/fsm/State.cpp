@@ -43,19 +43,32 @@ void State::configure_(const mc_rtc::Configuration & config)
   if(config.has("RemoveContactsAfter")) { remove_contacts_after_config_.load(config("RemoveContactsAfter")); }
   if(config.has("AddContactsAfter")) { add_contacts_after_config_.load(config("AddContactsAfter")); }
   if(config.has("RemoveDistanceLimits")) { remove_distance_limits_config_.load(config("RemoveDistanceLimits")); }
-  else if(config.has("RemoveCollisions")) { remove_distance_limits_config_.load(config("RemoveCollisions")); }
+  else if(config.has("RemoveCollisions"))
+  {
+    mc_rtc::log::deprecated("State", "RemoveCollisions", "RemoveDistanceLimits");
+    remove_distance_limits_config_.load(config("RemoveCollisions"));
+  }
   if(config.has("AddDistanceLimits")) { add_distance_limits_config_.load(config("AddDistanceLimits")); }
-  else if(config.has("AddCollisions")) { add_distance_limits_config_.load(config("AddCollisions")); }
+  else if(config.has("AddCollisions"))
+  {
+    mc_rtc::log::deprecated("State", "AddCollisions", "AddDistanceLimits");
+    add_distance_limits_config_.load(config("AddCollisions"));
+  }
   if(config.has("RemoveDistanceLimitsAfter"))
   {
     remove_distance_limits_after_config_.load(config("RemoveDistanceLimitsAfter"));
   }
   else if(config.has("RemoveCollisionsAfter"))
   {
+    mc_rtc::log::deprecated("State", "RemoveCollisionsAfter", "RemoveDistanceLimitsAfter");
     remove_distance_limits_after_config_.load(config("RemoveCollisionsAfter"));
   }
   if(config.has("AddDistanceLimitsAfter")) { add_distance_limits_after_config_.load(config("AddDistanceLimitsAfter")); }
-  else if(config.has("AddCollisionsAfter")) { add_distance_limits_after_config_.load(config("AddCollisionsAfter")); }
+  else if(config.has("AddCollisionsAfter"))
+  {
+    mc_rtc::log::deprecated("State", "AddCollisionsAfter", "AddDistanceLimitsAfter");
+    add_distance_limits_after_config_.load(config("AddCollisionsAfter"));
+  }
   if(config.has("constraints")) { constraints_config_.load(config("constraints")); }
   if(config.has("tasks")) { tasks_config_.load(config("tasks")); }
   if(config.has("RemovePostureTask"))

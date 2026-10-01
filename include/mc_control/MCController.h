@@ -13,6 +13,7 @@
 #include <mc_rbdyn/Robots.h>
 
 #include <mc_rtc/DataStore.h>
+#include <mc_rtc/deprecated.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/unique_ptr.h>
@@ -240,9 +241,9 @@ public:
                          const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
   /** \deprecated Use addDistanceLimits */
-  void addCollisions(const std::string & r1,
-                     const std::string & r2,
-                     const std::vector<mc_rbdyn::DistanceLimit> & collisions);
+  MC_RTC_DEPRECATED void addCollisions(const std::string & r1,
+                                       const std::string & r2,
+                                       const std::vector<mc_rbdyn::DistanceLimit> & collisions);
 
   /** Returns true if the given distance limit is active */
   bool hasDistanceLimit(const std::string & r1,
@@ -250,7 +251,9 @@ public:
                         const mc_rbdyn::DistanceLimit & dl) const noexcept;
 
   /** \deprecated Use hasDistanceLimit */
-  bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::DistanceLimit & col) const noexcept;
+  MC_RTC_DEPRECATED bool hasCollision(const std::string & r1,
+                                      const std::string & r2,
+                                      const mc_rbdyn::DistanceLimit & col) const noexcept;
 
   /** Returns true if the given distance limit is active */
   bool hasDistanceLimit(const std::string & r1,
@@ -259,10 +262,10 @@ public:
                         const std::string & c2) const noexcept;
 
   /** \deprecated Use hasDistanceLimit */
-  bool hasCollision(const std::string & r1,
-                    const std::string & r2,
-                    const std::string & c1,
-                    const std::string & c2) const noexcept;
+  MC_RTC_DEPRECATED bool hasCollision(const std::string & r1,
+                                      const std::string & r2,
+                                      const std::string & c1,
+                                      const std::string & c2) const noexcept;
 
   /** Remove distance limits between two robots
    *
@@ -274,9 +277,9 @@ public:
                             const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
   /** \deprecated Use removeDistanceLimits */
-  void removeCollisions(const std::string & r1,
-                        const std::string & r2,
-                        const std::vector<mc_rbdyn::DistanceLimit> & collisions);
+  MC_RTC_DEPRECATED void removeCollisions(const std::string & r1,
+                                          const std::string & r2,
+                                          const std::vector<mc_rbdyn::DistanceLimit> & collisions);
 
   /** Remove all distance limits between two robots
    *
@@ -286,7 +289,7 @@ public:
   void removeDistanceLimits(const std::string & r1, const std::string & r2);
 
   /** \deprecated Use removeDistanceLimits */
-  void removeCollisions(const std::string & r1, const std::string & r2);
+  MC_RTC_DEPRECATED void removeCollisions(const std::string & r1, const std::string & r2);
 
   /** Add a contact between two robots
    *
