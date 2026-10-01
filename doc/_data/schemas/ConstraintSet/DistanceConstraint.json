@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "const": "distance" },
+    "type": { "const": "distanceLimit" },
     "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the distance constraint" },
     "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the distance constraint" },
     "automaticMonitor":
@@ -12,17 +12,29 @@
       "default": true,
       "description": "If true automatically display distance constraint monitors as constraints get activated. Otherwise those monitors are managed manually"
     },
+    "useExtra":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the extra distance limits set (RobotModule::extraDistanceLimits)"
+    },
+    "useEssential":
+    {
+      "type": "boolean",
+      "default": false,
+      "description": "If true and r1Index == r2Index, add the essential distance limits set (RobotModule::essentialDistanceLimits)"
+    },
     "useCommon":
     {
       "type": "boolean",
       "default": false,
-      "description": "If true and r1Index == r2Index, add the common distance constraint set"
+      "description": "Deprecated alias for useExtra"
     },
     "useMinimal":
     {
       "type": "boolean",
       "default": false,
-      "description": "If true and r1Index == r2Index, add the minimal distance constraint set"
+      "description": "Deprecated alias for useEssential"
     },
     "distances":
     {

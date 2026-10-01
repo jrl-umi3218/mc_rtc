@@ -208,6 +208,14 @@
         "$ref": "../mc_rbdyn/DistanceLimit.json"
       }
     },
+    "extraDistanceLimits":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/DistanceLimit.json"
+      }
+    },
     "grippers":
     {
       "type": "array",
