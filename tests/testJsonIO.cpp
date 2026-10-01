@@ -353,8 +353,9 @@ bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule &
          && lhs._minimalSelfCollisions == rhs._minimalSelfCollisions
          && lhs._commonSelfCollisions == rhs._commonSelfCollisions
          && lhs._essentialDistanceLimits == rhs._essentialDistanceLimits
-         && compare_vectors(lhs._grippers, rhs._grippers) && lhs._ref_joint_order == rhs._ref_joint_order
-         && lhs._default_attitude == rhs._default_attitude && lhs._gripperSafety == rhs._gripperSafety;
+         && lhs._extraDistanceLimits == rhs._extraDistanceLimits && compare_vectors(lhs._grippers, rhs._grippers)
+         && lhs._ref_joint_order == rhs._ref_joint_order && lhs._default_attitude == rhs._default_attitude
+         && lhs._gripperSafety == rhs._gripperSafety;
 }
 
 typedef boost::mpl::list<mc_rbdyn::Base,
