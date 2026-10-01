@@ -643,43 +643,56 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   const Springs & springs() const { return _springs; }
 
-  /** Return a minimal self-collision set
-   *
-   * This set of collision describes self-collisions that you always want to
-   * enable regardless of the application
-   *
-   * \see mc_rbdyn::DistanceLimit for details on the expected data
+  /** \deprecated Use essentialDistanceLimits() instead. Returns the same
+   * merged set. _minimalSelfCollisions and _essentialDistanceLimits are two
+   * storage locations for what is conceptually a single list, kept separate
+   * only so existing robot modules do not need to change at once.
    */
-  const std::vector<mc_rbdyn::DistanceLimit> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
+  MC_RTC_DEPRECATED std::vector<mc_rbdyn::DistanceLimit> minimalSelfCollisions() const
+  {
+    return essentialDistanceLimits();
+  }
 
-  /** Return a common self-collision set
-   *
-   * This set of collisions describes self-collisions that you want to enable for
-   * general applications. Generally this is a super-set of \ref
-   * minimalSelfCollisions
-   *
-   * \see mc_rbdyn::DistanceLimit for details on the expected data
-   */
-  const std::vector<mc_rbdyn::DistanceLimit> & commonSelfCollisions() const { return _commonSelfCollisions; }
+  /** \deprecated Use extraDistanceLimits() instead, see minimalSelfCollisions() */
+  MC_RTC_DEPRECATED std::vector<mc_rbdyn::DistanceLimit> commonSelfCollisions() const { return extraDistanceLimits(); }
 
   /** Return an essential distance limits set
    *
    * This set describes distance limits that you always want to
    * enable regardless of the application
    *
+   * This is the concatenation, by unique identity (see
+   * mc_rbdyn::DistanceLimit::id), of _essentialDistanceLimits and the
+   * deprecated _minimalSelfCollisions, so it sees data populated through
+   * either one.
+   *
    * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::DistanceLimit> & essentialDistanceLimits() const { return _essentialDistanceLimits; }
+  std::vector<mc_rbdyn::DistanceLimit> essentialDistanceLimits() const;
 
-  /** Return a common distance limits set
+  /** Set the essential distance limits set, see essentialDistanceLimits() */
+  void essentialDistanceLimits(std::vector<mc_rbdyn::DistanceLimit> limits)
+  {
+    _essentialDistanceLimits = std::move(limits);
+  }
+
+  /** Return an extra distance limits set
    *
    * This set describes distance limits that you want to enable for
    * general applications. Generally this is a super-set of \ref
    * essentialDistanceLimits
    *
+   * This is the concatenation, by unique identity (see
+   * mc_rbdyn::DistanceLimit::id), of _extraDistanceLimits and the
+   * deprecated _commonSelfCollisions, so it sees data populated through
+   * either one.
+   *
    * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::DistanceLimit> & commonDistanceLimits() const { return _commonDistanceLimits; }
+  std::vector<mc_rbdyn::DistanceLimit> extraDistanceLimits() const;
+
+  /** Set the extra distance limits set, see extraDistanceLimits() */
+  void extraDistanceLimits(std::vector<mc_rbdyn::DistanceLimit> limits) { _extraDistanceLimits = std::move(limits); }
 
   /** Return the grippers in the robot
    *
@@ -842,14 +855,19 @@ public:
   std::vector<JointSensor> _jointSensors;
   /** \see springs() */
   Springs _springs;
-  /** \see minimalSelfCollisions() */
+  /** \deprecated kept as plain storage (not tagged [[deprecated]] itself:
+   * doing so makes every RobotModule constructor/destructor warn, since the
+   * implicitly-generated ones touch every member). Write through this
+   * directly if you must, but prefer the essentialDistanceLimits() setter.
+   * \see minimalSelfCollisions()
+   */
   std::vector<mc_rbdyn::DistanceLimit> _minimalSelfCollisions;
-  /** \see commonSelfCollisions() */
+  /** \deprecated see _minimalSelfCollisions; \see commonSelfCollisions() */
   std::vector<mc_rbdyn::DistanceLimit> _commonSelfCollisions;
   /** \see essentialDistanceLimits() */
   std::vector<mc_rbdyn::DistanceLimit> _essentialDistanceLimits;
-  /** \see commonDistanceLimits() */
-  std::vector<mc_rbdyn::DistanceLimit> _commonDistanceLimits;
+  /** \see extraDistanceLimits() */
+  std::vector<mc_rbdyn::DistanceLimit> _extraDistanceLimits;
   /** \see grippers() */
   std::vector<Gripper> _grippers;
   /** \see gripperSafety() */

@@ -3,6 +3,7 @@
  */
 
 #include <mc_rbdyn/configuration_io.h>
+#include <mc_rtc/deprecated.h>
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/ConstraintSetLoader.h>
 
@@ -55,15 +56,23 @@ static auto registered_collision = mc_solver::ConstraintSetLoader::register_load
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
-        if(config("useCommon", false))
+        auto configFlag = [&](const char * newKey, const char * oldKey) -> bool
         {
-          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).commonDistanceLimits());
-          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
+          if(config.has(newKey)) { return config(newKey, false); }
+          if(config.has(oldKey))
+          {
+            mc_rtc::log::deprecated("collision", oldKey, newKey);
+            return config(oldKey, false);
+          }
+          return false;
+        };
+        if(configFlag("useExtra", "useCommon"))
+        {
+          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).extraDistanceLimits());
         }
-        else if(config("useMinimal", false))
+        else if(configFlag("useEssential", "useMinimal"))
         {
           ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
-          ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }
       std::vector<mc_rbdyn::Collision> distLims = config("collisions", std::vector<mc_rbdyn::Collision>{});

@@ -1118,6 +1118,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("minimalSelfCollisions", rm._minimalSelfCollisions);
   config("commonSelfCollisions", rm._commonSelfCollisions);
   config("minimalDistanceLimits", rm._essentialDistanceLimits);
+  config("extraDistanceLimits", rm._extraDistanceLimits);
   config("default_attitude", rm._default_attitude);
 
   /* Those cannot be empty */
@@ -1205,6 +1206,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("springs", rm._springs);
   config.add("minimalSelfCollisions", rm._minimalSelfCollisions);
   config.add("commonSelfCollisions", rm._commonSelfCollisions);
+  config.add("minimalDistanceLimits", rm._essentialDistanceLimits);
+  config.add("extraDistanceLimits", rm._extraDistanceLimits);
   config.add("grippers", rm._grippers);
   config.add("ref_joint_order", rm._ref_joint_order);
   config.add("default_attitude", rm._default_attitude);

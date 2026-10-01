@@ -53,6 +53,9 @@ struct MC_RBDYN_DLLAPI DistanceLimit
   bool r2JointsInactive = false; /** When true the selected joints in r2ActiveJoints are considered inactive */
   inline bool isNone() { return body1 == "NONE" && body2 == "NONE"; }
 
+  /** Unique distance limit ID */
+  inline std::string id() const { return body1 + "/" + body2 + (iDist > sDist ? "_min" : "_max"); }
+
   bool operator==(const DistanceLimit & rhs) const;
   bool operator!=(const DistanceLimit & rhs) const;
 };

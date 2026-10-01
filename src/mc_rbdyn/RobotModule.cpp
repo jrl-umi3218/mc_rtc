@@ -10,6 +10,8 @@
 
 #include <mesh_sampling/mesh_sampling.h>
 
+#include <unordered_set>
+
 namespace fs = std::filesystem;
 
 namespace mc_rbdyn
@@ -361,6 +363,40 @@ bool check_module_compatibility(const RobotModule & lhs, const RobotModule & rhs
     }
   }
   return is_ok;
+}
+
+namespace
+{
+
+/** Concatenates \p primary and \p secondary, keeping only the first entry seen
+ * for each mc_rbdyn::DistanceLimit::id so the result has no duplicate identity. */
+std::vector<mc_rbdyn::DistanceLimit> mergeUniqueDistanceLimits(const std::vector<mc_rbdyn::DistanceLimit> & primary,
+                                                               const std::vector<mc_rbdyn::DistanceLimit> & secondary)
+{
+  std::vector<mc_rbdyn::DistanceLimit> out;
+  out.reserve(primary.size() + secondary.size());
+  std::unordered_set<std::string> seen;
+  for(const auto & dl : primary)
+  {
+    if(seen.insert(dl.id()).second) { out.push_back(dl); }
+  }
+  for(const auto & dl : secondary)
+  {
+    if(seen.insert(dl.id()).second) { out.push_back(dl); }
+  }
+  return out;
+}
+
+} // namespace
+
+std::vector<mc_rbdyn::DistanceLimit> RobotModule::essentialDistanceLimits() const
+{
+  return mergeUniqueDistanceLimits(_essentialDistanceLimits, _minimalSelfCollisions);
+}
+
+std::vector<mc_rbdyn::DistanceLimit> RobotModule::extraDistanceLimits() const
+{
+  return mergeUniqueDistanceLimits(_extraDistanceLimits, _commonSelfCollisions);
 }
 
 } // namespace mc_rbdyn

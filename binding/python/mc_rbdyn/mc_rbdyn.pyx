@@ -377,10 +377,10 @@ cdef class RobotModule(object):
       ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
-  def commonDistanceLimits(self):
+  def extraDistanceLimits(self):
     assert(self.impl.get())
-    end = deref(self.impl)._commonDistanceLimits.end()
-    it = deref(self.impl)._commonDistanceLimits.begin()
+    end = deref(self.impl)._extraDistanceLimits.end()
+    it = deref(self.impl)._extraDistanceLimits.begin()
     ret = []
     while it != end:
       ret.append(DistanceLimitFromC(deref(it)))

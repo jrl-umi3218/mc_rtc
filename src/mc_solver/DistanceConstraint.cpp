@@ -13,6 +13,7 @@
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/configuration_io.h>
 
+#include <mc_rtc/deprecated.h>
 #include <mc_rtc/gui/Arrow.h>
 #include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/Label.h>
@@ -621,7 +622,7 @@ void DistanceConstraint::reset()
 
 std::string DistanceConstraint::__keyByNames(const mc_rbdyn::DistanceLimit & dl) const
 {
-  return dl.body1 + "/" + dl.body2 + (dl.iDist > dl.sDist ? "_min" : "_max");
+  return dl.id();
 }
 
 int DistanceConstraint::__createDistanceLimitId(const mc_rbdyn::DistanceLimit & dl)
@@ -677,15 +678,23 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
-        if(config("useCommon", false))
+        auto configFlag = [&](const char * newKey, const char * oldKey) -> bool
         {
-          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).commonDistanceLimits());
-          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).commonSelfCollisions());
+          if(config.has(newKey)) { return config(newKey, false); }
+          if(config.has(oldKey))
+          {
+            mc_rtc::log::deprecated("distance", oldKey, newKey);
+            return config(oldKey, false);
+          }
+          return false;
+        };
+        if(configFlag("useExtra", "useCommon"))
+        {
+          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).extraDistanceLimits());
         }
-        else if(config("useMinimal", false))
+        else if(configFlag("useEssential", "useMinimal"))
         {
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
-          ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).minimalSelfCollisions());
         }
       }
       std::vector<mc_rbdyn::DistanceLimit> distLims = config("distances", std::vector<mc_rbdyn::DistanceLimit>{});
