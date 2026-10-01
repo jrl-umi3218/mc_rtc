@@ -56,21 +56,11 @@ static auto registered_collision = mc_solver::ConstraintSetLoader::register_load
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
-        auto configFlag = [&](const char * newKey, const char * oldKey) -> bool
-        {
-          if(config.has(newKey)) { return config(newKey, false); }
-          if(config.has(oldKey))
-          {
-            mc_rtc::log::deprecated("collision", oldKey, newKey);
-            return config(oldKey, false);
-          }
-          return false;
-        };
-        if(configFlag("useExtra", "useCommon"))
+        if(mc_solver::deprecatedFlag(config, "collision", "useExtra", "useCommon"))
         {
           ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).extraDistanceLimits());
         }
-        else if(configFlag("useEssential", "useMinimal"))
+        else if(mc_solver::deprecatedFlag(config, "collision", "useEssential", "useMinimal"))
         {
           ret->addCollisions(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
         }

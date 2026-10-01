@@ -678,21 +678,11 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
-        auto configFlag = [&](const char * newKey, const char * oldKey) -> bool
-        {
-          if(config.has(newKey)) { return config(newKey, false); }
-          if(config.has(oldKey))
-          {
-            mc_rtc::log::deprecated("distanceLimit", oldKey, newKey);
-            return config(oldKey, false);
-          }
-          return false;
-        };
-        if(configFlag("useExtra", "useCommon"))
+        if(mc_solver::deprecatedFlag(config, "distanceLimit", "useExtra", "useCommon"))
         {
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).extraDistanceLimits());
         }
-        else if(configFlag("useEssential", "useMinimal"))
+        else if(mc_solver::deprecatedFlag(config, "distanceLimit", "useEssential", "useMinimal"))
         {
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
         }
