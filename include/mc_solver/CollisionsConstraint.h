@@ -8,6 +8,8 @@
 #include <mc_solver/DistanceConstraint.h>
 #include "mc_rbdyn/DistanceLimit.h"
 
+#include <mc_rtc/deprecated.h>
+
 namespace mc_solver
 {
 
@@ -18,7 +20,7 @@ namespace mc_solver
  *
  * \deprecated Use DistanceConstraint instead.
  */
-struct MC_SOLVER_DLLAPI CollisionsConstraint : public DistanceConstraint
+struct MC_RTC_DEPRECATED MC_SOLVER_DLLAPI CollisionsConstraint : public DistanceConstraint
 {
 public:
   using DistanceConstraint::DistanceConstraint;

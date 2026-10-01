@@ -1,9 +1,10 @@
 {
   "title": "mc_solver::CollisionsConstraint",
+  "description": "Deprecated, use mc_solver::DistanceConstraint (\"type\": \"distanceLimit\") instead",
   "type": "object",
   "properties":
   {
-    "type": { "const": "collision" },
+    "type": { "const": "collision", "description": "Deprecated alias for \"distanceLimit\"" },
     "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the collision" },
     "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the collision" },
     "automaticMonitor":

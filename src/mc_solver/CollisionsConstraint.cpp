@@ -50,9 +50,13 @@ static auto registered_collision = mc_solver::ConstraintSetLoader::register_load
     "collision",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
     {
+      mc_rtc::log::deprecated("ConstraintSetLoader", "collision", "distanceLimit");
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
       auto ret = std::make_shared<mc_solver::CollisionsConstraint>(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "collision", false, "r1Index", "r1", ""),
           robotIndexFromConfig(config, solver.robots(), "collision", false, "r2Index", "r2", ""), solver.dt());
+#pragma GCC diagnostic pop
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
