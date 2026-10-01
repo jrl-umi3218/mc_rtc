@@ -669,12 +669,12 @@ namespace
 {
 
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
-    "distance",
+    "distanceLimit",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
     {
       auto ret = std::make_shared<mc_solver::DistanceConstraint>(
-          solver.robots(), robotIndexFromConfig(config, solver.robots(), "distance", false, "r1Index", "r1", ""),
-          robotIndexFromConfig(config, solver.robots(), "distance", false, "r2Index", "r2", ""), solver.dt());
+          solver.robots(), robotIndexFromConfig(config, solver.robots(), "distanceLimit", false, "r1Index", "r1", ""),
+          robotIndexFromConfig(config, solver.robots(), "distanceLimit", false, "r2Index", "r2", ""), solver.dt());
       ret->automaticMonitor(config("automaticMonitor", true));
       if(ret->r1Index == ret->r2Index)
       {
@@ -683,7 +683,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
           if(config.has(newKey)) { return config(newKey, false); }
           if(config.has(oldKey))
           {
-            mc_rtc::log::deprecated("distance", oldKey, newKey);
+            mc_rtc::log::deprecated("distanceLimit", oldKey, newKey);
             return config(oldKey, false);
           }
           return false;

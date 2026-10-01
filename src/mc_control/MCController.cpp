@@ -321,13 +321,16 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   }
   /** Load distance constraint managers */
   {
-    bool useDeprecatedKey = !config.has("distances") && config.has("collisions");
-    if(useDeprecatedKey) { mc_rtc::log::deprecated("MCController", "collisions", "distances"); }
-    auto config_distance_limits =
-        config(useDeprecatedKey ? "collisions" : "distances", std::vector<mc_rtc::Configuration>{});
+    const char * key = "distanceConstraints";
+    if(!config.has(key) && config.has("collisions"))
+    {
+      key = "collisions";
+      mc_rtc::log::deprecated("MCController", "collisions", "distanceConstraints");
+    }
+    auto config_distance_limits = config(key, std::vector<mc_rtc::Configuration>{});
     for(auto & config_dc : config_distance_limits)
     {
-      if(!config_dc.has("type")) { config_dc.add("type", "distance"); }
+      if(!config_dc.has("type")) { config_dc.add("type", "distanceLimit"); }
       auto dc = mc_solver::ConstraintSetLoader::load<mc_solver::DistanceConstraint>(solver(), config_dc);
       auto & r1 = robots().robot(dc->r1Index);
       auto & r2 = robots().robot(dc->r2Index);

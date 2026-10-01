@@ -98,12 +98,12 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
 
   for(size_t i = 0; i < rjo.size(); ++i) { _jointSensors.push_back(mc_rbdyn::JointSensor(rjo[i])); }
 
-  std::vector<mc_rbdyn::DistanceLimit> selfCollisions = {
+  std::vector<mc_rbdyn::DistanceLimit> selfCollisionLimits = {
       {"WAIST_R_S", "L_SHOULDER_Y_S", 0.02, 0.001, 0.}, {"WAIST_R_S", "R_SHOULDER_Y_S", 0.02, 0.001, 0.},
       {"PELVIS_S", "R_ELBOW_P_S", 0.05, 0.001, 0.},     {"PELVIS_S", "L_ELBOW_P_S", 0.05, 0.001, 0.},
       {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0.},    {"L_WRIST_Y_S", "L_HIP_Y_S", 0.05, 0.025, 0.}};
-  essentialDistanceLimits(selfCollisions);
-  extraDistanceLimits(std::move(selfCollisions));
+  essentialDistanceLimits(selfCollisionLimits);
+  extraDistanceLimits(std::move(selfCollisionLimits));
   _grippers = {{"l_gripper", {"L_UTHUMB"}, true}, {"r_gripper", {"R_UTHUMB"}, false}};
 
   // Configure the stabilizer. Uses the default values of the
