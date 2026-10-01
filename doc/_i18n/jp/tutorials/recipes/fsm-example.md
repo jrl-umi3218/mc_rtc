@@ -160,7 +160,7 @@ contacts:
 距離制限
 ===
 
-次に、距離制限の初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して距離制限を後で追加・削除できます。`distanceConstraints`要素は、[DistanceConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/DistanceConstraint)オブジェクトの配列で構成されます(`collisions`/[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint)は後方互換性のため非推奨の別名として残されています)。`MainRobot`については、必須の距離制限のデフォルトのリストが{% doxygen mc_rbdyn::RobotModule %}で定義されており、それらをここで使用できます。
+次に、衝突回避のための距離制限の初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して距離制限を後で追加・削除できます。`distanceConstraints`要素は、[DistanceConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/DistanceConstraint)オブジェクトの配列で構成されます(`collisions`/[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint)は後方互換性のため非推奨の別名として残されています)。`MainRobot`については、自己衝突回避のための距離制限のデフォルトのリストが{% doxygen mc_rbdyn::RobotModule %}で定義されており、それらをここで使用できます。
 
 ```yaml
 # 距離制約

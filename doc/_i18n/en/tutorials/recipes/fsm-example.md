@@ -156,7 +156,7 @@ With this, the left and right foot surfaces are now considered in contact with t
 Distance limits
 ===
 
-Let's now see how to add an initial set of distance limits. As is the case for the contacts, those may later be added/removed by the states. The `distanceConstraints` element contains an array of [DistanceConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/DistanceConstraint) objects (`collisions`/[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint) is kept as a deprecated alias). For the `MainRobot`, a default list of essential distance limits is defined in the {% doxygen mc_rbdyn::RobotModule %} and may be used here.
+Let's now see how to add an initial set of distance limits for collision avoidance. As is the case for the contacts, those may later be added/removed by the states. The `distanceConstraints` element contains an array of [DistanceConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/DistanceConstraint) objects (`collisions`/[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint) is kept as a deprecated alias). For the `MainRobot`, a default list of distance limits for self-collision avoidance is defined in the {% doxygen mc_rbdyn::RobotModule %} and may be used here.
 
 ```yaml
 # Distance constraint
