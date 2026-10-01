@@ -36,7 +36,7 @@
       "default": false,
       "description": "Deprecated alias for useEssential"
     },
-    "distances":
+    "distanceLimits":
     {
       "type": "array",
       "description": "List of distance limits in the constraint",

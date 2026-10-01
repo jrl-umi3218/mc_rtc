@@ -166,7 +166,7 @@ distanceConstraints:
 - type: distanceLimit
   r1: jvrc1
   r2: door
-  distances: # array of distance limits to add for this pair of robots
+  distanceLimits: # array of distance limits to add for this pair of robots
     - body1: L_WRIST_Y_S
       body2: door
       iDist: 0.5  # interaction distance: minimal distance below which the constraint becomes active

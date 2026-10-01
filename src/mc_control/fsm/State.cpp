@@ -12,6 +12,24 @@
 
 #include <mc_rbdyn/configuration_io.h>
 
+namespace
+{
+
+/** Reads a list of distance limits from a config entry, preferring the "distanceLimits" key and falling back on the
+ * deprecated "collisions" key */
+std::vector<mc_rbdyn::DistanceLimit> distanceLimitsFromConfig(const mc_rtc::Configuration & c)
+{
+  if(c.has("distanceLimits")) { return c("distanceLimits"); }
+  if(c.has("collisions"))
+  {
+    mc_rtc::log::deprecated("State", "collisions", "distanceLimits");
+    return c("collisions");
+  }
+  return {};
+}
+
+} // namespace
+
 namespace mc_control
 {
 
@@ -74,10 +92,9 @@ void State::start_(Controller & ctl)
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
-      if(c.has("collisions"))
+      if(c.has("distanceLimits") || c.has("collisions"))
       {
-        std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-        ctl.removeDistanceLimits(r1, r2, collisions);
+        ctl.removeDistanceLimits(r1, r2, distanceLimitsFromConfig(c));
       }
       else
       {
@@ -92,8 +109,7 @@ void State::start_(Controller & ctl)
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
-      std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-      ctl.addDistanceLimits(r1, r2, collisions);
+      ctl.addDistanceLimits(r1, r2, distanceLimitsFromConfig(c));
     }
   }
   if(!remove_posture_task_.empty())
@@ -172,10 +188,9 @@ void State::teardown_(Controller & ctl)
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
-      if(c.has("collisions"))
+      if(c.has("distanceLimits") || c.has("collisions"))
       {
-        std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-        ctl.removeDistanceLimits(r1, r2, collisions);
+        ctl.removeDistanceLimits(r1, r2, distanceLimitsFromConfig(c));
       }
       else
       {
@@ -190,8 +205,7 @@ void State::teardown_(Controller & ctl)
       std::string r1 = c("r1");
       std::string r2 = r1;
       if(c.has("r2")) { r2 = static_cast<std::string>(c("r2")); }
-      std::vector<mc_rbdyn::DistanceLimit> collisions = c("collisions");
-      ctl.addDistanceLimits(r1, r2, collisions);
+      ctl.addDistanceLimits(r1, r2, distanceLimitsFromConfig(c));
     }
   }
   for(const auto & c : constraints_) { ctl.solver().removeConstraintSet(*c); }

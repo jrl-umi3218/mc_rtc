@@ -1,7 +1,7 @@
 type: distanceLimit
 r1Index: 0
 r2Index: 0
-distances:
+distanceLimits:
   - body1: b1
     body2: b2
     iDist: 0.05

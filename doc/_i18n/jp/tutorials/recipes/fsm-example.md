@@ -170,7 +170,7 @@ distanceConstraints:
 - type: distanceLimit
   r1: jvrc1
   r2: door
-  distances: # このロボットの組み合わせに対する距離制限のリスト
+  distanceLimits: # このロボットの組み合わせに対する距離制限のリスト
     - body1: L_WRIST_Y_S
       body2: door
       iDist: 0.5  # インタラクション距離：物体間の距離がこの値を下回ると拘束が有効になる

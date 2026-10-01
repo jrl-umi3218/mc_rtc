@@ -697,7 +697,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
           ret->addDistanceLimits(solver, solver.robots().robotModule(ret->r1Index).essentialDistanceLimits());
         }
       }
-      std::vector<mc_rbdyn::DistanceLimit> distLims = config("distances", std::vector<mc_rbdyn::DistanceLimit>{});
+      std::vector<mc_rbdyn::DistanceLimit> distLims = config("distanceLimits", std::vector<mc_rbdyn::DistanceLimit>{});
       ret->addDistanceLimits(solver, distLims);
       return ret;
     });
