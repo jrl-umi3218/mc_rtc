@@ -31,15 +31,15 @@ class MobileArmController(mc_control.MCPythonController):
         )
 
         iDist, sDist, damping = 0.1, 0.05, 0.0
-        self.addCollisions(
+        self.addDistanceLimits(
             "dingo",
             "door",
-            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+            [mc_rbdyn.DistanceLimit("*", "*", iDist, sDist, damping)],
         )
-        self.addCollisions(
+        self.addDistanceLimits(
             "ur5e",
             "door",
-            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+            [mc_rbdyn.DistanceLimit("*", "*", iDist, sDist, damping)],
         )
 
         self._phase = ControllerPhase.APPROACH

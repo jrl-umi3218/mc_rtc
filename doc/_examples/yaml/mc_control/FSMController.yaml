@@ -23,10 +23,10 @@ constraints:
   - type: dynamics
     damper: [0.1, 0.01, 0.5]
   - type: compoundJoint
-# Collision constraint
-collisions:
-  - type: collision
-    useMinimal: true
+# Distance constraint
+distanceConstraints:
+  - type: distanceLimit
+    useEssential: true
 # Initial set of contacts
 contacts:
   - r1: jvrc1

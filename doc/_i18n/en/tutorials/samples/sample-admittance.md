@@ -186,12 +186,12 @@ In the next state's, we will use this updated wall position to ensure collision 
 
 ### Going back to the initial posture
 
-The remainder of the FSM is dedicated to getting the robot back to its initial configuration. First, to ensure a smooth transition, we release the pressure on the hand with the `RightHandReleaseAdmittance` until it reaches close to zero force, and then move the hand `10cm` backwards relative to its current position. Finally, we use the {% doxygen mc_control::fsm::HalfSittingState %} state to go back to the initial halfsitting posture. As we do not explicitly specify the hand motion, there is a risk that the hand could collide with the wall while going back to the half-sitting posture. To prevent this, we add a collision constraint between the hand and the wall:
+The remainder of the FSM is dedicated to getting the robot back to its initial configuration. First, to ensure a smooth transition, we release the pressure on the hand with the `RightHandReleaseAdmittance` until it reaches close to zero force, and then move the hand `10cm` backwards relative to its current position. Finally, we use the {% doxygen mc_control::fsm::HalfSittingState %} state to go back to the initial halfsitting posture. As we do not explicitly specify the hand motion, there is a risk that the hand could collide with the wall while going back to the half-sitting posture. To prevent this, we add a distance constraint between the hand and the wall (`AddCollisionsAfter` is kept as a deprecated alias for `AddDistanceLimitsAfter`):
 
 ```cpp
   RightHandMoveBack:
     base: StandingBase
-    AddCollisionsAfter:
+    AddDistanceLimitsAfter:
       - r1: jvrc1
         r2: wall
         collisions:

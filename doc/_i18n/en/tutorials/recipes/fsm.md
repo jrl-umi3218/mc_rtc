@@ -348,22 +348,24 @@ void addContact(const Contact &);
 void removeContact(const Contact &);
 ```
 
-#### Collisions
+#### Distance limits
 
-To add/remove collisions, simply call:
+To add/remove distance limits, simply call:
 
 ```cpp
-void addCollisions(const std::string & r1, const std::string & r2,
-                   const std::vector<mc_rbdyn::Collision> & collisions);
+void addDistanceLimits(const std::string & r1, const std::string & r2,
+                       const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
-void removeCollisions(const std::string & r1, const std::string & r2,
-                   const std::vector<mc_rbdyn::Collision> & collisions);
+void removeDistanceLimits(const std::string & r1, const std::string & r2,
+                          const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
-// Remove all collisions between r1 and r2
-void removeCollisions(const std::string & r1, const std::string & r2);
+// Remove all distance limits between r1 and r2
+void removeDistanceLimits(const std::string & r1, const std::string & r2);
 ```
 
-The FSM will create and add the necessary collision constraints if necessary.
+`addCollisions`/`removeCollisions` are kept as deprecated aliases for the above.
+
+The FSM will create and add the necessary distance constraints if necessary.
 
 #### Posture tasks
 
@@ -408,7 +410,7 @@ The following options can be used to configure the FSM:
 ```
 
 - `constraints`: array of constraints, each object is a JSON representation of a `mc_solver::ConstraintSet` object as specified by the JSON schemas;
-- `collisions`: array of collision constraints following the `mc_solver::CollisionConstraint` sJSON schema;
+- `distanceConstraints`: array of distance constraints following the `mc_solver::DistanceConstraint`/`mc_solver::CollisionsConstraint` JSON schemas (`collisions` is kept as a deprecated alias);
 - `contacts`: array of initial contacts;
 
 ```json
