@@ -732,6 +732,10 @@ protected:
    * effectively a self-collision manager */
   std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::DistanceConstraint>> distance_constraints_;
 
+  /** \deprecated Reference alias. Prefer distance_constraints_. */
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::DistanceConstraint>> &
+      collision_constraints_ = distance_constraints_;
+
   /** FSM contacts */
   ContactSet contacts_;
   /** True if contacts were changed in the previous round */
