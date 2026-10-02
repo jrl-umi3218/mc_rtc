@@ -322,6 +322,9 @@ cdef class RobotModule(object):
       ret[deref(it).first] = sva.PTransformdFromC(deref(it).second)
       preinc(it)
     return ret
+  def collisionTransforms(self):
+    """Deprecated, see convexTransforms"""
+    return self.convexTransforms()
   def flexibility(self):
     assert(self.impl.get())
     end = deref(self.impl)._flexibility.end()
@@ -351,7 +354,7 @@ cdef class RobotModule(object):
     assert(self.impl.get())
     return SpringsFromC(deref(self.impl).springs())
   def minimalSelfCollisions(self):
-    """Deprecated, see minimalDistanceLimits"""
+    """Deprecated, see essentialDistanceLimits"""
     assert(self.impl.get())
     cdef vector[c_mc_rbdyn.DistanceLimit] limits = deref(self.impl).minimalSelfCollisions()
     ret = []
@@ -372,7 +375,7 @@ cdef class RobotModule(object):
       ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
-  def minimalDistanceLimits(self, limits = None):
+  def essentialDistanceLimits(self, limits = None):
     assert(self.impl.get())
     cdef vector[c_mc_rbdyn.DistanceLimit] out
     cdef vector[c_mc_rbdyn.DistanceLimit] dls
@@ -855,6 +858,10 @@ cdef class Robot(object):
     if isinstance(bName, unicode):
       bName = bName.encode(u'ascii')
     return sva.PTransformdFromC(self.impl.convexTransform(bName), False)
+
+  def collisionTransform(self, bName):
+    """Deprecated, see convexTransform"""
+    return self.convexTransform(bName)
 
   def loadRSDFFromDir(self, surfaceDir):
     self.__is_valid()
