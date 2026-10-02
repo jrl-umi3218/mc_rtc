@@ -11,7 +11,7 @@
   - `mc_solver::DistanceConstraint` (`"type": "distanceLimit"`) replaces `mc_solver::CollisionsConstraint` (`"type": "collision"`, now deprecated)
 - Config keys:
   - `distanceConstraints` replaces the `collisions` top-level key in `MCController`/FSM configuration
-  - `distanceLimits` replaces the `distances`/`collisions` per-entry array key
+  - `distanceLimits` replaces the `collisions` per-entry array key
   - `useEssential`/`useExtra` replace `useMinimal`/`useCommon`
 - Python bindings: expose `addDistanceLimits`/`hasDistanceLimit`/`removeDistanceLimits` and `RobotModule.essentialDistanceLimits`/`extraDistanceLimits` (getter and setter)
 - Update tutorials, samples and JSON schemas (English and Japanese) to the new names
