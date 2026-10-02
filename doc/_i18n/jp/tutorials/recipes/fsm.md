@@ -353,22 +353,24 @@ void addContact(const Contact &);
 void removeContact(const Contact &);
 ```
 
-#### 衝突メッシュ
+#### 距離制限
 
-衝突メッシュを追加・削除するには、以下の関数を呼び出します。
+距離制限を追加・削除するには、以下の関数を呼び出します。
 
 ```cpp
-void addCollisions(const std::string & r1, const std::string & r2,
-                   const std::vector<mc_rbdyn::Collision> & collisions);
+void addDistanceLimits(const std::string & r1, const std::string & r2,
+                       const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
-void removeCollisions(const std::string & r1, const std::string & r2,
-                   const std::vector<mc_rbdyn::Collision> & collisions);
+void removeDistanceLimits(const std::string & r1, const std::string & r2,
+                          const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
-// r1 と r2 の間の全ての干渉回避拘束を削除
-void removeCollisions(const std::string & r1, const std::string & r2);
+// r1 と r2 の間の全ての距離制限を削除
+void removeDistanceLimits(const std::string & r1, const std::string & r2);
 ```
 
-有限オートマトンによって、必要に応じて衝突制約条件が作成されて追加されます。
+`addCollisions`/`removeCollisions` は後方互換性のため非推奨の別名として残されています。
+
+有限オートマトンによって、必要に応じて距離制約条件が作成されて追加されます。
 
 #### 姿勢制御タスク
 
@@ -412,7 +414,7 @@ Tこれは、状態の処理が中断されたときに呼び出されます。
 ```
 
 - `constraints`: 制約条件の配列。各オブジェクトは、JSONスキーマに基づきJSON形式で記述された`mc_solver::ConstraintSet`オブジェクトです。
-- `collisions`: `mc_solver::CollisionConstraint`JSONスキーマに基づき定義された衝突制約条件の配列
+- `distanceConstraints`: `mc_solver::DistanceConstraint`/`mc_solver::CollisionsConstraint`JSONスキーマに基づき定義された距離制約条件の配列(`collisions`は後方互換性のため非推奨の別名として残されています)
 - `contacts`: 初期接触面の配列
 
 ```json

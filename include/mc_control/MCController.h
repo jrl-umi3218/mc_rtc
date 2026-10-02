@@ -13,6 +13,7 @@
 #include <mc_rbdyn/Robots.h>
 
 #include <mc_rtc/DataStore.h>
+#include <mc_rtc/deprecated.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/unique_ptr.h>
@@ -20,11 +21,13 @@
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/CompoundJointConstraint.h>
 #include <mc_solver/ContactConstraint.h>
+#include <mc_solver/DistanceConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
 #include <mc_solver/QPSolver.h>
 
 #include <mc_tasks/PostureTask.h>
+#include "mc_rbdyn/DistanceLimit.h"
 
 namespace mc_rbdyn
 {
@@ -228,39 +231,65 @@ public:
    */
   virtual void reset(const ControllerResetData & reset_data);
 
-  /** Add collisions-pair between two robots
+  /** Add distance limits between two robots
    *
-   * If the r1-r2 collision manager does not exist yet, it is created and
+   * If the r1-r2 distance limit manager does not exist yet, it is created and
    * added to the solver.
    */
-  void addCollisions(const std::string & r1,
-                     const std::string & r2,
-                     const std::vector<mc_rbdyn::Collision> & collisions);
+  void addDistanceLimits(const std::string & r1,
+                         const std::string & r2,
+                         const std::vector<mc_rbdyn::DistanceLimit> & limits);
 
-  /** Returns true if the given collision is active */
-  bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col) const noexcept;
+  /** \deprecated Use addDistanceLimits */
+  MC_RTC_DEPRECATED void addCollisions(const std::string & r1,
+                                       const std::string & r2,
+                                       const std::vector<mc_rbdyn::DistanceLimit> & collisions);
 
-  /** Returns true if the given collision is active */
-  bool hasCollision(const std::string & r1,
-                    const std::string & r2,
-                    const std::string & c1,
-                    const std::string & c2) const noexcept;
-
-  /** Remove collisions-pair between two robots
-   *
-   * If the r1-r2 collision manager does not exist yet, this has no
-   * effect.
-   */
-  void removeCollisions(const std::string & r1,
+  /** Returns true if the given distance limit is active */
+  bool hasDistanceLimit(const std::string & r1,
                         const std::string & r2,
-                        const std::vector<mc_rbdyn::Collision> & collisions);
+                        const mc_rbdyn::DistanceLimit & dl) const noexcept;
 
-  /** Remove all collision-pair between two robots
+  /** \deprecated Use hasDistanceLimit */
+  MC_RTC_DEPRECATED bool hasCollision(const std::string & r1,
+                                      const std::string & r2,
+                                      const mc_rbdyn::DistanceLimit & col) const noexcept;
+
+  /** Returns true if the given distance limit is active */
+  bool hasDistanceLimit(const std::string & r1,
+                        const std::string & r2,
+                        const std::string & c1,
+                        const std::string & c2) const noexcept;
+
+  /** \deprecated Use hasDistanceLimit */
+  MC_RTC_DEPRECATED bool hasCollision(const std::string & r1,
+                                      const std::string & r2,
+                                      const std::string & c1,
+                                      const std::string & c2) const noexcept;
+
+  /** Remove distance limits between two robots
    *
-   * If the r1-r2 collision manager does not exist yet, this has no
+   * If the r1-r2 distance limit manager does not exist yet, this has no
    * effect.
    */
-  void removeCollisions(const std::string & r1, const std::string & r2);
+  void removeDistanceLimits(const std::string & r1,
+                            const std::string & r2,
+                            const std::vector<mc_rbdyn::DistanceLimit> & limits);
+
+  /** \deprecated Use removeDistanceLimits */
+  MC_RTC_DEPRECATED void removeCollisions(const std::string & r1,
+                                          const std::string & r2,
+                                          const std::vector<mc_rbdyn::DistanceLimit> & collisions);
+
+  /** Remove all distance limits between two robots
+   *
+   * If the r1-r2 distance limit manager does not exist yet, this has no
+   * effect.
+   */
+  void removeDistanceLimits(const std::string & r1, const std::string & r2);
+
+  /** \deprecated Use removeDistanceLimits */
+  MC_RTC_DEPRECATED void removeCollisions(const std::string & r1, const std::string & r2);
 
   /** Add a contact between two robots
    *
@@ -699,9 +728,13 @@ protected:
   /** Keep track of the contact constraint */
   std::shared_ptr<mc_solver::ContactConstraint> contact_constraint_ = nullptr;
 
-  /** Collision managers for robot-pair (r1, r2), if r1 == r2 this is
+  /** Distance limit managers for robot-pair (r1, r2), if r1 == r2 this is
    * effectively a self-collision manager */
-  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::CollisionsConstraint>> collision_constraints_;
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::DistanceConstraint>> distance_constraints_;
+
+  /** \deprecated Reference alias. Prefer distance_constraints_. */
+  std::map<std::pair<std::string, std::string>, std::shared_ptr<mc_solver::DistanceConstraint>> &
+      collision_constraints_ = distance_constraints_;
 
   /** FSM contacts */
   ContactSet contacts_;
@@ -726,7 +759,7 @@ public:
   /** Kinematics constraints for the main robot */
   mc_rtc::unique_ptr<mc_solver::KinematicsConstraint> kinematicsConstraint;
   /** Self collisions constraint for the main robot */
-  mc_rtc::unique_ptr<mc_solver::CollisionsConstraint> selfCollisionConstraint;
+  mc_rtc::unique_ptr<mc_solver::DistanceConstraint> selfCollisionConstraint;
   /** Compound joint constraint for the main robot */
   mc_rtc::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */

@@ -5,8 +5,8 @@
 #pragma once
 
 #include <mc_rbdyn/BodySensor.h>
-#include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/CompoundJointConstraintDescription.h>
+#include <mc_rbdyn/DistanceLimit.h>
 #include <mc_rbdyn/Flexibility.h>
 #include <mc_rbdyn/ForceSensor.h>
 #include <mc_rbdyn/JointSensor.h>
@@ -450,7 +450,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * - Initialize mb, mbc and mbg
    * - Initial limits
-   * - Initialize _collisionTransforms
+   * - Initialize _convexTransforms
    * - Initialize _visual
    * - Create a default joint order
    * - Create a default stance
@@ -570,7 +570,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * 2. the path to the file containing the convex description
    *
    * The transformation between the convex and the body it's attached to are
-   * provided in a separate map see \ref collisionTransforms()
+   * provided in a separate map see \ref convexTransforms()
    */
   const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const { return _convexHull; }
 
@@ -585,7 +585,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * 2. the collision object
    *
    * The transformation between the convex and the body it's attached to are
-   * provided in a separate map see \ref collisionTransforms()
+   * provided in a separate map see \ref convexTransforms()
    */
   const std::map<std::string, std::pair<std::string, S_ObjectPtr>> & collisionObjects() const
   {
@@ -601,7 +601,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * 2. the path to the file containing the STPBV description
    *
    * The transformation between the STPBV and the body it's attached to are
-   * provided in a separate map see \ref collisionTransforms()
+   * provided in a separate map see \ref convexTransforms()
    */
   const std::map<std::string, std::pair<std::string, std::string>> & stpbvHull() const { return _stpbvHull; }
 
@@ -611,7 +611,13 @@ struct MC_RBDYN_DLLAPI RobotModule
    * A key defines the collision name. The value is the transformation between
    * this collision object and its parent body
    */
-  const std::map<std::string, sva::PTransformd> & collisionTransforms() const { return _collisionTransforms; }
+  const std::map<std::string, sva::PTransformd> & convexTransforms() const { return _convexTransforms; }
+
+  /** \deprecated Use convexTransforms() instead */
+  MC_RTC_DEPRECATED const std::map<std::string, sva::PTransformd> & collisionTransforms() const
+  {
+    return convexTransforms();
+  }
 
   /** Return the flexibilities of the robot
    *
@@ -643,24 +649,56 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   const Springs & springs() const { return _springs; }
 
-  /** Return a minimal self-collision set
+  /** \deprecated Use essentialDistanceLimits() instead. Returns the same
+   * merged set. _minimalSelfCollisions and _essentialDistanceLimits are two
+   * storage locations for what is conceptually a single list, kept separate
+   * only so existing robot modules do not need to change at once.
+   */
+  MC_RTC_DEPRECATED std::vector<mc_rbdyn::DistanceLimit> minimalSelfCollisions() const
+  {
+    return essentialDistanceLimits();
+  }
+
+  /** \deprecated Use extraDistanceLimits() instead, see minimalSelfCollisions() */
+  MC_RTC_DEPRECATED std::vector<mc_rbdyn::DistanceLimit> commonSelfCollisions() const { return extraDistanceLimits(); }
+
+  /** Return an essential distance limits set
    *
-   * This set of collision describe self-collisions that you always want to
+   * This set describes distance limits that you always want to
    * enable regardless of the application
    *
-   * \see mc_rbdyn::Collision for details on the expected data
+   * This is the concatenation, by unique identity (see
+   * mc_rbdyn::DistanceLimit::id), of _essentialDistanceLimits and the
+   * deprecated _minimalSelfCollisions, so it sees data populated through
+   * either one.
+   *
+   * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::Collision> & minimalSelfCollisions() const { return _minimalSelfCollisions; }
+  std::vector<mc_rbdyn::DistanceLimit> essentialDistanceLimits() const;
 
-  /** Return a common self-collision set
+  /** Set the essential distance limits set, see essentialDistanceLimits() */
+  void essentialDistanceLimits(std::vector<mc_rbdyn::DistanceLimit> limits)
+  {
+    _essentialDistanceLimits = std::move(limits);
+  }
+
+  /** Return an extra distance limits set
    *
-   * This set of collision describe self-collisions that you want to enable for
+   * This set describes distance limits that you want to enable for
    * general applications. Generally this is a super-set of \ref
-   * minimalSelfCollisions
+   * essentialDistanceLimits
    *
-   * \see mc_rbdyn::Collision for details on the expected data
+   * This is the concatenation, by unique identity (see
+   * mc_rbdyn::DistanceLimit::id), of _extraDistanceLimits and the
+   * deprecated _commonSelfCollisions, so it sees data populated through
+   * either one.
+   *
+   * \see mc_rbdyn::DistanceLimit for details on the expected data
    */
-  const std::vector<mc_rbdyn::Collision> & commonSelfCollisions() const { return _commonSelfCollisions; }
+  std::vector<mc_rbdyn::DistanceLimit> extraDistanceLimits() const;
+
+  /** Set the extra distance limits set, see extraDistanceLimits() */
+  void extraDistanceLimits(std::vector<mc_rbdyn::DistanceLimit> limits) { _extraDistanceLimits = std::move(limits); }
 
   /** Return the grippers in the robot
    *
@@ -811,8 +849,8 @@ public:
   VisualMap _visual;
   /** Holds collision representation of bodies in the robot */
   VisualMap _collision;
-  /** \see collisionTransforms() */
-  std::map<std::string, sva::PTransformd> _collisionTransforms;
+  /** \see convexTransforms() */
+  std::map<std::string, sva::PTransformd> _convexTransforms;
   /** \see flexibility() */
   std::vector<Flexibility> _flexibility;
   /** \see forceSensors() */
@@ -823,10 +861,19 @@ public:
   std::vector<JointSensor> _jointSensors;
   /** \see springs() */
   Springs _springs;
-  /** \see minimalSelfCollisions() */
-  std::vector<mc_rbdyn::Collision> _minimalSelfCollisions;
-  /** \see commonSelfCollisions() */
-  std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
+  /** \deprecated kept as plain storage (not tagged [[deprecated]] itself:
+   * doing so makes every RobotModule constructor/destructor warn, since the
+   * implicitly-generated ones touch every member). Write through this
+   * directly if you must, but prefer the essentialDistanceLimits() setter.
+   * \see minimalSelfCollisions()
+   */
+  std::vector<mc_rbdyn::DistanceLimit> _minimalSelfCollisions;
+  /** \deprecated see _minimalSelfCollisions; \see commonSelfCollisions() */
+  std::vector<mc_rbdyn::DistanceLimit> _commonSelfCollisions;
+  /** \see essentialDistanceLimits() */
+  std::vector<mc_rbdyn::DistanceLimit> _essentialDistanceLimits;
+  /** \see extraDistanceLimits() */
+  std::vector<mc_rbdyn::DistanceLimit> _extraDistanceLimits;
   /** \see grippers() */
   std::vector<Gripper> _grippers;
   /** \see gripperSafety() */

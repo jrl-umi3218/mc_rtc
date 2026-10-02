@@ -189,7 +189,7 @@
       "type": "array",
       "items":
       {
-        "$ref": "../mc_rbdyn/Collision.json"
+        "$ref": "../mc_rbdyn/DistanceLimit.json"
       }
     },
     "commonSelfCollisions":
@@ -198,6 +198,22 @@
       "items":
       {
         "$ref": "../mc_rbdyn/Collision.json"
+      }
+    },
+    "essentialDistanceLimits":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/DistanceLimit.json"
+      }
+    },
+    "extraDistanceLimits":
+    {
+      "type": "array",
+      "items":
+      {
+        "$ref": "../mc_rbdyn/DistanceLimit.json"
       }
     },
     "grippers":

@@ -10,6 +10,7 @@
 #include <mc_solver/CollisionsConstraint.h>
 #include <mc_solver/ConstraintSetLoader.h>
 #include <mc_solver/ContactConstraint.h>
+#include <mc_solver/DistanceConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/TasksQPSolver.h>
 
@@ -110,6 +111,7 @@ struct ConstraintTester<mc_solver::BoundedSpeedConstr>
   Eigen::Vector6d uS = Eigen::Vector6d::Zero();
 };
 
+// deprecated: ensure that we can still load it.
 template<>
 struct ConstraintTester<mc_solver::CollisionsConstraint>
 {
@@ -140,6 +142,44 @@ struct ConstraintTester<mc_solver::CollisionsConstraint>
   {
     auto ref = std::dynamic_pointer_cast<mc_solver::CollisionsConstraint>(ref_p);
     auto loaded = std::dynamic_pointer_cast<mc_solver::CollisionsConstraint>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK(ref->r1Index == loaded->r1Index);
+    BOOST_CHECK(ref->r2Index == loaded->r2Index);
+    BOOST_CHECK(ref->cols == loaded->cols);
+  }
+};
+
+template<>
+struct ConstraintTester<mc_solver::DistanceConstraint>
+{
+  mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
+  {
+    auto ret = std::make_shared<mc_solver::DistanceConstraint>(*robots, 0, 0, solver.dt());
+    BOOST_REQUIRE(rm->commonSelfCollisions().size() > 0);
+    ret->addDistanceLimits(solver, rm->commonSelfCollisions());
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "collision");
+    config.add("r1Index", 0);
+    config.add("r2Index", 0);
+    auto cv = config.array("collisions");
+    for(const auto & c : rm->commonSelfCollisions()) { cv.push(c); }
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_solver::ConstraintSetPtr & ref_p,
+             const mc_solver::ConstraintSetPtr & loaded_p,
+             mc_solver::QPSolver & /*solver*/)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_solver::DistanceConstraint>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_solver::DistanceConstraint>(loaded_p);
     BOOST_REQUIRE(ref);
     BOOST_REQUIRE(loaded);
     BOOST_CHECK(ref->r1Index == loaded->r1Index);
@@ -272,6 +312,7 @@ struct ConstraintTester<mc_solver::DynamicsConstraint>
 
 typedef boost::mpl::list<mc_solver::BoundedSpeedConstr,
                          mc_solver::CollisionsConstraint,
+                         mc_solver::DistanceConstraint,
                          mc_solver::CoMIncPlaneConstr,
                          mc_solver::ContactConstraint,
                          mc_solver::KinematicsConstraint,
