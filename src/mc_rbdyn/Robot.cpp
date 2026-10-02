@@ -393,12 +393,23 @@ Robot::Robot(NewRobotToken,
       if(visuals.size() == 1 && hasBody(body)) { collisionTransforms_[body] = visuals[0].origin; }
       else if(visuals.size() > 1 && hasBody(body))
       {
+        // only convexes built from multiple <collision> elements carry the
+        // "<body>_<i>" naming => a body with several <visual> but a single <collision>
+        // keeps the plain body name => removing indexed keys unconditionally create collision
+        // transforms matching neither a convex nor a body, and fixCollisionTransforms() throws
         size_t added = 0;
+        bool indexed = false;
         for(const auto & visual : visuals)
         {
-          collisionTransforms_[body + "_" + std::to_string(added)] = visual.origin;
+          const auto name = body + "_" + std::to_string(added);
+          if(convexes_.count(name))
+          {
+            collisionTransforms_[name] = visual.origin;
+            indexed = true;
+          }
           added++;
         }
+        if(!indexed) { collisionTransforms_[body] = visuals[0].origin; }
       }
     }
     for(const auto & p : module_.collisionTransforms()) { collisionTransforms_[p.first] = p.second; }
