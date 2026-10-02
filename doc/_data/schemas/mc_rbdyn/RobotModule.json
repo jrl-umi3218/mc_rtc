@@ -200,7 +200,7 @@
         "$ref": "../mc_rbdyn/Collision.json"
       }
     },
-    "minimalDistanceLimits":
+    "essentialDistanceLimits":
     {
       "type": "array",
       "items":
