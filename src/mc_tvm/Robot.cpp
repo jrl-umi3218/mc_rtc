@@ -136,6 +136,8 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   dq_->setZero();
   ddq_->setZero();
   tau_->setZero();
+  tau_ext_ = Eigen::VectorXd::Zero(robot.mb().nrDof());
+  ddq_ext_ = Eigen::VectorXd::Zero(robot.mb().nrDof());
 
   const auto & rjo = robot.refJointOrder();
   refJointIndexToQIndex_.resize(rjo.size());
@@ -159,7 +161,7 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   /** Signal setup */
   registerUpdates(Update::FK, &Robot::updateFK, Update::FV, &Robot::updateFV, Update::FA, &Robot::updateFA,
                   Update::NormalAcceleration, &Robot::updateNormalAcceleration, Update::H, &Robot::updateH, Update::C,
-                  &Robot::updateC);
+                  &Robot::updateC, Update::ExternalForces, &Robot::updateExternalForces);
   /** Output dependencies setup */
   addOutputDependency(Output::FK, Update::FK);
   addOutputDependency(Output::FV, Update::FV);
@@ -168,12 +170,15 @@ Robot::Robot(NewRobotToken, const mc_rbdyn::Robot & robot)
   addOutputDependency(Output::H, Update::H);
   addOutputDependency(Output::C, Update::C);
   addOutputDependency(Output::FV, Update::FV);
+  addOutputDependency(Output::ExternalForces, Update::ExternalForces);
   /** Internal dependencies setup */
   addInternalDependency(Update::FV, Update::FK);
   addInternalDependency(Update::H, Update::FV);
   addInternalDependency(Update::C, Update::FV);
   addInternalDependency(Update::FA, Update::FV);
   addInternalDependency(Update::NormalAcceleration, Update::FV);
+  addInternalDependency(Update::ExternalForces, Update::H);
+  addInternalDependency(Update::ExternalForces, Update::FA);
 }
 
 void Robot::updateFK()
@@ -236,6 +241,19 @@ tvm::VariablePtr Robot::qJoint(size_t jIdx)
   const auto & j = mb.joints()[jIdx];
   return q_->subvariable(tvm::Space(j.dof(), j.params(), j.dof()), j.name(),
                          tvm::Space(offsetDof, offsetParam, offsetDof));
+}
+
+void Robot::updateExternalForces()
+{
+  tau_ext_ = robot_.externalTorques();
+  tau_comp_ = robot_.compensationTorques();
+  auto H_inv = H().ldlt();
+  ddq_ext_ = H_inv.solve(tau_ext_);
+  if(tau_comp_)
+  {
+    if(ddq_comp_->size() != tau_comp_->size()) { ddq_comp_->resize(tau_comp_->size()); }
+    ddq_comp_ = H_inv.solve(tau_comp_.value());
+  }
 }
 
 } // namespace mc_tvm

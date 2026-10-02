@@ -16,6 +16,8 @@
 
 #include <RBDyn/FD.h>
 
+#include <optional>
+
 namespace mc_tvm
 {
 
@@ -47,8 +49,8 @@ namespace mc_tvm
  */
 struct MC_TVM_DLLAPI Robot : public tvm::graph::abstract::Node<Robot>
 {
-  SET_OUTPUTS(Robot, FK, FV, FA, NormalAcceleration, tau, H, C)
-  SET_UPDATES(Robot, FK, FV, FA, NormalAcceleration, H, C)
+  SET_OUTPUTS(Robot, FK, FV, FA, NormalAcceleration, tau, H, C, ExternalForces)
+  SET_UPDATES(Robot, FK, FV, FA, NormalAcceleration, H, C, ExternalForces)
 
   friend struct mc_rbdyn::Robot;
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -96,6 +98,11 @@ public:
   /** Access q second derivative (joint acceleration) */
   inline tvm::VariablePtr & alphaD() noexcept { return ddq_; }
 
+  /** Access joint acceleration from external forces (const) */
+  inline const Eigen::VectorXd & alphaDExternal() const noexcept { return ddq_ext_; }
+  /** Access joint acceleration from external forces */
+  inline Eigen::VectorXd & alphaDExternal() noexcept { return ddq_ext_; }
+
   /** Access floating-base variable (const) */
   inline const tvm::VariablePtr & qFloatingBase() const noexcept { return q_fb_; }
   /** Access free-flyer variable */
@@ -133,6 +140,21 @@ public:
   inline const tvm::VariablePtr & tau() const noexcept { return tau_; }
   /** Access tau variable */
   inline tvm::VariablePtr & tau() { return tau_; }
+
+  /** Access tau external variable (const) */
+  inline const Eigen::VectorXd & tauExternal() const noexcept { return tau_ext_; }
+  /** Access tau external variable */
+  inline Eigen::VectorXd & tauExternal() { return tau_ext_; }
+
+  /** Access tau compensation (const) */
+  inline const std::optional<Eigen::VectorXd> & tauCompensation() const noexcept { return tau_comp_; }
+  /** Access tau compensation */
+  inline std::optional<Eigen::VectorXd> & tauCompensation() noexcept { return tau_comp_; }
+
+  /** Access joint acceleration from compensation torques (const) */
+  inline const std::optional<Eigen::VectorXd> & alphaDCompensation() const noexcept { return ddq_comp_; }
+  /** Access joint acceleration from compensation torques */
+  inline std::optional<Eigen::VectorXd> & alphaDCompensation() noexcept { return ddq_comp_; }
 
   /** Returns the CoM algorithm associated to this robot (const) */
   inline const CoM & comAlgo() const noexcept { return *com_; }
@@ -203,8 +225,16 @@ private:
   tvm::VariablePtr dq_;
   /** Double derivative of q */
   tvm::VariablePtr ddq_;
+  /** Joint acceleration from external forces */
+  Eigen::VectorXd ddq_ext_;
+  /** Joint acceleration from compensation torques */
+  std::optional<Eigen::VectorXd> ddq_comp_;
   /** Tau variable */
   tvm::VariablePtr tau_;
+  /** Tau external variable */
+  Eigen::VectorXd tau_ext_;
+  /** Tau compensation variable */
+  std::optional<Eigen::VectorXd> tau_comp_;
   /** Normal accelerations of the bodies */
   std::vector<sva::MotionVecd> normalAccB_;
   /** Forward dynamics algorithm associated to this robot */
@@ -225,6 +255,7 @@ private:
   void updateNormalAcceleration();
   void updateH();
   void updateC();
+  void updateExternalForces();
 };
 
 } // namespace mc_tvm
