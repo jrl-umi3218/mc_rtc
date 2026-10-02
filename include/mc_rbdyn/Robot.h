@@ -1197,6 +1197,9 @@ protected:
   /** Used to set the collision transforms correctly */
   void fixConvexTransforms();
 
+  /** \deprecated Use fixConvexTransforms() instead */
+  MC_RTC_DEPRECATED void fixCollisionTransforms() { fixConvexTransforms(); }
+
   /**
    * @brief Finds the name of the body to which a force sensor is attached,
    * starting from the provided body and going up the kinematic tree.

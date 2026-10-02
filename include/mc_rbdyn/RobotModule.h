@@ -613,6 +613,12 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   const std::map<std::string, sva::PTransformd> & convexTransforms() const { return _convexTransforms; }
 
+  /** \deprecated Use convexTransforms() instead */
+  MC_RTC_DEPRECATED const std::map<std::string, sva::PTransformd> & collisionTransforms() const
+  {
+    return convexTransforms();
+  }
+
   /** Return the flexibilities of the robot
    *
    * \see mc_rbdyn::Flexibility for details on the expected data
