@@ -31,9 +31,7 @@ void KinematicInertialObserver::configure(const mc_control::MCController & ctl, 
 }
 
 void KinematicInertialObserver::reset(const mc_control::MCController & ctl)
-{
-  reset(ctl, ctl.realRobot(robot_).velW());
-}
+{ reset(ctl, ctl.realRobot(robot_).velW()); }
 
 void KinematicInertialObserver::reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW)
 {
@@ -68,9 +66,7 @@ void KinematicInertialObserver::update(mc_control::MCController & ctl)
 }
 
 const sva::MotionVecd & KinematicInertialObserver::velW() const
-{
-  return velW_;
-}
+{ return velW_; }
 
 void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl,
                                             mc_rtc::Logger & logger,

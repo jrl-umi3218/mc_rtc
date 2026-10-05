@@ -55,17 +55,11 @@ extern "C"
 {
 
   GLOBAL_PLUGIN_API void MC_RTC_GLOBAL_PLUGIN(std::vector<std::string> & names)
-  {
-    names = {"Plugin0", "Plugin1", "Plugin2", "Plugin3"};
-  }
+  { names = {"Plugin0", "Plugin1", "Plugin2", "Plugin3"}; }
 
   GLOBAL_PLUGIN_API void destroy(mc_control::GlobalPlugin * ptr)
-  {
-    delete ptr;
-  }
+  { delete ptr; }
 
   GLOBAL_PLUGIN_API mc_control::GlobalPlugin * create(const std::string & name)
-  {
-    return new mc_plugin::TestPlugin(name);
-  }
+  { return new mc_plugin::TestPlugin(name); }
 }

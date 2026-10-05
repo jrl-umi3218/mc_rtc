@@ -24,9 +24,7 @@ CylindricalSurface::CylindricalSurface(const std::string & name,
                                        const double & radius,
                                        const double & width)
 : Surface(name, bodyName, X_b_s, materialName), impl(new CylindricalSurfaceImpl({radius, width}))
-{
-  computePoints();
-}
+{ computePoints(); }
 
 CylindricalSurface::~CylindricalSurface() {}
 
@@ -38,14 +36,10 @@ void CylindricalSurface::computePoints()
 }
 
 const double & CylindricalSurface::radius() const
-{
-  return impl->radius;
-}
+{ return impl->radius; }
 
 const double & CylindricalSurface::width() const
-{
-  return impl->width;
-}
+{ return impl->width; }
 
 void CylindricalSurface::width(const double & width)
 {
@@ -60,9 +54,7 @@ std::shared_ptr<Surface> CylindricalSurface::copy() const
 }
 
 std::string CylindricalSurface::type() const
-{
-  return "cylindrical";
-}
+{ return "cylindrical"; }
 
 std::unique_ptr<CylindricalSurface> CylindricalSurface::fromXML(const tinyxml2::XMLElement & elem)
 {

@@ -65,9 +65,7 @@ static mc_rtc::void_ptr initialize_tasks(const mc_rbdyn::Robots & robots,
 }
 
 mc_rtc::void_ptr initialize_tvm(const mc_rbdyn::Robot & robot)
-{
-  return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot));
-}
+{ return mc_rtc::make_void_ptr<mc_tvm::DynamicFunctionPtr>(std::make_shared<mc_tvm::DynamicFunction>(robot)); }
 
 static mc_rtc::void_ptr initialize(QPSolver::Backend backend,
                                    const mc_rbdyn::Robots & robots,

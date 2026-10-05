@@ -28,14 +28,10 @@ bool MetaState::run(Controller & ctl)
 }
 
 void MetaState::stop(Controller & ctl)
-{
-  executor_.stop(ctl);
-}
+{ executor_.stop(ctl); }
 
 void MetaState::teardown(Controller & ctl)
-{
-  executor_.teardown(ctl);
-}
+{ executor_.teardown(ctl); }
 
 bool MetaState::read_msg(std::string & msg)
 {
@@ -64,14 +60,10 @@ bool MetaState::read_msg(std::string & msg)
 }
 
 std::vector<std::vector<std::string>> MetaState::transitions() const
-{
-  return config_("transitions");
-}
+{ return config_("transitions"); }
 
 std::map<std::string, mc_rtc::Configuration> MetaState::configs() const
-{
-  return config_("configs", mc_rtc::Configuration{});
-}
+{ return config_("configs", mc_rtc::Configuration{}); }
 
 } // namespace fsm
 

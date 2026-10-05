@@ -82,9 +82,7 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
 }
 
 void BodySensorObserver::reset(const mc_control::MCController & ctl)
-{
-  run(ctl);
-}
+{ run(ctl); }
 
 bool BodySensorObserver::run(const mc_control::MCController & ctl)
 {

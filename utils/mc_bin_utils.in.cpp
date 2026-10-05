@@ -41,9 +41,7 @@ struct TypedKey
   mc_rtc::log::LogType type;
 
   friend inline bool operator==(const TypedKey & lhs, const TypedKey & rhs)
-  {
-    return lhs.type == rhs.type && lhs.key == rhs.key;
-  }
+  { return lhs.type == rhs.type && lhs.key == rhs.key; }
 
   friend inline bool operator!=(const TypedKey & lhs, const TypedKey & rhs) { return !(lhs == rhs); }
 };

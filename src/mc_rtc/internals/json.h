@@ -126,9 +126,7 @@ inline std::string dumpDocumentInternal(RapidJSONValue & document, bool pretty)
  *
  */
 inline std::string dumpDocument(RapidJSONValue & document, bool pretty)
-{
-  return dumpDocumentInternal(document, pretty);
-}
+{ return dumpDocumentInternal(document, pretty); }
 
 inline static void toMessagePack(const RapidJSONValue & value, MessagePackBuilder & builder)
 {
@@ -198,9 +196,7 @@ inline void saveDocument(const std::string & path, RapidJSONValue & document, bo
  */
 template<typename T>
 inline RapidJSONValue toJSON(const T & value, RapidJSONDocument::AllocatorType &)
-{
-  return RapidJSONValue(value);
-}
+{ return RapidJSONValue(value); }
 
 template<>
 inline RapidJSONValue toJSON(const std::string & value, RapidJSONDocument::AllocatorType & allocator)
