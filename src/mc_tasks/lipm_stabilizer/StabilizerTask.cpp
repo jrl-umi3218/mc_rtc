@@ -133,14 +133,10 @@ void StabilizerTask::reset()
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
-{
-  mc_rtc::log::error_and_throw("dimWeight not implemented for task {}", type_);
-}
+{ mc_rtc::log::error_and_throw("dimWeight not implemented for task {}", type_); }
 
 Eigen::VectorXd StabilizerTask::dimWeight() const
-{
-  mc_rtc::log::error_and_throw("dimWeight not implemented for task {}", type_);
-}
+{ mc_rtc::log::error_and_throw("dimWeight not implemented for task {}", type_); }
 
 void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & /* solver */,
                                         const std::vector<std::string> & /* activeJointsName */,
@@ -321,9 +317,7 @@ void StabilizerTask::configure(const StabilizerConfiguration & config)
 }
 
 void StabilizerTask::commitConfig()
-{
-  defaultConfig_ = c_;
-}
+{ defaultConfig_ = c_; }
 
 void StabilizerTask::configure_(mc_solver::QPSolver & solver)
 {
@@ -432,14 +426,10 @@ void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & c
 }
 
 const StabilizerConfiguration & StabilizerTask::config() const
-{
-  return c_;
-}
+{ return c_; }
 
 const StabilizerConfiguration & StabilizerTask::commitedConfig() const
-{
-  return defaultConfig_;
-}
+{ return defaultConfig_; }
 
 void StabilizerTask::setContacts(const std::vector<ContactState> & contacts)
 {

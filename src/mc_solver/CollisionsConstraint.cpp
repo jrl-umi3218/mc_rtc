@@ -72,9 +72,7 @@ struct TVMCollisionConstraint
   }
 
   void deleteCollision(TVMQPSolver & solver, const mc_rbdyn::Collision & col)
-  {
-    removeOrDeleteCollision<true>(solver, getData(col));
-  }
+  { removeOrDeleteCollision<true>(solver, getData(col)); }
 
   void deleteCollision(TVMQPSolver & solver, int id) { removeOrDeleteCollision<true>(solver, getData(id)); }
 
@@ -450,9 +448,7 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId, const mc_rbdyn::Co
 }
 
 void CollisionsConstraint::addCollision(QPSolver & solver, const mc_rbdyn::Collision & col)
-{
-  addCollisions(solver, {col});
-}
+{ addCollisions(solver, {col}); }
 
 void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols)
 {
@@ -576,9 +572,7 @@ void CollisionsConstraint::reset()
 }
 
 std::string CollisionsConstraint::__keyByNames(const std::string & name1, const std::string & name2)
-{
-  return name1 + name2;
-}
+{ return name1 + name2; }
 
 int CollisionsConstraint::__createCollId(const mc_rbdyn::Collision & col)
 {

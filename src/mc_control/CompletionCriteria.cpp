@@ -14,14 +14,10 @@ bool CompletionCriteria::completed(const mc_tasks::MetaTask & task)
 }
 
 void CompletionCriteria::configure(const mc_tasks::MetaTask & task, double dt, const mc_rtc::Configuration & config)
-{
-  fn_ = build(task, dt, config);
-}
+{ fn_ = build(task, dt, config); }
 
 const std::string & CompletionCriteria::output() const
-{
-  return output_;
-}
+{ return output_; }
 
 std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteria::build(
     const mc_tasks::MetaTask & task,

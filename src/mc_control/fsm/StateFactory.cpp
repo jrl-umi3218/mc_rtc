@@ -179,14 +179,10 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
 }
 
 StatePtr StateFactory::create(const std::string & state, Controller & ctl, const mc_rtc::Configuration & config)
-{
-  return create(state, ctl, true, config);
-}
+{ return create(state, ctl, true, config); }
 
 StatePtr StateFactory::create(const std::string & state, Controller & ctl)
-{
-  return create(state, ctl, false);
-}
+{ return create(state, ctl, false); }
 
 StatePtr StateFactory::create(const std::string & state,
                               Controller & ctl,
@@ -212,9 +208,7 @@ StatePtr StateFactory::create(const std::string & state, const mc_rtc::Configura
 }
 
 StatePtr StateFactory::create(const std::string & state)
-{
-  return create(state, state);
-}
+{ return create(state, state); }
 
 StatePtr StateFactory::create(const std::string & state, const std::string & final_name)
 {
@@ -252,9 +246,7 @@ StatePtr StateFactory::create(const std::string & state, const std::string & fin
 }
 
 bool StateFactory::hasState(const std::string & state) const
-{
-  return std::find(states_.begin(), states_.end(), state) != states_.end();
-}
+{ return std::find(states_.begin(), states_.end(), state) != states_.end(); }
 
 bool StateFactory::load_with_loader(const std::string & state)
 {
@@ -274,9 +266,7 @@ bool StateFactory::load_with_loader(const std::string & state)
 }
 
 const std::vector<std::string> & StateFactory::states() const
-{
-  return states_;
-}
+{ return states_; }
 
 void StateFactory::update(const std::string & cn)
 {

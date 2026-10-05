@@ -36,9 +36,7 @@ struct PrettyTable
 
   template<typename... Args>
   void put(const std::tuple<Args...> & args)
-  {
-    put_impl(args);
-  }
+  { put_impl(args); }
 
   template<size_t i = 0, typename... Args, typename std::enable_if<i >= N, int>::type = 0>
   void put_impl(const std::tuple<Args...> &)
@@ -96,9 +94,7 @@ using PerfTable = PrettyTable<5>;
 static const std::string match = "perf_";
 
 void usage(char * name)
-{
-  std::cerr << name << " [log] [entry = t]\n";
-}
+{ std::cerr << name << " [log] [entry = t]\n"; }
 
 std::pair<size_t, size_t> getRange(const mc_rtc::log::FlatLog & log, const std::string & key)
 {

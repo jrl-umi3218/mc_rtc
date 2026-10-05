@@ -18,9 +18,7 @@ GenericLoader<Derived, T>::Handle::Handle(const std::string & type) : type_(type
 
 template<typename Derived, typename T>
 GenericLoader<Derived, T>::Handle::Handle(Handle && h) : type_("")
-{
-  std::swap(h.type_, type_);
-}
+{ std::swap(h.type_, type_); }
 
 template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::Handle & GenericLoader<Derived, T>::Handle::operator=(Handle && h)
@@ -32,23 +30,17 @@ typename GenericLoader<Derived, T>::Handle & GenericLoader<Derived, T>::Handle::
 
 template<typename Derived, typename T>
 GenericLoader<Derived, T>::Handle::~Handle()
-{
-  GenericLoader<Derived, T>::unregister_load_function(type_);
-}
+{ GenericLoader<Derived, T>::unregister_load_function(type_); }
 
 template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
                                                                           const std::string & file)
-{
-  return load(solver, mc_rtc::Configuration(file));
-}
+{ return load(solver, mc_rtc::Configuration(file)); }
 
 template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
                                                                           const char * file)
-{
-  return load(solver, mc_rtc::Configuration(file));
-}
+{ return load(solver, mc_rtc::Configuration(file)); }
 
 template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
@@ -68,29 +60,21 @@ typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_sol
 template<typename Derived, typename T>
 template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
 std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const std::string & file)
-{
-  return cast<U>(load(solver, file));
-}
+{ return cast<U>(load(solver, file)); }
 
 template<typename Derived, typename T>
 template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
 std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const char * file)
-{
-  return cast<U>(load(solver, file));
-}
+{ return cast<U>(load(solver, file)); }
 
 template<typename Derived, typename T>
 template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
 std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
-{
-  return cast<U>(load(solver, config));
-}
+{ return cast<U>(load(solver, config)); }
 
 template<typename Derived, typename T>
 std::map<std::string, typename GenericLoader<Derived, T>::load_fun> & GenericLoader<Derived, T>::get_fns()
-{
-  return Derived::storage();
-}
+{ return Derived::storage(); }
 
 template<typename Derived, typename T>
 template<typename U>

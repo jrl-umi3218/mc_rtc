@@ -1812,9 +1812,7 @@ struct formatter<mc_rtc::Configuration> : public formatter<string_view>
 #else
   auto format(const mc_rtc::Configuration & c, FormatContext & ctx) const -> decltype(ctx.out())
 #endif
-  {
-    return formatter<string_view>::format(static_cast<std::string>(c), ctx);
-  }
+  { return formatter<string_view>::format(static_cast<std::string>(c), ctx); }
 };
 
 } // namespace fmt

@@ -101,9 +101,7 @@ sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame)
 }
 
 void DynamicFunction::updateb()
-{
-  b_ = robot_.tvmRobot().C();
-}
+{ b_ = robot_.tvmRobot().C(); }
 
 void DynamicFunction::updateJacobian()
 {

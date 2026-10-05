@@ -25,9 +25,7 @@ constexpr double PI = static_cast<double>(EIGEN_PI);
  * @return Angle in degrees
  */
 constexpr double toDeg(const double rad)
-{
-  return rad * 180. / PI;
-}
+{ return rad * 180. / PI; }
 
 /**
  * @brief Converts degrees to radians
@@ -37,9 +35,7 @@ constexpr double toDeg(const double rad)
  * @return Angle in radians
  */
 constexpr double toRad(const double degrees)
-{
-  return degrees * PI / 180.;
-}
+{ return degrees * PI / 180.; }
 
 } // namespace constants
 } // namespace mc_rtc

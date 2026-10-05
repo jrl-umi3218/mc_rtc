@@ -17,9 +17,7 @@ extern "C"
     names = {"MyRobot", "MyRobotFixed"};
   }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
-  {
-    delete ptr;
-  }
+  { delete ptr; }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & name)
   {
     // At this point name must be one of the supported robots

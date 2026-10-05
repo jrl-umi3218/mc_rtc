@@ -36,9 +36,7 @@ struct SampleControllerClient : public mc_control::ControllerClient
 
 SampleControllerClient::SampleControllerClient()
 : mc_control::ControllerClient("ipc:///tmp/mc_rtc_pub.ipc", "ipc:///tmp/mc_rtc_rep.ipc")
-{
-  start();
-}
+{ start(); }
 
 void SampleControllerClient::join()
 {
@@ -47,9 +45,7 @@ void SampleControllerClient::join()
 }
 
 void SampleControllerClient::category(const std::vector<std::string> & category, const std::string & name)
-{
-  mc_rtc::log::info("Create new category {} in {}", name, cat2str(category));
-}
+{ mc_rtc::log::info("Create new category {} in {}", name, cat2str(category)); }
 
 int main()
 {

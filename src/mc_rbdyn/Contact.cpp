@@ -214,9 +214,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
 }
 
 mc_rbdyn::Contact Contact::load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
-{
-  return mc_rtc::ConfigurationLoader<mc_rbdyn::Contact>::load(config, robots);
-}
+{ return mc_rtc::ConfigurationLoader<mc_rbdyn::Contact>::load(config, robots); }
 
 std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robots,
                                                    const mc_rtc::Configuration & config)
@@ -253,74 +251,46 @@ Contact & Contact::operator=(const Contact & rhs)
 Contact::~Contact() {}
 
 unsigned int Contact::r1Index() const
-{
-  return impl->r1Index;
-}
+{ return impl->r1Index; }
 
 unsigned int Contact::r2Index() const
-{
-  return impl->r2Index;
-}
+{ return impl->r2Index; }
 
 const std::shared_ptr<mc_rbdyn::Surface> & Contact::r1Surface() const
-{
-  return impl->r1Surface;
-}
+{ return impl->r1Surface; }
 
 const std::shared_ptr<mc_rbdyn::Surface> & Contact::r2Surface() const
-{
-  return impl->r2Surface;
-}
+{ return impl->r2Surface; }
 
 const sva::PTransformd & Contact::X_r2s_r1s() const
-{
-  return impl->X_r2s_r1s;
-}
+{ return impl->X_r2s_r1s; }
 
 void Contact::X_r2s_r1s(const sva::PTransformd & in)
-{
-  impl->X_r2s_r1s = in;
-}
+{ impl->X_r2s_r1s = in; }
 
 const sva::PTransformd & Contact::X_b_s() const
-{
-  return impl->X_b_s;
-}
+{ return impl->X_b_s; }
 
 const int & Contact::ambiguityId() const
-{
-  return impl->ambiguityId;
-}
+{ return impl->ambiguityId; }
 
 bool Contact::isFixed() const
-{
-  return impl->is_fixed;
-}
+{ return impl->is_fixed; }
 
 std::pair<std::string, std::string> Contact::surfaces() const
-{
-  return std::pair<std::string, std::string>(impl->r1Surface->name(), impl->r2Surface->name());
-}
+{ return std::pair<std::string, std::string>(impl->r1Surface->name(), impl->r2Surface->name()); }
 
 sva::PTransformd Contact::X_0_r1s(const mc_rbdyn::Robots & robots) const
-{
-  return X_0_r1s(robots.robot(impl->r2Index));
-}
+{ return X_0_r1s(robots.robot(impl->r2Index)); }
 
 sva::PTransformd Contact::X_0_r1s(const mc_rbdyn::Robot & robot) const
-{
-  return impl->X_r2s_r1s * (impl->r2Surface->X_0_s(robot));
-}
+{ return impl->X_r2s_r1s * (impl->r2Surface->X_0_s(robot)); }
 
 sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robots & robots) const
-{
-  return X_0_r2s(robots.robot(impl->r1Index));
-}
+{ return X_0_r2s(robots.robot(impl->r1Index)); }
 
 sva::PTransformd Contact::X_0_r2s(const mc_rbdyn::Robot & robot) const
-{
-  return impl->X_r2s_r1s.inv() * (impl->r1Surface->X_0_s(robot));
-}
+{ return impl->X_r2s_r1s.inv() * (impl->r1Surface->X_0_s(robot)); }
 
 std::vector<sva::PTransformd> Contact::r1Points()
 {
@@ -432,24 +402,16 @@ std::string Contact::toStr() const
 }
 
 bool Contact::operator==(const Contact & rhs) const
-{
-  return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface()));
-}
+{ return (*(this->r1Surface()) == *(rhs.r1Surface())) && (*(this->r2Surface()) == *(rhs.r2Surface())); }
 
 bool Contact::operator!=(const Contact & rhs) const
-{
-  return !(*this == rhs);
-}
+{ return !(*this == rhs); }
 
 double Contact::friction() const
-{
-  return impl->friction;
-}
+{ return impl->friction; }
 
 void Contact::friction(double friction)
-{
-  impl->friction = friction;
-}
+{ impl->friction = friction; }
 
 Contact Contact::swap(const mc_rbdyn::Robots & robots) const
 {
