@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_rbdyn/BodySensor.h>
+#include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/CompoundJointConstraintDescription.h>
 #include <mc_rbdyn/DistanceLimit.h>
 #include <mc_rbdyn/Flexibility.h>
