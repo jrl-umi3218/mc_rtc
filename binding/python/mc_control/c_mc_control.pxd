@@ -78,7 +78,7 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     unique_ptr[ContactConstraint] contactConstraint
     unique_ptr[DynamicsConstraint] dynamicsConstraint
     unique_ptr[KinematicsConstraint] kinematicsConstraint
-    unique_ptr[CollisionsConstraint] selfCollisionConstraint
+    unique_ptr[DistanceConstraint] selfCollisionConstraint
     shared_ptr[c_mc_tasks.PostureTask] postureTask
     QPSolver & solver()
 
@@ -87,11 +87,20 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     c_mc_observers.ObserverPipeline & observerPipeline(const string&)
     vector[c_mc_observers.ObserverPipeline] & observerPipelines()
 
+    void addDistanceLimits(const string&, const string&,
+                           const vector[DistanceLimit] &)
     void addCollisions(const string&, const string&,
-                       const vector[Collision] &)
+                       const vector[DistanceLimit] &)
+    cppbool hasDistanceLimit(const string&, const string&, const DistanceLimit&)
+    cppbool hasDistanceLimit(const string&, const string&, const string&, const string&)
+    cppbool hasCollision(const string&, const string&, const DistanceLimit&)
+    cppbool hasCollision(const string&, const string&, const string&, const string&)
+    void removeDistanceLimits(const string&, const string&)
+    void removeDistanceLimits(const string&, const string&,
+                              const vector[DistanceLimit] &)
     void removeCollisions(const string&, const string&)
     void removeCollisions(const string&, const string&,
-                          const vector[Collision] &)
+                          const vector[DistanceLimit] &)
     cppbool hasRobot(const string&)
     Robot& robot(const string&)
     void addContact(const Contact&)

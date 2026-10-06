@@ -13,7 +13,7 @@
 **制約条件**
 - {% doxygen mc_solver::ContactConstraint %}: このコントローラーには、必ず接触面制約条件を設定する必要があります。ただし、接触面セットが空でも構いません。
 - {% doxygen mc_solver::KinematicsConstraint %}: ジョイントの可動範囲に関する制約条件
-- {% doxygen mc_solver::CollisionsConstraint %}: 自己衝突回避に関する制約条件
+- {% doxygen mc_solver::DistanceConstraint %}: 自己衝突回避に関する制約条件
 - {% doxygen mc_solver::CompoundJointConstraint %}: 複合関節（ある関節の可動範囲が別の関節の値によって決まる関節）の関節可動範囲を処理します。
 
 **サポートされているロボット**:
@@ -38,7 +38,7 @@ Enabled: Posture
 ***制約条件**
 - {% doxygen mc_solver::ContactConstraint %}: 左右の足の裏と地面の環境との間に接触面を追加します。
 - {% doxygen mc_solver::DynamicsConstraint %}: この制約条件を使用すると、{% doxygen mc_solver::KinematicsConstraint %}で指定された関節可動範囲の制約条件に加え、関節のトルクと摩擦円錐の計算が可能となります。
-- {% doxygen mc_solver::CollisionsConstraint %}: 自己衝突回避に関する制約条件
+- {% doxygen mc_solver::DistanceConstraint %}: 自己衝突回避に関する制約条件
 - {% doxygen mc_solver::CompoundJointConstraint %}: 複合関節（ある関節の可動範囲が別の関節の値によって決まる関節）の関節可動範囲を処理します。
 
 **サポートされているロボット**:
@@ -87,7 +87,7 @@ Text:
   constraints:
   - type: dynamics
   - type: contact
-  - type: collision
+  - type: distanceLimit
   - type: compoundJoint
   tasks:
   - type: com

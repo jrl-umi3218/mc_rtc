@@ -127,6 +127,22 @@ private:
   static storage_t & get_fns();
 };
 
+/** Reads a boolean flag from \p config, preferring \p newKey and falling back on the deprecated \p oldKey
+ * (logged under \p source) */
+inline bool deprecatedFlag(const mc_rtc::Configuration & config,
+                           const char * source,
+                           const char * newKey,
+                           const char * oldKey)
+{
+  if(config.has(newKey)) { return config(newKey, false); }
+  if(config.has(oldKey))
+  {
+    mc_rtc::log::deprecated(source, oldKey, newKey);
+    return config(oldKey, false);
+  }
+  return false;
+}
+
 } // namespace mc_solver
 
 #include "GenericLoader.hpp"

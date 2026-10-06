@@ -1,17 +1,16 @@
 {
-  "title": "mc_solver::CollisionsConstraint",
-  "description": "Deprecated, use mc_solver::DistanceConstraint (\"type\": \"distanceLimit\") instead",
+  "title": "mc_solver::DistanceConstraint",
   "type": "object",
   "properties":
   {
-    "type": { "const": "collision", "description": "Deprecated alias for \"distanceLimit\"" },
-    "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the collision" },
-    "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the collision" },
+    "type": { "const": "distanceLimit" },
+    "r1": { "type": "string", "default": "MainRobot", "description": "Name of the first robot involved in the distance constraint" },
+    "r2": { "type": "string", "default": "MainRobot", "description": "Name of the second robot involved in the distance constraint" },
     "automaticMonitor":
     {
       "type": "boolean",
       "default": true,
-      "description": "If true automatically display collision monitors as constraints get activated. Otherwise those monitors are managed manually"
+      "description": "If true automatically display distance constraint monitors as constraints get activated. Otherwise those monitors are managed manually"
     },
     "useExtra":
     {
@@ -37,13 +36,13 @@
       "default": false,
       "description": "Deprecated alias for useEssential"
     },
-    "collisions":
+    "distanceLimits":
     {
       "type": "array",
-      "description": "List of collisions in the constraint",
+      "description": "List of distance limits in the constraint",
       "items":
       {
-        "$ref": "../mc_rbdyn/Collision.json"
+        "$ref": "../mc_rbdyn/DistanceLimit.json"
       }
     }
   },

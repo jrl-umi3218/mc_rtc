@@ -110,6 +110,11 @@ cdef Collision CollisionFromC(const c_mc_rbdyn.Collision & col):
   ret.impl = c_mc_rbdyn.Collision(col)
   return ret
 
+cdef DistanceLimit DistanceLimitFromC(const c_mc_rbdyn.DistanceLimit & col):
+  cdef DistanceLimit ret = DistanceLimit()
+  ret.impl = c_mc_rbdyn.DistanceLimit(col)
+  return ret
+
 cdef class Flexibility(object):
   def __cinit__(self, *args):
     if len(args) == 4:
@@ -308,15 +313,18 @@ cdef class RobotModule(object):
   def stpbvHull(self):
     assert(self.impl.get())
     return deref(self.impl).stpbvHull()
-  def collisionTransforms(self):
+  def convexTransforms(self):
     assert(self.impl.get())
-    end = deref(self.impl)._collisionTransforms.end()
-    it = deref(self.impl)._collisionTransforms.begin()
+    end = deref(self.impl)._convexTransforms.end()
+    it = deref(self.impl)._convexTransforms.begin()
     ret = {}
     while it != end:
       ret[deref(it).first] = sva.PTransformdFromC(deref(it).second)
       preinc(it)
     return ret
+  def collisionTransforms(self):
+    """Deprecated, see convexTransforms"""
+    return self.convexTransforms()
   def flexibility(self):
     assert(self.impl.get())
     end = deref(self.impl)._flexibility.end()
@@ -346,23 +354,61 @@ cdef class RobotModule(object):
     assert(self.impl.get())
     return SpringsFromC(deref(self.impl).springs())
   def minimalSelfCollisions(self):
+    """Deprecated, see essentialDistanceLimits"""
     assert(self.impl.get())
-    end = deref(self.impl)._minimalSelfCollisions.end()
-    it = deref(self.impl)._minimalSelfCollisions.begin()
+    cdef vector[c_mc_rbdyn.DistanceLimit] limits = deref(self.impl).minimalSelfCollisions()
     ret = []
+    it = limits.begin()
+    end = limits.end()
     while it != end:
-      ret.append(CollisionFromC(deref(it)))
+      ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
   def commonSelfCollisions(self):
+    """Deprecated, see extraDistanceLimits"""
     assert(self.impl.get())
-    end = deref(self.impl)._commonSelfCollisions.end()
-    it = deref(self.impl)._commonSelfCollisions.begin()
+    cdef vector[c_mc_rbdyn.DistanceLimit] limits = deref(self.impl).commonSelfCollisions()
     ret = []
+    it = limits.begin()
+    end = limits.end()
     while it != end:
-      ret.append(CollisionFromC(deref(it)))
+      ret.append(DistanceLimitFromC(deref(it)))
       preinc(it)
     return ret
+  def essentialDistanceLimits(self, limits = None):
+    assert(self.impl.get())
+    cdef vector[c_mc_rbdyn.DistanceLimit] out
+    cdef vector[c_mc_rbdyn.DistanceLimit] dls
+    if limits is None:
+      out = deref(self.impl).essentialDistanceLimits()
+      ret = []
+      it = out.begin()
+      end = out.end()
+      while it != end:
+        ret.append(DistanceLimitFromC(deref(it)))
+        preinc(it)
+      return ret
+    assert(all([isinstance(dl, DistanceLimit) for dl in limits]))
+    for dl in limits:
+      dls.push_back((<DistanceLimit>dl).impl)
+    deref(self.impl).essentialDistanceLimits(dls)
+  def extraDistanceLimits(self, limits = None):
+    assert(self.impl.get())
+    cdef vector[c_mc_rbdyn.DistanceLimit] out
+    cdef vector[c_mc_rbdyn.DistanceLimit] dls
+    if limits is None:
+      out = deref(self.impl).extraDistanceLimits()
+      ret = []
+      it = out.begin()
+      end = out.end()
+      while it != end:
+        ret.append(DistanceLimitFromC(deref(it)))
+        preinc(it)
+      return ret
+    assert(all([isinstance(dl, DistanceLimit) for dl in limits]))
+    for dl in limits:
+      dls.push_back((<DistanceLimit>dl).impl)
+    deref(self.impl).extraDistanceLimits(dls)
   def ref_joint_order(self):
     assert(self.impl.get())
     cdef vector[string] joints = deref(self.impl).ref_joint_order()
@@ -807,11 +853,15 @@ cdef class Robot(object):
       bName = bName.encode(u'ascii')
     return sva.PTransformdFromC(self.impl.bodyTransform(bName), False)
 
-  def collisionTransform(self, bName):
+  def convexTransform(self, bName):
     self.__is_valid()
     if isinstance(bName, unicode):
       bName = bName.encode(u'ascii')
-    return sva.PTransformdFromC(self.impl.collisionTransform(bName), False)
+    return sva.PTransformdFromC(self.impl.convexTransform(bName), False)
+
+  def collisionTransform(self, bName):
+    """Deprecated, see convexTransform"""
+    return self.convexTransform(bName)
 
   def loadRSDFFromDir(self, surfaceDir):
     self.__is_valid()
