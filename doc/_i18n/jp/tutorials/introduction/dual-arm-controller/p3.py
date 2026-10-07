@@ -52,7 +52,7 @@ def _run_ur5e(self):
         self._urEndEffectorTask.add_ef_pose(sva.PTransformd(
             sva.RotZ(0), eigen.Vector3d(0.0, 0.5, 0.0)
         ))
-        
+
 # runコールバック関数内
 def run_callback(self):
     # ...

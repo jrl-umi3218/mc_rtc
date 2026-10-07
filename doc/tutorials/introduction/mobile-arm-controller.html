@@ -36,6 +36,7 @@ set_contact_sources:
       dof[4] = 0.0;
       double friction = mc_rbdyn::Contact::defaultFriction;
       addContact({"dingo", "ground", "Base", "AllGround", friction, dof});
+
       // In the reset function after setting up initial position
       addContact({"dingo", "ur5e", "Base", "Base"});
   - name: Python
@@ -52,6 +53,7 @@ set_contact_sources:
               "dingo", "ground", "Base", "AllGround", friction, dof
           )
       )
+
       # In the reset function after setting up initial position
       self.addContact(mc_control.Contact("dingo", "ur5e", "Base", "Base"))
 reposition_sources:
@@ -235,9 +237,11 @@ p1_sources:
   - name: C++
     lang: cpp
     source: |
+      // In the constructor
+      solver().addTask(postureTask);
+
       // In the reset function
       solver().addTask(dingoBaseTask_);
-      solver().addTask(postureTask.get());
       postureTask->target({{"shoulder_lift_joint", {-M_PI / 2}}});
       dingoBaseTask_->target({Eigen::Vector3d(1.5, 0.0, 0.0)});
   - name: Python
@@ -363,22 +367,22 @@ phase_conditions:
             and self._dingoBaseTask.eval().norm() < 1e-2
             and self._dingoBaseTask.speed().norm() < 1e-5
         ):
-        # ...
+      # ...
       elif (
             self._phase == ControllerPhase.HANDLE
             and self._handTask.eval().norm() < 0.1
             and self._handTask.speed().norm() < 1e-4
         ):
-        # ...
+      # ...
       elif (
             self._phase == ControllerPhase.OPEN
             and self._doorPosture.eval().norm() < 0.01
         ):
-        # ...
+      # ...
       elif (
             self._phase == ControllerPhase.DONE
             and self._doorPosture.eval().norm() < 0.01
         ):
-        # ...
+      # ...
 ---
 {% translate_file tutorials/introduction/mobile-arm-controller.html %}

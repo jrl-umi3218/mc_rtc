@@ -5,8 +5,10 @@ enum ControllerPhase
   STARTED,
   MOVE
 };
+
 // コントローラーのプライベートプロパティ
 ControllerPhase phase = IDLE;
+
 // run関数内
 bool DualArmController::run()
 {

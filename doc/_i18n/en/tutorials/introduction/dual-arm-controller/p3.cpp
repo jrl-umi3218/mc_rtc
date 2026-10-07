@@ -1,4 +1,4 @@
-// ヘッダー内
+// In the header
 enum ControllerState
 {
   GO = 0,

@@ -30,6 +30,8 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
 
+option(PYTHON_BINDING "Build the python bindings" ON)
+
 # Check if the submodule cmake have been initialized
 set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
 if(EXISTS "${JRL_CMAKE_MODULES}/base.cmake")
@@ -49,25 +51,18 @@ else()
     FetchContent_Declare(
       "jrl-cmakemodules"
       GIT_REPOSITORY "https://github.com/jrl-umi3218/jrl-cmakemodules.git"
+      GIT_TAG c32298a98e736ac4d15a9540dcd1f22cd7f161db
     )
     FetchContent_MakeAvailable("jrl-cmakemodules")
     FetchContent_GetProperties("jrl-cmakemodules" SOURCE_DIR JRL_CMAKE_MODULES)
   endif()
 endif()
-
-# Force override jrl-cmakemodule default
-set(PYTHON_BINDING_FORCE_PYTHON3
-    ON
-    CACHE BOOL "Force use of Python 3 for bindings" FORCE
-)
-set(PYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3
-    OFF
-    CACHE BOOL "Force use of Python 3 for bindings" FORCE
-)
 include(${JRL_CMAKE_MODULES}/base.cmake)
-include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
 include(${JRL_CMAKE_MODULES}/msvc-specific.cmake)
 include(${JRL_CMAKE_MODULES}/version-script.cmake)
+if(PYTHON_BINDING)
+  include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
+endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -139,7 +134,6 @@ option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
 option(BUILD_MC_RTC_PYTHON_UTILS
        "Build python utilities (e.g mc_log_ui, mc_rtc_new_controller, etc)" ON
 )
-
 if(NOT BUILD_MC_RTC)
   if(NOT BUILD_MC_RTC_CPP_UTILS AND NOT BUILD_MC_RTC_PYTHON_UTILS)
     message(STATUS "Nothing to build, exiting.")
@@ -383,7 +377,7 @@ add_subdirectory(src)
 add_subdirectory(plugins)
 add_subdirectory(utils)
 
-if(${PYTHON_BINDING})
+if(PYTHON_BINDING)
   add_subdirectory(binding/python)
 endif()
 

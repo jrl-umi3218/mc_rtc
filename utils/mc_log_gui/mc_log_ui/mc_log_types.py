@@ -91,7 +91,12 @@ class ColorsSchemeConfiguration(object):
 
     def _select_pyplot_set(self, name, ncolors):
         self.cm_ = name
-        cm = plt.cm.get_cmap(name)
+        if hasattr(matplotlib, "colormaps"):
+            cm = matplotlib.colormaps[name]
+        elif hasattr(plt, "get_cmap"):
+            cm = plt.get_cmap(name)
+        else:
+            cm = plt.cm.get_cmap(name)
         self.ncolors_ = min(cm.N, ncolors)
         cm2rgb = (np.array(cm(x)[0:3]) for x in np.linspace(0, 1, self.ncolors_))
         self.colors_ = [
