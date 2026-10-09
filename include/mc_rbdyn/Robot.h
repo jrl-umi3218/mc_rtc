@@ -632,7 +632,12 @@ public:
   const Eigen::Vector3d & zmpTarget() const;
 
   /** Compute and returns the mass of the robot */
-  inline double mass() const noexcept { return mass_; }
+  inline double mass() const noexcept
+  {
+    double mass = 0.;
+    for(const auto & b : mb().bodies()) { mass += b.inertia().mass(); }
+    return mass;
+  }
 
   /** @name Joint sensors
    *

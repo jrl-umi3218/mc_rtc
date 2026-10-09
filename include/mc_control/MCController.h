@@ -264,15 +264,19 @@ public:
 
   /** Add a contact between two robots
    *
-   * No effect if the contact is already present.
+   * No effect if the contact is already present and hasn't changed.
    *
+   * Appropriate constraints will be updated/recreated as needed if contact properties changed (dof, friction,
+   * feasibility polytopes, etc)
+   *
+   * \param c Contact to add
+   * \param show When true print information
    */
-  void addContact(const Contact & c);
+  void addContact(const Contact & c, bool show = true);
 
   /** Remove a contact between two robots
    *
-   * No effect if the contact is already absent.
-   *
+   * No effect if the contact does not exist
    */
   void removeContact(const Contact & c);
 

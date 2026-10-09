@@ -61,6 +61,13 @@ void critical(const S & format, Args &&... args)
   }
 }
 
+/**
+ * Print an error message
+ *
+ * Displayed in red on terminals with color support
+ *
+ * @tparam Args Print all args using fmt format. The first argument can be an fmt formatting string
+ */
 template<typename S, typename... Args>
 void error(const S & format, Args &&... args)
 {
@@ -71,6 +78,22 @@ void error(const S & format, Args &&... args)
   }
 }
 
+/**
+ * Print optional error message
+ */
+template<typename... Args>
+void error(bool print, Args &&... args)
+{
+  if(print) { error(std::forward<Args>(args)...); }
+}
+
+/**
+ * Print a warning message
+ *
+ * Displayed in yellow on terminals with color support
+ *
+ * @tparam Args Print all args using fmt format. The first argument can be an fmt formatting string
+ */
 template<typename S, typename... Args>
 void warning(const S & format, Args &&... args)
 {
@@ -81,6 +104,22 @@ void warning(const S & format, Args &&... args)
   }
 }
 
+/**
+ * Print optional warning message
+ */
+template<typename... Args>
+void warning(bool print, Args &&... args)
+{
+  if(print) { warning(std::forward<Args>(args)...); }
+}
+
+/**
+ * Print an information message
+ *
+ * Displayed in blue on terminals with color support
+ *
+ * @tparam Args Print all args using fmt format. The first argument can be an fmt formatting string
+ */
 template<typename S, typename... Args>
 void info(const S & format, Args &&... args)
 {
@@ -91,6 +130,22 @@ void info(const S & format, Args &&... args)
   }
 }
 
+/**
+ * Print optional information message
+ */
+template<typename... Args>
+void info(bool print, Args &&... args)
+{
+  if(print) { info(std::forward<Args>(args)...); }
+}
+
+/**
+ * Print a success message
+ *
+ * Displayed in green on terminals with color support
+ *
+ * @tparam Args Print all args using fmt format. The first argument can be an fmt formatting string
+ */
 template<typename S, typename... Args>
 void success(const S & format, Args &&... args)
 {
@@ -101,6 +156,20 @@ void success(const S & format, Args &&... args)
   }
 }
 
+/**
+ * Print optional success message
+ */
+template<typename... Args>
+void success(bool print, Args &&... args)
+{
+  if(print) { success(std::forward<Args>(args)...); }
+}
+
+/**
+ * Displays a system notification
+ *
+ * @tparam Args Print all args using fmt format. The first argument can be an fmt formatting string
+ */
 template<typename S, typename... Args>
 void notify(const S & format, Args &&... args)
 {
@@ -109,6 +178,15 @@ void notify(const S & format, Args &&... args)
   {
     details::notify(fmt::format(fmt::runtime(format), std::forward<Args>(args)...));
   }
+}
+
+/**
+ * Displays an optional system notification (libnotify, WinToast, etc.)
+ */
+template<typename... Args>
+void notify(bool print, Args &&... args)
+{
+  if(print) { notify(std::forward<Args>(args)...); }
 }
 
 } // namespace log
