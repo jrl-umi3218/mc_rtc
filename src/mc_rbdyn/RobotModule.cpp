@@ -10,6 +10,8 @@
 
 #include <mesh_sampling/mesh_sampling.h>
 
+#include <cmath>
+
 namespace fs = std::filesystem;
 
 namespace mc_rbdyn
@@ -80,15 +82,17 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
       {
         if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
         {
-          const auto & mesh_path = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
-          crc += fs::file_size(mc_rtc::convertURI(mesh_path));
+          const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data);
+          crc += fs::file_size(mc_rtc::convertURI(fs::path(mesh.filename)));
+          // Regenerate the convexes of scaled meshes that were generated before the scale was applied
+          if(!mesh.scaleV.isOnes()) { crc += static_cast<uint32_t>(std::lround(1e6 * mesh.scaleV.sum())); }
         }
       }
     }
     return crc;
   };
 
-  auto generate = [&](const fs::path & mesh_file, const fs::path & output_convex_dir)
+  auto generate = [&](const fs::path & mesh_file, const Eigen::Vector3d & scale, const fs::path & output_convex_dir)
   {
     if(!fs::exists(mesh_file))
     {
@@ -96,8 +100,14 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
     }
 
     mesh_sampling::MeshSampling sampler(mesh_file);
-    const auto & meshes = sampler.create_clouds(sampling_point);
-    sampler.create_convexes(meshes, output_convex_dir, false);
+    auto clouds = sampler.create_clouds(sampling_point);
+    // Apply the scale of the mesh in the robot description, e.g. 0.001 for a mesh in millimeters
+    const Eigen::Vector3f s = scale.cast<float>();
+    for(auto & cloud : clouds)
+    {
+      for(auto & p : cloud.second) { p = p.cwiseProduct(s); }
+    }
+    sampler.create_convexes(clouds, output_convex_dir, false);
   };
 
   if(!name.empty())
@@ -131,8 +141,8 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         {
           if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
           {
-            const auto & mesh_file = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
-            generate(mc_rtc::convertURI(mesh_file), convex_dir);
+            const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data);
+            generate(mc_rtc::convertURI(fs::path(mesh.filename)), mesh.scaleV, convex_dir);
           }
         }
       }
