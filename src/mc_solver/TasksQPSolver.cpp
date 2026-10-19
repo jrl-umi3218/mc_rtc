@@ -361,12 +361,12 @@ using boost_ns = boost::chrono::duration<double, boost::nano>;
 
 double TasksQPSolver::solveTime()
 {
-  return boost_ms(boost_ns(solver_.solveTime().wall)).count();
+  return std::chrono::duration<double, std::milli>(solver_.solveTime()).count();
 }
 
 double TasksQPSolver::solveAndBuildTime()
 {
-  return boost_ms(boost_ns(solver_.solveAndBuildTime().wall)).count();
+  return std::chrono::duration<double, std::milli>(solver_.solveAndBuildTime()).count();
 }
 
 const Eigen::VectorXd & TasksQPSolver::result() const
