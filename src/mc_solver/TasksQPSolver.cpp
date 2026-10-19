@@ -8,7 +8,7 @@
 
 #include <mc_tasks/MetaTask.h>
 
-#include <boost/chrono.hpp>
+#include <mc_rtc/clock.h>
 
 namespace mc_solver
 {
@@ -356,17 +356,14 @@ void TasksQPSolver::updateNrVars(const mc_rbdyn::Robots & robots)
   solver_.updateNrVars(robots.mbs());
 }
 
-using boost_ms = boost::chrono::duration<double, boost::milli>;
-using boost_ns = boost::chrono::duration<double, boost::nano>;
-
 double TasksQPSolver::solveTime()
 {
-  return boost_ms(boost_ns(solver_.solveTime().wall)).count();
+  return mc_rtc::duration_ms(solver_.solveTime()).count();
 }
 
 double TasksQPSolver::solveAndBuildTime()
 {
-  return boost_ms(boost_ns(solver_.solveAndBuildTime().wall)).count();
+  return mc_rtc::duration_ms(solver_.solveAndBuildTime()).count();
 }
 
 const Eigen::VectorXd & TasksQPSolver::result() const

@@ -33,6 +33,15 @@
                 shells.defaultShells.devel = false;
               };
             flakoboros = {
+              overrideAttrs.tasks = { pkgs-final, ... }: {
+                src = pkgs-final.fetchFromGitHub {
+                  owner = "jrl-umi3218";
+                  repo = "Tasks";
+                  tag = "v1.9.2";
+                  hash = "sha256-afZbxXd2uQVpDL97sXyxIrbFqa76JGc0s0ZAPzHcpsQ=";
+                };
+
+              };
               overrideAttrs.mc-rtc =
                 { drv-prev, pkgs-final, ... }:
                 {

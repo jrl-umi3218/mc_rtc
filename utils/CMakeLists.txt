@@ -15,7 +15,7 @@ endif()
 # ######################################################################################
 if(BUILD_MC_RTC_CPP_UTILS)
   message(STATUS "Building C++ utilities (because MC_RTC_BUILD_CPP_UTILS is ON)")
-  find_package(Boost REQUIRED COMPONENTS program_options timer)
+  find_package(Boost REQUIRED COMPONENTS program_options)
 
   function(add_mc_rtc_utils NAME)
     set(SOURCES ${ARGN})
