@@ -178,7 +178,7 @@ if(BOOST_STACKTRACE STREQUAL "")
   )
 endif()
 
-add_project_dependency(Boost REQUIRED COMPONENTS timer ${BOOST_STACKTRACE})
+add_project_dependency(Boost REQUIRED COMPONENTS ${BOOST_STACKTRACE})
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(TVM REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
