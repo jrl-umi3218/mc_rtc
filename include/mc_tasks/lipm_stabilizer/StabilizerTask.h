@@ -408,6 +408,15 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return Eigen::Vector2d::Zero();
   }
 
+  inline Eigen::Vector2d dcmMeasurementPredictionError() noexcept
+  {
+    auto & filter = dcmEstimator_.getFilter();
+    if(filter.getMeasurementsNumber() == 0) { return Eigen::Vector2d::Zero(); }
+    const auto & error = filter.getMeasurementPredictionError();
+    if(error.size() != 2) { return Eigen::Vector2d::Zero(); }
+    return error;
+  }
+
   inline Eigen::Vector2d filteredDCM() const noexcept
   {
     if(c_.dcmBias.withDCMBias) { return dcmEstimator_.getUnbiasedDCM(); }
