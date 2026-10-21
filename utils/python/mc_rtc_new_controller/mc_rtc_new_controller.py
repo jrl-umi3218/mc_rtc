@@ -1,4 +1,4 @@
-#!/usr/bin/env @MC_LOG_UI_PYTHON_EXECUTABLE@
+#!/usr/bin/env python 
 # -*- coding: utf-8 -*-
 
 #
@@ -311,7 +311,7 @@ vim.lsp.config('yamlls',
     return repo
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         description="Create a new mc_rtc Controller project"
     )
@@ -340,3 +340,6 @@ if __name__ == "__main__":
         args.project_dir, args.controller_class_name, args.controller_name
     )
     repo.index.commit("Initial commit")
+
+if __name__ == "__main__":
+    main()
