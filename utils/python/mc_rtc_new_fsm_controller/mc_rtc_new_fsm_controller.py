@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 #
@@ -12,6 +12,7 @@ import json
 
 
 import mc_rtc_new_controller
+
 new_controller = mc_rtc_new_controller.new_controller
 
 
@@ -283,6 +284,7 @@ vim.lsp.config('yamlls',
     )
     return repo
 
+
 def main():
     parser = argparse.ArgumentParser(description="Create a new mc_rtc FSM project")
     parser.add_argument(
@@ -311,5 +313,6 @@ def main():
     )
     repo.index.commit("Initial commit")
 
+
 if __name__ == "__main__":
-  main()
+    main()

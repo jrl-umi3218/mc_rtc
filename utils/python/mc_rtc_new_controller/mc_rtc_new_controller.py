@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 #
@@ -340,6 +340,7 @@ def main():
         args.project_dir, args.controller_class_name, args.controller_name
     )
     repo.index.commit("Initial commit")
+
 
 if __name__ == "__main__":
     main()
