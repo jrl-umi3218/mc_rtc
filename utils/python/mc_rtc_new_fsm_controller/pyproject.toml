@@ -1,0 +1,9 @@
+[project]
+name = "mc-rtc-new-fsm-controller"
+version = "0.1.0"
+description = "MC RTC new FSM controller utility"
+authors = [{ name = "Your Name", email = "your@email.com" }]
+dependencies = ["gitpython"]
+
+[project.scripts]
+mc-rtc-new-fsm-controller = "mc_rtc_new_fsm_controller:main"

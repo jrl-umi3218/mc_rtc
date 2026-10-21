@@ -1,4 +1,4 @@
-#!/usr/bin/env @MC_LOG_UI_PYTHON_EXECUTABLE@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 #
@@ -11,23 +11,9 @@ import os
 import json
 
 
-def load_source(modname, filename):
-    loader = machinery.SourceFileLoader(modname, filename)
-    spec = util.spec_from_file_location(modname, filename, loader=loader)
-    module = util.module_from_spec(spec)
-    loader.exec_module(module)
-    return module
+import mc_rtc_new_controller
 
-
-try:
-    mod = load_source(
-        "mc_rtc_new_controller", os.path.dirname(__file__) + "/mc_rtc_new_controller"
-    )
-except FileNotFoundError:
-    mod = load_source(
-        "mc_rtc_new_controller", os.path.dirname(__file__) + "/mc_rtc_new_controller.py"
-    )
-new_controller = mod.new_controller
+new_controller = mc_rtc_new_controller.new_controller
 
 
 def new_fsm_controller(project_dir, controller_class_name, controller_name):
@@ -299,7 +285,7 @@ vim.lsp.config('yamlls',
     return repo
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Create a new mc_rtc FSM project")
     parser.add_argument(
         "project_dir",
@@ -326,3 +312,7 @@ if __name__ == "__main__":
         args.project_dir, args.controller_class_name, args.controller_name
     )
     repo.index.commit("Initial commit")
+
+
+if __name__ == "__main__":
+    main()

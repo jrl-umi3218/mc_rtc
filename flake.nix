@@ -2,13 +2,15 @@
   description = " mc_rtc is an interface for simulated and real robotic systems suitable for real-time control";
 
   inputs = {
-    mc-rtc-nix.url = "github:mc-rtc/nixpkgs";
+    #mc-rtc-nix.url = "github:mc-rtc/nixpkgs";
+    mc-rtc-nix.url = "path:/home/arnaud/devel/mc-rtc-nix/nixpkgs";
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
     gepetto.follows = "mc-rtc-nix/gepetto";
 
     ccache-trigger.follows = "mc-rtc-nix/ccache-trigger";
     with-ros-trigger.follows = "mc-rtc-nix/with-ros-trigger";
+    mc-rtc-ros-compat.url = "github:jrl-umi3218/mc_rtc_ros_compat";
   };
 
   outputs =
