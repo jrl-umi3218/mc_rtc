@@ -6,6 +6,11 @@
 #include <mc_rtc/config.h>
 #include <mc_rtc/path.h>
 
+// For CRC32
+#include <cstddef>
+#include <cstdint>
+#include <fstream> // IWYU pragma: keep
+
 #include <mc_rbdyn/Robot.h>
 
 #include <mesh_sampling/assimp_scene.h>
@@ -17,6 +22,46 @@ namespace fs = std::filesystem;
 
 namespace mc_rbdyn
 {
+
+namespace details
+{
+/**
+ * Simple CRC32 implementation to compute a CRC32 checksum of a file. This is used to determine if the convex hulls need
+ * to be regenerated. It is based on the well-known bitwise CRC-32 algorithm using the polynomial `0xEDB88320`, which is
+ * the reversed form of the standard CRC-32 polynomial. This implementation is not copied from any specific source, but
+ * follows the canonical algorithm described in many references, such as:
+ *
+ * - [Wikipedia: CRC-32 algorithm](https://en.wikipedia.org/wiki/Cyclic_redundancy_check#CRC-32_algorithm)
+ * - [Ross Williams' "A Painless Guide to CRC Error Detection Algorithms"](https://zlib.net/crc_v3.txt)
+ * - The reference implementation in [zlib](https://github.com/madler/zlib/blob/master/crc32.c) (though zlib uses a
+ * table-based approach for speed)
+ */
+struct CRC32
+{
+  CRC32() : crc_(0xFFFFFFFF) {}
+
+  void update(const void * data, size_t length)
+  {
+    const uint8_t * buf = static_cast<const uint8_t *>(data);
+    for(size_t i = 0; i < length; ++i)
+    {
+      crc_ ^= buf[i];
+      for(int j = 0; j < 8; ++j)
+      {
+        if(crc_ & 1)
+          crc_ = (crc_ >> 1) ^ 0xEDB88320;
+        else
+          crc_ >>= 1;
+      }
+    }
+  }
+
+  uint32_t finalize() const { return crc_ ^ 0xFFFFFFFF; }
+
+private:
+  uint32_t crc_;
+};
+} // namespace details
 
 // Repeat static constexpr declarations
 // See also https://stackoverflow.com/q/8016780
@@ -90,7 +135,7 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
 {
   auto urdfCRC = [&]()
   {
-    uint32_t crc = 0;
+    mc_rbdyn::details::CRC32 crc;
     for(const auto & col : _collision)
     {
       for(const auto & c : col.second)
@@ -98,19 +143,23 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
         {
           const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data);
-          crc += fs::file_size(mc_rtc::convertURI(fs::path(mesh.filename)));
-          // The hull of a scaled mesh is named after its scale, so the cache also depends on it
-          if(!mesh.scaleV.isOnes())
+          // Read file contents
+          std::ifstream file(mc_rtc::convertURI(fs::path(mesh.filename)), std::ios::binary);
+          if(file)
           {
-            for(Eigen::Index i = 0; i < 3; ++i)
-            {
-              crc = 31 * crc + static_cast<uint32_t>(std::llround(1e6 * mesh.scaleV[i]));
-            }
+            std::vector<char> buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            if(!buffer.empty()) crc.update(buffer.data(), buffer.size());
+          }
+          // Add scale values
+          for(Eigen::Index i = 0; i < 3; ++i)
+          {
+            double scale = mesh.scaleV[i];
+            crc.update(&scale, sizeof(double));
           }
         }
       }
     }
-    return crc;
+    return crc.finalize();
   };
 
   auto generate = [&](const rbd::parsers::Geometry::Mesh & mesh, const fs::path & output_convex_dir)
