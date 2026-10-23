@@ -8,6 +8,7 @@
 
 #include <mc_rbdyn/Robot.h>
 
+#include <mesh_sampling/assimp_scene.h>
 #include <mesh_sampling/mesh_sampling.h>
 
 #include <cmath>
@@ -71,6 +72,20 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   }
 }
 
+namespace
+{
+
+// Name of the convex hull file of a collision mesh. A scaled mesh has its scale in the name, so that a mesh used both
+// as is and mirrored gets two hulls
+std::string convexName(const rbd::parsers::Geometry::Mesh & mesh)
+{
+  auto name = mc_rtc::filename(mesh.filename);
+  if(!mesh.scaleV.isOnes()) { name += fmt::format("_{}_{}_{}", mesh.scaleV.x(), mesh.scaleV.y(), mesh.scaleV.z()); }
+  return name + "-ch.txt";
+}
+
+} // namespace
+
 void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point)
 {
   auto urdfCRC = [&]()
@@ -84,30 +99,46 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         {
           const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data);
           crc += fs::file_size(mc_rtc::convertURI(fs::path(mesh.filename)));
-          // Regenerate the convexes of scaled meshes that were generated before the scale was applied
-          if(!mesh.scaleV.isOnes()) { crc += static_cast<uint32_t>(std::lround(1e6 * mesh.scaleV.sum())); }
+          // The hull of a scaled mesh is named after its scale, so the cache also depends on it
+          if(!mesh.scaleV.isOnes())
+          {
+            for(Eigen::Index i = 0; i < 3; ++i)
+            {
+              crc = 31 * crc + static_cast<uint32_t>(std::llround(1e6 * mesh.scaleV[i]));
+            }
+          }
         }
       }
     }
     return crc;
   };
 
-  auto generate = [&](const fs::path & mesh_file, const Eigen::Vector3d & scale, const fs::path & output_convex_dir)
+  auto generate = [&](const rbd::parsers::Geometry::Mesh & mesh, const fs::path & output_convex_dir)
   {
+    const auto mesh_file = mc_rtc::convertURI(fs::path(mesh.filename));
     if(!fs::exists(mesh_file))
     {
       mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file.string(), name);
     }
 
     mesh_sampling::MeshSampling sampler(mesh_file);
-    auto clouds = sampler.create_clouds(sampling_point);
-    // Apply the scale of the mesh in the robot description, e.g. 0.001 for a mesh in millimeters
-    const Eigen::Vector3f s = scale.cast<float>();
-    for(auto & cloud : clouds)
+    auto * scene = sampler.mesh(mesh_file.string());
+    if(!scene)
     {
-      for(auto & p : cloud.second) { p = p.cwiseProduct(s); }
+      mc_rtc::log::error("[RobotModule] {}: could not load the mesh {}", name, mesh_file.string());
+      return;
     }
-    sampler.create_convexes(clouds, output_convex_dir, false);
+    try
+    {
+      // The scale of the mesh in the robot description, e.g. 0.001 for a mesh in millimeters, -1 on an axis to mirror it
+      auto cloud = sampler.create_cloud(scene->scene(), sampling_point, {}, false, mesh.scaleV.cast<float>());
+      sampler.create_convex(cloud, output_convex_dir / convexName(mesh));
+    }
+    catch(const std::exception & e)
+    {
+      mc_rtc::log::error("[RobotModule] {}: could not generate the convex hull of {}: {}", name, mesh_file.string(),
+                         e.what());
+    }
   };
 
   if(!name.empty())
@@ -141,8 +172,7 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         {
           if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
           {
-            const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data);
-            generate(mc_rtc::convertURI(fs::path(mesh.filename)), mesh.scaleV, convex_dir);
+            generate(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data), convex_dir);
           }
         }
       }
@@ -163,8 +193,8 @@ void RobotModule::bind_convexes()
     {
       if(collisions[0].geometry.type == rbd::parsers::Geometry::Type::MESH)
       {
-        const auto & mesh_file = boost::get<rbd::parsers::Geometry::Mesh>(collisions[0].geometry.data).filename;
-        fs::path convex_path = fs::path(convex_dir) / (mc_rtc::filename(mesh_file) + "-ch.txt");
+        const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(collisions[0].geometry.data);
+        fs::path convex_path = fs::path(convex_dir) / convexName(mesh);
 
         if(!fs::exists(convex_path))
         {
@@ -182,8 +212,8 @@ void RobotModule::bind_convexes()
     {
       if(col.geometry.type == rbd::parsers::Geometry::Type::MESH)
       {
-        const auto & mesh_file = boost::get<rbd::parsers::Geometry::Mesh>(col.geometry.data).filename;
-        fs::path convex_path = fs::path(convex_dir) / (mc_rtc::filename(mesh_file) + "-ch.txt");
+        const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(col.geometry.data);
+        fs::path convex_path = fs::path(convex_dir) / convexName(mesh);
 
         if(!fs::exists(convex_path))
         {
