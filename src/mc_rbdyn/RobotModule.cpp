@@ -121,17 +121,11 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
       mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file.string(), name);
     }
 
-    mesh_sampling::MeshSampling sampler(mesh_file);
-    auto * scene = sampler.mesh(mesh_file.string());
-    if(!scene)
-    {
-      mc_rtc::log::error("[RobotModule] {}: could not load the mesh {}", name, mesh_file.string());
-      return;
-    }
     try
     {
+      mesh_sampling::MeshSampling sampler(mesh_file, mesh.scaleV.cast<float>());
       // The scale of the mesh in the robot description, e.g. 0.001 for a mesh in millimeters, -1 on an axis to mirror it
-      auto cloud = sampler.create_cloud(scene->scene(), sampling_point, {}, false, mesh.scaleV.cast<float>());
+      auto cloud = sampler.create_cloud(mesh_file, sampling_point, {}, false);
       sampler.create_convex(cloud, output_convex_dir / convexName(mesh));
     }
     catch(const std::exception & e)
