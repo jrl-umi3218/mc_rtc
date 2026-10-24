@@ -13,10 +13,7 @@
 
 #include <mc_rbdyn/Robot.h>
 
-#include <mesh_sampling/assimp_scene.h>
 #include <mesh_sampling/mesh_sampling.h>
-
-#include <cmath>
 
 namespace fs = std::filesystem;
 
@@ -117,19 +114,16 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   }
 }
 
-namespace
-{
-
-// Name of the convex hull file of a collision mesh. A scaled mesh has its scale in the name, so that a mesh used both
-// as is and mirrored gets two hulls
+/**
+ * Name of the convex hull file of a collision mesh. A scaled mesh has its scale in the name, so that a mesh used both
+ * as is and mirrored gets two hulls
+ */
 std::string convexName(const rbd::parsers::Geometry::Mesh & mesh)
 {
   auto name = mc_rtc::filename(mesh.filename);
   if(!mesh.scaleV.isOnes()) { name += fmt::format("_{}_{}_{}", mesh.scaleV.x(), mesh.scaleV.y(), mesh.scaleV.z()); }
   return name + "-ch.txt";
 }
-
-} // namespace
 
 void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point)
 {
