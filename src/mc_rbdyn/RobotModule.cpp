@@ -6,6 +6,11 @@
 #include <mc_rtc/config.h>
 #include <mc_rtc/path.h>
 
+// For CRC32
+#include <cstddef>
+#include <cstdint>
+#include <fstream> // IWYU pragma: keep
+
 #include <mc_rbdyn/Robot.h>
 
 #include <mesh_sampling/mesh_sampling.h>
@@ -14,6 +19,46 @@ namespace fs = std::filesystem;
 
 namespace mc_rbdyn
 {
+
+namespace details
+{
+/**
+ * Simple CRC32 implementation to compute a CRC32 checksum of a file. This is used to determine if the convex hulls need
+ * to be regenerated. It is based on the well-known bitwise CRC-32 algorithm using the polynomial `0xEDB88320`, which is
+ * the reversed form of the standard CRC-32 polynomial. This implementation is not copied from any specific source, but
+ * follows the canonical algorithm described in many references, such as:
+ *
+ * - [Wikipedia: CRC-32 algorithm](https://en.wikipedia.org/wiki/Cyclic_redundancy_check#CRC-32_algorithm)
+ * - [Ross Williams' "A Painless Guide to CRC Error Detection Algorithms"](https://zlib.net/crc_v3.txt)
+ * - The reference implementation in [zlib](https://github.com/madler/zlib/blob/master/crc32.c) (though zlib uses a
+ * table-based approach for speed)
+ */
+struct CRC32
+{
+  CRC32() : crc_(0xFFFFFFFF) {}
+
+  void update(const void * data, size_t length)
+  {
+    const uint8_t * buf = static_cast<const uint8_t *>(data);
+    for(size_t i = 0; i < length; ++i)
+    {
+      crc_ ^= buf[i];
+      for(int j = 0; j < 8; ++j)
+      {
+        if(crc_ & 1)
+          crc_ = (crc_ >> 1) ^ 0xEDB88320;
+        else
+          crc_ >>= 1;
+      }
+    }
+  }
+
+  uint32_t finalize() const { return crc_ ^ 0xFFFFFFFF; }
+
+private:
+  uint32_t crc_;
+};
+} // namespace details
 
 // Repeat static constexpr declarations
 // See also https://stackoverflow.com/q/8016780
@@ -69,35 +114,68 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   }
 }
 
+/**
+ * Name of the convex hull file of a collision mesh. A scaled mesh has its scale in the name, so that a mesh used both
+ * as is and mirrored gets two hulls
+ */
+std::string convexName(const rbd::parsers::Geometry::Mesh & mesh)
+{
+  auto name = mc_rtc::filename(mesh.filename);
+  if(!mesh.scaleV.isOnes()) { name += fmt::format("_{}_{}_{}", mesh.scaleV.x(), mesh.scaleV.y(), mesh.scaleV.z()); }
+  return name + "-ch.txt";
+}
+
 void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point)
 {
   auto urdfCRC = [&]()
   {
-    uint32_t crc = 0;
+    mc_rbdyn::details::CRC32 crc;
     for(const auto & col : _collision)
     {
       for(const auto & c : col.second)
       {
         if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
         {
-          const auto & mesh_path = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
-          crc += fs::file_size(mc_rtc::convertURI(mesh_path));
+          const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data);
+          // Read file contents
+          std::ifstream file(mc_rtc::convertURI(fs::path(mesh.filename)), std::ios::binary);
+          if(file)
+          {
+            std::vector<char> buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            if(!buffer.empty()) crc.update(buffer.data(), buffer.size());
+          }
+          // Add scale values
+          for(Eigen::Index i = 0; i < 3; ++i)
+          {
+            double scale = mesh.scaleV[i];
+            crc.update(&scale, sizeof(double));
+          }
         }
       }
     }
-    return crc;
+    return crc.finalize();
   };
 
-  auto generate = [&](const fs::path & mesh_file, const fs::path & output_convex_dir)
+  auto generate = [&](const rbd::parsers::Geometry::Mesh & mesh, const fs::path & output_convex_dir)
   {
+    const auto mesh_file = mc_rtc::convertURI(fs::path(mesh.filename));
     if(!fs::exists(mesh_file))
     {
       mc_rtc::log::error_and_throw("Couldn't find meshes at {} for {}", mesh_file.string(), name);
     }
 
-    mesh_sampling::MeshSampling sampler(mesh_file);
-    const auto & meshes = sampler.create_clouds(sampling_point);
-    sampler.create_convexes(meshes, output_convex_dir, false);
+    try
+    {
+      mesh_sampling::MeshSampling sampler(mesh_file, mesh.scaleV.cast<float>());
+      // The scale of the mesh in the robot description, e.g. 0.001 for a mesh in millimeters, -1 on an axis to mirror it
+      auto cloud = sampler.create_cloud(mesh_file, sampling_point, {}, false);
+      sampler.create_convex(cloud, output_convex_dir / convexName(mesh));
+    }
+    catch(const std::exception & e)
+    {
+      mc_rtc::log::error("[RobotModule] {}: could not generate the convex hull of {}: {}", name, mesh_file.string(),
+                         e.what());
+    }
   };
 
   if(!name.empty())
@@ -131,8 +209,7 @@ void RobotModule::generate_convexes(bool regenerate, unsigned int sampling_point
         {
           if(c.geometry.type == rbd::parsers::Geometry::Type::MESH)
           {
-            const auto & mesh_file = fs::path(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data).filename);
-            generate(mc_rtc::convertURI(mesh_file), convex_dir);
+            generate(boost::get<rbd::parsers::Geometry::Mesh>(c.geometry.data), convex_dir);
           }
         }
       }
@@ -153,8 +230,8 @@ void RobotModule::bind_convexes()
     {
       if(collisions[0].geometry.type == rbd::parsers::Geometry::Type::MESH)
       {
-        const auto & mesh_file = boost::get<rbd::parsers::Geometry::Mesh>(collisions[0].geometry.data).filename;
-        fs::path convex_path = fs::path(convex_dir) / (mc_rtc::filename(mesh_file) + "-ch.txt");
+        const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(collisions[0].geometry.data);
+        fs::path convex_path = fs::path(convex_dir) / convexName(mesh);
 
         if(!fs::exists(convex_path))
         {
@@ -172,8 +249,8 @@ void RobotModule::bind_convexes()
     {
       if(col.geometry.type == rbd::parsers::Geometry::Type::MESH)
       {
-        const auto & mesh_file = boost::get<rbd::parsers::Geometry::Mesh>(col.geometry.data).filename;
-        fs::path convex_path = fs::path(convex_dir) / (mc_rtc::filename(mesh_file) + "-ch.txt");
+        const auto & mesh = boost::get<rbd::parsers::Geometry::Mesh>(col.geometry.data);
+        fs::path convex_path = fs::path(convex_dir) / convexName(mesh);
 
         if(!fs::exists(convex_path))
         {

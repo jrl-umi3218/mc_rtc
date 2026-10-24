@@ -467,6 +467,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * Convex hulls are cached on disk in a per-variant directory under the user's local share path.
    * If the cache is missing or `regenerate` is true, convex hulls will be rebuilt using the
    * `mesh_sampling` utilities. Old cache directories for the same robot variant are deleted.
+   * The hulls apply the mesh scale of the robot description, including mirroring (negative scale).
    *
    * Mesh file URIs are resolved from:
    * - `package://` URIs (using ROS or fallback search paths)
@@ -491,7 +492,8 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * - For bodies with a single mesh, binds directly using the body name.
    * - For bodies with multiple meshes, binds using indexed names (e.g., "body_0", "body_1", ...).
-   * - Convex files are expected in @p convex_dir and named as {mesh_name}-ch.txt.
+   * - Convex files are expected in @p convex_dir and named as {mesh_name}-ch.txt, or
+   *   {mesh_name}_{sx}_{sy}_{sz}-ch.txt for a mesh with a scale.
    */
   void bind_convexes();
 

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Convex hulls generated from collision meshes now apply the mesh scale of the robot description, including mirroring (negative scale). Scaled meshes, such as meshes in millimeters with `scale="0.001 0.001 0.001"`, used to get hulls 1000 times too large. The hulls of scaled meshes are regenerated automatically, and robots without scaled meshes keep their cached hulls
+
 ## [2.16.0] - 2026-10-19
 
 ## [2.15.2] - 2026-07-15
