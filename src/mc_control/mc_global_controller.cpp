@@ -1078,7 +1078,9 @@ void MCGlobalController::setup_log()
   setup_logger_[current_ctrl] = true;
 }
 
-GlobalPlugin * MCGlobalController::loadPlugin(const std::string & name, const char * requiredBy)
+GlobalPlugin * MCGlobalController::loadPlugin(const std::string & name,
+                                              const char * requiredBy,
+                                              bool controllerSpecific)
 {
 #ifdef MC_RTC_BUILD_STATIC
   auto * plugin_loader = &GlobalPluginLoader::loader();
@@ -1087,9 +1089,10 @@ GlobalPlugin * MCGlobalController::loadPlugin(const std::string & name, const ch
 #endif
   try
   {
-    plugins_.emplace_back(name, plugin_loader->create_unique_object(name));
-    GlobalPlugin * plugin = plugins_.back().plugin.get();
-    const auto & plugin_config = plugins_.back().plugin->configuration();
+    auto & target_plugins = controllerSpecific ? controller_plugins_ : plugins_;
+    target_plugins.emplace_back(name, plugin_loader->create_unique_object(name));
+    GlobalPlugin * plugin = target_plugins.back().plugin.get();
+    const auto & plugin_config = target_plugins.back().plugin->configuration();
     if(plugin_config.should_run_before)
     {
       plugins_before_.push_back({plugin, duration_ms{0}});
@@ -1111,8 +1114,36 @@ GlobalPlugin * MCGlobalController::loadPlugin(const std::string & name, const ch
   return nullptr;
 }
 
+void MCGlobalController::trackPluginDatastoreEntries(PluginHandle & plugin, const std::vector<std::string> & beforeKeys)
+{
+  if(!controller_) { return; }
+  const auto afterKeys = controller_->datastore().keys();
+  for(const auto & key : afterKeys)
+  {
+    if(std::find(beforeKeys.begin(), beforeKeys.end(), key) == beforeKeys.end()
+       && std::find(plugin.datastore_entries.begin(), plugin.datastore_entries.end(), key)
+              == plugin.datastore_entries.end())
+    {
+      plugin.datastore_entries.push_back(key);
+    }
+  }
+}
+
+void MCGlobalController::cleanupPluginDatastoreEntries(PluginHandle & plugin, mc_rtc::DataStore & datastore)
+{
+  for(const auto & key : plugin.datastore_entries)
+  {
+    if(datastore.has(key)) { datastore.remove(key); }
+  }
+}
+
 void MCGlobalController::resetControllerPlugins()
 {
+  // Current controller - previous active controller before switch
+  MCController * prev_controller = nullptr;
+  auto prev_it = controllers.find(current_ctrl);
+  if(prev_it != controllers.end()) { prev_controller = prev_it->second.get(); }
+
   auto next_ctrl_plugins =
       mc_rtc::fromVectorOrElement<std::string>(config.controllers_configs[next_ctrl], "Plugins", {});
   // Remove the plugins that are loaded at the global level
@@ -1129,6 +1160,8 @@ void MCGlobalController::resetControllerPlugins()
     bool should_remove = (next_plugin_it == next_ctrl_plugins.end());
     if(should_remove)
     {
+      cleanupPluginDatastoreEntries(*it, prev_controller->datastore());
+      it->datastore_entries.clear();
       // First we remove the plugin from the before/always lists as needed
       auto it_before = std::find_if(plugins_before_.begin(), plugins_before_.end(),
                                     [&](const PluginBefore & p) { return p.plugin == it->plugin.get(); });
@@ -1146,15 +1179,24 @@ void MCGlobalController::resetControllerPlugins()
     else
     {
       next_ctrl_plugins.erase(next_plugin_it);
+      const auto beforeKeys = controller_->datastore().keys();
       it->plugin->reset(*this);
+      trackPluginDatastoreEntries(*it, beforeKeys);
       ++it;
     }
   }
   // At this point, next_ctrl_plugins only contains plugins that are required by this controller and not already loaded
   for(const auto & name : next_ctrl_plugins)
   {
-    auto plugin = loadPlugin(name, next_ctrl.c_str());
-    if(plugin) { plugin->init(*this, config.global_plugin_configs[name]); }
+    auto plugin = loadPlugin(name, next_ctrl.c_str(), true);
+    if(plugin)
+    {
+      const auto beforeKeys = controller_->datastore().keys();
+      plugin->init(*this, config.global_plugin_configs[name]);
+      auto it = std::find_if(controller_plugins_.begin(), controller_plugins_.end(),
+                             [&](const PluginHandle & p) { return p.plugin.get() == plugin; });
+      if(it != controller_plugins_.end()) { trackPluginDatastoreEntries(*it, beforeKeys); }
+    }
   }
   setup_plugin_log();
 }
@@ -1164,6 +1206,10 @@ void MCGlobalController::setup_plugin_log()
   auto getPluginName = [this](GlobalPlugin * plugin) -> const std::string &
   {
     for(auto & p : plugins_)
+    {
+      if(p.plugin.get() == plugin) { return p.name; }
+    }
+    for(auto & p : controller_plugins_)
     {
       if(p.plugin.get() == plugin) { return p.name; }
     }
