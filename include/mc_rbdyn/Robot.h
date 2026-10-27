@@ -17,7 +17,6 @@
 #include <RBDyn/MultiBodyConfig.h>
 #include <RBDyn/MultiBodyGraph.h>
 
-#include <Eigen/src/Core/Matrix.h>
 #include <memory>
 #include <optional>
 #include <unordered_map>
@@ -1115,41 +1114,55 @@ public:
    */
   mc_tvm::Convex & tvmConvex(const std::string & name) const;
 
-  /** @name External Torques
+  /** @name External torques
    *
-   * These functions are used to get or set:
-   * - The estimation of external torques being applied on the robot and its 'equivalent' acceleration
-   * - The additional feedforward compensation torque and its 'equivalent' acceleration
+   * Estimated external torques and optional feedforward compensation torques, with their equivalent
+   * joint accelerations (H^-1 * tau).
+   *
+   * All vectors have size mb().nrDof() and follow the layout of rbd::dofToVector(mb(), mbc().jointTorque).
    *
    * @{
    */
 
-  /** Set the external torques */
+  /** Set the estimated external joint torques
+   *
+   * \param torques Size mb().nrDof(), same layout as mbc().jointTorque
+   */
   void setExternalTorques(const Eigen::VectorXd & torques);
 
-  /** Get the external torques */
-  const Eigen::VectorXd & externalTorques(void) const;
+  /** Return the estimated external joint torques (same layout as mbc().jointTorque) */
+  const Eigen::VectorXd & externalTorques() const;
 
-  /** Set the external torques equivalent accelerations */
+  /** Set the joint accelerations equivalent to the external torques
+   *
+   * \param accelerations Size mb().nrDof(), same layout as mbc().alphaD
+   */
   void setExternalTorquesAcc(const Eigen::VectorXd & accelerations);
 
-  /** Get the external torques equivalent accelerations */
-  const Eigen::VectorXd & externalTorquesAcc(void) const;
+  /** Return the joint accelerations equivalent to the external torques (same layout as mbc().alphaD) */
+  const Eigen::VectorXd & externalTorquesAcc() const;
 
-  /** Set the compensation torques */
+  /** Set the feedforward compensation torques, used instead of externalTorques() by DynamicsConstraint
+   *
+   * \param torques Size mb().nrDof(), same layout as mbc().jointTorque
+   */
   void setCompensationTorques(const Eigen::VectorXd & torques);
 
-  /** Get the compensation torques */
-  const std::optional<Eigen::VectorXd> & compensationTorques(void) const;
+  /** Return the compensation torques (same layout as mbc().jointTorque), std::nullopt if not set */
+  const std::optional<Eigen::VectorXd> & compensationTorques() const;
 
-  /** Set the compensation torques equivalent accelerations */
+  /** Set the joint accelerations equivalent to the compensation torques
+   *
+   * \param accelerations Size mb().nrDof(), same layout as mbc().alphaD
+   */
   void setCompensationTorquesAcc(const Eigen::VectorXd & accelerations);
 
-  /** Get the compensation torques equivalent accelerations */
-  const std::optional<Eigen::VectorXd> & compensationTorquesAcc(void) const;
+  /** Return the joint accelerations equivalent to the compensation torques (same layout as mbc().alphaD),
+   * std::nullopt if not set */
+  const std::optional<Eigen::VectorXd> & compensationTorquesAcc() const;
 
   /** @} */
-  /* End of External Forces group */
+  /* End External torques section */
 
 private:
   Robots * robots_;

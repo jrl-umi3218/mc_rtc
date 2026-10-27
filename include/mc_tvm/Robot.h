@@ -98,9 +98,9 @@ public:
   /** Access q second derivative (joint acceleration) */
   inline tvm::VariablePtr & alphaD() noexcept { return ddq_; }
 
-  /** Access joint acceleration from external forces (const) */
+  /** Access joint acceleration from external torques, H^-1 * tauExternal() (same layout as alphaD) (const) */
   inline const Eigen::VectorXd & alphaDExternal() const noexcept { return ddq_ext_; }
-  /** Access joint acceleration from external forces */
+  /** Access joint acceleration from external torques, H^-1 * tauExternal() (same layout as alphaD) */
   inline Eigen::VectorXd & alphaDExternal() noexcept { return ddq_ext_; }
 
   /** Access floating-base variable (const) */
@@ -141,19 +141,19 @@ public:
   /** Access tau variable */
   inline tvm::VariablePtr & tau() { return tau_; }
 
-  /** Access tau external variable (const) */
+  /** Access estimated external torques (same layout as tau) (const) */
   inline const Eigen::VectorXd & tauExternal() const noexcept { return tau_ext_; }
-  /** Access tau external variable */
+  /** Access estimated external torques (same layout as tau) */
   inline Eigen::VectorXd & tauExternal() { return tau_ext_; }
 
-  /** Access tau compensation (const) */
+  /** Access compensation torques (same layout as tau), std::nullopt if not used (const) */
   inline const std::optional<Eigen::VectorXd> & tauCompensation() const noexcept { return tau_comp_; }
-  /** Access tau compensation */
+  /** Access compensation torques (same layout as tau), std::nullopt if not used */
   inline std::optional<Eigen::VectorXd> & tauCompensation() noexcept { return tau_comp_; }
 
-  /** Access joint acceleration from compensation torques (const) */
+  /** Access joint acceleration from compensation torques, H^-1 * tauCompensation() (same layout as alphaD) (const) */
   inline const std::optional<Eigen::VectorXd> & alphaDCompensation() const noexcept { return ddq_comp_; }
-  /** Access joint acceleration from compensation torques */
+  /** Access joint acceleration from compensation torques, H^-1 * tauCompensation() (same layout as alphaD) */
   inline std::optional<Eigen::VectorXd> & alphaDCompensation() noexcept { return ddq_comp_; }
 
   /** Returns the CoM algorithm associated to this robot (const) */

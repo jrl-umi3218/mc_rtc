@@ -3,8 +3,6 @@
 #include <mc_rtc/gui/ArrayInput.h>
 #include <mc_rtc/gui/Checkbox.h>
 #include <mc_tvm/Robot.h>
-#include <RBDyn/Jacobian.h>
-#include <Eigen/src/Core/Matrix.h>
 
 namespace mc_tasks
 {

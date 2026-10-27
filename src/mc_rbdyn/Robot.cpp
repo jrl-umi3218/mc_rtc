@@ -18,13 +18,10 @@
 
 #include <RBDyn/CoM.h>
 #include <RBDyn/FA.h>
-#include <RBDyn/FD.h>
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 #include <RBDyn/NumericalIntegration.h>
 
-#include <Eigen/src/Core/Matrix.h>
-#include <optional>
 #include <sch/S_Object/S_Cylinder.h>
 #include <sch/S_Object/S_Superellipsoid.h>
 
@@ -1584,52 +1581,40 @@ mc_tvm::Convex & Robot::tvmConvex(const std::string & name) const
 
 void Robot::setExternalTorques(const Eigen::VectorXd & torques)
 {
-  externalTorques_.noalias() = torques;
+  externalTorques_ = torques;
 }
 
-const Eigen::VectorXd & Robot::externalTorques(void) const
+const Eigen::VectorXd & Robot::externalTorques() const
 {
   return externalTorques_;
 }
 
 void Robot::setExternalTorquesAcc(const Eigen::VectorXd & accelerations)
 {
-  externalTorquesEquivalentAcc_.noalias() = accelerations;
+  externalTorquesEquivalentAcc_ = accelerations;
 }
 
-const Eigen::VectorXd & Robot::externalTorquesAcc(void) const
+const Eigen::VectorXd & Robot::externalTorquesAcc() const
 {
   return externalTorquesEquivalentAcc_;
 }
 
 void Robot::setCompensationTorques(const Eigen::VectorXd & torques)
 {
-  if(!externalTorqueCompensation_) { externalTorqueCompensation_.emplace(torques.size()); }
-  else if(externalTorqueCompensation_->size() == torques.size())
-  {
-    externalTorqueCompensation_->resize(torques.size());
-  }
-
-  externalTorqueCompensation_->noalias() = torques;
+  externalTorqueCompensation_ = torques;
 }
 
-const std::optional<Eigen::VectorXd> & Robot::compensationTorques(void) const
+const std::optional<Eigen::VectorXd> & Robot::compensationTorques() const
 {
   return externalTorqueCompensation_;
 }
 
 void Robot::setCompensationTorquesAcc(const Eigen::VectorXd & accelerations)
 {
-  if(!externalTorqueCompensation_) { compensationEquivalentAcc_.emplace(accelerations.size()); }
-  else if(externalTorqueCompensation_->size() == accelerations.size())
-  {
-
-    compensationEquivalentAcc_->resize(accelerations.size());
-  }
-  compensationEquivalentAcc_->noalias() = accelerations;
+  compensationEquivalentAcc_ = accelerations;
 }
 
-const std::optional<Eigen::VectorXd> & Robot::compensationTorquesAcc(void) const
+const std::optional<Eigen::VectorXd> & Robot::compensationTorquesAcc() const
 {
   return compensationEquivalentAcc_;
 }

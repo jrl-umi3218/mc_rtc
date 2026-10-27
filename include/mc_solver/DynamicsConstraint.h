@@ -63,16 +63,17 @@ public:
 
   /** Constructor
    * Builds a CBF joint limits constraint and a motion constr depending on
-   * the nature of the robot
-   * See details of the CBF constraint in Safe Execution of RL Policies via Acceleration-based CBF-QP Constraint
-   * Enforcement for Real-World Robotic Deployments, B.Muraccioli et al. (2026) See tasks::qp::MotionConstr for details
-   * on the latter one
+   * the nature of the robot. TVM backend only.
+   *
+   * \see KinematicsConstraint(const mc_rbdyn::Robots &, unsigned int, const std::array<double, 5> &, double) for
+   * details on the CBF joint limits
+   *
    * \param robots The robots including the robot affected by this constraint
    * \param robotIndex The index of the robot affected by this constraint
-   * \param damperSecond Value of the damper {interaction distance, safety distance,
-   * offset, amortization margin, lambda}
+   * \param damperSecond {interaction distance, safety distance, offset, overDamping, lambda}
    * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
-   * \param compensateExtTorques If true, external torques are added to the dynamic model constraint
+   * \param compensateExtTorques If true, compensates external disturbances using
+   * robot.compensationTorques() if set, robot.externalTorques() otherwise
    */
   DynamicsConstraint(const mc_rbdyn::Robots & robots,
                      unsigned int robotIndex,

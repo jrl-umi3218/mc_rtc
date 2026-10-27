@@ -249,10 +249,10 @@ void Robot::updateExternalForces()
   tau_comp_ = robot_.compensationTorques();
   auto H_inv = H().ldlt();
   ddq_ext_ = H_inv.solve(tau_ext_);
-  if(tau_comp_)
+  if(tau_comp_) { ddq_comp_ = H_inv.solve(*tau_comp_); }
+  else
   {
-    if(ddq_comp_->size() != tau_comp_->size()) { ddq_comp_->resize(tau_comp_->size()); }
-    ddq_comp_ = H_inv.solve(tau_comp_.value());
+    ddq_comp_.reset();
   }
 }
 

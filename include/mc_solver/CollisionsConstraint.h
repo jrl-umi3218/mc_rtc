@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <mc_rtc/log/Logger.h>
 #include <mc_solver/ConstraintSet.h>
 
 #include <mc_rbdyn/Collision.h>
@@ -75,13 +74,12 @@ public:
    */
   void addCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
 
-  /** Set the damping values of a set of collisions
+  /** Set the CBF parameters of a set of collisions
    *
-   * CBF parameters, see details in Safe Execution of RL Policies via Acceleration-based CBF-QP Constraint Enforcement
-   * for Real-World Robotic Deployments, B.Muraccioli et al. (2026)
+   * \see mc_rbdyn::Collision for the meaning of the CBF parameters
    *
    * \param solver The solver into which this constraint was added
-   * \param dampers List of parameters: {overDamping, lambda}
+   * \param dampers {overDamping, lambda}
    */
   void setCollisionsDampers(QPSolver & solver, const std::vector<double> & dampers);
 
@@ -96,13 +94,11 @@ public:
 
   /** Edit a set of collisions
    *
-   * The collision to edit is identified by the body names, the new parameters
-   * specified in col are applied to the collision, if it exists. If no such
-   * collision exists, this function does nothing.
+   * Each collision is identified by its pair of collision object names (body1, body2), and its
+   * parameters are replaced by those in \p cols. Collisions that do not exist are ignored.
    *
-   * \param solver The solver into which this constraint was added \param col The
-   * collision with updated parameters, the collision to update is identified
-   * by the body names specified in col
+   * \param solver The solver into which this constraint was added
+   * \param cols Collisions with updated parameters
    */
   void editCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
 
@@ -134,10 +130,12 @@ public:
 
   void removeFromSolverImpl(QPSolver & solver) override;
 
-  /** Get the current distance for a specific collision pair.
-   * \param b1Name Name of the first convex
-   * \param b2Name Name of the second convex
-   * \return The distance in meters. Returns infinity if the collision is not found.
+  /** Get the current distance between two collision objects
+   *
+   * \param b1Name Name of the first collision object
+   * \param b2Name Name of the second collision object
+   *
+   * \return The distance in meters, infinity if the collision is not in this constraint
    */
   double getDistance(const std::string & b1Name, const std::string & b2Name) const;
 
@@ -167,7 +165,7 @@ private:
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
   /** Actually adds the collision to the constraint, handles id creation and wildcard support */
   void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
-  /** Actually removes the collision from the constraint, handles id removal */
+  /** Actually edits the collision in the constraint */
   void __editCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
 
   /* Internal management for collision display */
