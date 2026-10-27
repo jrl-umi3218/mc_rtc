@@ -1,5 +1,9 @@
 var NAVTREEINDEX11 =
 {
+"structmc__control_1_1ControllerClient.html#ad71e478b911f2bb391ab06af04c4411f":[6,0,1,5,59],
+"structmc__control_1_1ControllerClient.html#ad809e856748eb8b70110bf2e2ffb3e6a":[6,0,1,5,84],
+"structmc__control_1_1ControllerClient.html#ade72000ce29ac5d99b1420ebdaa778e4":[6,0,1,5,68],
+"structmc__control_1_1ControllerClient.html#ae0c7c17c332c1d82f8dae1db99d587bb":[6,0,1,5,88],
 "structmc__control_1_1ControllerClient.html#ae3244e80dcf44ec423924b09a6b39095":[6,0,1,5,24],
 "structmc__control_1_1ControllerClient.html#ae3ab0954180e484c37db80654c2b1d5c":[6,0,1,5,85],
 "structmc__control_1_1ControllerClient.html#ae3cb858a8d61b53bb9acadcf0f967972":[6,0,1,5,96],
@@ -245,9 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__control_1_1MCController.html#af791c0b95647f3a3a9f38851e23ea2df":[6,0,1,17,92],
 "structmc__control_1_1MCController.html#af8bcfa30a03911b0e31373ebcf2b4e24":[6,0,1,17,23],
 "structmc__control_1_1MCController.html#afaa78577373a2362772543b2b6c12b40":[6,0,1,17,33],
-"structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html":[6,0,1,17,0],
-"structmc__control_1_1MCGlobalController.html":[6,0,1,12],
-"structmc__control_1_1MCGlobalController.html#a00228c857f39700abeb100a5ae744390":[6,0,1,12,5],
-"structmc__control_1_1MCGlobalController.html#a019e64216e49d2d2ea642e0d44a4cbd2":[6,0,1,12,38],
-"structmc__control_1_1MCGlobalController.html#a0226bfe03137da2817dc804338102eef":[6,0,1,12,66]
+"structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html":[6,0,1,17,0]
 };
