@@ -356,12 +356,7 @@ target_link_libraries(
     TVM::TVM
     mesh_sampling::mesh_sampling # privately links against Qhull::qhull_r Qhull::qhullcpp
 )
-target_link_libraries(
-  mc_rbdyn
-  PRIVATE
-    Qhull::qhull_r
-    Qhull::qhullcpp
-)
+target_link_libraries(mc_rbdyn PRIVATE Qhull::qhull_r Qhull::qhullcpp)
 target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 
 if(MC_RTC_BUILD_STATIC)
@@ -372,12 +367,7 @@ if(MC_RTC_BUILD_STATIC)
                      "-Wl,--no-whole-archive" Qhull::qhullcpp
   )
 else()
-  target_link_libraries(
-    mc_rbdyn
-    PRIVATE
-      Qhull::qhull_r
-      Qhull::qhullcpp
-  )
+  target_link_libraries(mc_rbdyn PRIVATE Qhull::qhull_r Qhull::qhullcpp)
 endif()
 
 if(TARGET mc_rtc_3rd_party::ROS)
