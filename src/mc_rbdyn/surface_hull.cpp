@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_rbdyn/CylindricalSurface.h>
@@ -13,11 +13,10 @@
 #include <fstream>
 #include <stdlib.h>
 
-// Does not look nice but make sure it's not confused with system headers
-#include "libqhullcpp/Qhull.h"
-#include "libqhullcpp/QhullFacetList.h"
-#include "libqhullcpp/QhullPoints.h"
-#include "libqhullcpp/QhullVertexSet.h"
+#include <libqhullcpp/Qhull.h>
+#include <libqhullcpp/QhullFacetList.h>
+#include <libqhullcpp/QhullPoints.h>
+#include <libqhullcpp/QhullVertexSet.h>
 
 #ifdef WIN32
 #  include <Windows.h>
