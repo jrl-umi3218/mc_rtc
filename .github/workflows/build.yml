@@ -2,6 +2,8 @@ name: CI of mc_rtc
 
 on:
   push:
+    branches:
+      - 'main'
     paths-ignore:
       # Changes to those files don't mandate running CI
       - ".gitlab-ci.yml"
@@ -19,8 +21,6 @@ on:
       - "controllers/**/README.md"
       - "binding/**/README.md"
       - "src/mc_rtc/README.md"
-    branches:
-      - '**'
   pull_request:
     branches:
       - '**'
