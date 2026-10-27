@@ -1,9 +1,5 @@
 var NAVTREEINDEX12 =
 {
-"structmc__control_1_1MCGlobalController.html":[6,0,1,12],
-"structmc__control_1_1MCGlobalController.html#a00228c857f39700abeb100a5ae744390":[6,0,1,12,5],
-"structmc__control_1_1MCGlobalController.html#a019e64216e49d2d2ea642e0d44a4cbd2":[6,0,1,12,38],
-"structmc__control_1_1MCGlobalController.html#a0226bfe03137da2817dc804338102eef":[6,0,1,12,66],
 "structmc__control_1_1MCGlobalController.html#a07310532c70c9cb3087cbbec3a2f14e3":[6,0,1,12,25],
 "structmc__control_1_1MCGlobalController.html#a0dca39c45c9a87e08d48b6d34c75c44a":[6,0,1,12,32],
 "structmc__control_1_1MCGlobalController.html#a0fff6472a1d77b4b4866ff7cad1149a4":[6,0,1,12,9],
@@ -249,5 +245,9 @@ var NAVTREEINDEX12 =
 "structmc__control_1_1fsm_1_1HalfSittingState.html#a84f53c91784c88fd59a7863dba0c2a30":[6,0,1,1,9,3],
 "structmc__control_1_1fsm_1_1HalfSittingState.html#a8a8b45fdafd6e8b70d81a48ec20357c0":[6,0,1,1,9,0],
 "structmc__control_1_1fsm_1_1HalfSittingState.html#a93bf204a6601aa3294f2759817dc71e0":[6,0,1,1,9,4],
-"structmc__control_1_1fsm_1_1HalfSittingState.html#abde9259e5f3759b0266294abbad8c40b":[6,0,1,1,9,1]
+"structmc__control_1_1fsm_1_1HalfSittingState.html#abde9259e5f3759b0266294abbad8c40b":[6,0,1,1,9,1],
+"structmc__control_1_1fsm_1_1HalfSittingState.html#af2cef21b4b88c3ea3b48d86367404e93":[6,0,1,1,9,5],
+"structmc__control_1_1fsm_1_1MessageState.html":[6,0,1,1,10],
+"structmc__control_1_1fsm_1_1MessageState.html#a13aaf77e6c79a2dc709e4951499ec36f":[6,0,1,1,10,3],
+"structmc__control_1_1fsm_1_1MessageState.html#a17d7efa8afe689d0859dbc2c353a857d":[6,0,1,1,10,7]
 };
