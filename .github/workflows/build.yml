@@ -3,7 +3,7 @@ name: CI of mc_rtc
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
     paths-ignore:
       # Changes to those files don't mandate running CI
       - ".gitlab-ci.yml"
