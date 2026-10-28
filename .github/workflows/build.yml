@@ -2,6 +2,8 @@ name: CI of mc_rtc
 
 on:
   push:
+    branches:
+      - 'master'
     paths-ignore:
       # Changes to those files don't mandate running CI
       - ".gitlab-ci.yml"
@@ -19,8 +21,6 @@ on:
       - "controllers/**/README.md"
       - "binding/**/README.md"
       - "src/mc_rtc/README.md"
-    branches:
-      - '**'
   pull_request:
     branches:
       - '**'
@@ -91,6 +91,28 @@ jobs:
         repository: mc-rtc/mc-rtc-superbuild
         path: mc-rtc-superbuild
 
+
+    # Restores the cache from warmest cache to most generic one
+    # Saves the newly generated cache automatically after job success
+    # - First, it looks for an exact match:
+    #   `ccache-ubuntu-22.04-gcc-RelWithDebInfo-refs/heads/master`
+    # - If not found, it tries:
+    #   `ccache-ubuntu-22.04-gcc-RelWithDebInfo-` (any branch/ref)
+    # - If still not found, it tries:
+    #   `ccache-ubuntu-22.04-gcc-` (any build type, any branch/ref)
+    # - Finally, it tries:
+    #   `ccache-ubuntu-22.04-` (any compiler, build type, branch/ref)
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: ${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.build-type }}-${{ github.ref_name }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.build-type }}-main
+          ${{ runner.os }}-${{ matrix.compiler }}-
+          ${{ runner.os }}-
+        max-size: "5000MB"
+        verbose: 2
+
     - name: "[superbuild] Bootstrap"
       if: matrix.os != 'windows-latest'
       shell: bash
@@ -99,14 +121,17 @@ jobs:
         ./utils/bootstrap-linux.sh
         git config --global user.email "arn.tanguy@gmail.com"
         git config --global user.name "Arnaud Tanguy (Automated CI update)"
+
     - name: "[superbuild] Install system dependencies"
       if: matrix.os != 'windows-latest'
       shell: bash
       run: |
         mkdir -p ${TMPDIR-/tmp}/build-mc-rtc
+        # DEVELOPPER_MODE=ON to increase ccache hit rate for mc_rtc
         cmake -S ${GITHUB_WORKSPACE}/mc-rtc-superbuild \
               -B ${TMPDIR-/tmp}/build-mc-rtc \
               -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+              -DDEVELOPPER_MODE=ON  \
               -DINSTALL_DOCUMENTATION=ON \
               -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GITHUB=${GITHUB_REPO_TRIGGER} \
               -DMC_RTC_SUPERBUILD_OVERRIDE_mc_rtc_GIT_TAG="origin/${GITHUB_BRANCH}"
@@ -119,6 +144,7 @@ jobs:
 
     # mc-rtc-superbuild does not support windows yet, build manually
     - uses: actions/checkout@v7
+      if: matrix.os == 'windows-latest'
       with:
         submodules: recursive
 

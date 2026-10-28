@@ -354,20 +354,20 @@ target_link_libraries(
     mc_filter
     GEOS::geos
     TVM::TVM
-    mesh_sampling::mesh_sampling # transitively links against Qhull::qhull_r Qhull::qhullcpp
+    mesh_sampling::mesh_sampling # privately links against Qhull::qhull_r Qhull::qhullcpp
 )
+target_link_libraries(mc_rbdyn PRIVATE Qhull::qhull_r Qhull::qhullcpp)
 target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 
-# TODO: restore static qhull build
 if(MC_RTC_BUILD_STATIC)
-  message(
-    FATAL_ERROR
-      "MC_RTC_BUILD_STATIC: building against a static qhull version is no longer supported since the introductin of mesh_sampling. To fix it, you need to compile mesh_sampling against a static (reentrant) version of qhull as well."
+  # FIXME: confirm that static qhull build still works since mesh_sampling changes with re-entrant qhull
+  # we at least will need the same static qhull logic for mesh_sampling
+  target_link_libraries(
+    mc_rbdyn PRIVATE "-Wl,--no-whole-archive" Qhull::qhullstatic_r
+                     "-Wl,--no-whole-archive" Qhull::qhullcpp
   )
-  # target_link_libraries(
-  #   mc_rbdyn PRIVATE "-Wl,--no-whole-archive" Qhull::qhullstatic_r
-  #                    "-Wl,--no-whole-archive" Qhull::qhullcpp
-  # )
+else()
+  target_link_libraries(mc_rbdyn PRIVATE Qhull::qhull_r Qhull::qhullcpp)
 endif()
 
 if(TARGET mc_rtc_3rd_party::ROS)
