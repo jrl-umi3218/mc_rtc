@@ -5,17 +5,18 @@ on:
     types:
     - package-master
     - package-release
-  pull_request:
-    branches:
-    - "**"
   push:
-    paths-ignore:
-    - ".gitlab-ci.yml"
-    - ".jrl-ci"
+    paths-ignore: &paths-to-ignore
+    - ".mergify.yml"
+    - "flake.nix"
+    - "flake.lock"
+    - ".envrc"
     - doc/**
     - README.md
     - "CHANGELOG.md"
-    - ".github/workflows/build.yml"
+    - ".github/workflows/nix*.yml"
+    - ".github/workflows/build*.yml"
+    - ".github/workflows/sync.yml"
     - ".pre-commit-config.yaml"
     - "robots/README.md"
     - "utils/**/README.md"
@@ -24,12 +25,17 @@ on:
     - "binding/**/README.md"
     - "src/mc_rtc/README.md"
     branches:
-    - "**"
+    - "master"
     tags:
     - v*
+  pull_request:
+    branches:
+    - "master"
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   package:
     uses: jrl-umi3218/github-actions/.github/workflows/package-project.yml@master

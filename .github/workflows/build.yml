@@ -4,11 +4,15 @@ on:
   push:
     branches:
       - 'master'
-    paths-ignore:
+    paths-ignore: &paths_to_ignore
       # Changes to those files don't mandate running CI
-      - ".gitlab-ci.yml"
-      - ".jrl-ci"
+      - ".mergify.yml"
+      - "flake.nix"
+      - "flake.lock"
+      - ".envrc"
       - ".github/workflows/package.yml"
+      - ".github/workflows/nix*.yml"
+      - ".github/workflows/sync.yml"
       - ".github/workflows/sources/*"
       - ".github/workflows/build-others.yml"
       - ".github/workflows/docker/*"
@@ -23,7 +27,8 @@ on:
       - "src/mc_rtc/README.md"
   pull_request:
     branches:
-      - '**'
+      - 'master'
+    paths-ignore: *paths_to_ignore
 
 # cancel running workflows when pushing to the same branch/pr
 concurrency:

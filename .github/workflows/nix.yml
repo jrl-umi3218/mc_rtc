@@ -2,14 +2,14 @@ name: CI - Nix
 on:
   push:
     branches:
-      - devel
       - master
-      - main
-    paths-ignore:
+    paths-ignore: &paths-to-ignore
+      - ".mergify.yml"
       - README.md
       - CHANGELOG.md
       - .github/workflows/build.yml
       - .github/workflows/package.yml
+      - ".github/workflows/sync.yml"
       - .pre-commit-config.yaml
       - robots/README.md
       - utils/**/README.md
@@ -19,12 +19,13 @@ on:
       - src/mc_rtc/README.md
   pull_request:
     branches:
-      - devel
       - master
-      - main
+    paths-ignore: *paths-to-ignore
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   build:
     uses: ./.github/workflows/nix-build.yml

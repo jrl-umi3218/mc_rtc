@@ -4,11 +4,20 @@ name: CI of mc_rtc with Docker
 
 on:
   push:
-    paths-ignore:
+    branches:
+      - 'master'
+    paths-ignore: &paths_to_ignore
       # Changes to those files don't mandate running CI
-      - ".gitlab-ci.yml"
-      - ".jrl-ci"
+      - ".mergify.yml"
+      - "flake.nix"
+      - "flake.lock"
+      - ".envrc"
       - ".github/workflows/package.yml"
+      - ".github/workflows/nix*.yml"
+      - ".github/workflows/sync.yml"
+      - ".github/workflows/sources/*"
+      - ".github/workflows/build-others.yml"
+      - ".github/workflows/docker/*"
       - "debian/**"
       - "*.md"
       - "doc/**/README.md"
@@ -18,11 +27,10 @@ on:
       - "controllers/**/README.md"
       - "binding/**/README.md"
       - "src/mc_rtc/README.md"
-    branches:
-      - '**'
   pull_request:
     branches:
-      - '**'
+      - 'master'
+    paths-ignore: *paths_to_ignore
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
