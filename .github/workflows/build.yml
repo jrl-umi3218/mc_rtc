@@ -33,6 +33,7 @@ jobs:
       with:
         filters: |
           code:
+            - '.github/workflows/build.yml'
             - 'benchmarks/**'
             - 'binding/**'
             # XXX: doc only needs build for json schemas, and even there
@@ -271,3 +272,4 @@ jobs:
       - uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
+          allowed-skips: build # accept skipped builds as success
