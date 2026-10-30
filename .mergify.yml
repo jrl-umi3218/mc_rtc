@@ -6,7 +6,12 @@ pull_request_rules:
       - check-success = "check-package"
       - check-success = "pre-commit.ci - pr"
       - or:
+          # github does not allow to self-approve PRs (even for owners)...
           - approved-reviews-by = arntanguy
+          # ... so we use '@mergifyio merge' comment on prs by @arntanguy
+          - and:
+              - comment-author = arntanguy
+              - comment-body ~ = (?i)@mergifyio (merge|queue)
           - author = dependabot[bot]
           - author = gepetto-flake-updater[bot]
           - author = mc-rtc-nixpkgs-flake-updater[bot]
