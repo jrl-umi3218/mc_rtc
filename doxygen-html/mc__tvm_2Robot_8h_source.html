@@ -184,42 +184,38 @@ $(document).ready(function(){initNavTree('mc__tvm_2Robot_8h_source.html',''); in
 <div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Robot.html#ad433dc0ea980cc12a348d81d4932741a">  156</a></span>&#160;  <span class="keyword">inline</span> <span class="keyword">const</span> std::vector&lt;sva::MotionVecd&gt; &amp; <a class="code" href="structmc__tvm_1_1Robot.html#ad433dc0ea980cc12a348d81d4932741a">normalAccB</a>() const noexcept { <span class="keywordflow">return</span> normalAccB_; }</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
 <div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Robot.html#ad2443dfa13fc3f84b53bd4dde44c0dd5">  168</a></span>&#160;  <span class="keyword">inline</span> Eigen::DenseIndex <a class="code" href="structmc__tvm_1_1Robot.html#ad2443dfa13fc3f84b53bd4dde44c0dd5">refJointIndexToQIndex</a>(<span class="keywordtype">size_t</span> jointIndex)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">return</span> refJointIndexToQIndex_.at(jointIndex);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  }</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Robot.html#a97a81387c3c9520a0864c4f86e9e4ba7">  184</a></span>&#160;  <span class="keyword">inline</span> Eigen::DenseIndex <a class="code" href="structmc__tvm_1_1Robot.html#a97a81387c3c9520a0864c4f86e9e4ba7">refJointIndexToQDotIndex</a>(<span class="keywordtype">size_t</span> jointIndex)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">  </span>{</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">return</span> refJointIndexToQDotIndex_.at(jointIndex);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; robot_;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <a class="code" href="structmc__tvm_1_1Limits.html">Limits</a> limits_;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> q_fb_;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> q_joints_;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> q_;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  std::map&lt;tvm::VariablePtr, mimic_variables_t&gt; mimics_;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> dq_;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> ddq_;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> tau_;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  std::vector&lt;sva::MotionVecd&gt; normalAccB_;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/classrbd_1_1ForwardDynamics.html">rbd::ForwardDynamics</a> fd_;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <a class="code" href="namespacemc__tvm.html#a6b3e6f3b517f90f44e4056830bb66218">CoMPtr</a> com_;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <a class="code" href="namespacemc__tvm.html#a36f851b703f67948d4d0bd33f4f65a0b">MomentumPtr</a> momentum_;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  std::vector&lt;Eigen::DenseIndex&gt; refJointIndexToQIndex_;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  std::vector&lt;Eigen::DenseIndex&gt; refJointIndexToQDotIndex_;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="comment">/* Update functions */</span></div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordtype">void</span> updateFK();</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keywordtype">void</span> updateFV();</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keywordtype">void</span> updateFA();</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="keywordtype">void</span> updateNormalAcceleration();</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  <span class="keywordtype">void</span> updateH();</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keywordtype">void</span> updateC();</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;};</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;} <span class="comment">// namespace mc_tvm</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keyword">  </span>{ <span class="keywordflow">return</span> refJointIndexToQIndex_.at(jointIndex); }</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="structmc__tvm_1_1Robot.html#a97a81387c3c9520a0864c4f86e9e4ba7">  182</a></span>&#160;  <span class="keyword">inline</span> Eigen::DenseIndex <a class="code" href="structmc__tvm_1_1Robot.html#a97a81387c3c9520a0864c4f86e9e4ba7">refJointIndexToQDotIndex</a>(<span class="keywordtype">size_t</span> jointIndex)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="keyword">  </span>{ <span class="keywordflow">return</span> refJointIndexToQDotIndex_.at(jointIndex); }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keyword">const</span> <a class="code" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp; robot_;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <a class="code" href="structmc__tvm_1_1Limits.html">Limits</a> limits_;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> q_fb_;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> q_joints_;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> q_;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  std::map&lt;tvm::VariablePtr, mimic_variables_t&gt; mimics_;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> dq_;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> ddq_;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/namespacetvm.html#a024f10de786d6592dbd271d3df847835">tvm::VariablePtr</a> tau_;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  std::vector&lt;sva::MotionVecd&gt; normalAccB_;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <a class="codeRef" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/classrbd_1_1ForwardDynamics.html">rbd::ForwardDynamics</a> fd_;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <a class="code" href="namespacemc__tvm.html#a6b3e6f3b517f90f44e4056830bb66218">CoMPtr</a> com_;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <a class="code" href="namespacemc__tvm.html#a36f851b703f67948d4d0bd33f4f65a0b">MomentumPtr</a> momentum_;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  std::vector&lt;Eigen::DenseIndex&gt; refJointIndexToQIndex_;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  std::vector&lt;Eigen::DenseIndex&gt; refJointIndexToQDotIndex_;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="comment">/* Update functions */</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordtype">void</span> updateFK();</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <span class="keywordtype">void</span> updateFV();</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordtype">void</span> updateFA();</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="keywordtype">void</span> updateNormalAcceleration();</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keywordtype">void</span> updateH();</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keywordtype">void</span> updateC();</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;};</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;} <span class="comment">// namespace mc_tvm</span></div>
 <div class="ttc" id="aAbstractNode_8h_html_abd38cd98a6567962387d6ebe5a27ce45"><div class="ttname"><a href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/AbstractNode_8h.html#abd38cd98a6567962387d6ebe5a27ce45">SET_UPDATES</a></div><div class="ttdeci">#define SET_UPDATES(SelfT,...)</div></div>
 <div class="ttc" id="aCoM_8h_html"><div class="ttname"><a href="CoM_8h.html">CoM.h</a></div></div>
 <div class="ttc" id="aFD_8h.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/FD_8h.html">FD.h</a></div></div>
@@ -264,7 +260,7 @@ $(document).ready(function(){initNavTree('mc__tvm_2Robot_8h_source.html',''); in
 <div class="ttc" id="astructmc__tvm_1_1Robot_html_a863e4b53fa0fc555ce17b0cd2d78499f"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#a863e4b53fa0fc555ce17b0cd2d78499f">mc_tvm::Robot::q</a></div><div class="ttdeci">const tvm::VariablePtr &amp; q() const noexcept</div><div class="ttdef"><b>Definition:</b> Robot.h:85</div></div>
 <div class="ttc" id="astructmc__tvm_1_1Robot_html_a883f8887c9250b6403bc4e8e17525c3a"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#a883f8887c9250b6403bc4e8e17525c3a">mc_tvm::Robot::alpha</a></div><div class="ttdeci">const tvm::VariablePtr &amp; alpha() const noexcept</div><div class="ttdef"><b>Definition:</b> Robot.h:90</div></div>
 <div class="ttc" id="astructmc__tvm_1_1Robot_html_a928553e8164db803c0ecc3bab591940f"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#a928553e8164db803c0ecc3bab591940f">mc_tvm::Robot::momentumAlgo</a></div><div class="ttdeci">Momentum &amp; momentumAlgo() noexcept</div><div class="ttdef"><b>Definition:</b> Robot.h:147</div></div>
-<div class="ttc" id="astructmc__tvm_1_1Robot_html_a97a81387c3c9520a0864c4f86e9e4ba7"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#a97a81387c3c9520a0864c4f86e9e4ba7">mc_tvm::Robot::refJointIndexToQDotIndex</a></div><div class="ttdeci">Eigen::DenseIndex refJointIndexToQDotIndex(size_t jointIndex) const</div><div class="ttdef"><b>Definition:</b> Robot.h:184</div></div>
+<div class="ttc" id="astructmc__tvm_1_1Robot_html_a97a81387c3c9520a0864c4f86e9e4ba7"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#a97a81387c3c9520a0864c4f86e9e4ba7">mc_tvm::Robot::refJointIndexToQDotIndex</a></div><div class="ttdeci">Eigen::DenseIndex refJointIndexToQDotIndex(size_t jointIndex) const</div><div class="ttdef"><b>Definition:</b> Robot.h:182</div></div>
 <div class="ttc" id="astructmc__tvm_1_1Robot_html_aaed926b037dc3cd6c825e8bb98b765d5"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#aaed926b037dc3cd6c825e8bb98b765d5">mc_tvm::Robot::mimics</a></div><div class="ttdeci">std::map&lt; tvm::VariablePtr, mimic_variables_t &gt; &amp; mimics() noexcept</div><div class="ttdef"><b>Definition:</b> Robot.h:130</div></div>
 <div class="ttc" id="astructmc__tvm_1_1Robot_html_ab78e413a5551a6bdadf9aef05c0480a9"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#ab78e413a5551a6bdadf9aef05c0480a9">mc_tvm::Robot::tau</a></div><div class="ttdeci">tvm::VariablePtr &amp; tau()</div><div class="ttdef"><b>Definition:</b> Robot.h:135</div></div>
 <div class="ttc" id="astructmc__tvm_1_1Robot_html_abdf8f5c4410399bdfdf515039a7bb46b"><div class="ttname"><a href="structmc__tvm_1_1Robot.html#abdf8f5c4410399bdfdf515039a7bb46b">mc_tvm::Robot::qJoint</a></div><div class="ttdeci">tvm::VariablePtr qJoint(size_t jIdx)</div></div>

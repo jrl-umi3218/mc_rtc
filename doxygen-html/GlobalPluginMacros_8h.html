@@ -199,14 +199,10 @@ Macros</h2></td></tr>
 <div class="line">      }                                                                             \</div>
 <div class="line">                                                                                    \</div>
 <div class="line">      GLOBAL_PLUGIN_API <span class="keywordtype">void</span> destroy(<a class="code" href="structmc__control_1_1GlobalPlugin.html">mc_control::GlobalPlugin</a> * ptr)                \</div>
-<div class="line">      {                                                                             \</div>
-<div class="line">        delete ptr;                                                                 \</div>
-<div class="line">      }                                                                             \</div>
+<div class="line">      { <span class="keyword">delete</span> ptr; }                                                               \</div>
 <div class="line">                                                                                    \</div>
 <div class="line">      GLOBAL_PLUGIN_API <a class="code" href="structmc__control_1_1GlobalPlugin.html">mc_control::GlobalPlugin</a> * create(<span class="keyword">const</span> std::string &amp;)      \</div>
-<div class="line">      {                                                                             \</div>
-<div class="line">        return <span class="keyword">new</span> TYPE();                                                          \</div>
-<div class="line">      }                                                                             \</div>
+<div class="line">      { <span class="keywordflow">return</span> <span class="keyword">new</span> TYPE(); }                                                        \</div>
 <div class="line">    }</div>
 <div class="ttc" id="astructmc__control_1_1GlobalPlugin_html"><div class="ttname"><a href="structmc__control_1_1GlobalPlugin.html">mc_control::GlobalPlugin</a></div><div class="ttdef"><b>Definition:</b> GlobalPlugin.h:22</div></div>
 </div><!-- fragment -->

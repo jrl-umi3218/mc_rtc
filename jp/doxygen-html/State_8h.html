@@ -249,17 +249,11 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>                                                              \</div>
 <div class="line">    {                                                                       \</div>
 <div class="line">      FSM_STATE_API <span class="keywordtype">void</span> MC_RTC_FSM_STATE(std::vector&lt;std::string&gt; &amp; names) \</div>
-<div class="line">      {                                                                     \</div>
-<div class="line">        names = {NAME};                                                     \</div>
-<div class="line">      }                                                                     \</div>
+<div class="line">      { names = {NAME}; }                                                   \</div>
 <div class="line">      FSM_STATE_API <span class="keywordtype">void</span> destroy(<a class="code" href="structmc__control_1_1fsm_1_1State.html">mc_control::fsm::State</a> * ptr)              \</div>
-<div class="line">      {                                                                     \</div>
-<div class="line">        delete ptr;                                                         \</div>
-<div class="line">      }                                                                     \</div>
+<div class="line">      { <span class="keyword">delete</span> ptr; }                                                       \</div>
 <div class="line">      FSM_STATE_API <a class="code" href="structmc__control_1_1fsm_1_1State.html">mc_control::fsm::State</a> * create(<span class="keyword">const</span> std::string &amp;)    \</div>
-<div class="line">      {                                                                     \</div>
-<div class="line">        return <span class="keyword">new</span> TYPE();                                                  \</div>
-<div class="line">      }                                                                     \</div>
+<div class="line">      { <span class="keywordflow">return</span> <span class="keyword">new</span> TYPE(); }                                                \</div>
 <div class="line">    }</div>
 <div class="ttc" id="astructmc__control_1_1fsm_1_1State_html"><div class="ttname"><a href="structmc__control_1_1fsm_1_1State.html">mc_control::fsm::State</a></div><div class="ttdef"><b>Definition:</b> State.h:59</div></div>
 </div><!-- fragment -->

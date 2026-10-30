@@ -125,35 +125,29 @@ $(document).ready(function(){initNavTree('ObserverMacros_8h_source.html',''); in
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        names = {NAME};                                                                                \</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      }                                                                                                \</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                                   \</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      {                                                                                                \</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        delete ptr;                                                                                    \</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      }                                                                                                \</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      OBSERVER_MODULE_API unsigned int create_args_required()                                          \</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      {                                                                                                \</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        return 2;                                                                                      \</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      }                                                                                                \</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      OBSERVER_MODULE_API mc_observers::Observer * create(const std::string &amp; type, const double &amp; dt) \</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      {                                                                                                \</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        return new TYPE{type, dt};                                                                     \</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      }                                                                                                \</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#  include &lt;<a class="code" href="ObserverLoader_8h.html">mc_observers/ObserverLoader.h</a>&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#  define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                                           \</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    namespace                                                                                                          \</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    {                                                                                                                  \</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">    static auto registered = []()                                                                                      \</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">    {                                                                                                                  \</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">      using fn_t = std::function&lt;TYPE *(const double &amp;)&gt;;                                                              \</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">      mc_observers::ObserverLoader::register_object(NAME, fn_t([](const double &amp; dt) { return new TYPE(NAME, dt); })); \</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">      return true;                                                                                                     \</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">    }();                                                                                                               \</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">    }</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      { delete ptr; }                                                                                  \</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      OBSERVER_MODULE_API unsigned int create_args_required()                                          \</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      { return 2; }                                                                                    \</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      OBSERVER_MODULE_API mc_observers::Observer * create(const std::string &amp; type, const double &amp; dt) \</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      { return new TYPE{type, dt}; }                                                                   \</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#  include &lt;<a class="code" href="ObserverLoader_8h.html">mc_observers/ObserverLoader.h</a>&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#  define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                                           \</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">    namespace                                                                                                          \</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">    {                                                                                                                  \</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">    static auto registered = []()                                                                                      \</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">    {                                                                                                                  \</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">      using fn_t = std::function&lt;TYPE *(const double &amp;)&gt;;                                                              \</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">      mc_observers::ObserverLoader::register_object(NAME, fn_t([](const double &amp; dt) { return new TYPE(NAME, dt); })); \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">      return true;                                                                                                     \</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    }();                                                                                                               \</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">    }</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aObserverLoader_8h_html"><div class="ttname"><a href="ObserverLoader_8h.html">ObserverLoader.h</a></div></div>
 <div class="ttc" id="aObserver_8h_html"><div class="ttname"><a href="Observer_8h.html">Observer.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

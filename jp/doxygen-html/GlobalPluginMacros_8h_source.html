@@ -125,32 +125,28 @@ $(document).ready(function(){initNavTree('GlobalPluginMacros_8h_source.html','')
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      }                                                                             \</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                                                                    \</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      GLOBAL_PLUGIN_API void destroy(mc_control::GlobalPlugin * ptr)                \</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      {                                                                             \</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        delete ptr;                                                                 \</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      }                                                                             \</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                                                                                    \</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      GLOBAL_PLUGIN_API mc_control::GlobalPlugin * create(const std::string &amp;)      \</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      {                                                                             \</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        return new TYPE();                                                          \</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      }                                                                             \</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      { delete ptr; }                                                               \</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                                                                                    \</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      GLOBAL_PLUGIN_API mc_control::GlobalPlugin * create(const std::string &amp;)      \</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      { return new TYPE(); }                                                        \</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#  include &lt;<a class="code" href="GlobalPluginLoader_8h.html">mc_control/GlobalPluginLoader.h</a>&gt;</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#  include &lt;<a class="code" href="GlobalPluginLoader_8h.html">mc_control/GlobalPluginLoader.h</a>&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#  define EXPORT_MC_RTC_PLUGIN(NAME, TYPE)                                                               \</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">    namespace                                                                                            \</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">    {                                                                                                    \</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">    static auto registered = []()                                                                        \</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    {                                                                                                    \</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">      using fn_t = std::function&lt;TYPE *()&gt;;                                                              \</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">      mc_control::GlobalPluginLoader::loader().register_object(NAME, fn_t([]() { return new TYPE(); })); \</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">      return true;                                                                                       \</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">    }();                                                                                                 \</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">    }</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#  define EXPORT_MC_RTC_PLUGIN(NAME, TYPE)                                                               \</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">    namespace                                                                                            \</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">    {                                                                                                    \</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">    static auto registered = []()                                                                        \</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">    {                                                                                                    \</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">      using fn_t = std::function&lt;TYPE *()&gt;;                                                              \</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">      mc_control::GlobalPluginLoader::loader().register_object(NAME, fn_t([]() { return new TYPE(); })); \</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">      return true;                                                                                       \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    }();                                                                                                 \</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    }</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aGlobalPluginLoader_8h_html"><div class="ttname"><a href="GlobalPluginLoader_8h.html">GlobalPluginLoader.h</a></div></div>
 <div class="ttc" id="aGlobalPlugin_8h_html"><div class="ttname"><a href="GlobalPlugin_8h.html">GlobalPlugin.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

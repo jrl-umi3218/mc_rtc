@@ -116,11 +116,9 @@ $(document).ready(function(){initNavTree('type__name_8h_source.html',''); initRe
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">   28</a></span>&#160;std::string <a class="code" href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">type_name</a>()</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespacemc__rtc_1_1internal.html#af017e274f3cf4699850fdbf753d07fa2">internal::demangle</a>(<span class="keyword">typeid</span>(T).name());</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;} <span class="comment">// namespace mc_rtc</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="namespacemc__rtc_1_1internal.html#af017e274f3cf4699850fdbf753d07fa2">internal::demangle</a>(<span class="keyword">typeid</span>(T).name()); }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;} <span class="comment">// namespace mc_rtc</span></div>
 <div class="ttc" id="anamespacemc__rtc_1_1internal_html_af017e274f3cf4699850fdbf753d07fa2"><div class="ttname"><a href="namespacemc__rtc_1_1internal.html#af017e274f3cf4699850fdbf753d07fa2">mc_rtc::internal::demangle</a></div><div class="ttdeci">MC_RTC_UTILS_DLLAPI std::string demangle(const char *name)</div></div>
 <div class="ttc" id="anamespacemc__rtc_html"><div class="ttname"><a href="namespacemc__rtc.html">mc_rtc</a></div><div class="ttdef"><b>Definition:</b> Contact.h:88</div></div>
 <div class="ttc" id="anamespacemc__rtc_html_a8fb61bc6391bc9cd0ef2aa0efff2d641"><div class="ttname"><a href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">mc_rtc::type_name</a></div><div class="ttdeci">std::string type_name()</div><div class="ttdef"><b>Definition:</b> type_name.h:28</div></div>

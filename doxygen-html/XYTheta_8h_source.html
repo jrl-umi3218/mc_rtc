@@ -135,17 +135,13 @@ $(document).ready(function(){initNavTree('XYTheta_8h_source.html',''); initResiz
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> GetT, std::enable_if_t&lt;std::is_invocable_v&lt;GetT&gt;, <span class="keywordtype">int</span>&gt; = 0&gt;</div>
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="namespacemc__rtc_1_1gui.html#a24043937b89b5895dcb0e2e33aaaf60e">   55</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacemc__rtc_1_1gui.html#a24043937b89b5895dcb0e2e33aaaf60e">XYTheta</a>(<span class="keyword">const</span> std::string &amp; name, GetT get_fn)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html">details::XYThetaImpl</a>(name, get_fn);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> GetT, <span class="keyword">typename</span> SetT&gt;</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="namespacemc__rtc_1_1gui.html#a331f8537aac06378da9dbbb7162684ed">   62</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacemc__rtc_1_1gui.html#a24043937b89b5895dcb0e2e33aaaf60e">XYTheta</a>(<span class="keyword">const</span> std::string &amp; name, GetT get_fn, SetT set_fn)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;{</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html">details::XYThetaImpl</a>(name, get_fn, set_fn);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;} <span class="comment">// namespace mc_rtc::gui</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html">details::XYThetaImpl</a>(name, get_fn); }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> GetT, <span class="keyword">typename</span> SetT&gt;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="namespacemc__rtc_1_1gui.html#a331f8537aac06378da9dbbb7162684ed">   60</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="namespacemc__rtc_1_1gui.html#a24043937b89b5895dcb0e2e33aaaf60e">XYTheta</a>(<span class="keyword">const</span> std::string &amp; name, GetT get_fn, SetT set_fn)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="structmc__rtc_1_1gui_1_1details_1_1XYThetaImpl.html">details::XYThetaImpl</a>(name, get_fn, set_fn); }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <span class="comment">// namespace mc_rtc::gui</span></div>
 <div class="ttc" id="aelements_8h_html"><div class="ttname"><a href="elements_8h.html">elements.h</a></div></div>
 <div class="ttc" id="anamespacemc__rtc_1_1gui_html"><div class="ttname"><a href="namespacemc__rtc_1_1gui.html">mc_rtc::gui</a></div><div class="ttdef"><b>Definition:</b> Observer.h:16</div></div>
 <div class="ttc" id="anamespacemc__rtc_1_1gui_html_a24043937b89b5895dcb0e2e33aaaf60e"><div class="ttname"><a href="namespacemc__rtc_1_1gui.html#a24043937b89b5895dcb0e2e33aaaf60e">mc_rtc::gui::XYTheta</a></div><div class="ttdeci">auto XYTheta(const std::string &amp;name, GetT get_fn)</div><div class="ttdef"><b>Definition:</b> XYTheta.h:55</div></div>

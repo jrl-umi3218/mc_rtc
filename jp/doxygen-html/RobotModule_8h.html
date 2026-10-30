@@ -319,7 +319,8 @@ Functions</h2></td></tr>
 <div class="line">    NAME##_ = b;                                              \</div>
 <div class="line">    return *<span class="keyword">this</span>;                                             \</div>
 <div class="line">  }                                                           \</div>
-<div class="line">  inline <span class="keyword">auto</span> &amp; NAME() noexcept { <span class="keywordflow">return</span> NAME##_; }</div>
+<div class="line">  inline <span class="keyword">auto</span> &amp; NAME() noexcept                               \</div>
+<div class="line">  { <span class="keywordflow">return</span> NAME##_; }</div>
 </div><!-- fragment --><p>Helper to define a member variables and methods that allow chaining calls to setters e.g ConnecionParameters{}.name(...).urdf_path(...) </p>
 
 </div>

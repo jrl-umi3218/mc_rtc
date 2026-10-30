@@ -151,52 +151,50 @@ $(document).ready(function(){initNavTree('SmoothTask_8h_source.html',''); initRe
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                             <span class="keyword">const</span> objT &amp; obj,</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                             <span class="keywordtype">double</span> percent)</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;: w_set(w_set), w_get(w_get), obj_set(obj_set), obj_get(obj_get)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">reset</a>(<a class="code" href="structmc__tasks_1_1SmoothTask.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">weight</a>, <a class="code" href="structmc__tasks_1_1SmoothTask.html#a37bce28bfb36f35247f40e400fa1d33e">obj</a>, percent);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;}</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> objT&gt;</div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">  107</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">SmoothTask&lt;objT&gt;::reset</a>(<span class="keywordtype">double</span> weight, <span class="keyword">const</span> objT &amp; obj, <span class="keywordtype">double</span> percent)</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  this-&gt;weight = weight;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  this-&gt;obj = obj;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  stepW = (weight - w_get()) * percent;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  stepO = (obj - obj_get()) * percent;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  nrIter = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span><span class="keyword">&gt;</span>(ceil(1 / percent));</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  iter = 0;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> objT&gt;</div>
-<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">  120</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">SmoothTask&lt;objT&gt;::update</a>()</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;{</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordflow">if</span>(iter &lt; nrIter)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    w_set(w_get() + stepW);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    obj_set(obj_get() + stepO);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    iter++;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  }</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    obj_set(obj);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    w_set(weight);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;} <span class="comment">// namespace mc_tasks</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;{ <a class="code" href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">reset</a>(<a class="code" href="structmc__tasks_1_1SmoothTask.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">weight</a>, <a class="code" href="structmc__tasks_1_1SmoothTask.html#a37bce28bfb36f35247f40e400fa1d33e">obj</a>, percent); }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> objT&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">  105</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">SmoothTask&lt;objT&gt;::reset</a>(<span class="keywordtype">double</span> weight, <span class="keyword">const</span> objT &amp; obj, <span class="keywordtype">double</span> percent)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  this-&gt;weight = weight;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  this-&gt;obj = obj;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  stepW = (weight - w_get()) * percent;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  stepO = (obj - obj_get()) * percent;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  nrIter = <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span><span class="keyword">&gt;</span>(ceil(1 / percent));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  iter = 0;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> objT&gt;</div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">  118</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">SmoothTask&lt;objT&gt;::update</a>()</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;{</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordflow">if</span>(iter &lt; nrIter)</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    w_set(w_get() + stepW);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    obj_set(obj_get() + stepO);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    iter++;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    obj_set(obj);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    w_set(weight);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;} <span class="comment">// namespace mc_tasks</span></div>
 <div class="ttc" id="anamespacemc__tasks_html"><div class="ttname"><a href="namespacemc__tasks.html">mc_tasks</a></div><div class="ttdef"><b>Definition:</b> StabilizerStandingState.h:12</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html">mc_tasks::SmoothTask</a></div><div class="ttdoc">SmoothTask allows to smoothly reach a final weight and objective for a given task.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:19</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a0c30bbb84a3b062b0992c022f782ecfe"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a0c30bbb84a3b062b0992c022f782ecfe">mc_tasks::SmoothTask::w_get</a></div><div class="ttdeci">w_get_fn w_get</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:79</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a1c18f13463da565c13cb7b7f27b6cbfa"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a1c18f13463da565c13cb7b7f27b6cbfa">mc_tasks::SmoothTask::obj_get</a></div><div class="ttdeci">obj_get_fn obj_get</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:81</div></div>
-<div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a2615cd1f68019e4b4b8947c9271e2062"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask::update</a></div><div class="ttdeci">void update()</div><div class="ttdoc">Update the task.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:120</div></div>
+<div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a2615cd1f68019e4b4b8947c9271e2062"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask::update</a></div><div class="ttdeci">void update()</div><div class="ttdoc">Update the task.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:118</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a28924d882b21a72fe7998f0ed7ab9d6c"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a28924d882b21a72fe7998f0ed7ab9d6c">mc_tasks::SmoothTask::stepW</a></div><div class="ttdeci">double stepW</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:86</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a37bce28bfb36f35247f40e400fa1d33e"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a37bce28bfb36f35247f40e400fa1d33e">mc_tasks::SmoothTask::obj</a></div><div class="ttdeci">objT obj</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:84</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a5477c67f01c202cf9a659558e71700ce"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a5477c67f01c202cf9a659558e71700ce">mc_tasks::SmoothTask::iter</a></div><div class="ttdeci">unsigned int iter</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:90</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a5a0447137eacf8f3c534ecc568b5aec1"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a5a0447137eacf8f3c534ecc568b5aec1">mc_tasks::SmoothTask::w_get_fn</a></div><div class="ttdeci">std::function&lt; double(void)&gt; w_get_fn</div><div class="ttdoc">A function to get the current weight of the task.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:24</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a5b8834e3bf77ffe9c7f4626dbc6c64c8"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">mc_tasks::SmoothTask::weight</a></div><div class="ttdeci">double weight</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:83</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a5ea4109a61bfbaec12d0b0831c5b01cf"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a5ea4109a61bfbaec12d0b0831c5b01cf">mc_tasks::SmoothTask::obj_set_fn</a></div><div class="ttdeci">std::function&lt; void(const objT &amp;)&gt; obj_set_fn</div><div class="ttdoc">A function to set the objective of a task.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:26</div></div>
-<div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a739c37ff2c58b2b906fe1ac7eb08adbe"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask::reset</a></div><div class="ttdeci">void reset(double weight, const objT &amp;obj, double percent)</div><div class="ttdoc">Reset the target weight, target objective and interpolation step.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:107</div></div>
+<div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a739c37ff2c58b2b906fe1ac7eb08adbe"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask::reset</a></div><div class="ttdeci">void reset(double weight, const objT &amp;obj, double percent)</div><div class="ttdoc">Reset the target weight, target objective and interpolation step.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:105</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a884b8bb76b6c9a855075927986d4b26f"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a884b8bb76b6c9a855075927986d4b26f">mc_tasks::SmoothTask::nrIter</a></div><div class="ttdeci">unsigned int nrIter</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:89</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_a9ceb8c25b164dea48c57db36aae1f788"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#a9ceb8c25b164dea48c57db36aae1f788">mc_tasks::SmoothTask::SmoothTask</a></div><div class="ttdeci">SmoothTask(w_set_fn w_set, w_get_fn w_get, obj_set_fn obj_set, obj_get_fn obj_get, double weight, const objT &amp;obj, double percent)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:94</div></div>
 <div class="ttc" id="astructmc__tasks_1_1SmoothTask_html_aade06f21c4fbdee53fc75491a02c7db4"><div class="ttname"><a href="structmc__tasks_1_1SmoothTask.html#aade06f21c4fbdee53fc75491a02c7db4">mc_tasks::SmoothTask::stepO</a></div><div class="ttdeci">objT stepO</div><div class="ttdef"><b>Definition:</b> SmoothTask.h:87</div></div>

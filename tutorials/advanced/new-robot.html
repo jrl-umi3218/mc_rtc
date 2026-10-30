@@ -802,9 +802,7 @@
     <span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="s">"MyRobot"</span><span class="p">,</span> <span class="s">"MyRobotFixed"</span><span class="p">};</span>
   <span class="p">}</span>
   <span class="n">ROBOT_MODULE_API</span> <span class="kt">void</span> <span class="n">destroy</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span> <span class="o">*</span> <span class="n">ptr</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
-  <span class="p">}</span>
+  <span class="p">{</span> <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span> <span class="p">}</span>
   <span class="n">ROBOT_MODULE_API</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span> <span class="o">*</span> <span class="n">create</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">name</span><span class="p">)</span>
   <span class="p">{</span>
     <span class="c1">// At this point name must be one of the supported robots</span>

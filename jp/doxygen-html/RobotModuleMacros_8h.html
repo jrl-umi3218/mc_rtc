@@ -198,15 +198,11 @@ Macros</h2></td></tr>
 <div class="line">    {                                                                           \</div>
 <div class="line">      ROBOT_MODULE_COMMON(NAME)                                                 \</div>
 <div class="line">      ROBOT_MODULE_API <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> create_args_required()                      \</div>
-<div class="line">      {                                                                         \</div>
-<div class="line">        return 3;                                                               \</div>
-<div class="line">      }                                                                         \</div>
+<div class="line">      { <span class="keywordflow">return</span> 3; }                                                             \</div>
 <div class="line">      ROBOT_MODULE_API <a class="code" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> * create(<span class="keyword">const</span> std::string &amp;,      \</div>
 <div class="line">                                                      <span class="keyword">const</span> std::string &amp; path, \</div>
 <div class="line">                                                      <span class="keyword">const</span> std::string &amp; name) \</div>
-<div class="line">      {                                                                         \</div>
-<div class="line">        return <span class="keyword">new</span> TYPE(path, name);                                            \</div>
-<div class="line">      }                                                                         \</div>
+<div class="line">      { <span class="keywordflow">return</span> <span class="keyword">new</span> TYPE(path, name); }                                          \</div>
 <div class="line">    }</div>
 <div class="ttc" id="astructmc__rbdyn_1_1RobotModule_html"><div class="ttname"><a href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a></div><div class="ttdef"><b>Definition:</b> RobotModule.h:66</div></div>
 </div><!-- fragment --><p>ROBOT_MODULE_CANONIC_CONSTRUCTOR Declare an external symbol for creation using the cannonical constructor (const string &amp;, const string &amp;) Also declare destruction symbol Exclusive of ROBOT_MODULE_DEFAULT_CONSTRUCTOR </p>
@@ -261,10 +257,8 @@ Macros</h2></td></tr>
 <div class="line">      names = {NAME};                                                           \</div>
 <div class="line">    }                                                                           \</div>
 <div class="line">    ROBOT_MODULE_API <span class="keywordtype">void</span> destroy(<a class="code" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> * ptr)                  \</div>
-<div class="line">    {                                                                           \</div>
-<div class="line">      delete ptr;                                                               \</div>
-<div class="line">    }</div>
-<div class="ttc" id="aRobotModule_8h_html_a983157fccbdda235351228ec75cbd167"><div class="ttname"><a href="RobotModule_8h.html#a983157fccbdda235351228ec75cbd167">ROBOT_MODULE_API</a></div><div class="ttdeci">#define ROBOT_MODULE_API</div><div class="ttdef"><b>Definition:</b> RobotModule.h:918</div></div>
+<div class="line">    { <span class="keyword">delete</span> ptr; }</div>
+<div class="ttc" id="aRobotModule_8h_html_a983157fccbdda235351228ec75cbd167"><div class="ttname"><a href="RobotModule_8h.html#a983157fccbdda235351228ec75cbd167">ROBOT_MODULE_API</a></div><div class="ttdeci">#define ROBOT_MODULE_API</div><div class="ttdef"><b>Definition:</b> RobotModule.h:911</div></div>
 </div><!-- fragment --><p>ROBOT_MODULE_COMMON Declare a destroy symbol and CLASS_NAME symbol Constructor should be declared by the user </p>
 
 </div>
@@ -298,13 +292,9 @@ Macros</h2></td></tr>
 <div class="line">    {                                                                      \</div>
 <div class="line">      ROBOT_MODULE_COMMON(NAME)                                            \</div>
 <div class="line">      ROBOT_MODULE_API <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> create_args_required()                 \</div>
-<div class="line">      {                                                                    \</div>
-<div class="line">        return 1;                                                          \</div>
-<div class="line">      }                                                                    \</div>
+<div class="line">      { <span class="keywordflow">return</span> 1; }                                                        \</div>
 <div class="line">      ROBOT_MODULE_API <a class="code" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> * create(<span class="keyword">const</span> std::string &amp;) \</div>
-<div class="line">      {                                                                    \</div>
-<div class="line">        return <span class="keyword">new</span> TYPE();                                                 \</div>
-<div class="line">      }                                                                    \</div>
+<div class="line">      { <span class="keywordflow">return</span> <span class="keyword">new</span> TYPE(); }                                               \</div>
 <div class="line">    }</div>
 </div><!-- fragment --><p>ROBOT_MODULE_DEFAULT_CONSTRUCTOR Declare an external symbol for creation using a default constructor Also declare destruction symbol Exclusive of ROBOT_MODULE_CANONIC_CONSTRUCTOR </p>
 

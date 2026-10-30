@@ -133,24 +133,22 @@ $(document).ready(function(){initNavTree('CoMIncPlaneConstr_8h_source.html','');
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                                           <span class="keywordtype">double</span> sDist = 0.01,</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                                           <span class="keywordtype">double</span> damping = 0.1,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                           <span class="keywordtype">double</span> dampingOff = 0.)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    setPlanes(solver, planes, speeds, normalsDots, iDist, sDist, damping, dampingOff);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structmc__solver_1_1CoMIncPlaneConstr.html#a9c30b632b5b5e654c666721a69d11714">   54</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="structmc__solver_1_1CoMIncPlaneConstr.html#a9c30b632b5b5e654c666721a69d11714">setPlanes</a>(<a class="code" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp; solver,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                 <span class="keyword">const</span> std::vector&lt;mc_rbdyn::Plane&gt; &amp; planes,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                 <span class="keyword">const</span> std::vector&lt;Eigen::Vector3d&gt; &amp; speeds = {},</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                 <span class="keyword">const</span> std::vector&lt;Eigen::Vector3d&gt; &amp; normalsDots = {},</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                 <span class="keywordtype">double</span> iDist = 0.05,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                 <span class="keywordtype">double</span> sDist = 0.01,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                 <span class="keywordtype">double</span> damping = 0.1,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                 <span class="keywordtype">double</span> dampingOff = 0.);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <a class="code" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">mc_rtc::void_ptr</a> constraint_;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;};</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;} <span class="comment">// namespace mc_solver</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  { setPlanes(solver, planes, speeds, normalsDots, iDist, sDist, damping, dampingOff); }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structmc__solver_1_1CoMIncPlaneConstr.html#a9c30b632b5b5e654c666721a69d11714">   52</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="structmc__solver_1_1CoMIncPlaneConstr.html#a9c30b632b5b5e654c666721a69d11714">setPlanes</a>(<a class="code" href="structmc__solver_1_1QPSolver.html">QPSolver</a> &amp; solver,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                 <span class="keyword">const</span> std::vector&lt;mc_rbdyn::Plane&gt; &amp; planes,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                 <span class="keyword">const</span> std::vector&lt;Eigen::Vector3d&gt; &amp; speeds = {},</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                 <span class="keyword">const</span> std::vector&lt;Eigen::Vector3d&gt; &amp; normalsDots = {},</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                 <span class="keywordtype">double</span> iDist = 0.05,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                 <span class="keywordtype">double</span> sDist = 0.01,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                 <span class="keywordtype">double</span> damping = 0.1,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                 <span class="keywordtype">double</span> dampingOff = 0.);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <a class="code" href="namespacemc__rtc.html#a180392c9544bd202410478d8a4fb623d">mc_rtc::void_ptr</a> constraint_;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;} <span class="comment">// namespace mc_solver</span></div>
 <div class="ttc" id="aConstraintSet_8h_html"><div class="ttname"><a href="ConstraintSet_8h.html">ConstraintSet.h</a></div></div>
 <div class="ttc" id="adeprecated_8h_html"><div class="ttname"><a href="deprecated_8h.html">deprecated.h</a></div></div>
 <div class="ttc" id="ainclude_2mc__solver_2api_8h_html_a1f670c9ef41bde54578a3afc8fd75445"><div class="ttname"><a href="include_2mc__solver_2api_8h.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a></div><div class="ttdeci">#define MC_SOLVER_DLLAPI</div><div class="ttdef"><b>Definition:</b> api.h:50</div></div>

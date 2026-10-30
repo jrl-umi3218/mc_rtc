@@ -306,9 +306,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">inline</span> details::FormDataInput&lt;DATAT, ELEMENT&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required)                 \</div>
-<div class="line">  {                                                                                                            \</div>
-<div class="line">    return {name, required};                                                                                   \</div>
-<div class="line">  }                                                                                                            \</div>
+<div class="line">  { <span class="keywordflow">return</span> {name, required}; }                                                                                 \</div>
 <div class="line">                                                                                                               \</div>
 <div class="line">  template&lt;typename T = DATAT&gt;                                                                                 \</div>
 <div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>)                                          \</div>
@@ -363,9 +361,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">inline</span> details::FormInteractiveDataInput&lt;DATAT, ELEMENT&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required,    \</div>
 <div class="line">                                                                 <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)                    \</div>
-<div class="line">  {                                                                                                          \</div>
-<div class="line">    return {name, required, interactive};                                                                    \</div>
-<div class="line">  }                                                                                                          \</div>
+<div class="line">  { <span class="keywordflow">return</span> {name, required, interactive}; }                                                                  \</div>
 <div class="line">                                                                                                             \</div>
 <div class="line">  template&lt;typename T = DATAT, typename = std::enable_if_t&lt;!std::is_same_v&lt;T, bool&gt;&gt;&gt;                        \</div>
 <div class="line">  inline <span class="keyword">auto</span> FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, T <a class="codeRef" href="https://jrl-umi3218.github.io/tvm/doxygen/HEAD/group__checkGroup.html#gaace06f3a98e0605370a5f3c17c6d6bd6">value</a>, <span class="keywordtype">bool</span> interactive = <span class="keyword">true</span>)               \</div>

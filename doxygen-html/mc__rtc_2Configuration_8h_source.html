@@ -989,12 +989,10 @@ $(document).ready(function(){initNavTree('mc__rtc_2Configuration_8h_source.html'
 <div class="line"><a name="l01812"></a><span class="lineno"> 1812</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l01813"></a><span class="lineno"> 1813</span>&#160;  <span class="keyword">auto</span> format(<span class="keyword">const</span> <a class="code" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp; c, FormatContext &amp; ctx) <span class="keyword">const</span> -&gt; decltype(ctx.out())</div>
 <div class="line"><a name="l01814"></a><span class="lineno"> 1814</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;  {</div>
-<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;    <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="keyword">static_cast&lt;</span>std::string<span class="keyword">&gt;</span>(c), ctx);</div>
-<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160;  }</div>
-<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;};</div>
-<div class="line"><a name="l01819"></a><span class="lineno"> 1819</span>&#160; </div>
-<div class="line"><a name="l01820"></a><span class="lineno"> 1820</span>&#160;} <span class="comment">// namespace fmt</span></div>
+<div class="line"><a name="l01815"></a><span class="lineno"> 1815</span>&#160;  { <span class="keywordflow">return</span> formatter&lt;string_view&gt;::format(<span class="keyword">static_cast&lt;</span>std::string<span class="keyword">&gt;</span>(c), ctx); }</div>
+<div class="line"><a name="l01816"></a><span class="lineno"> 1816</span>&#160;};</div>
+<div class="line"><a name="l01817"></a><span class="lineno"> 1817</span>&#160; </div>
+<div class="line"><a name="l01818"></a><span class="lineno"> 1818</span>&#160;} <span class="comment">// namespace fmt</span></div>
 <div class="ttc" id="aGains_8h_html"><div class="ttname"><a href="Gains_8h.html">Gains.h</a></div></div>
 <div class="ttc" id="aMessagePackBuilder_8h_html"><div class="ttname"><a href="MessagePackBuilder_8h.html">MessagePackBuilder.h</a></div></div>
 <div class="ttc" id="aSpaceVecAlg.html_html"><div class="ttname"><a href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.html">SpaceVecAlg</a></div></div>
