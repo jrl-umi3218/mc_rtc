@@ -8,9 +8,7 @@ bool DualArmController::run()
     solver().addTask(urEndEffectorTask_);
   }
   else if(phase_ == STARTED)
-  {
-    urEndEffectorTask_->reset();
-  }
+  { urEndEffectorTask_->reset(); }
   // ...
   return mc_control::MCController::run();
 }

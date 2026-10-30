@@ -42,9 +42,7 @@ constexpr double Range::inf;
 Element::Element(const std::string & name) : name_(name) {}
 
 StateBuilder::StateBuilder()
-{
-  reset();
-}
+{ reset(); }
 
 void StateBuilder::reset()
 {
@@ -276,13 +274,9 @@ StateBuilder::Category & StateBuilder::getOrCreateCategory(const std::vector<std
 }
 
 const Element & StateBuilder::ElementStore::operator()() const
-{
-  return element();
-}
+{ return element(); }
 Element & StateBuilder::ElementStore::operator()()
-{
-  return element();
-}
+{ return element(); }
 
 std::vector<StateBuilder::Category>::iterator StateBuilder::Category::find(const std::string & name)
 {

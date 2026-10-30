@@ -44,28 +44,18 @@ void CoMFunction::reset()
 }
 
 void CoMFunction::updateValue()
-{
-  value_ = comAlgo_.com() - com_;
-}
+{ value_ = comAlgo_.com() - com_; }
 
 void CoMFunction::updateVelocity()
-{
-  velocity_ = comAlgo_.velocity() - refVel_;
-}
+{ velocity_ = comAlgo_.velocity() - refVel_; }
 
 void CoMFunction::updateJacobian()
-{
-  splitJacobian(comAlgo_.jacobian(), comAlgo_.robot().q());
-}
+{ splitJacobian(comAlgo_.jacobian(), comAlgo_.robot().q()); }
 
 void CoMFunction::updateNormalAcceleration()
-{
-  normalAcceleration_ = comAlgo_.normalAcceleration() - refAccel_;
-}
+{ normalAcceleration_ = comAlgo_.normalAcceleration() - refAccel_; }
 
 void CoMFunction::updateJDot()
-{
-  splitJacobian(comAlgo_.JDot(), comAlgo_.robot().q());
-}
+{ splitJacobian(comAlgo_.JDot(), comAlgo_.robot().q()); }
 
 } // namespace mc_tvm

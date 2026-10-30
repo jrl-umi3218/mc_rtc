@@ -18,9 +18,7 @@ size_t nEntries(const mc_rtc::log::FlatLog & log, const std::map<std::string, mc
 }
 
 void write(uint64_t s, std::ostream & os)
-{
-  os.write((char *)&s, sizeof(uint64_t));
-}
+{ os.write((char *)&s, sizeof(uint64_t)); }
 
 void write(const std::string & entry, bool numeric, std::ostream & os)
 {
@@ -37,9 +35,7 @@ void write(const std::string & entry, const double * data, size_t size, std::ost
 }
 
 void write(const std::string & entry, const std::vector<double> & data, std::ostream & os)
-{
-  write(entry, data.data(), data.size(), os);
-}
+{ write(entry, data.data(), data.size(), os); }
 
 void write(const std::string & entry, const std::vector<std::string> & data, std::ostream & os)
 {
@@ -72,9 +68,7 @@ void write(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ost
 
 template<>
 void write<std::string>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)
-{
-  write(entry, log.get<std::string>(entry, ""), os);
-}
+{ write(entry, log.get<std::string>(entry, ""), os); }
 
 template<>
 void write<Eigen::Quaterniond>(const mc_rtc::log::FlatLog & log, const std::string & entry, std::ostream & os)

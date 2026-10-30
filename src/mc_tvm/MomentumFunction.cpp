@@ -44,28 +44,18 @@ void MomentumFunction::reset()
 }
 
 void MomentumFunction::updateValue()
-{
-  value_ = (momentumAlgo_.momentum() - momentum_).vector();
-}
+{ value_ = (momentumAlgo_.momentum() - momentum_).vector(); }
 
 void MomentumFunction::updateVelocity()
-{
-  velocity_ = -refVel_;
-}
+{ velocity_ = -refVel_; }
 
 void MomentumFunction::updateJacobian()
-{
-  splitJacobian(momentumAlgo_.jacobian(), momentumAlgo_.robot().q());
-}
+{ splitJacobian(momentumAlgo_.jacobian(), momentumAlgo_.robot().q()); }
 
 void MomentumFunction::updateNormalAcceleration()
-{
-  normalAcceleration_ = momentumAlgo_.normalAcceleration().vector() - refAccel_;
-}
+{ normalAcceleration_ = momentumAlgo_.normalAcceleration().vector() - refAccel_; }
 
 void MomentumFunction::updateJDot()
-{
-  splitJacobian(momentumAlgo_.JDot(), momentumAlgo_.robot().q());
-}
+{ splitJacobian(momentumAlgo_.JDot(), momentumAlgo_.robot().q()); }
 
 } // namespace mc_tvm

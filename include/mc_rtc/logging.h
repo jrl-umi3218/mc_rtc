@@ -37,7 +37,7 @@ MC_RTC_UTILS_DLLAPI void disable_notifications();
 } // namespace details
 
 template<typename ExceptionT = std::runtime_error, typename S, typename... Args>
-void error_and_throw [[noreturn]] (const S & format, Args &&... args)
+void error_and_throw [[noreturn]](const S & format, Args &&... args)
 {
   std::string message;
   if constexpr(sizeof...(Args) == 0) { message = fmt::format("{}", format); }

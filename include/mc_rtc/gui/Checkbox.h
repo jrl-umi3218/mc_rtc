@@ -41,9 +41,7 @@ struct CheckboxImpl : public VoidCallbackElement<DataElement<GetT>, Callback>
 /** Helper function to create a Checkbox */
 template<typename GetT, typename Callback>
 auto Checkbox(const std::string & name, GetT get_fn, Callback cb)
-{
-  return details::CheckboxImpl(name, get_fn, cb);
-}
+{ return details::CheckboxImpl(name, get_fn, cb); }
 
 /** Helper function to create a Checkbox from a variable, the callback flips the variable state */
 inline auto Checkbox(const std::string & name, bool & value)

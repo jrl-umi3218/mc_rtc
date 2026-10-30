@@ -41,9 +41,7 @@ void State::configure_(const mc_rtc::Configuration & config)
 }
 
 void State::configure(const mc_rtc::Configuration & config)
-{
-  config_.load(config);
-}
+{ config_.load(config); }
 
 void State::start_(Controller & ctl)
 {

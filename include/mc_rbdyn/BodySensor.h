@@ -33,9 +33,7 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
    */
   inline BodySensor(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s)
   : Device(name, bodyName, X_b_s)
-  {
-    type_ = "BodySensor";
-  }
+  { type_ = "BodySensor"; }
 
   BodySensor(const BodySensor & bs) : BodySensor(bs.name(), bs.parent(), bs.X_b_s())
   {
@@ -118,18 +116,14 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
 
   /** Set the sensor's linear acceleration reading */
   inline void linearAcceleration(const Eigen::Vector3d & linear_acceleration)
-  {
-    linear_acceleration_ = linear_acceleration;
-  }
+  { linear_acceleration_ = linear_acceleration; }
 
   /** Return the sensor's angular acceleration reading, Zero if not provided */
   inline const Eigen::Vector3d & angularAcceleration() const { return angular_acceleration_; }
 
   /** Set the sensor's angular acceleration reading */
   inline void angularAcceleration(const Eigen::Vector3d & angular_acceleration)
-  {
-    angular_acceleration_ = angular_acceleration;
-  }
+  { angular_acceleration_ = angular_acceleration; }
 
   DevicePtr clone() const override;
 
@@ -145,8 +139,6 @@ private:
 typedef std::vector<BodySensor, Eigen::aligned_allocator<BodySensor>> BodySensorVector;
 
 inline bool operator==(const mc_rbdyn::BodySensor & lhs, const mc_rbdyn::BodySensor & rhs)
-{
-  return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_b_s() == rhs.X_b_s();
-}
+{ return lhs.name() == rhs.name() && lhs.parentBody() == rhs.parentBody() && lhs.X_b_s() == rhs.X_b_s(); }
 
 } // namespace mc_rbdyn

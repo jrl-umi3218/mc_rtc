@@ -30,14 +30,10 @@ bool ParallelState::DelayedState::run(Controller & ctl, double time)
 }
 
 StatePtr & ParallelState::DelayedState::state()
-{
-  return state_;
-}
+{ return state_; }
 
 void ParallelState::DelayedState::createState(Controller & ctl)
-{
-  state_ = ctl.factory().create(name_, ctl, config_);
-}
+{ state_ = ctl.factory().create(name_, ctl, config_); }
 
 void ParallelState::start(Controller & ctl)
 {
@@ -129,14 +125,10 @@ bool ParallelState::read_write_msg(std::string & msg, std::string & out)
 }
 
 std::vector<std::string> ParallelState::states() const
-{
-  return config_("states");
-}
+{ return config_("states"); }
 
 std::map<std::string, mc_rtc::Configuration> ParallelState::configs() const
-{
-  return config_("configs", mc_rtc::Configuration{});
-}
+{ return config_("configs", mc_rtc::Configuration{}); }
 
 } // namespace fsm
 

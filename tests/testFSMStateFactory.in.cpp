@@ -24,9 +24,7 @@ mc_control::fsm::Controller & get_default_controller()
 }
 
 void check_state(mc_control::fsm::StateFactory & factory, const std::string & state)
-{
-  BOOST_REQUIRE(factory.hasState(state));
-}
+{ BOOST_REQUIRE(factory.hasState(state)); }
 
 void check_states(mc_control::fsm::StateFactory & factory, const std::vector<std::string> & states)
 {

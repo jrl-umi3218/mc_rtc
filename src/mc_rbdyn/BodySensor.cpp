@@ -6,8 +6,6 @@ namespace mc_rbdyn
 BodySensor::~BodySensor() noexcept = default;
 
 DevicePtr BodySensor::clone() const
-{
-  return DevicePtr(new BodySensor(*this));
-}
+{ return DevicePtr(new BodySensor(*this)); }
 
 } // namespace mc_rbdyn

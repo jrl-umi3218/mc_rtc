@@ -12,14 +12,10 @@ void RobotDriverMyRobot::sync()
 }
 
 std::vector<double> RobotDriverMyRobot::getActualQ()
-{
-  return {state_.q.begin(), state_.q.end()};
-}
+{ return {state_.q.begin(), state_.q.end()}; }
 
 std::vector<double> RobotDriverMyRobot::getJointTorques()
-{
-  return {state_.tau.begin(), state_.tau.end()};
-}
+{ return {state_.tau.begin(), state_.tau.end()}; }
 
 void RobotDriverMyRobot::servoJ(const std::vector<double> & q)
 {

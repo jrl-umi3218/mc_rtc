@@ -181,9 +181,7 @@ struct MC_RBDYN_DLLAPI Gripper
 
   /* \brief Checks whether a joint is an active gripper joint */
   inline bool hasActiveJoint(const std::string & jointName) const
-  {
-    return std::find(active_joints.begin(), active_joints.end(), jointName) != active_joints.end();
-  }
+  { return std::find(active_joints.begin(), active_joints.end(), jointName) != active_joints.end(); }
 
   /*! \brief Return all gripper joints configuration
    * \return Current values of all the gripper's joints, including passive joints
