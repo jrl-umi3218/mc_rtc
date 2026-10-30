@@ -13,8 +13,6 @@ Device::Device(const std::string & name, const std::string & parent, const sva::
 }
 
 sva::PTransformd Device::X_0_s(const mc_rbdyn::Robot & robot) const
-{
-  return X_p_s() * robot.bodyPosW(parent_);
-}
+{ return X_p_s() * robot.bodyPosW(parent_); }
 
 } // namespace mc_rbdyn

@@ -21,13 +21,9 @@ static inline mc_rtc::void_ptr_caster<tasks::qp::HighLevelTask> tasks_error{};
 static inline mc_rtc::void_ptr_caster<tasks::qp::JointsSelector> tasks_selector{};
 
 static inline details::TVMTrajectoryTaskGeneric * tvm_trajectory(mc_rtc::void_ptr & ptr)
-{
-  return static_cast<details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
-}
+{ return static_cast<details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get(); }
 static inline const details::TVMTrajectoryTaskGeneric * tvm_trajectory(const mc_rtc::void_ptr & ptr)
-{
-  return static_cast<const details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get();
-}
+{ return static_cast<const details::TVMTrajectoryTaskGenericPtr *>(ptr.get())->get(); }
 static inline mc_rtc::void_ptr_caster<tvm::function::abstract::Function> tvm_error{};
 static inline mc_rtc::void_ptr_caster<mc_tvm::JointsSelectorFunction> tvm_selector{};
 
@@ -187,9 +183,7 @@ void TrajectoryTaskGeneric::refVel(const Eigen::VectorXd & vel)
 }
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::refVel() const
-{
-  return refVel_;
-}
+{ return refVel_; }
 
 void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
 {
@@ -211,19 +205,13 @@ void TrajectoryTaskGeneric::refAccel(const Eigen::VectorXd & accel)
 }
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::refAccel() const
-{
-  return refAccel_;
-}
+{ return refAccel_; }
 
 void TrajectoryTaskGeneric::stiffness(double s)
-{
-  setGains(s, 2 * std::sqrt(s));
-}
+{ setGains(s, 2 * std::sqrt(s)); }
 
 void TrajectoryTaskGeneric::stiffness(const Eigen::VectorXd & stiffness)
-{
-  setGains(stiffness, 2 * stiffness.cwiseSqrt());
-}
+{ setGains(stiffness, 2 * stiffness.cwiseSqrt()); }
 
 void TrajectoryTaskGeneric::damping(double d)
 {
@@ -252,24 +240,16 @@ void TrajectoryTaskGeneric::setGains(const Eigen::VectorXd & stiffness, const Ei
 }
 
 double TrajectoryTaskGeneric::stiffness() const
-{
-  return stiffness_(0);
-}
+{ return stiffness_(0); }
 
 double TrajectoryTaskGeneric::damping() const
-{
-  return damping_(0);
-}
+{ return damping_(0); }
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::dimStiffness() const
-{
-  return stiffness_;
-}
+{ return stiffness_; }
 
 const Eigen::VectorXd & TrajectoryTaskGeneric::dimDamping() const
-{
-  return damping_;
-}
+{ return damping_; }
 
 void TrajectoryTaskGeneric::weight(double w)
 {
@@ -291,9 +271,7 @@ void TrajectoryTaskGeneric::weight(double w)
 }
 
 double TrajectoryTaskGeneric::weight() const
-{
-  return weight_;
-}
+{ return weight_; }
 
 void TrajectoryTaskGeneric::dimWeight(const Eigen::VectorXd & w)
 {
@@ -617,8 +595,6 @@ void TrajectoryTaskGeneric::addToLogger(mc_rtc::Logger & logger)
 std::function<bool(const mc_tasks::MetaTask & task, std::string &)> TrajectoryTaskGeneric::buildCompletionCriteria(
     double dt,
     const mc_rtc::Configuration & config) const
-{
-  return MetaTask::buildCompletionCriteria(dt, config);
-}
+{ return MetaTask::buildCompletionCriteria(dt, config); }
 
 } // namespace mc_tasks

@@ -29,9 +29,7 @@ namespace Eigen
 {
 
 bool operator==(const Quaterniond & lhs, const Quaterniond & rhs)
-{
-  return lhs.w() == rhs.w() && lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
-}
+{ return lhs.w() == rhs.w() && lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z(); }
 
 } // namespace Eigen
 

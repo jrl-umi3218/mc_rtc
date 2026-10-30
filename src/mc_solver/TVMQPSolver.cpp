@@ -82,14 +82,10 @@ const sva::ForceVecd TVMQPSolver::desiredContactForce(const mc_rbdyn::Contact & 
 }
 
 double TVMQPSolver::solveTime()
-{
-  return solve_dt_.count();
-}
+{ return solve_dt_.count(); }
 
 double TVMQPSolver::solveAndBuildTime()
-{
-  return solve_dt_.count();
-}
+{ return solve_dt_.count(); }
 
 bool TVMQPSolver::run_impl(FeedbackType fType)
 {

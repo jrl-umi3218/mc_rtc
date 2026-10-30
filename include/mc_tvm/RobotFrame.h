@@ -60,9 +60,7 @@ public:
 
   /** Returns the associated mc_rbdyn RobotFrame */
   inline const mc_rbdyn::RobotFrame & frame() const noexcept
-  {
-    return static_cast<const mc_rbdyn::RobotFrame &>(frame_);
-  }
+  { return static_cast<const mc_rbdyn::RobotFrame &>(frame_); }
 
 protected:
   Eigen::Matrix3d h_ = Eigen::Matrix3d::Zero();

@@ -112,9 +112,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::Joint::Type>::save(const rbd::Joi
 }
 
 mc_rbdyn::Base ConfigurationLoader<mc_rbdyn::Base>::load(const mc_rtc::Configuration & config)
-{
-  return {config("name"), config("X_0_s"), config("X_b0_s"), config("type")};
-}
+{ return {config("name"), config("X_0_s"), config("X_b0_s"), config("type")}; }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Base>::save(const mc_rbdyn::Base & b)
 {
@@ -127,9 +125,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Base>::save(const mc_rbdyn::
 }
 
 mc_rbdyn::BodySensor ConfigurationLoader<mc_rbdyn::BodySensor>::load(const mc_rtc::Configuration & config)
-{
-  return mc_rbdyn::BodySensor(config("name"), config("parentBody"), config("X_b_s"));
-}
+{ return mc_rbdyn::BodySensor(config("name"), config("parentBody"), config("X_b_s")); }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::BodySensor>::save(const mc_rbdyn::BodySensor & bs)
 {
@@ -141,9 +137,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::BodySensor>::save(const mc_r
 }
 
 mc_rbdyn::JointSensor ConfigurationLoader<mc_rbdyn::JointSensor>::load(const mc_rtc::Configuration & config)
-{
-  return mc_rbdyn::JointSensor(static_cast<std::string>(config("joint")));
-}
+{ return mc_rbdyn::JointSensor(static_cast<std::string>(config("joint"))); }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::JointSensor>::save(const mc_rbdyn::JointSensor & js)
 {
@@ -287,9 +281,7 @@ std::shared_ptr<mc_rbdyn::PlanarSurface> ConfigurationLoader<std::shared_ptr<mc_
 
 mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::PlanarSurface>>::save(
     const std::shared_ptr<mc_rbdyn::PlanarSurface> & s)
-{
-  return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
-}
+{ return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s); }
 
 std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::CylindricalSurface>>::load(
     const mc_rtc::Configuration & config)
@@ -305,9 +297,7 @@ std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_pt
 
 mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::CylindricalSurface>>::save(
     const std::shared_ptr<mc_rbdyn::CylindricalSurface> & s)
-{
-  return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
-}
+{ return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s); }
 
 std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc_rbdyn::GripperSurface>>::load(
     const mc_rtc::Configuration & config)
@@ -323,14 +313,10 @@ std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc
 
 mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::GripperSurface>>::save(
     const std::shared_ptr<mc_rbdyn::GripperSurface> & s)
-{
-  return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s);
-}
+{ return ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(s); }
 
 mc_rbdyn::Flexibility ConfigurationLoader<mc_rbdyn::Flexibility>::load(const mc_rtc::Configuration & config)
-{
-  return {config("jointName"), config("K"), config("C"), config("O")};
-}
+{ return {config("jointName"), config("K"), config("C"), config("O")}; }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Flexibility>::save(const mc_rbdyn::Flexibility & flex)
 {
@@ -343,9 +329,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Flexibility>::save(const mc_
 }
 
 mc_rbdyn::ForceSensor ConfigurationLoader<mc_rbdyn::ForceSensor>::load(const mc_rtc::Configuration & config)
-{
-  return {config("name"), config("parentBody"), config("X_p_f")};
-}
+{ return {config("name"), config("parentBody"), config("X_p_f")}; }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::ForceSensor>::save(const mc_rbdyn::ForceSensor & fs)
 {
@@ -357,9 +341,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::ForceSensor>::save(const mc_
 }
 
 mc_rbdyn::Plane ConfigurationLoader<mc_rbdyn::Plane>::load(const mc_rtc::Configuration & config)
-{
-  return mc_rbdyn::Plane{config("normal"), config("offset")};
-}
+{ return mc_rbdyn::Plane{config("normal"), config("offset")}; }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Plane>::save(const mc_rbdyn::Plane & pl)
 {
@@ -417,9 +399,7 @@ mc_rtc::Configuration ConfigurationLoader<sva::RBInertiad>::save(const sva::RBIn
 }
 
 rbd::Body ConfigurationLoader<rbd::Body>::load(const mc_rtc::Configuration & config)
-{
-  return {config("inertia"), config("name")};
-}
+{ return {config("inertia"), config("name")}; }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::Body>::save(const rbd::Body & bod)
 {
@@ -557,9 +537,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::MultiBodyConfig>::save(const rbd:
 }
 
 mc_rbdyn::Mimic ConfigurationLoader<mc_rbdyn::Mimic>::load(const mc_rtc::Configuration & config)
-{
-  return {config("name"), config("joint"), config("multiplier", 1.0), config("offset", 0.0)};
-}
+{ return {config("name"), config("joint"), config("multiplier", 1.0), config("offset", 0.0)}; }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Mimic>::save(const mc_rbdyn::Mimic & mimic)
 {
@@ -594,9 +572,7 @@ mc_rbdyn::RobotModule::Gripper loadGripper(const mc_rtc::Configuration & config,
 
 mc_rbdyn::RobotModule::Gripper ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::load(
     const mc_rtc::Configuration & config)
-{
-  return loadGripper(config, {});
-}
+{ return loadGripper(config, {}); }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
     const mc_rbdyn::RobotModule::Gripper & rmg)
@@ -622,15 +598,11 @@ mc_rbdyn::RobotModule::Gripper::Safety ConfigurationLoader<mc_rbdyn::RobotModule
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety>::save(
     const mc_rbdyn::RobotModule::Gripper::Safety & safety)
-{
-  return safety.save();
-}
+{ return safety.save(); }
 
 mc_rbdyn::RobotModule::FrameDescription ConfigurationLoader<mc_rbdyn::RobotModule::FrameDescription>::load(
     const mc_rtc::Configuration & config)
-{
-  return {config("name"), config("parent"), config("X_p_f"), config("baked", false)};
-}
+{ return {config("name"), config("parent"), config("X_p_f"), config("baked", false)}; }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::FrameDescription>::save(
     const mc_rbdyn::RobotModule::FrameDescription & frame)
@@ -791,9 +763,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry>::save(const rb
 
 rbd::parsers::Material::Color ConfigurationLoader<rbd::parsers::Material::Color>::load(
     const mc_rtc::Configuration & config)
-{
-  return rbd::parsers::Material::Color{config("r"), config("g"), config("b"), config("a")};
-}
+{ return rbd::parsers::Material::Color{config("r"), config("g"), config("b"), config("a")}; }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material::Color>::save(const rbd::parsers::Material::Color & col)
 {
@@ -807,9 +777,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material::Color>::save(c
 
 rbd::parsers::Material::Texture ConfigurationLoader<rbd::parsers::Material::Texture>::load(
     const mc_rtc::Configuration & config)
-{
-  return rbd::parsers::Material::Texture{config("filename")};
-}
+{ return rbd::parsers::Material::Texture{config("filename")}; }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material::Texture>::save(
     const rbd::parsers::Material::Texture & text)
@@ -855,9 +823,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material>::save(const rb
 }
 
 rbd::parsers::Visual ConfigurationLoader<rbd::parsers::Visual>::load(const mc_rtc::Configuration & config)
-{
-  return {config("name"), config("origin"), config("geometry"), config("material")};
-}
+{ return {config("name"), config("origin"), config("geometry"), config("material")}; }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Visual>::save(const rbd::parsers::Visual & vis)
 {
@@ -1211,9 +1177,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const 
                                                                           bool save_mbc,
                                                                           const std::vector<std::string> & filteredLinks,
                                                                           bool fixed)
-{
-  return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm, save_mbc, filteredLinks, fixed);
-}
+{ return ConfigurationLoader<mc_rbdyn::RobotModule>::save(*rm, save_mbc, filteredLinks, fixed); }
 
 mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config,
                                                                const mc_rbdyn::Robots & robots)

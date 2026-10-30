@@ -82,15 +82,11 @@ ObjectLoader<T>::ObjectLoader(const std::string & class_name,
 
 template<typename T>
 ObjectLoader<T>::~ObjectLoader()
-{
-  Loader::close();
-}
+{ Loader::close(); }
 
 template<typename T>
 bool ObjectLoader<T>::has_object(const std::string & object) const
-{
-  return handles_.count(object) != 0 || callbacks_.has(object);
-}
+{ return handles_.count(object) != 0 || callbacks_.has(object); }
 
 template<typename T>
 std::vector<std::string> ObjectLoader<T>::objects() const
@@ -102,9 +98,7 @@ std::vector<std::string> ObjectLoader<T>::objects() const
 
 template<typename T>
 void ObjectLoader<T>::load_libraries(const std::vector<std::string> & paths, Loader::callback_t cb)
-{
-  Loader::load_libraries(class_name, paths, handles_, verbose, cb);
-}
+{ Loader::load_libraries(class_name, paths, handles_, verbose, cb); }
 
 template<typename T>
 void ObjectLoader<T>::clear()
@@ -116,9 +110,7 @@ void ObjectLoader<T>::clear()
 
 template<typename T>
 void ObjectLoader<T>::set_verbosity(bool verbose)
-{
-  this->verbose = verbose;
-}
+{ this->verbose = verbose; }
 
 template<typename T>
 template<typename... Args>
@@ -183,9 +175,7 @@ T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
 template<typename T>
 template<typename... Args>
 T * ObjectLoader<T>::create_from_callbacks(const std::string & name, Args... args)
-{
-  return callbacks_.call<T *, const typename std::decay<Args>::type &...>(name, std::forward<Args>(args)...);
-}
+{ return callbacks_.call<T *, const typename std::decay<Args>::type &...>(name, std::forward<Args>(args)...); }
 
 template<typename T>
 template<typename RetT, typename... Args>

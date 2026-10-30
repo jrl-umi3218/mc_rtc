@@ -86,9 +86,7 @@ public:
    * Use the name in the module to load the robot
    */
   inline Robot & load(const RobotModule & module, const LoadRobotParameters & params = {})
-  {
-    return load(module.name, module, params);
-  }
+  { return load(module.name, module, params); }
 
   /** Load multiple robots from as many RobotModule instances
    *
@@ -256,9 +254,7 @@ public:
   /** Create a new Robots instance with a custom deleter */
   template<class Deleter>
   inline static RobotsPtr make(Deleter deleter) noexcept
-  {
-    return std::shared_ptr<Robots>(new Robots{NewRobotsToken{}}, deleter);
-  }
+  { return std::shared_ptr<Robots>(new Robots{NewRobotsToken{}}, deleter); }
 
   /** Copy this instance into another instance
    *

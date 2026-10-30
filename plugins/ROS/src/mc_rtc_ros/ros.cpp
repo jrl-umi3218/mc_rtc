@@ -539,9 +539,7 @@ void ROSBridge::stop_robot_publisher(const std::string & publisher)
 }
 
 void ROSBridge::stop_robot_publishers()
-{
-  impl_().rpubs.clear();
-}
+{ impl_().rpubs.clear(); }
 
 size_t ROSBridge::nb_robot_publisher()
 {
@@ -570,8 +568,6 @@ void ROSBridge::remove_extra_robot_publishers(const mc_rbdyn::Robots & robots)
 }
 
 void ROSBridge::shutdown()
-{
-  rclcpp::shutdown();
-}
+{ rclcpp::shutdown(); }
 
 } // namespace mc_rtc

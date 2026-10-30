@@ -99,9 +99,7 @@ SmoothTask<objT>::SmoothTask(w_set_fn w_set,
                              const objT & obj,
                              double percent)
 : w_set(w_set), w_get(w_get), obj_set(obj_set), obj_get(obj_get)
-{
-  reset(weight, obj, percent);
-}
+{ reset(weight, obj, percent); }
 
 template<typename objT>
 void SmoothTask<objT>::reset(double weight, const objT & obj, double percent)

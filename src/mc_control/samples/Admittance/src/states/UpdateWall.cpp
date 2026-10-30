@@ -7,9 +7,7 @@
 #include <mc_rtc/ConfigurationHelpers.h>
 
 void UpdateWall::configure(const mc_rtc::Configuration & config)
-{
-  config_.load(config);
-}
+{ config_.load(config); }
 
 void UpdateWall::start(mc_control::fsm::Controller & ctl)
 {

@@ -73,16 +73,12 @@ Contact Contact::from_mc_rbdyn(const MCController & ctl, const mc_rbdyn::Contact
 static thread_local std::string MC_CONTROLLER_LOADING_LOCATION = "";
 
 void MCController::set_loading_location(std::string_view location)
-{
-  MC_CONTROLLER_LOADING_LOCATION = location;
-}
+{ MC_CONTROLLER_LOADING_LOCATION = location; }
 
 static thread_local std::string MC_CONTROLLER_NAME = "";
 
 void MCController::set_name(std::string_view name)
-{
-  MC_CONTROLLER_NAME = name;
-}
+{ MC_CONTROLLER_NAME = name; }
 
 MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, ControllerParameters params)
 : MCController(robot, dt, {}, params)
@@ -765,14 +761,10 @@ bool MCController::hasObserverPipeline(const std::string & name) const
 }
 
 const std::vector<mc_observers::ObserverPipeline> & MCController::observerPipelines() const
-{
-  return observerPipelines_;
-}
+{ return observerPipelines_; }
 
 std::vector<mc_observers::ObserverPipeline> & MCController::observerPipelines()
-{
-  return observerPipelines_;
-}
+{ return observerPipelines_; }
 
 const mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name) const
 {
@@ -792,9 +784,7 @@ mc_observers::ObserverPipeline & MCController::observerPipeline(const std::strin
 }
 
 bool MCController::hasObserverPipeline() const
-{
-  return !observerPipelines_.empty();
-}
+{ return !observerPipelines_.empty(); }
 
 const mc_observers::ObserverPipeline & MCController::observerPipeline() const
 {
@@ -806,14 +796,10 @@ const mc_observers::ObserverPipeline & MCController::observerPipeline() const
 }
 
 mc_observers::ObserverPipeline & MCController::observerPipeline()
-{
-  return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline());
-}
+{ return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline()); }
 
 bool MCController::run()
-{
-  return run(mc_solver::FeedbackType::None);
-}
+{ return run(mc_solver::FeedbackType::None); }
 
 bool MCController::run(mc_solver::FeedbackType fType)
 {
@@ -973,9 +959,7 @@ void MCController::addCollisions(const std::string & r1,
 bool MCController::hasCollision(const std::string & r1,
                                 const std::string & r2,
                                 const mc_rbdyn::Collision & col) const noexcept
-{
-  return hasCollision(r1, r2, col.body1, col.body2);
-}
+{ return hasCollision(r1, r2, col.body1, col.body2); }
 
 bool MCController::hasCollision(const std::string & r1,
                                 const std::string & r2,
@@ -1072,19 +1056,13 @@ void MCController::clearContacts()
 }
 
 const ContactSet & MCController::contacts() const
-{
-  return contacts_;
-}
+{ return contacts_; }
 
 bool MCController::hasContact(const Contact & c) const
-{
-  return std::find(contacts_.begin(), contacts_.end(), c) != contacts_.end();
-}
+{ return std::find(contacts_.begin(), contacts_.end(), c) != contacts_.end(); }
 
 void MCController::supported_robots(std::vector<std::string> & out) const
-{
-  out = {};
-}
+{ out = {}; }
 
 void MCController::stop()
 {
@@ -1092,14 +1070,10 @@ void MCController::stop()
 }
 
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
-{
-  return robots().robot(robot).gripper(gripper);
-}
+{ return robots().robot(robot).gripper(gripper); }
 
 mc_rtc::Configuration MCController::robot_config(const mc_rbdyn::Robot & robot) const
-{
-  return robot_config(robot.module().name);
-}
+{ return robot_config(robot.module().name); }
 
 mc_rtc::Configuration MCController::robot_config(const std::string & robot) const
 {

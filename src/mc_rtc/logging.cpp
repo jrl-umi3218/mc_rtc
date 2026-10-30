@@ -170,9 +170,7 @@ static inline void do_notify(const std::string & message)
 static bool NOTIFICATIONS_ENABLED = true;
 
 void disable_notifications()
-{
-  NOTIFICATIONS_ENABLED = false;
-}
+{ NOTIFICATIONS_ENABLED = false; }
 
 void notify(const std::string & message)
 {

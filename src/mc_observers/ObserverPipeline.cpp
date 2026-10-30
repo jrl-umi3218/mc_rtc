@@ -197,8 +197,6 @@ void ObserverPipeline::addToGUI(mc_rtc::gui::StateBuilder & gui)
   }
 }
 void ObserverPipeline::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{
-  gui.removeCategory({"ObserverPipelines", name_});
-}
+{ gui.removeCategory({"ObserverPipelines", name_}); }
 
 } // namespace mc_observers

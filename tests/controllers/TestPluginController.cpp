@@ -96,14 +96,10 @@ extern "C"
   }
 
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)
-  {
-    delete ptr;
-  }
+  { delete ptr; }
 
   CONTROLLER_MODULE_API unsigned int create_args_required()
-  {
-    return 4;
-  }
+  { return 4; }
 
   CONTROLLER_MODULE_API mc_control::MCController * create(const std::string & name,
                                                           const mc_rbdyn::RobotModulePtr & rm,

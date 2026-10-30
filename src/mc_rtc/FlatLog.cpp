@@ -21,9 +21,7 @@ namespace log
 FlatLog::record::record() : type(), data(nullptr, internal::void_deleter<int>) {}
 
 FlatLog::FlatLog(const std::string & fpath)
-{
-  load(fpath);
-}
+{ load(fpath); }
 
 void FlatLog::load(const std::string & fpath)
 {
@@ -146,9 +144,7 @@ void FlatLog::appendFlat(const std::string & f)
 }
 
 size_t FlatLog::size() const
-{
-  return data_.size() == 0 ? 0 : data_[0].records.size();
-}
+{ return data_.size() == 0 ? 0 : data_[0].records.size(); }
 
 std::set<std::string> FlatLog::entries() const
 {
