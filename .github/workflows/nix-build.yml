@@ -10,7 +10,34 @@ on:
       CACHIX_AUTH_TOKEN:
         required: false
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+    - uses: actions/checkout@v7
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          code:
+            - '.github/workflows/nix-build.yml'
+            - 'benchmarks/**'
+            - 'binding/**'
+            # XXX: doc only needs build for json schemas, and even there
+            # it's only for cmake install paths injection
+            # we should define more fine-grained rules here
+            - 'doc/**'
+            - 'include/'
+            - 'src/**'
+            - 'tests/**'
+            - 'utils/**'
+            - 'CMakeLists.txt'
+            - 'flake.nix'
+            - 'flake.lock'
   nix:
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

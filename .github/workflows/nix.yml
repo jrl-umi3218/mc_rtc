@@ -3,24 +3,9 @@ on:
   push:
     branches:
       - master
-    paths-ignore: &paths-to-ignore
-      - ".mergify.yml"
-      - README.md
-      - CHANGELOG.md
-      - .github/workflows/build.yml
-      - .github/workflows/package.yml
-      - ".github/workflows/sync.yml"
-      - .pre-commit-config.yaml
-      - robots/README.md
-      - utils/**/README.md
-      - observers/**/README.md
-      - controllers/**/README.md
-      - binding/**/README.md
-      - src/mc_rtc/README.md
   pull_request:
     branches:
       - master
-    paths-ignore: *paths-to-ignore
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -41,3 +26,4 @@ jobs:
       - uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
+          allowed-skips: nix
