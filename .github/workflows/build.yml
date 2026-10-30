@@ -1,34 +1,16 @@
-name: CI of mc_rtc
+name: Build on Ubuntu
 
+# We do not use path-ignore on purpose here as it makes github skip the whole workflow
+# which does not play well with mergify's check-build job that must always run.
+# Instead we use dorny/paths-filter action to achieve the same result
+# with better granularity within the jobs.
 on:
   push:
     branches:
       - 'master'
-    paths-ignore: &paths_to_ignore
-      # Changes to those files don't mandate running CI
-      - ".mergify.yml"
-      - "flake.nix"
-      - "flake.lock"
-      - ".envrc"
-      - ".github/workflows/package.yml"
-      - ".github/workflows/nix*.yml"
-      - ".github/workflows/sync.yml"
-      - ".github/workflows/sources/*"
-      - ".github/workflows/build-others.yml"
-      - ".github/workflows/docker/*"
-      - "debian/**"
-      - "*.md"
-      - "doc/**/README.md"
-      - "robots/README.md"
-      - "utils/**/README.md"
-      - "observers/**/README.md"
-      - "controllers/**/README.md"
-      - "binding/**/README.md"
-      - "src/mc_rtc/README.md"
   pull_request:
     branches:
       - 'master'
-    paths-ignore: *paths_to_ignore
 
 # cancel running workflows when pushing to the same branch/pr
 concurrency:
@@ -40,7 +22,45 @@ env:
   GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+      steps:
+        - uses: actions/checkout@v4
+        - uses: dorny/paths-filter@v3
+          id: filter
+          with:
+            filters: |
+              code:
+                # Matches anything, EXCEPT the files you want to ignore
+                - '**.**'
+                # List negation patterns matching your original paths_to_ignore:
+                - '!.mergify.yml'
+                - '!flake.nix'
+                - '!flake.lock'
+                - '!.envrc'
+                - '!.github/workflows/package.yml'
+                - '!.github/workflows/nix*.yml'
+                - '!.github/workflows/sync.yml'
+                - '!.github/workflows/sources/*'
+                - '!.github/workflows/build-others.yml'
+                - '!.github/workflows/docker/*'
+                - '!debian/**'
+                - '!*.md'
+                - '!doc/**/README.md'
+                - '!robots/README.md'
+                - '!utils/**/README.md'
+                - '!observers/**/README.md'
+                - '!controllers/**/README.md'
+                - '!binding/**/README.md'
+                - '!src/mc_rtc/README.md'
+
   build:
+    needs: changes
+    # only trigger build steps if the changes are on relevant files
+    if: needs.changes.outputs.code == 'true'
+
     strategy:
       fail-fast: false
       matrix:
