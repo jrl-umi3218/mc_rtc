@@ -33,28 +33,17 @@ jobs:
       with:
         filters: |
           code:
-            # Matches anything, EXCEPT the files you want to ignore
-            - '**.**'
-            # List negation patterns matching your original paths_to_ignore:
-            - '!.mergify.yml'
-            - '!flake.nix'
-            - '!flake.lock'
-            - '!.envrc'
-            - '!.github/workflows/package.yml'
-            - '!.github/workflows/nix*.yml'
-            - '!.github/workflows/sync.yml'
-            - '!.github/workflows/sources/*'
-            - '!.github/workflows/build-others.yml'
-            - '!.github/workflows/docker/*'
-            - '!debian/**'
-            - '!*.md'
-            - '!doc/**/README.md'
-            - '!robots/README.md'
-            - '!utils/**/README.md'
-            - '!observers/**/README.md'
-            - '!controllers/**/README.md'
-            - '!binding/**/README.md'
-            - '!src/mc_rtc/README.md'
+            - 'benchmarks/**'
+            - 'binding/**'
+            # XXX: doc only needs build for json schemas, and even there
+            # it's only for cmake install paths injection
+            # we should define more fine-grained rules here
+            - 'doc/**'
+            - 'include/'
+            - 'src/**'
+            - 'tests/**'
+            - 'utils/**'
+            - 'CMakeLists.txt'
 
   build:
     needs: changes
