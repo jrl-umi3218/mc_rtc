@@ -45,6 +45,25 @@ public:
                        const std::array<double, 3> & damper,
                        double velocityPercent = 0.5);
 
+  /** CBF constraint constructor
+   *
+   * Builds joint position and velocity limits as acceleration-based CBFs, which are robust to noise in
+   * closed-loop torque control, instead of velocity dampers. TVM backend only.
+   *
+   * See B. Muraccioli et al., arXiv:2607.14488 (2026)
+   *
+   * \param robots The robots including the robot affected by this constraint
+   * \param robotIndex The index of the robot affected by this constraint
+   * \param damperSecond {interaction distance, safety distance, offset, overDamping, lambda}:
+   * distances are percentages of the joint range, overDamping must be >= 1 (1: critically damped,
+   * > 1: over-damped), and lambda is the convergence rate [1/s] shared by position and velocity limits
+   * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
+   */
+  KinematicsConstraint(const mc_rbdyn::Robots & robots,
+                       unsigned int robotIndex,
+                       const std::array<double, 5> & damperSecond,
+                       double velocityPercent = 0.5);
+
 protected:
   /** Implementation of mc_solver::ConstraintSet::addToSolver */
   void addToSolverImpl(mc_solver::QPSolver & solver) override;

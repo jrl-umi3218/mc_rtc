@@ -519,6 +519,9 @@ Robot::Robot(NewRobotToken,
   flexibility_ = module_.flexibility();
 
   zmp_ = Eigen::Vector3d::Zero();
+
+  externalTorques_ = Eigen::VectorXd::Zero(mb().nrDof());
+  externalTorquesEquivalentAcc_ = Eigen::VectorXd::Zero(mb().nrDof());
 }
 
 Robot::~Robot()
@@ -1574,6 +1577,46 @@ mc_tvm::Convex & Robot::tvmConvex(const std::string & name) const
                                                                   frame(cvx.first), collisionTransform(name))}});
   }
   return *it->second;
+}
+
+void Robot::setExternalTorques(const Eigen::VectorXd & torques)
+{
+  externalTorques_ = torques;
+}
+
+const Eigen::VectorXd & Robot::externalTorques() const
+{
+  return externalTorques_;
+}
+
+void Robot::setExternalTorquesAcc(const Eigen::VectorXd & accelerations)
+{
+  externalTorquesEquivalentAcc_ = accelerations;
+}
+
+const Eigen::VectorXd & Robot::externalTorquesAcc() const
+{
+  return externalTorquesEquivalentAcc_;
+}
+
+void Robot::setCompensationTorques(const Eigen::VectorXd & torques)
+{
+  externalTorqueCompensation_ = torques;
+}
+
+const std::optional<Eigen::VectorXd> & Robot::compensationTorques() const
+{
+  return externalTorqueCompensation_;
+}
+
+void Robot::setCompensationTorquesAcc(const Eigen::VectorXd & accelerations)
+{
+  compensationEquivalentAcc_ = accelerations;
+}
+
+const std::optional<Eigen::VectorXd> & Robot::compensationTorquesAcc() const
+{
+  return compensationEquivalentAcc_;
 }
 
 } // namespace mc_rbdyn

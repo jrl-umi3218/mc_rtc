@@ -74,6 +74,15 @@ public:
    */
   void addCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
 
+  /** Set the CBF parameters of a set of collisions
+   *
+   * \see mc_rbdyn::Collision for the meaning of the CBF parameters
+   *
+   * \param solver The solver into which this constraint was added
+   * \param dampers {overDamping, lambda}
+   */
+  void setCollisionsDampers(QPSolver & solver, const std::vector<double> & dampers);
+
   /** Add a set of collisions
    *
    * \see addCollision for details on wildcard collision specification
@@ -83,6 +92,16 @@ public:
    */
   void addCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
 
+  /** Edit a set of collisions
+   *
+   * Each collision is identified by its pair of collision object names (body1, body2), and its
+   * parameters are replaced by those in \p cols. Collisions that do not exist are ignored.
+   *
+   * \param solver The solver into which this constraint was added
+   * \param cols Collisions with updated parameters
+   */
+  void editCollisions(QPSolver & solver, const std::vector<mc_rbdyn::Collision> & cols);
+
   /** Returns true if the given collision is in this constraint */
   bool hasCollision(const std::string & c1, const std::string & c2) const noexcept;
 
@@ -91,6 +110,11 @@ public:
 
   /** Get the automated monitoring setting */
   inline bool automaticMonitor() const noexcept { return autoMonitor_; }
+
+  /** Add collision logging
+   * \param a True to enable collision logging, false to disable
+   */
+  inline void logCollisions(bool a) noexcept { logCollisions_ = a; }
 
   /** Set the automated monitoring setting
    *
@@ -105,6 +129,15 @@ public:
   void update(QPSolver & solver) override;
 
   void removeFromSolverImpl(QPSolver & solver) override;
+
+  /** Get the current distance between two collision objects
+   *
+   * \param b1Name Name of the first collision object
+   * \param b2Name Name of the second collision object
+   *
+   * \return The distance in meters, infinity if the collision is not in this constraint
+   */
+  double getDistance(const std::string & b1Name, const std::string & b2Name) const;
 
 public:
   /** Holds the constraint implementation
@@ -132,14 +165,19 @@ private:
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
   /** Actually adds the collision to the constraint, handles id creation and wildcard support */
   void __addCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
+  /** Actually edits the collision in the constraint */
+  void __editCollision(mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
 
   /* Internal management for collision display */
   bool autoMonitor_ = true;
+  bool logCollisions_ = true;
   std::unordered_set<int> monitored_;
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
+  std::shared_ptr<mc_rtc::Logger> logger_;
   std::vector<std::string> category_;
   void addMonitorButton(int collId, const mc_rbdyn::Collision & col);
   void toggleCollisionMonitor(int collId, const mc_rbdyn::Collision * col = nullptr);
+  void addLogs(int collId, const mc_rbdyn::Collision & col);
 };
 
 } // namespace mc_solver

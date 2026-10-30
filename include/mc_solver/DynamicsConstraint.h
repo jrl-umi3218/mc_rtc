@@ -28,8 +28,15 @@ public:
    * \param robotIndex The index of the robot affected by this constraint
    * \param timeStep Solver timestep
    * \param infTorque If true, ignore the torque limits set in the robot model
+   * \param compensateExtTorques If true, compensates external disturbances using a feedforward torque signal. The
+   * constraint will search for the compensation value in robot by calling `compensationTorques()` method, if not an
+   * estimation of external torques acting on the robot will be used by calling `externalTorques()` method.
    */
-  DynamicsConstraint(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double timeStep, bool infTorque = false);
+  DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                     unsigned int robotIndex,
+                     double timeStep,
+                     bool infTorque = false,
+                     bool compensateExtTorques = true);
 
   /** Constructor
    * Builds a damped joint limits constraint and a motion constr depending on
@@ -42,13 +49,45 @@ public:
    * offset}
    * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
    * \param infTorque If true, ignore the torque limits set in the robot model
+   * \param compensateExtTorques If true, compensates external disturbances using a feedforward torque signal. The
+   * constraint will search for the compensation value in robot by calling `compensationTorques()` method, if not an
+   * estimation of external torques acting on the robot will be used by calling `externalTorques()` method.
    */
   DynamicsConstraint(const mc_rbdyn::Robots & robots,
                      unsigned int robotIndex,
                      double timeStep,
                      const std::array<double, 3> & damper,
                      double velocityPercent = 1.0,
-                     bool infTorque = false);
+                     bool infTorque = false,
+                     bool compensateExtTorques = true);
+
+  /** Constructor
+   * Builds a CBF joint limits constraint and a motion constr depending on
+   * the nature of the robot. TVM backend only.
+   *
+   * \see KinematicsConstraint(const mc_rbdyn::Robots &, unsigned int, const std::array<double, 5> &, double) for
+   * details on the CBF joint limits
+   *
+   * \param robots The robots including the robot affected by this constraint
+   * \param robotIndex The index of the robot affected by this constraint
+   * \param damperSecond {interaction distance, safety distance, offset, overDamping, lambda}
+   * \param velocityPercent Maximum joint velocity percentage, 0.5 is advised
+   * \param compensateExtTorques If true, compensates external disturbances using
+   * robot.compensationTorques() if set, robot.externalTorques() otherwise
+   */
+  DynamicsConstraint(const mc_rbdyn::Robots & robots,
+                     unsigned int robotIndex,
+                     const std::array<double, 5> & damperSecond,
+                     double velocityPercent = 1.0,
+                     bool compensateExtTorques = true);
+
+  /** \brief Update the constraint
+   *
+   * This is called at every iteration of the controller once the constraint has been added to a solver
+   *
+   * \param solver Solver in which the constraint has been inserted
+   */
+  void update(QPSolver & solver) override;
 
   /** Returns the tasks::qp::MotionConstr
    *

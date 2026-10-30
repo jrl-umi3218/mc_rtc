@@ -10,8 +10,9 @@
 namespace mc_tvm
 {
 
-DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot)
-: tvm::function::abstract::LinearFunction(robot.mb().nrDof()), robot_(robot)
+DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot, bool compensateExternalForces)
+: tvm::function::abstract::LinearFunction(robot.mb().nrDof()), robot_(robot),
+  compensateExternalForces_(compensateExternalForces)
 {
   registerUpdates(Update::B, &DynamicFunction::updateb);
   registerUpdates(Update::Jacobian, &DynamicFunction::updateJacobian);
@@ -20,6 +21,10 @@ DynamicFunction::DynamicFunction(const mc_rbdyn::Robot & robot)
   auto & tvm_robot = robot.tvmRobot();
   addInputDependency<DynamicFunction>(Update::Jacobian, tvm_robot, Robot::Output::H);
   addInputDependency<DynamicFunction>(Update::B, tvm_robot, Robot::Output::C);
+  if(compensateExternalForces_)
+  {
+    addInputDependency<DynamicFunction>(Update::B, tvm_robot, Robot::Output::ExternalForces);
+  }
   addVariable(tvm::dot(tvm_robot.q(), 2), true);
   addVariable(tvm_robot.tau(), true);
   jacobian_[tvm_robot.tau().get()] = -Eigen::MatrixXd::Identity(robot_.mb().nrDof(), robot_.mb().nrDof());
@@ -103,6 +108,14 @@ sva::ForceVecd DynamicFunction::contactForce(const mc_rbdyn::RobotFrame & frame)
 void DynamicFunction::updateb()
 {
   b_ = robot_.tvmRobot().C();
+  if(compensateExternalForces_)
+  {
+    if(robot_.tvmRobot().tauCompensation()) { b_ -= robot_.tvmRobot().tauCompensation().value(); }
+    else
+    {
+      b_ -= robot_.tvmRobot().tauExternal();
+    }
+  }
 }
 
 void DynamicFunction::updateJacobian()

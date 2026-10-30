@@ -1114,6 +1114,56 @@ public:
    */
   mc_tvm::Convex & tvmConvex(const std::string & name) const;
 
+  /** @name External torques
+   *
+   * Estimated external torques and optional feedforward compensation torques, with their equivalent
+   * joint accelerations (H^-1 * tau).
+   *
+   * All vectors have size mb().nrDof() and follow the layout of rbd::dofToVector(mb(), mbc().jointTorque).
+   *
+   * @{
+   */
+
+  /** Set the estimated external joint torques
+   *
+   * \param torques Size mb().nrDof(), same layout as mbc().jointTorque
+   */
+  void setExternalTorques(const Eigen::VectorXd & torques);
+
+  /** Return the estimated external joint torques (same layout as mbc().jointTorque) */
+  const Eigen::VectorXd & externalTorques() const;
+
+  /** Set the joint accelerations equivalent to the external torques
+   *
+   * \param accelerations Size mb().nrDof(), same layout as mbc().alphaD
+   */
+  void setExternalTorquesAcc(const Eigen::VectorXd & accelerations);
+
+  /** Return the joint accelerations equivalent to the external torques (same layout as mbc().alphaD) */
+  const Eigen::VectorXd & externalTorquesAcc() const;
+
+  /** Set the feedforward compensation torques, used instead of externalTorques() by DynamicsConstraint
+   *
+   * \param torques Size mb().nrDof(), same layout as mbc().jointTorque
+   */
+  void setCompensationTorques(const Eigen::VectorXd & torques);
+
+  /** Return the compensation torques (same layout as mbc().jointTorque), std::nullopt if not set */
+  const std::optional<Eigen::VectorXd> & compensationTorques() const;
+
+  /** Set the joint accelerations equivalent to the compensation torques
+   *
+   * \param accelerations Size mb().nrDof(), same layout as mbc().alphaD
+   */
+  void setCompensationTorquesAcc(const Eigen::VectorXd & accelerations);
+
+  /** Return the joint accelerations equivalent to the compensation torques (same layout as mbc().alphaD),
+   * std::nullopt if not set */
+  const std::optional<Eigen::VectorXd> & compensationTorquesAcc() const;
+
+  /** @} */
+  /* End External torques section */
+
 private:
   Robots * robots_;
   unsigned int robots_idx_;
@@ -1149,6 +1199,14 @@ private:
   std::unordered_map<std::string, RobotFramePtr> frames_;
   /** Mass of this robot */
   double mass_ = 0.0;
+  /** Non modeled external forces acting on the robot **/
+  Eigen::VectorXd externalTorques_;
+  /** Joint accelerations from external forces acting on the robot **/
+  Eigen::VectorXd externalTorquesEquivalentAcc_;
+  /** External forces to be compensated in the commanded torque **/
+  std::optional<Eigen::VectorXd> externalTorqueCompensation_ = std::nullopt;
+  /** Joint accelerations from the compensation in the commanded torque **/
+  std::optional<Eigen::VectorXd> compensationEquivalentAcc_ = std::nullopt;
 
 protected:
   struct NewRobotToken
