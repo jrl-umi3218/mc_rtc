@@ -1,0 +1,4 @@
+# my_robot_interface.yaml, on the robot PC
+name: my_robot             # same as the key under Robots:
+network_interface:
+  protocol: zenoh
