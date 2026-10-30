@@ -181,7 +181,7 @@ tutorials:
     new-plugin:
       title: Implement a new plugin for mc_rtc
     new-interface:
-      title: Implement a new mc_rtc interface
+      title: Implement a new mc_rtc robot interface
     new-environment:
       title: Environment creation for mc_rtc
     new-robot:
