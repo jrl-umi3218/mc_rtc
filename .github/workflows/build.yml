@@ -26,35 +26,35 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       code: ${{ steps.filter.outputs.code }}
-      steps:
-      - uses: actions/checkout@v7
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            code:
-              # Matches anything, EXCEPT the files you want to ignore
-              - '**.**'
-              # List negation patterns matching your original paths_to_ignore:
-              - '!.mergify.yml'
-              - '!flake.nix'
-              - '!flake.lock'
-              - '!.envrc'
-              - '!.github/workflows/package.yml'
-              - '!.github/workflows/nix*.yml'
-              - '!.github/workflows/sync.yml'
-              - '!.github/workflows/sources/*'
-              - '!.github/workflows/build-others.yml'
-              - '!.github/workflows/docker/*'
-              - '!debian/**'
-              - '!*.md'
-              - '!doc/**/README.md'
-              - '!robots/README.md'
-              - '!utils/**/README.md'
-              - '!observers/**/README.md'
-              - '!controllers/**/README.md'
-              - '!binding/**/README.md'
-              - '!src/mc_rtc/README.md'
+    steps:
+    - uses: actions/checkout@v7
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          code:
+            # Matches anything, EXCEPT the files you want to ignore
+            - '**.**'
+            # List negation patterns matching your original paths_to_ignore:
+            - '!.mergify.yml'
+            - '!flake.nix'
+            - '!flake.lock'
+            - '!.envrc'
+            - '!.github/workflows/package.yml'
+            - '!.github/workflows/nix*.yml'
+            - '!.github/workflows/sync.yml'
+            - '!.github/workflows/sources/*'
+            - '!.github/workflows/build-others.yml'
+            - '!.github/workflows/docker/*'
+            - '!debian/**'
+            - '!*.md'
+            - '!doc/**/README.md'
+            - '!robots/README.md'
+            - '!utils/**/README.md'
+            - '!observers/**/README.md'
+            - '!controllers/**/README.md'
+            - '!binding/**/README.md'
+            - '!src/mc_rtc/README.md'
 
   build:
     needs: changes
