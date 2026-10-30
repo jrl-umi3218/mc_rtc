@@ -50,7 +50,7 @@
 
 <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
 
-    <title>チュートリアル - 新しいmc_rtcインタフェースの実装方法 - mc_rtc</title>
+    <title>チュートリアル - 新しいmc_rtcロボットインタフェースの実装方法 - mc_rtc</title>
   </head>
 
   <body>
@@ -320,7 +320,7 @@
                         
                       
                         
-                        <li><strong>新しいmc_rtcインタフェースの実装方法</strong></li>
+                        <li><strong>新しいmc_rtcロボットインタフェースの実装方法</strong></li>
                           
                         
                       
@@ -346,7 +346,27 @@
                 </div>
               </div>
               
-                
+                <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#uri用ドライバの作成">URI用ドライバの作成</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#uriとは">URIとは</a></li>
+<li class="toc-entry toc-h3"><a href="#uriのインストール">URIのインストール</a></li>
+<li class="toc-entry toc-h3"><a href="#既存のドライバの確認">既存のドライバの確認</a></li>
+<li class="toc-entry toc-h3"><a href="#ドライバプロジェクトの作成">ドライバプロジェクトの作成</a></li>
+<li class="toc-entry toc-h3"><a href="#ドライバの実装">ドライバの実装</a></li>
+<li class="toc-entry toc-h3"><a href="#ビルドとインストール">ビルドとインストール</a></li>
+<li class="toc-entry toc-h3"><a href="#ドライバ単体でのテスト">ドライバ単体でのテスト</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mc-rtcでドライバを使う">mc_rtcでドライバを使う</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#別のコンピュータ上のロボット">別のコンピュータ上のロボット</a></li>
+<li class="toc-entry toc-h3"><a href="#複数のロボット">複数のロボット</a></li>
+<li class="toc-entry toc-h3"><a href="#さらに詳しく">さらに詳しく</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#従来の方法-専用のインターフェイス実行ファイル">従来の方法: 専用のインターフェイス実行ファイル</a></li>
+</ul>
               
             </div>
           </div>
@@ -354,10 +374,395 @@
       </div>
       <div class="col-9" id="tutorial-content">
         
-        <h1>新しいmc_rtcインタフェースの実装方法</h1>
+        <h1>新しいmc_rtcロボットインタフェースの実装方法</h1>
         
 
-        <p>近日公開</p>
+        <p><em>インターフェイス</em>とは、mc_rtcとロボット（またはシミュレータ）を接続するソフトウェアのことです。インターフェイスは反復ごとに次の処理を行います。</p>
+
+<ol>
+  <li>ロボットの状態（関節位置、速度、トルク、IMU、力センサーなど）を読み取る</li>
+  <li>それをmc_rtcに渡し、コントローラーを実行する</li>
+  <li>結果（関節位置、速度、またはトルク）をロボットに送り返す</li>
+</ol>
+
+<p>このチュートリアルでは、新しいロボット用のインターフェイスの書き方を説明します。方法は2つあります。</p>
+
+<ul>
+  <li>
+    <strong>推奨:</strong> <a href="https://github.com/isri-aist/unified_robot_interface">URI</a>（Unified Robot Interface）用の小さな<em>ドライバ</em>プラグインを書く。ロボット固有ではない部分はすべてURIがすでに提供しています。
+  </li>
+  <li>
+    <strong>従来の方法:</strong> <a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController" target="blank_"><code>mc_control::MCGlobalController</code></a>を組み込んだ専用のインターフェイス実行ファイルを書く。<a href="/mc_rtc/jp/interfaces.html">インターフェイスのページ</a>に掲載されているインターフェイスの多くはこの方法で書かれています。
+  </li>
+</ul>
+
+<div class="alert alert-info">このチュートリアルは、mc_rtcのコントローラーとロボットモジュールに慣れており、対象ロボットのRobotModuleがすでにあることを前提としています（<a href="/mc_rtc/jp/tutorials/advanced/new-robot.html">こちらのチュートリアル</a>を参照してください）。</div>
+
+<h2 id="uri用ドライバの作成">URI用ドライバの作成</h2>
+
+
+<h3 id="uriとは">URIとは</h3>
+
+
+<p>URIは従来のインターフェイスを3つの部分に分割します。</p>
+
+<ul>
+  <li><code>uri manager</code>: すべてのロボットに対してソルバー（mc_rtc）を実行する1つのプロセス。通常の<code>mc_rtc.yaml</code>に<code>Robots</code>セクションを加えて設定します。</li>
+  <li><code>uri interface</code>: ロボットごとに1つ存在する汎用プロセス。ロボット側のPCまたは制御用PCで動作し、起動時にあなたの<em>ドライバ</em>を読み込みます。</li>
+  <li>両者の間の通信レイヤー（ZenohとFlatBuffers）。これを直接使う必要はありません。</li>
+</ul>
+
+<p>あなたが書く部分はドライバだけです。ドライバはロボットのSDKをテンプレート化されたドライバでラップする共有ライブラリで、mc_rtcには一切依存しません。さらに、1つのコントローラーで異なる複数のロボットをそれぞれの制御周期で同時に動かすことができ、ロボットは別々のコンピュータ上に置くこともできます。</p>
+
+<h3 id="uriのインストール">URIのインストール</h3>
+
+
+<p>URIはmc_rtcの隣にインストールします。<a href="https://github.com/mc-rtc/mc-rtc-superbuild">mc-rtc-superbuild</a>でmc_rtcをビルドしている場合は、<code>WITH_URI</code>オプションを有効にします。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>mc-rtc-superbuild
+cmake <span class="nt">--preset</span> relwithdebinfo <span class="nt">-DWITH_URI</span><span class="o">=</span>ON
+cmake <span class="nt">--build</span> <span class="nt">--preset</span> relwithdebinfo</code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>その他のインストール方法（手動、devcontainer）は<a href="https://isri-aist.github.io/unified_robot_interface/docGettingStarted.html">URIのドキュメント</a>に記載されています。</p>
+
+<div class="alert alert-warning">使用したインストールプレフィックスを覚えておいてください。<code>uri interface</code>は<code>&lt;prefix&gt;/lib/robot_interface</code>内のドライバだけを探すため、ドライバも同じプレフィックスでインストールする必要があります。</div>
+
+<h3 id="既存のドライバの確認">既存のドライバの確認</h3>
+
+
+<p>Universal Robots（RTDE）、Kinova Gen3、xArm、<code>ros2_control</code>のcontroller managerを持つ任意のロボットなどのドライバがすでに存在します。<a href="https://isri-aist.github.io/unified_robot_interface/docSupportedRobots.html">対応ロボットの一覧</a>を参照してください。お使いのロボットが載っている場合は、<a href="#mc_rtcでドライバを使う">mc_rtcでドライバを使う</a>に進んでください。</p>
+
+<h3 id="ドライバプロジェクトの作成">ドライバプロジェクトの作成</h3>
+
+
+<div class="alert alert-info">このトピックの詳細な情報はURIのウェブサイトにあります（<a href="https://isri-aist.github.io/unified_robot_interface/docNewRobotDriver.html">Create a new robot driver</a>を参照してください）。</div>
+
+<p>URIはすぐにビルドできるプロジェクトを生成してくれます。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-bash" data-lang="bash">uri create_new_driver MyRobot &lt;new_driver_path&gt;</code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>これにより、スタンドアロンのCMakeプロジェクト<code>my_robot_driver</code>と、<code>RobotDriverMyRobot</code>という名前のクラスが作成されます。このプロジェクトはすでにコンパイルできます。空の状態を報告し、コマンドを無視するだけのスケルトンです。</p>
+
+<h3 id="ドライバの実装">ドライバの実装</h3>
+
+
+<p><code>src/RobotDriverMyRobot.cpp</code>を開いてメソッドを実装します。ほとんどの場合に実装するのは次のメソッドです。</p>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>メソッド</th>
+      <th>実装すべき内容</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>コンストラクタ</td>
+      <td>受け取った<code>ip</code>、<code>port</code>、およびオプションの<code>config_path</code>を使ってロボットに接続する。接続に失敗した場合は例外を投げる。</td>
+    </tr>
+    <tr>
+      <td><code>sync()</code></td>
+      <td>ロボットが新しい状態を公開するまでブロックする。<strong>これが制御周期を決めます</strong>。<code>sleep()</code>ではなく、SDKのブロッキング読み取りを使ってください。</td>
+    </tr>
+    <tr>
+      <td><code>getActualQ()</code></td>
+      <td>関節位置 [rad]。まだ状態が得られていない場合は空のベクトルを返す。</td>
+    </tr>
+    <tr>
+      <td><code>getActualQd()</code></td>
+      <td>関節速度 [rad/s]（任意）</td>
+    </tr>
+    <tr>
+      <td><code>getJointTorques()</code></td>
+      <td>関節トルク [Nm]</td>
+    </tr>
+    <tr>
+      <td><code>servoJ(q)</code></td>
+      <td>関節位置 [rad] をロボットに送る</td>
+    </tr>
+    <tr>
+      <td><code>speedJ(qd)</code></td>
+      <td>関節速度 [rad/s] をロボットに送る</td>
+    </tr>
+    <tr>
+      <td><code>tauJ(tau)</code></td>
+      <td>関節トルク [Nm] をロボットに送る</td>
+    </tr>
+    <tr>
+      <td><code>getIMUs()</code>、<code>getForceSensors()</code></td>
+      <td>センサーの読み取り値（任意）</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>実装が必要なのは、ロボットが対応する制御モードのコマンドメソッドだけです（位置制御なら<code>servoJ</code>など）。それ以外は例外を投げるか、何もしなくて構いません。</p>
+
+<p>特に重要なルールが3つあります。</p>
+
+<ul>
+  <li><strong>関節の順序</strong>: ドライバに入出力されるすべてのベクトルは、RobotModuleの<code>ref_joint_order</code>に従います。SDKが異なる順序を使う場合は、ドライバ内で並べ替えてください。</li>
+  <li><strong>単位</strong>: rad、rad/s、Nm、N。クォータニオンは<code>(w, x, y, z)</code>です。</li>
+  <li><strong>センサー</strong>: <code>getIMUs()</code>と<code>getForceSensors()</code>でキーとして使う名前は、RobotModuleのボディセンサーおよび力センサーと一致している必要があります。</li>
+</ul>
+
+<p>SDKが追加のライブラリを必要とする場合は、生成された<code>CMakeLists.txt</code>に通常どおり<code>find_package</code>と<code>target_link_libraries</code>で追加してください。<code>ip</code>と<code>port</code>に収まらない設定（トピック名やゲインなど）は独自のYAMLファイルに記述でき、そのパスは<code>config_path</code>としてコンストラクタに渡されます。</p>
+
+<h3 id="ビルドとインストール">ビルドとインストール</h3>
+
+
+<p>URI（およびmc_rtc）と同じプレフィックスでドライバをビルドします。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>my_robot_driver
+cmake <span class="nt">-S</span> <span class="nb">.</span> <span class="nt">-B</span> build <span class="se">\</span>
+  <span class="nt">-DCMAKE_PREFIX_PATH</span><span class="o">=</span>/path/to/install <span class="se">\</span>
+  <span class="nt">-DCMAKE_INSTALL_PREFIX</span><span class="o">=</span>/path/to/install
+cmake <span class="nt">--build</span> build
+cmake <span class="nt">--install</span> build</code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>生成されたソースには<code>ROBOT_DRIVER_EXPORT_ABI_VERSION()</code>の行が含まれています。削除しないでください。この行がないドライバはURIに読み込みを拒否されます。URIがドライバのインターフェイスを変更した場合、古いバージョンに対してビルドされたドライバは明確なメッセージとともに読み込みに失敗するため、再ビルドが必要です。</p>
+
+<h3 id="ドライバ単体でのテスト">ドライバ単体でのテスト</h3>
+
+
+<p>mc_rtcを使う前に、ドライバが接続でき、状態が正しく見えることを確認します。ロボットのアドレスを書いた小さなファイルを用意します。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">robot_interface</span><span class="pi">:</span>
+  <span class="na">driver</span><span class="pi">:</span> <span class="s">RobotDriverMyRobot</span>
+  <span class="na">ip</span><span class="pi">:</span> <span class="s">192.168.1.10</span>
+  <span class="na">port</span><span class="pi">:</span> <span class="s">0</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>次にビューアを実行します。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-bash" data-lang="bash">uri viewer <span class="nt">-c</span> viewer.yaml</code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>ビューアは<code>uri interface</code>とまったく同じようにドライバを読み込み、関節位置、速度、トルク、および<code>sync()</code>で費やされた時間を表示します。ロボットを手で動かして（またはシミュレーションで）、関節の順序、符号、単位を確認してください。ビューアはコマンドを一切送信しないため、実機でも安全に使用できます。</p>
+
+<h2 id="mc-rtcでドライバを使う">mc_rtcでドライバを使う</h2>
+
+
+<p><code>mc_rtc.yaml</code>の<code>Robots</code>セクションにロボットを追加します。それ以外の項目（<code>MainRobot</code>、<code>Enabled</code>、オブザーバー、プラグインなど）の意味は従来どおりです。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">MyRobot</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Posture</span>
+<span class="na">Timestep</span><span class="pi">:</span> <span class="m">0.005</span>            <span class="c1"># mc_rtcは200 Hzで動作</span>
+
+<span class="na">Robots</span><span class="pi">:</span>
+  <span class="na">my_robot</span><span class="pi">:</span>                <span class="c1"># ロボット名</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">MyRobot</span>        <span class="c1"># mc_rtcのRobotModule</span>
+    <span class="na">controller</span><span class="pi">:</span>
+      <span class="na">mode</span><span class="pi">:</span> <span class="s">position</span>       <span class="c1"># position | velocity | torque</span>
+      <span class="na">time_step</span><span class="pi">:</span> <span class="m">0.001</span>     <span class="c1"># ロボット自身の制御周期（1 kHz）</span>
+    <span class="na">network_interface</span><span class="pi">:</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">zenoh</span>
+    <span class="na">robot_interface</span><span class="pi">:</span>
+      <span class="na">driver</span><span class="pi">:</span> <span class="s">RobotDriverMyRobot</span>
+      <span class="na">ip</span><span class="pi">:</span> <span class="s">192.168.1.10</span>
+      <span class="na">port</span><span class="pi">:</span> <span class="m">0</span>
+      <span class="na">autostart</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>いくつかの項目について説明します。</p>
+
+<ul>
+  <li><code>module</code>は、ロボットのmc_rtc RobotModuleです。</li>
+  <li><code>controller.mode</code>は、ロボットに送るコマンドの種類（<code>position</code>、<code>velocity</code>、または<code>torque</code>）です。<code>servoJ</code>、<code>speedJ</code>、<code>tauJ</code>のどれが呼ばれるかを決めます。</li>
+  <li><code>controller.time_step</code>は、ロボットの制御周期です。（mc_rtcの）<code>Timestep</code>はこの値の整数倍でなければなりません。この例では、ロボットは1 kHz、mc_rtcは200 Hzで動作し、その間は最後のコマンドが再送されます。</li>
+  <li><code>robot_interface.driver</code>は、ドライバのクラス名です。<code>ip</code>と<code>port</code>は、ドライバが使用しない場合でも常に必須です。</li>
+  <li><code>autostart: true</code>を指定すると、<code>uri manager</code>が<code>uri interface</code>を自動的に起動します。ロボットが制御用PCから到達可能な場合に使用します。</li>
+</ul>
+
+<p>インターフェイス実行ファイルの代わりに、<code>uri manager</code>でコントローラーを起動します。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-bash" data-lang="bash">uri manager <span class="nt">-c</span> mc_rtc.yaml</code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>ドライバが読み込まれ、ロボットが実際の関節位置で初期化され、mc_rtcがコントローラーを開始する様子が確認できるはずです。これまでと同様に、任意のmc_rtc GUIクライアントでコントローラーを操作できます。</p>
+
+<div class="alert alert-info">コントローラーは、すべてのロボットから最初の状態を受信してから開始されるため、ロボットがデフォルトの姿勢に向かって急に動くことはありません。</div>
+
+<h3 id="別のコンピュータ上のロボット">別のコンピュータ上のロボット</h3>
+
+
+<p>ロボットが専用のPC（例えばアームの隣にあるリアルタイムPC）に接続されている場合は、<code>autostart</code>を削除し、そのPCにドライバをインストールします。そのPCで、<code>uri manager</code>の<em>前に</em><code>uri interface</code>を起動してください。必要なのはロボットの名前だけです。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># my_robot_interface.yaml（ロボット側PC）</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">my_robot</span>             <span class="c1"># Robots:の下のキーと同じ名前</span>
+<span class="na">network_interface</span><span class="pi">:</span>
+  <span class="na">protocol</span><span class="pi">:</span> <span class="s">zenoh</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># ロボット側PCで</span>
+uri interface <span class="nt">-c</span> my_robot_interface.yaml
+<span class="c"># 制御用PCで</span>
+uri manager <span class="nt">-c</span> mc_rtc.yaml</code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>ドライバ名、IPアドレス、制御モードはマネージャから送られるため、ロボット側のPCに触れずにドライバを切り替えられます。接続が失われた場合、マネージャはコントローラーを停止し、インターフェイスはロボットをその場に保持します。</p>
+
+<h3 id="複数のロボット">複数のロボット</h3>
+
+
+<p><code>Robots</code>の下にエントリを追加します。各ロボットはそれぞれ独自のドライバと制御周期を持ち、すべて同じmc_rtcコントローラーによって制御されます。<code>base</code>キーは別のエントリをコピーするため、異なる部分だけを書けば済みます。</p>
+
+<h3 id="さらに詳しく">さらに詳しく</h3>
+
+
+<p>このチュートリアルでは要点のみを扱いました。<a href="https://isri-aist.github.io/unified_robot_interface/">URIのドキュメント</a>には次の詳細があります。</p>
+
+<ul>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docNewRobotDriver.html">新しいロボットドライバの作成</a>: グリッパー、ROS 2ベースのドライバ、チェックリスト</li>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docRobotManager.html">ロボットマネージャ</a>: <code>mc_rtc.yaml</code>の完全なリファレンス、タイミングのルール、接続断の処理</li>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docCommandLine.html">コマンドライン</a>: すべての<code>uri</code>サブコマンド</li>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docSimulation.html">シミュレーション</a>: 同じコントローラーをシミュレーション上のロボットで実行する</li>
+</ul>
+
+<h2 id="従来の方法-専用のインターフェイス実行ファイル">従来の方法: 専用のインターフェイス実行ファイル</h2>
+
+
+<div class="alert alert-warning">これはロボットをmc_rtcと統合する従来の方法です。現在もサポートされていますが、<strong>新しいロボットには推奨されません</strong>。</div>
+
+<p>この方法では、mc_rtcとリンクし、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController" target="blank_"><code>mc_control::MCGlobalController</code></a>を組み込んだ実行ファイルを書きます。ロボットとの通信、タイミング、mc_rtcの呼び出しといったリアルタイムループ全体を自分で管理します。各反復は次のようになります。</p>
+
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+  <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// 専用インターフェイスのスケッチ</span>
+<span class="n">mc_control</span><span class="o">::</span><span class="n">MCGlobalController</span> <span class="nf">controller</span><span class="p">(</span><span class="s">"/path/to/mc_rtc.yaml"</span><span class="p">);</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">robot</span> <span class="o">=</span> <span class="n">controller</span><span class="p">.</span><span class="n">robot</span><span class="p">();</span>
+
+<span class="c1">// 1. 実ロボットの状態からコントローラーを初期化する</span>
+<span class="n">controller</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">readJointPositions</span><span class="p">());</span>
+
+<span class="c1">// 2. ロボットに同期したリアルタイムループ</span>
+<span class="k">while</span><span class="p">(</span><span class="n">running</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">waitForNextRobotState</span><span class="p">();</span>
+
+  <span class="c1">// 3. mc_rtcにセンサー値を渡す</span>
+  <span class="n">controller</span><span class="p">.</span><span class="n">setEncoderValues</span><span class="p">(</span><span class="n">readJointPositions</span><span class="p">());</span>
+  <span class="n">controller</span><span class="p">.</span><span class="n">setJointTorques</span><span class="p">(</span><span class="n">readJointTorques</span><span class="p">());</span>
+  <span class="n">controller</span><span class="p">.</span><span class="n">setSensorOrientations</span><span class="p">(</span><span class="n">Accelerometer</span><span class="p">);</span>
+
+  <span class="c1">// 4. コントローラーを1回実行する</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">run</span><span class="p">())</span>
+  <span class="p">{</span>
+    <span class="c1">// 5. 結果をロボットに送る</span>
+    <span class="n">sendJointPositions</span><span class="p">(</span><span class="n">robot</span><span class="p">.</span><span class="n">mbc</span><span class="p">().</span><span class="n">q</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+  
+  </div>
+</div>
+
+
+<p>主に使用する関数は次のとおりです。</p>
+
+<ul>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#ac49cb563047d30361c781b96ec2a8e5d" target="blank_"><code>mc_control::MCGlobalController::init()</code></a>は、ロボットの初期状態からコントローラーを初期化します</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a2703ab87cc9556a1f18cc883113da33c" target="blank_"><code>mc_control::MCGlobalController::setEncoderValues()</code></a>、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a0dca39c45c9a87e08d48b6d34c75c44a" target="blank_"><code>mc_control::MCGlobalController::setEncoderVelocities()</code></a>、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a893f4ffae6fbc419efff45b53ef6ffd2" target="blank_"><code>mc_control::MCGlobalController::setJointTorques()</code></a>は、関節の状態を提供します</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a10d3410db9986b61837175c73adc6009" target="blank_"><code>mc_control::MCGlobalController::setSensorOrientations()</code></a>、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#aee1e0c31b2a18df3d803a7befe7c4f1a" target="blank_"><code>mc_control::MCGlobalController::setSensorAngularVelocities()</code></a>、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a96f16e96cb41a0bf1edfa2d48f427bc8" target="blank_"><code>mc_control::MCGlobalController::setSensorLinearAccelerations()</code></a>、<a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a501402db79c4bc10aeb0b6e6afbb70d8" target="blank_"><code>mc_control::MCGlobalController::setWrenches()</code></a>は、その他のセンサーを提供します</li>
+  <li><a href="/mc_rtc/jp/doxygen.html#structmc__control_1_1MCGlobalController#a153432b8c6ebfc4f9484deb1439ca3ee" target="blank_"><code>mc_control::MCGlobalController::run()</code></a>は、コントローラーを1回実行します</li>
+</ul>
+
+<p>URIドライバと比べると、専用のインターフェイスにはいくつかの欠点があります。</p>
+
+<ul>
+  <li>ロボットごとに、mc_rtcとその依存ライブラリにリンクする専用の実行ファイルが必要で、多くの場合それらを個別にビルドする必要があります。</li>
+  <li>タイミング、安全性（接続断、ロボットの保持）、マルチレートの処理を毎回実装し直す必要があります。</li>
+  <li>異なるSDKや制御周期を持つ複数のロボットを1つのコントローラーから制御することは、標準ではサポートされていません。</li>
+  <li>ロボットのSDKはmc_rtcと同じマシン上で動作する必要があります。</li>
+</ul>
+
+<p>既存のインターフェイス（<a href="/mc_rtc/jp/interfaces.html">インターフェイスのページ</a>を参照）は、保守や移植が必要な場合に参考になる良い例です。例えば独自のメインループを持つシミュレータを統合するなど、新しいスタンドアロンのインターフェイスがどうしても必要な場合は、それらを出発点にできます。</p>
 
 
 
