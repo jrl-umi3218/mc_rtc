@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check for nix-result-closure artifact
         id: check_artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v8
         with:
           name: nix-build-result
           path: ./nix-result-closure

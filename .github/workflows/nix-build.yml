@@ -92,7 +92,7 @@ jobs:
           nix-store --copy-closure $(readlink -f ./result) ./nix-result-closure
       - name: Upload Build Result
         if: ${{ env.CACHIX_AUTH_TOKEN == '' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: nix-build-result
           path: ./nix-result-closure
