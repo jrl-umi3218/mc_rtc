@@ -1,18 +1,55 @@
 # Maintainers can add a push-cachix label to a PR to trigger a nix build and
 # push the result to the binary cache (with CACHIX_AUTH_TOKEN secret)
-name: CI Nix Fork PR
+name: Push to cachix
 on:
   pull_request_target:
     types:
       - labeled
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+
 jobs:
-  build:
+  push-to-cachix:
     if: github.event.label.name == 'push-cachix'
-    uses: ./.github/workflows/nix-build.yml
-    with:
-      ref: ${{ github.event.pull_request.head.sha }}
-    secrets:
-      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for nix-result-closure artifact
+        id: check_artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nix-build-result
+          path: ./nix-result-closure
+        continue-on-error: true  # Allow workflow to continue even if artifact is not found
+
+      - name: Check artifact existence
+        id: artifact_check
+        run: |
+          if [ ! -d ./nix-result-closure ]; then
+            echo "Artifact not found."
+            echo "::set-output name=exists::false"
+          else
+            echo "Artifact found."
+            echo "::set-output name=exists::true"
+          fi
+
+      - name: Push Build Result to Cachix
+        if: steps.artifact_check.outputs.exists == 'true'
+        run: |
+          # Configure Cachix
+          uses: cachix/cachix-action@v17
+          with:
+            name: mc-rtc-nix
+            authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+            extraPullNames: ros,gepetto
+          # Push the downloaded result to Cachix
+          cachix push mc-rtc-nix ./nix-result-closure
+
+      - name: Remove Label and Comment
+        if: steps.artifact_check.outputs.exists == 'false'
+        run: |
+          LABEL_NAME="push-cachix"
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          COMMENT="The artifact is not yet available. Please wait for the Nix build to complete before pushing to Cachix."
+          curl -s -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/labels/${LABEL_NAME}"
+          curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d "{\"body\": \"${COMMENT}\"}" \
+          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
