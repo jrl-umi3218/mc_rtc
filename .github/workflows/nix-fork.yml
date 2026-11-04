@@ -1,6 +1,7 @@
 # Maintainers can add a push-cachix label to a PR to trigger a nix build and
 # push the result to the binary cache (with CACHIX_AUTH_TOKEN secret)
 name: Push to cachix
+
 on:
   pull_request_target:
     types:
@@ -11,45 +12,57 @@ jobs:
     if: github.event.label.name == 'push-cachix'
     runs-on: ubuntu-latest
     steps:
-      - name: Check for nix-result-closure artifact
-        id: check_artifact
+      - name: Download nix-closure artifact
         uses: actions/download-artifact@v8
+        id: download
         with:
-          name: nix-build-result
-          path: ./nix-result-closure
-        continue-on-error: true  # Allow workflow to continue even if artifact is not found
+          name: nix-closure
+          path: ./artifact-dir
+        continue-on-error: true # Allow workflow to continue even if artifact is missing
 
       - name: Check artifact existence
         id: artifact_check
         run: |
-          if [ ! -d ./nix-result-closure ]; then
-            echo "Artifact not found."
-            echo "::set-output name=exists::false"
-          else
+          if [ -f ./artifact-dir/nix-result-closure.nar ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
             echo "Artifact found."
-            echo "::set-output name=exists::true"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Artifact not found."
           fi
 
-      - name: Push Build Result to Cachix
-        if: steps.artifact_check.outputs.exists == 'true'
-        run: |
-          # Configure Cachix
-          uses: cachix/cachix-action@v17
-          with:
-            name: mc-rtc-nix
-            authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-            extraPullNames: ros,gepetto
-          # Push the downloaded result to Cachix
-          cachix push mc-rtc-nix ./nix-result-closure
-
-      - name: Remove Label and Comment
+      - name: Remove Label and Comment (Artifact Missing)
         if: steps.artifact_check.outputs.exists == 'false'
         run: |
           LABEL_NAME="push-cachix"
           PR_NUMBER=${{ github.event.pull_request.number }}
-          COMMENT="The artifact is not yet available. Please wait for the Nix build to complete before pushing to Cachix."
+          COMMENT="[push-cachix label]: The build closure artifact is not yet available. Please wait for the Nix build to complete before pushing to Cachix."
+
           curl -s -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/labels/${LABEL_NAME}"
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/labels/${LABEL_NAME}"
+
           curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -d "{\"body\": \"${COMMENT}\"}" \
-          "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+            -d "{\"body\": \"${COMMENT}\"}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        if: steps.artifact_check.outputs.exists == 'true'
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v17
+        if: steps.artifact_check.outputs.exists == 'true'
+        with:
+          name: mc-rtc-nix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          extraPullNames: ros,gepetto
+
+      - name: Import closure and Push to Cachix
+        if: steps.artifact_check.outputs.exists == 'true'
+        run: |
+          # Import the NAR archive back into the runner's /nix/store
+          STORE_PATHS=$(nix-store --import < ./artifact-dir/nix-result-closure.nar)
+          echo "Imported store paths: $STORE_PATHS"
+
+          # Push the imported paths to Cachix
+          cachix push mc-rtc-nix $STORE_PATHS

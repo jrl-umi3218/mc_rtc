@@ -85,14 +85,15 @@ jobs:
           sudo ls -ld /var/cache/ccache
       - run: nix flake check -L ${{ steps.flags.outputs.args }}
       - run: nix build -L ${{ steps.flags.outputs.args }}
-      - name: Copy Closure
+      - name: Export closure to a NAR archive
         if: ${{ env.CACHIX_AUTH_TOKEN == '' }}
         run: |
-          mkdir -p ./nix-result-closure
-          nix-store --copy-closure $(readlink -f ./result) ./nix-result-closure
-      - name: Upload Build Result
+          # Query the entire closure (dependencies + result) and export it
+          nix-store --export $(nix-store -qR ./result) > ./nix-result-closure.nar
+
+      - name: Upload closure artifact
         if: ${{ env.CACHIX_AUTH_TOKEN == '' }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
-          name: nix-build-result
-          path: ./nix-result-closure
+          name: nix-closure
+          path: ./nix-result-closure.nar
