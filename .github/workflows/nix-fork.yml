@@ -13,12 +13,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download nix-closure artifact
-        uses: actions/download-artifact@v8
+
+      - name: Download nix-closure artifact from PR build run
+        uses: dawidd6/action-download-artifact@v6
         id: download
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: nix.yml   # <-- CHANGE THIS to the exact filename of your main build workflow
+          pr: ${{ github.event.pull_request.number }}
           name: nix-closure
           path: ./artifact-dir
-        continue-on-error: true # Allow workflow to continue even if artifact is missing
+          search_artifacts: true
+        continue-on-error: true # Allow workflow to continue if artifact is missing or expired
 
       - name: Check artifact existence
         id: artifact_check
