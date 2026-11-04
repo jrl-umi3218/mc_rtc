@@ -12,8 +12,6 @@ jobs:
     if: github.event.label.name == 'push-cachix'
     runs-on: ubuntu-latest
     steps:
-      - name: Download nix-closure artifact
-
       - name: Download nix-closure artifact from PR build run
         uses: dawidd6/action-download-artifact@v6
         id: download
