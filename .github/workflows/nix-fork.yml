@@ -17,7 +17,7 @@ jobs:
         id: download
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: nix.yml   # <-- CHANGE THIS to the exact filename of your main build workflow
+          workflow: nix-build.yml
           pr: ${{ github.event.pull_request.number }}
           name: nix-closure
           path: ./artifact-dir
