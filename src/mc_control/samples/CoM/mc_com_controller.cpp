@@ -18,6 +18,7 @@ namespace mc_control
 MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt, Backend backend)
 : MCController(robot_module, dt, backend)
 {
+  // try a change
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
   qpsolver->addConstraintSet(*compoundJointConstraint);
