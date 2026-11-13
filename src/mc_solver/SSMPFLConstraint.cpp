@@ -40,14 +40,10 @@ SSMPFLConstraint::SSMPFLConstraint(const mc_rbdyn::Robot & robot,
 }
 
 void SSMPFLConstraint::setMeasurements(const std::vector<Measurement> & measurements)
-{
-  function_->setMeasurements(measurements);
-}
+{ function_->setMeasurements(measurements); }
 
 void SSMPFLConstraint::clear()
-{
-  function_->clear();
-}
+{ function_->clear(); }
 
 double SSMPFLConstraint::softSlack(size_t row) const
 {

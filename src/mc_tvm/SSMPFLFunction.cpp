@@ -63,7 +63,11 @@ void SSMPFLFunction::clear()
 void SSMPFLFunction::setMeasurements(const std::vector<Measurement> & measurements)
 {
   if(measurements.size() > capacity_) { throw std::invalid_argument("too many SSM+PFL measurements"); }
-  if(measurements.empty()) { clear(); return; }
+  if(measurements.empty())
+  {
+    clear();
+    return;
+  }
   const auto & mb = robot_.mb();
   const auto & mbc = robot_.mbc();
   const int dofs = mb.nrDof();
@@ -137,8 +141,6 @@ void SSMPFLFunction::updateJacobian()
 }
 
 void SSMPFLFunction::updateb()
-{
-  b_ = -scaledUpper_;
-}
+{ b_ = -scaledUpper_; }
 
 } // namespace mc_tvm
