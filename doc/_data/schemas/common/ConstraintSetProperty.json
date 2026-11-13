@@ -9,6 +9,7 @@
     { "$ref": "../ConstraintSet/CompoundJointConstraint.json" },
     { "$ref": "../ConstraintSet/ContactConstraint.json" },
     { "$ref": "../ConstraintSet/DynamicsConstraint.json" },
-    { "$ref": "../ConstraintSet/KinematicsConstraint.json" }
+    { "$ref": "../ConstraintSet/KinematicsConstraint.json" },
+    { "$ref": "../ConstraintSet/SSMPFLConstraint.json" }
   ]
 }

@@ -1,0 +1,28 @@
+{
+  "title": "mc_solver::SSMPFLConstraint",
+  "type": "object",
+  "description": "TVM-only SSM + PFL constraint. Live pair measurements must be supplied by the controller.",
+  "properties": {
+    "type": { "const": "ssmPfl" },
+    "robot": { "$ref": "../common/ConstraintSet_robot.json" },
+    "capacity": { "type": "integer", "minimum": 1 },
+    "StoppingTimeSeconds": { "type": "number", "exclusiveMinimum": 0 },
+    "MinDirectionalInverseMass": { "type": "number", "minimum": 0, "default": 1e-12 },
+    "MinMassEigenvalue": { "type": "number", "exclusiveMinimum": 0, "default": 1e-9 },
+    "Weight": { "type": "number", "exclusiveMinimum": 0, "description": "Optional soft row penalty; omit for hard rows" },
+    "Regions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "ForceMaxN": { "type": "number", "minimum": 0 },
+          "StiffnessNPerM": { "type": "number", "exclusiveMinimum": 0 },
+          "DistanceMarginM": { "type": "number", "minimum": 0, "default": 0 }
+        },
+        "required": ["ForceMaxN", "StiffnessNPerM"]
+      }
+    }
+  },
+  "required": ["type", "capacity", "StoppingTimeSeconds", "Regions"]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ssmPfl",
+  "robot": "MainRobot",
+  "capacity": 2,
+  "StoppingTimeSeconds": 0.5,
+  "Regions": {
+    "hand": { "ForceMaxN": 140, "StiffnessNPerM": 75000, "DistanceMarginM": 0.05 }
+  }
+}

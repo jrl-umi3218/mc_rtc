@@ -314,6 +314,7 @@ set(mc_tvm_HDR
     ${mc_tvm_HDR_DIR}/PostureFunction.h
     ${mc_tvm_HDR_DIR}/Robot.h
     ${mc_tvm_HDR_DIR}/RobotFrame.h
+    ${mc_tvm_HDR_DIR}/SSMPFLFunction.h
     ${mc_tvm_HDR_DIR}/TransformFunction.h
     ${mc_tvm_HDR_DIR}/VectorOrientationFunction.h
 )
@@ -338,6 +339,7 @@ set(mc_tvm_SRC
     mc_tvm/PostureFunction.cpp
     mc_tvm/Robot.cpp
     mc_tvm/RobotFrame.cpp
+    mc_tvm/SSMPFLFunction.cpp
     mc_tvm/TransformFunction.cpp
     mc_tvm/VectorOrientationFunction.cpp
 )
@@ -444,6 +446,7 @@ set(mc_solver_SRC
     mc_solver/DynamicsConstraint.cpp
     mc_solver/KinematicsConstraint.cpp
     mc_solver/QPSolver.cpp
+    mc_solver/SSMPFLConstraint.cpp
     mc_solver/TasksQPSolver.cpp
     mc_solver/TVMQPSolver.cpp
     mc_solver/Update.cpp
@@ -473,6 +476,7 @@ set(mc_solver_HDR
     ../include/mc_solver/GenInequalityConstraint.h
     ../include/mc_solver/InequalityConstraint.h
     ../include/mc_solver/QPSolver.h
+    ../include/mc_solver/SSMPFLConstraint.h
     ../include/mc_solver/TasksQPSolver.h
     ../include/mc_solver/TVMQPSolver.h
     ../include/mc_tasks/MetaTask.h
