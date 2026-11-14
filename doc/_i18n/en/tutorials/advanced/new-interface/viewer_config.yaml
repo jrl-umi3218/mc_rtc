@@ -1,0 +1,4 @@
+robot_interface:
+  driver: RobotDriverMyRobot
+  ip: 192.168.1.10
+  port: 0

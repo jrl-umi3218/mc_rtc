@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-**Changes:**
+### Changed
 
 - Generalize self-collision/collision-avoidance API into a `DistanceLimit` abstraction, usable beyond collision avoidance:
   - `mc_control::MCController::addDistanceLimits`/`hasDistanceLimit`/`removeDistanceLimits` replace `addCollisions`/`hasCollision`/`removeCollisions` (kept as deprecated aliases)
@@ -16,10 +16,13 @@
 - Python bindings: expose `addDistanceLimits`/`hasDistanceLimit`/`removeDistanceLimits` and `RobotModule.essentialDistanceLimits`/`extraDistanceLimits` (getter and setter)
 - Update tutorials, samples and JSON schemas (English and Japanese) to the new names
 
-**Fixes**:
+### Fixed
 
 - `DistanceConstraint::hasDistanceLimit` incorrectly ignored whether a limit was a minimum or maximum distance bound
 - GUI: fix a "Monitor ... already exists" error caused by distance limit monitor names not disambiguating minimum/maximum bounds
+- Convex hulls generated from collision meshes now apply the mesh scale of the robot description, including mirroring (negative scale). Scaled meshes, such as meshes in millimeters with `scale="0.001 0.001 0.001"`, used to get hulls 1000 times too large. The hulls of scaled meshes are regenerated automatically, and robots without scaled meshes keep their cached hulls
+
+## [2.16.0] - 2026-10-19
 
 ## [2.15.2] - 2026-07-15
 

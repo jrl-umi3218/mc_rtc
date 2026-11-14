@@ -192,9 +192,7 @@ template<>
 struct ConstraintTester<mc_solver::CoMIncPlaneConstr>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  {
-    return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt());
-  }
+  { return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt()); }
 
   std::string json()
   {
@@ -251,9 +249,7 @@ template<>
 struct ConstraintTester<mc_solver::KinematicsConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  {
-    return std::make_shared<mc_solver::KinematicsConstraint>(*robots, 0, solver.dt());
-  }
+  { return std::make_shared<mc_solver::KinematicsConstraint>(*robots, 0, solver.dt()); }
 
   std::string json()
   {
@@ -282,9 +278,7 @@ template<>
 struct ConstraintTester<mc_solver::DynamicsConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  {
-    return std::make_shared<mc_solver::DynamicsConstraint>(*robots, 0, solver.dt());
-  }
+  { return std::make_shared<mc_solver::DynamicsConstraint>(*robots, 0, solver.dt()); }
 
   std::string json()
   {

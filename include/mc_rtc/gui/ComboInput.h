@@ -50,14 +50,10 @@ private:
 /** Helper function to create a ComboInputImpl */
 template<typename GetT, typename SetT>
 auto ComboInput(const std::string & name, const std::vector<std::string> & values, GetT get_fn, SetT set_fn)
-{
-  return details::ComboInputImpl(name, values, get_fn, set_fn);
-}
+{ return details::ComboInputImpl(name, values, get_fn, set_fn); }
 
 /** Helper function to create a ComboInputImpl from a variable */
 inline auto ComboInput(const std::string & name, const std::vector<std::string> & values, std::string & value)
-{
-  return ComboInput(name, values, details::read(value), details::write(value));
-}
+{ return ComboInput(name, values, details::read(value), details::write(value)); }
 
 } // namespace mc_rtc::gui

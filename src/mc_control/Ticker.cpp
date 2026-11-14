@@ -27,15 +27,11 @@ GetT get(const mc_rtc::log::FlatLog & log,
          bool is_main,
          size_t idx,
          const GetT & def = {})
-{
-  return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
-}
+{ return log.get<GetT>(log_entry(entry, robot, is_main), idx, def); }
 
 /** Get the encoders of a robot from the given log at the given time */
 std::vector<double> get_encoders(const mc_rtc::log::FlatLog & log, const std::string & robot, bool is_main, size_t idx)
-{
-  return get(log, "qIn", robot, is_main, idx);
-}
+{ return get(log, "qIn", robot, is_main, idx); }
 
 /** Get the encoders of a robot from the robot's configuration */
 std::vector<double> get_encoders(const mc_rbdyn::Robot & robot)

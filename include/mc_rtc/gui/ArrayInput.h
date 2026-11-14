@@ -57,23 +57,17 @@ private:
 /** Helper function to create an ArrayInput element (no labels) */
 template<typename GetT, typename SetT>
 auto ArrayInput(const std::string & name, GetT get_fn, SetT set_fn)
-{
-  return details::ArrayInputImpl(name, get_fn, set_fn);
-}
+{ return details::ArrayInputImpl(name, get_fn, set_fn); }
 
 /** Helper function to create an ArrayInput element (with labels) */
 template<typename GetT, typename SetT>
 auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, GetT get_fn, SetT set_fn)
-{
-  return details::ArrayInputImpl(name, labels, get_fn, set_fn);
-}
+{ return details::ArrayInputImpl(name, labels, get_fn, set_fn); }
 
 /** Helper function to build an ArrayInput from a variable */
 template<typename T>
 auto ArrayInput(const std::string & name, const std::vector<std::string> & labels, T & value)
-{
-  return details::ArrayInputImpl(name, labels, details::read(value), details::write(value));
-}
+{ return details::ArrayInputImpl(name, labels, details::read(value), details::write(value)); }
 
 /** Helper function to build an ArrayInput from a variable
  *

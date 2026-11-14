@@ -20,9 +20,7 @@ bool MyFirstController::run()
 }
 
 void MyFirstController::reset(const mc_control::ControllerResetData & reset_data)
-{
-  mc_control::MCController::reset(reset_data);
-}
+{ mc_control::MCController::reset(reset_data); }
 
 void MyFirstController::switch_target()
 {

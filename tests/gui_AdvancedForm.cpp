@@ -85,9 +85,7 @@ struct AdvancedFormServer : public TestServer
   }
 
   void callback(const mc_rtc::Configuration & data)
-  {
-    mc_rtc::log::info("Data from callback:\n{}", data.dump(true, true));
-  }
+  { mc_rtc::log::info("Data from callback:\n{}", data.dump(true, true)); }
 
   std::vector<std::string> str_vector_ = {"a", "b", "c", "d"};
   Eigen::Vector3d point_ = Eigen::Vector3d::Ones();

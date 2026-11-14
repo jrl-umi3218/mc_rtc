@@ -95,67 +95,37 @@ MessagePackBuilder::MessagePackBuilder(std::vector<char> & buffer) : impl_(new M
 MessagePackBuilder::~MessagePackBuilder() {}
 
 void MessagePackBuilder::write()
-{
-  mpack_write_nil(impl_.get());
-}
+{ mpack_write_nil(impl_.get()); }
 
 void MessagePackBuilder::write(bool b)
-{
-  mpack_write_bool(impl_.get(), b);
-}
+{ mpack_write_bool(impl_.get(), b); }
 void MessagePackBuilder::write(int8_t i)
-{
-  mpack_write_i8(impl_.get(), i);
-}
+{ mpack_write_i8(impl_.get(), i); }
 void MessagePackBuilder::write(int16_t i)
-{
-  mpack_write_i16(impl_.get(), i);
-}
+{ mpack_write_i16(impl_.get(), i); }
 void MessagePackBuilder::write(int32_t i)
-{
-  mpack_write_i32(impl_.get(), i);
-}
+{ mpack_write_i32(impl_.get(), i); }
 void MessagePackBuilder::write(int64_t i)
-{
-  mpack_write_i64(impl_.get(), i);
-}
+{ mpack_write_i64(impl_.get(), i); }
 void MessagePackBuilder::write(uint8_t i)
-{
-  mpack_write_u8(impl_.get(), i);
-}
+{ mpack_write_u8(impl_.get(), i); }
 void MessagePackBuilder::write(uint16_t i)
-{
-  mpack_write_u16(impl_.get(), i);
-}
+{ mpack_write_u16(impl_.get(), i); }
 void MessagePackBuilder::write(uint32_t i)
-{
-  mpack_write_u32(impl_.get(), i);
-}
+{ mpack_write_u32(impl_.get(), i); }
 void MessagePackBuilder::write(uint64_t i)
-{
-  mpack_write_u64(impl_.get(), i);
-}
+{ mpack_write_u64(impl_.get(), i); }
 void MessagePackBuilder::write(float f)
-{
-  mpack_write_float(impl_.get(), f);
-}
+{ mpack_write_float(impl_.get(), f); }
 void MessagePackBuilder::write(double d)
-{
-  mpack_write_double(impl_.get(), d);
-}
+{ mpack_write_double(impl_.get(), d); }
 void MessagePackBuilder::write(const std::string & s)
-{
-  mpack_write_str(impl_.get(), s.c_str(), static_cast<uint32_t>(s.size()));
-}
+{ mpack_write_str(impl_.get(), s.c_str(), static_cast<uint32_t>(s.size())); }
 void MessagePackBuilder::write(const char * s)
-{
-  mpack_write_cstr(impl_.get(), s);
-}
+{ mpack_write_cstr(impl_.get(), s); }
 
 void MessagePackBuilder::write(const char * s, size_t len)
-{
-  mpack_write_str(impl_.get(), s, static_cast<uint32_t>(len));
-}
+{ mpack_write_str(impl_.get(), s, static_cast<uint32_t>(len)); }
 
 namespace
 {
@@ -274,34 +244,22 @@ void MessagePackBuilder::write(const sva::ImpedanceVecd & iv)
 }
 
 void MessagePackBuilder::write(const mc_rtc::Configuration & config)
-{
-  config.toMessagePack(*this);
-}
+{ config.toMessagePack(*this); }
 
 void MessagePackBuilder::start_array(size_t s)
-{
-  mpack_start_array(impl_.get(), static_cast<uint32_t>(s));
-}
+{ mpack_start_array(impl_.get(), static_cast<uint32_t>(s)); }
 
 void MessagePackBuilder::finish_array()
-{
-  mpack_finish_array(impl_.get());
-}
+{ mpack_finish_array(impl_.get()); }
 
 void MessagePackBuilder::start_map(size_t s)
-{
-  mpack_start_map(impl_.get(), static_cast<uint32_t>(s));
-}
+{ mpack_start_map(impl_.get(), static_cast<uint32_t>(s)); }
 
 void MessagePackBuilder::finish_map()
-{
-  mpack_finish_map(impl_.get());
-}
+{ mpack_finish_map(impl_.get()); }
 
 void MessagePackBuilder::write_object(const char * data, size_t s)
-{
-  mpack_write_object_bytes(impl_.get(), data, s);
-}
+{ mpack_write_object_bytes(impl_.get(), data, s); }
 
 size_t MessagePackBuilder::finish()
 {

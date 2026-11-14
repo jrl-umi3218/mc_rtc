@@ -38,8 +38,6 @@ FramePtr Frame::make(const std::string & name, Frame & parent, sva::PTransformd 
 }
 
 void Frame::init_tvm_frame() const
-{
-  tvm_frame_.reset(new mc_tvm::Frame(mc_tvm::Frame::NewFrameToken{}, *this));
-}
+{ tvm_frame_.reset(new mc_tvm::Frame(mc_tvm::Frame::NewFrameToken{}, *this)); }
 
 } // namespace mc_rbdyn

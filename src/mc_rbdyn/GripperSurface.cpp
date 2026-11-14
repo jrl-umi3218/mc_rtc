@@ -27,9 +27,7 @@ GripperSurface::GripperSurface(const std::string & name,
                                const double & motorMaxTorque)
 : Surface(name, bodyName, X_b_s, materialName),
   impl(new GripperSurfaceImpl({pointsFromOrigin, X_b_motor, motorMaxTorque}))
-{
-  computePoints();
-}
+{ computePoints(); }
 
 GripperSurface::~GripperSurface() {}
 
@@ -52,24 +50,16 @@ std::shared_ptr<Surface> GripperSurface::copy() const
 }
 
 std::string GripperSurface::type() const
-{
-  return "gripper";
-}
+{ return "gripper"; }
 
 const std::vector<sva::PTransformd> & GripperSurface::pointsFromOrigin() const
-{
-  return impl->pointsFromOrigin;
-}
+{ return impl->pointsFromOrigin; }
 
 const sva::PTransformd & GripperSurface::X_b_motor() const
-{
-  return impl->X_b_motor;
-}
+{ return impl->X_b_motor; }
 
 const double & GripperSurface::motorMaxTorque() const
-{
-  return impl->motorMaxTorque;
-}
+{ return impl->motorMaxTorque; }
 
 std::unique_ptr<GripperSurface> GripperSurface::fromXML(const tinyxml2::XMLElement & elem)
 {

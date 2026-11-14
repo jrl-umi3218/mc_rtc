@@ -106,9 +106,7 @@ public:
    *
    */
   inline bool hasBodySensor(const std::string & name) const noexcept
-  {
-    return data_->bodySensorsIndex.count(name) != 0;
-  }
+  { return data_->bodySensorsIndex.count(name) != 0; }
 
   /** Return true if the specified body has a body sensor attached to it
    *
@@ -116,9 +114,7 @@ public:
    *
    */
   inline bool bodyHasBodySensor(const std::string & body) const noexcept
-  {
-    return data_->bodyBodySensors.count(body) != 0;
-  }
+  { return data_->bodyBodySensors.count(body) != 0; }
 
   /** Return a specific BobySensor by name
    *
@@ -150,9 +146,7 @@ public:
    *
    */
   inline bool jointHasJointSensor(const std::string & joint) const noexcept
-  {
-    return data()->jointJointSensors.count(joint) != 0;
-  }
+  { return data()->jointJointSensors.count(joint) != 0; }
 
   /** Return a specific JointSensor by joint name
    *
@@ -194,9 +188,7 @@ public:
    * \throws If the frame does not exist
    */
   inline RobotFrame & frame(const std::string & name)
-  {
-    return const_cast<RobotFrame &>(static_cast<const Robot *>(this)->frame(name));
-  }
+  { return const_cast<RobotFrame &>(static_cast<const Robot *>(this)->frame(name)); }
 
   /** Returns the list of available frames in this robot */
   std::vector<std::string> frames() const;
@@ -684,9 +676,7 @@ public:
    * @returns True if the sensor exists, false otherwise
    */
   inline bool hasForceSensor(const std::string & name) const noexcept
-  {
-    return data_->forceSensorsIndex.count(name) != 0;
-  }
+  { return data_->forceSensorsIndex.count(name) != 0; }
 
   /** Check if the body has a force sensor directly attached to it
    *
@@ -699,9 +689,7 @@ public:
    * otherwise
    */
   inline bool bodyHasForceSensor(const std::string & body) const noexcept
-  {
-    return data_->bodyForceSensors_.count(body) != 0;
-  }
+  { return data_->bodyForceSensors_.count(body) != 0; }
 
   /**
    * @brief Checks if the surface has a force sensor directly attached to it
@@ -717,9 +705,7 @@ public:
    * otherwise
    */
   inline bool surfaceHasForceSensor(const std::string & surface) const
-  {
-    return bodyHasForceSensor(this->surface(surface).bodyName());
-  }
+  { return bodyHasForceSensor(this->surface(surface).bodyName()); }
 
   /** Check if the body has a force sensor attached to it (directly or
    * indirectly)
@@ -731,9 +717,7 @@ public:
    * otherwise
    */
   inline bool bodyHasIndirectForceSensor(const std::string & body) const
-  {
-    return bodyHasForceSensor(body) || findIndirectForceSensorBodyName(body).empty();
-  }
+  { return bodyHasForceSensor(body) || findIndirectForceSensorBodyName(body).empty(); }
 
   /** Check if the surface has a force sensor attached to it (directly or
    * indirectly)
@@ -744,9 +728,7 @@ public:
    * otherwise
    */
   inline bool surfaceHasIndirectForceSensor(const std::string & surface) const
-  {
-    return bodyHasIndirectForceSensor(this->surface(surface).bodyName());
-  }
+  { return bodyHasIndirectForceSensor(this->surface(surface).bodyName()); }
 
   /** Return a force sensor by name
    *
@@ -843,9 +825,7 @@ public:
   /** Alias for \see hasDevice */
   template<typename T>
   inline bool hasSensor(const std::string & name) const noexcept
-  {
-    return hasDevice<T>(name);
-  }
+  { return hasDevice<T>(name); }
 
   /** Get a generic device of type T named name
    *
@@ -864,9 +844,7 @@ public:
   /** Non-const variant */
   template<typename T>
   T & device(const std::string & name)
-  {
-    return const_cast<T &>(const_cast<const Robot *>(this)->device<T>(name));
-  }
+  { return const_cast<T &>(const_cast<const Robot *>(this)->device<T>(name)); }
 
   /** Get all devices attached to a robot */
   inline const DevicePtrVector & devices() const noexcept { return data_->devices; }
@@ -874,16 +852,12 @@ public:
   /** Alias for \see device */
   template<typename T>
   inline const T & sensor(const std::string & name) const
-  {
-    return device<T>(name);
-  }
+  { return device<T>(name); }
 
   /** Alias for \see device */
   template<typename T>
   inline T & sensor(const std::string & name)
-  {
-    return device<T>(name);
-  }
+  { return device<T>(name); }
 
   /** Add a generic device to the robot */
   void addDevice(DevicePtr device);
@@ -1090,9 +1064,7 @@ public:
   bool hasGripper(const std::string & gripper) const;
 
   inline const std::unordered_map<std::string, mc_control::GripperPtr> & grippersByName() const noexcept
-  {
-    return data_->grippers;
-  }
+  { return data_->grippers; }
 
   /** Access all grippers */
   inline const std::vector<mc_control::GripperRef> & grippers() const noexcept { return data_->grippersRef; }

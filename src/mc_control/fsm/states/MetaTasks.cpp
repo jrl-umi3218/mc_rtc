@@ -15,9 +15,7 @@ namespace fsm
 {
 
 void MetaTasksState::configure(const mc_rtc::Configuration & config)
-{
-  outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", outputCrit_);
-}
+{ outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", outputCrit_); }
 
 void MetaTasksState::start(Controller & ctl)
 {

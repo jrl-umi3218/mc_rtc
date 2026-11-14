@@ -33,9 +33,7 @@ struct StationaryOffset
    */
   StationaryOffset(double dt, double timeConstant, const VectorT & initValue = VectorT::Zero())
   : average_(dt, timeConstant, initValue)
-  {
-    this->reset(initValue);
-  }
+  { this->reset(initValue); }
 
   /** Update input signal value.
    *

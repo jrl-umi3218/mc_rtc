@@ -24,9 +24,7 @@ void Spline<T, WaypointsT>::waypoints(const WaypointsT & waypoints)
 
 template<typename T, typename WaypointsT>
 const WaypointsT & Spline<T, WaypointsT>::waypoints() const
-{
-  return waypoints_;
-}
+{ return waypoints_; }
 
 template<typename T, typename WaypointsT>
 void Spline<T, WaypointsT>::start(const T & start)
@@ -37,9 +35,7 @@ void Spline<T, WaypointsT>::start(const T & start)
 
 template<typename T, typename WaypointsT>
 const T & Spline<T, WaypointsT>::start() const
-{
-  return start_;
-}
+{ return start_; }
 
 template<typename T, typename WaypointsT>
 void Spline<T, WaypointsT>::target(const T & target)
@@ -50,9 +46,7 @@ void Spline<T, WaypointsT>::target(const T & target)
 
 template<typename T, typename WaypointsT>
 const T & Spline<T, WaypointsT>::target() const
-{
-  return target_;
-}
+{ return target_; }
 
 template<typename T, typename WaypointsT>
 void Spline<T, WaypointsT>::samplingPoints(unsigned s)
@@ -63,8 +57,6 @@ void Spline<T, WaypointsT>::samplingPoints(unsigned s)
 
 template<typename T, typename WaypointsT>
 unsigned Spline<T, WaypointsT>::samplingPoints() const
-{
-  return samplingPoints_;
-}
+{ return samplingPoints_; }
 
 } // namespace mc_trajectory

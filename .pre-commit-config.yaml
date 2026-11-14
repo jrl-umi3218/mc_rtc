@@ -17,7 +17,7 @@ repos:
   - id: check-useless-excludes
   - id: check-hooks-apply
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v21.1.8
+  rev: v23.1.2
   hooks:
   - id: clang-format
     'types_or': [c++, c]
@@ -58,7 +58,7 @@ repos:
   - id: mixed-line-ending
   - id: trailing-whitespace
 - repo: https://github.com/psf/black-pre-commit-mirror
-  rev: 25.12.0
+  rev: 26.10.0
   hooks:
   - id: black
     exclude: |
@@ -67,7 +67,7 @@ repos:
           utils/mc_log_gui/mc_log_ui/ui/.*
       )$
 - repo: https://github.com/PyCQA/flake8
-  rev: 7.3.0
+  rev: 7.4.1
   hooks:
   - id: flake8
     args:

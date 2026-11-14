@@ -76,9 +76,7 @@ struct OrdinateWithColor : public Ordinate<GetT>
 {
   OrdinateWithColor(std::string_view name, GetT get_fn, GetColor color, Style style, Side side)
   : Ordinate<GetT>(name, get_fn, color(), style, side), get_color_(color)
-  {
-    static_assert(details::CheckReturnType<GetColor, Color>::value, "Ordinate color callback should return a color");
-  }
+  { static_assert(details::CheckReturnType<GetColor, Color>::value, "Ordinate color callback should return a color"); }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
   {
@@ -99,9 +97,7 @@ impl::Ordinate<GetT> Y(std::string_view name,
                        Color color,
                        Style style = Style::Solid,
                        Side side = Side::Left)
-{
-  return impl::Ordinate<GetT>(name, get_fn, color, style, side);
-}
+{ return impl::Ordinate<GetT>(name, get_fn, color, style, side); }
 
 /** Helper to create an impl::OrdinateWithColor */
 template<typename GetT, typename GetColor>
@@ -110,9 +106,7 @@ impl::OrdinateWithColor<GetT, GetColor> Y(std::string_view name,
                                           GetColor get_color,
                                           Style style = Style::Solid,
                                           Side side = Side::Left)
-{
-  return impl::OrdinateWithColor<GetT, GetColor>(name, get_fn, get_color, style, side);
-}
+{ return impl::OrdinateWithColor<GetT, GetColor>(name, get_fn, get_color, style, side); }
 
 } // namespace plot
 

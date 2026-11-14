@@ -34,15 +34,11 @@ struct LabelImpl : public DataElement<GetT>
 /** Helper function to create a Label element */
 template<typename GetT, std::enable_if_t<std::is_invocable_v<GetT>, int> = 0>
 auto Label(const std::string & name, GetT get_fn)
-{
-  return details::LabelImpl(name, get_fn);
-}
+{ return details::LabelImpl(name, get_fn); }
 
 /** Helper function to create a Label element from a variable */
 template<typename T, std::enable_if_t<!std::is_invocable_v<T>, int> = 0>
 auto Label(const std::string & name, T && value)
-{
-  return details::LabelImpl(name, details::read(std::forward<T>(value)));
-}
+{ return details::LabelImpl(name, details::read(std::forward<T>(value))); }
 
 } // namespace mc_rtc::gui

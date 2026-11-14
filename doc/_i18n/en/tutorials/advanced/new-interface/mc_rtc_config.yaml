@@ -1,0 +1,17 @@
+MainRobot: MyRobot
+Enabled: Posture
+Timestep: 0.005            # mc_rtc runs at 200 Hz
+
+Robots:
+  my_robot:                # robot name
+    module: MyRobot        # mc_rtc RobotModule
+    controller:
+      mode: position       # position | velocity | torque
+      time_step: 0.001     # the robot's own control period (1 kHz)
+    network_interface:
+      protocol: zenoh
+    robot_interface:
+      driver: RobotDriverMyRobot
+      ip: 192.168.1.10
+      port: 0
+      autostart: true

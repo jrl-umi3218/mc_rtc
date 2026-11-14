@@ -26,8 +26,6 @@ MC_RTC_UTILS_DLLAPI std::string demangle(const char * name);
  */
 template<typename T>
 std::string type_name()
-{
-  return internal::demangle(typeid(T).name());
-}
+{ return internal::demangle(typeid(T).name()); }
 
 } // namespace mc_rtc
