@@ -96,9 +96,7 @@ void DistanceFunction::updateValue()
 }
 
 void DistanceFunction::tick()
-{
-  iter_++;
-}
+{ iter_++; }
 
 void DistanceFunction::updateJacobian()
 {

@@ -74,9 +74,7 @@ struct TVMDistanceConstraint
   }
 
   void deleteDistanceLimit(TVMQPSolver & solver, const mc_rbdyn::DistanceLimit & dl)
-  {
-    removeOrDeleteDistanceLimit<true>(solver, getData(dl));
-  }
+  { removeOrDeleteDistanceLimit<true>(solver, getData(dl)); }
 
   void deleteDistanceLimit(TVMQPSolver & solver, int id) { removeOrDeleteDistanceLimit<true>(solver, getData(id)); }
 
@@ -493,9 +491,7 @@ void DistanceConstraint::toggleDistanceLimitMonitor(int dlId, const mc_rbdyn::Di
 }
 
 void DistanceConstraint::addDistanceLimit(QPSolver & solver, const mc_rbdyn::DistanceLimit & dl)
-{
-  addDistanceLimits(solver, {dl});
-}
+{ addDistanceLimits(solver, {dl}); }
 
 void DistanceConstraint::addDistanceLimits(QPSolver & solver, const std::vector<mc_rbdyn::DistanceLimit> & dls)
 {
@@ -621,9 +617,7 @@ void DistanceConstraint::reset()
 }
 
 std::string DistanceConstraint::__keyByNames(const mc_rbdyn::DistanceLimit & dl) const
-{
-  return dl.id();
-}
+{ return dl.id(); }
 
 int DistanceConstraint::__createDistanceLimitId(const mc_rbdyn::DistanceLimit & dl)
 {
@@ -659,9 +653,7 @@ bool DistanceConstraint::hasDistanceLimit(const std::string & c1, const std::str
 }
 
 bool DistanceConstraint::hasDistanceLimit(const mc_rbdyn::DistanceLimit & dl) const noexcept
-{
-  return dlIdDict.count(__keyByNames(dl)) != 0;
-}
+{ return dlIdDict.count(__keyByNames(dl)) != 0; }
 
 } // namespace mc_solver
 

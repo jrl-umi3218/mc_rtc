@@ -10,14 +10,10 @@ namespace mc_rbdyn
 {
 
 bool DistanceLimit::operator==(const DistanceLimit & rhs) const
-{
-  return body1 == rhs.body1 && body2 == rhs.body2 && iDist == rhs.iDist && sDist == rhs.sDist;
-}
+{ return body1 == rhs.body1 && body2 == rhs.body2 && iDist == rhs.iDist && sDist == rhs.sDist; }
 
 bool DistanceLimit::operator!=(const DistanceLimit & rhs) const
-{
-  return !(*this == rhs);
-}
+{ return !(*this == rhs); }
 
 std::ostream & operator<<(std::ostream & os, const DistanceLimit & dl)
 {
