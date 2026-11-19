@@ -16,30 +16,38 @@ To represent the robots, the framework provides two sets of robot instances ({% 
 
 # Configuring the observer pipelines
 
-Your controller's configuration configures the whole pipeline by merging configurations from the following files (in order):
-- Global configuration: {% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}
-- User configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}
-- Controller-specific configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_controllers/YourController.yaml{% endihighlight %}
-- The FSM configuration of your controller: {% ihighlight bash %} YouController.yaml{% endihighlight %} (recommended)
-
-
 In order to provide sensible default values for each observer, they are configured by merging the following configurations (in order):
 
 - The observer's author:
-  - The observer's runtime directory where its library is loaded from {% ihighlight bash %}$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX/etc/<ObserverType>.yaml{% endihighlight %}
-- The observer's author for a pre-defined set of robot's:
-  - The observer's robot-specific runtime directory {% ihighlight bash %}$OBSERVERS_RUNTIME_INSTALL_PREFIX/etc/<ObserverType>/<robot>.yaml{% endihighlight %}
-- The robot module's author (for extensibility to additional robots)
-  - The robot module's observer configuration {% ihighlight bash %}$OBSERVERS_RUNTIME_INSTALL_PREFIX/etc/observers/<ObserverType>.yaml{% endihighlight %}
-- You:
-  - User configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/observers/<ObserverType>.yaml{% endihighlight %}
-  - User robot-specific configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/observers/<ObserverType>/<robot>.yaml{% endihighlight %}
-- Lastly, the configuration provided in your pipeline above.
+  - The observer's runtime directory where its library is loaded from:
+    {% ihighlight bash %}$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX/observers/<ObserverType>/etc/<ObserverType>.yaml{% endihighlight %}
 
-With these, you can be assured that even without providing detailed configuration for each observer, it will have default values meaningful to your robot.
+- The observer's author for a predefined set of robots:
+  - The observer's robot-specific runtime directory:
+    {% ihighlight bash %}$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX/observers/<ObserverType>/<rm.name>.yaml{% endihighlight %}
+    Here, `rm.name` refers to the name of the robot module that the observer is associated with.
 
-Let's look first at a simple representative example to estimate the state of a floating-base robot from encoder position measurements and a sensor providing roll and pitch orientation of the floating base.
-The configuration format is fully documented in the [Observers JSON schema](../../json.html#Observers/ObserverPipelines).
+- The robot module's author (for extensibility to additional robots):
+  - The robot module's observer configuration:
+    {% ihighlight bash %}$OBSERVERS_RUNTIME_INSTALL_PREFIX/etc/observers/<ObserverType>.yaml{% endihighlight %}
+
+- User configuration:
+  - User configuration path:
+    {% ihighlight bash %}$HOME/.config/mc_rtc/observers/<ObserverType>.yaml{% endihighlight %}
+  - User robot-specific configuration:
+    {% ihighlight bash %}$HOME/.config/mc_rtc/observers/<ObserverType>/<robotName>.yaml{% endihighlight %}
+    Here, `robotName` is the name of the robot used in the controller, which may differ from `rm.name` in scenarios with multiple robots.
+
+- Lastly, the configuration provided directly in your controller's pipeline configuration.
+
+With these configurations, you can be assured that even without providing detailed configurations for each observer, defaults meaningful to your robot will be applied.
+
+Let's look first at a simple representative example to estimate the state of a floating-base robot from encoder position measurements and a sensor providing roll and pitch orientation of the floating base. The configuration format is fully documented in the [Observers JSON schema](../../json.html#Observers/ObserverPipelines).
+
+- Global configuration: {% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}
+- User configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}
+- Controller-specific configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_controllers/YourController.yaml{% endihighlight %}
+- The FSM configuration of your controller: {% ihighlight bash %}YourController.yaml{% endihighlight %} (recommended)
 
 ```yaml
 ---

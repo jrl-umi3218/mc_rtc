@@ -10,9 +10,7 @@ namespace mc_observers
 static thread_local std::string MC_OBSERVER_MODULE_LOADING_LOCATION = "";
 
 void Observer::set_loading_location(std::string_view location)
-{
-  MC_OBSERVER_MODULE_LOADING_LOCATION = location;
-}
+{ MC_OBSERVER_MODULE_LOADING_LOCATION = location; }
 
 Observer::Observer(const std::string & type, double dt)
 : loading_location_(MC_OBSERVER_MODULE_LOADING_LOCATION), type_(type), dt_(dt)

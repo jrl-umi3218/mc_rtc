@@ -23,10 +23,16 @@ struct TestObserver : public mc_observers::Observer
     BOOST_REQUIRE(config.has("finalValue"));
     if(name() == "FullConfiguration") { BOOST_REQUIRE(config("finalValue").operator int() == 3); }
     else if(name() == "NoControllerConfiguration") { BOOST_REQUIRE(config("finalValue").operator int() == 2); }
+    else if(name() == "AdditionalRobotConfiguration")
+    {
+      BOOST_REQUIRE(name() == "AdditionalRobotConfiguration");
+      BOOST_REQUIRE(config("finalValue").operator int() == 4);
+      BOOST_REQUIRE(config("robot") == "jvrc2");
+      BOOST_REQUIRE(config("fromRobotConfig") == true); // the jvrc1 configuration is loaded because rm.name = "jvrc1"
+    }
     else
     {
-      BOOST_REQUIRE(name() == "NoControllerOrRobotConfiguration");
-      BOOST_REQUIRE(config("finalValue").operator int() == 1);
+      BOOST_FAIL("Unexpected observer name: " + name());
     }
     desc_ = fmt::format("TestObserver ({})", name());
   }

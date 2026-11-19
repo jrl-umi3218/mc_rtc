@@ -112,7 +112,35 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   ObserverPipeline(mc_control::MCController & ctl);
   ~ObserverPipeline() = default;
 
-  /* Load the observers */
+  /**
+   * @brief Load the observers and their configuration
+   *
+   * Configurations is loaded from the following locations (in order):
+   *
+   * 1. **Default Observer Configuration**:
+   *    Loads the default configuration from
+   * `<observer_install_prefix>/observers/<observerType>/etc/<observerType>.yaml`.
+   *
+   * 2. **Robot-Specific Configuration**:
+   *    - Loads the robot-specific configuration from the observer's runtime path:
+   *      `<observer_install_prefix>/observers/<observerType>/<rm.name>.yaml`.
+   *
+   * 3. **Robot Module Configuration**:
+   *    Loads the robot module-specific configurations from the robot module's runtime path:
+   *    `<rm_runtime_dir>/etc/observers/<observerType>.yaml`.
+   *
+   * 4. **User Configuration**:
+   *    - Load user configurations from the user config directory:
+   *      `<user_config_directory>/observers/<observerType>.yaml`.
+   *    - Load user-specific robot configurations from:
+   *      `<user_config_directory>/observers/<observerType>/<rm.name>.yaml`.
+   *
+   * 5. **Pipeline Configuration**:
+   *    Finally, the configuration provided directly in the controller's pipeline `config` is loaded.
+   *
+   * @param config The controller's configuration (which may contain an ObserverPipeline configuration)
+   * @param dt controller's timestep in [s]
+   */
   void create(const mc_rtc::Configuration & config, double dt);
 
   /* Initialize based on the current robot state */

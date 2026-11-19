@@ -24,9 +24,11 @@ public:
   : MCController(rm, dt, config, backend)
   {
     // Check that the default constructor loads the robot + ground environment
-    BOOST_REQUIRE_EQUAL(robots().size(), 2);
+    BOOST_REQUIRE_EQUAL(robots().size(), 3);
     // Check that JVRC-1 was loaded
-    BOOST_REQUIRE_EQUAL(robot().name(), "jvrc1");
+    BOOST_REQUIRE(robots().hasRobot("jvrc1"));
+    BOOST_REQUIRE(robots().hasRobot("jvrc2"));
+    BOOST_REQUIRE(robots().hasRobot("ground"));
     qpsolver->addConstraintSet(contactConstraint);
     qpsolver->addConstraintSet(kinematicsConstraint);
     qpsolver->addConstraintSet(selfCollisionConstraint);

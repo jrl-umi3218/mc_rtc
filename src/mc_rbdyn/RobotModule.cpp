@@ -63,9 +63,7 @@ private:
 static thread_local std::string MC_ROBOT_MODULE_LOADING_LOCATION = "";
 
 void RobotModule::set_loading_location(std::string_view location)
-{
-  MC_ROBOT_MODULE_LOADING_LOCATION = location;
-}
+{ MC_ROBOT_MODULE_LOADING_LOCATION = location; }
 
 // Repeat static constexpr declarations
 // See also https://stackoverflow.com/q/8016780
