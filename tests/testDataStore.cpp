@@ -353,9 +353,7 @@ BOOST_AUTO_TEST_CASE(PointerSharing)
 
 // This is only used in the next test but we need to overload the Eigen::aligned_allocator for this type
 struct Overloaded
-{
-  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-};
+{ EIGEN_MAKE_ALIGNED_OPERATOR_NEW };
 
 // We cheat here since we know our code is going to use Eigen::aligned_allocator in such cases
 namespace Eigen

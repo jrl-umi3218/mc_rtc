@@ -4,7 +4,7 @@ Each controller has its own requirements on what the state of the observed robot
 
 The framework provides a mechanism, refered to as **State Observation Pipelines**, to simplify and generalize the observation of a robot, or multiple robots states. The concept is to view state observation as a pipelines, where each pipeline is composed of multiple observers executed sequentially. Each observer is a component responsible for estimating part of the robot state. When combined together, all observers in a pipeline contribute to provide a full estimation of the desired robot state. Multiple pipelines can be defined and executed allowing to estimate the state of multiple robots, or to perform comparisons between multiple estimation methods. The observers themselves are, as is the case for controller, tasks, plugins, loaded from libraries with a simple interface, allowing to conveniently define your own. The framework currently provides the following observers by default:
 
-- **Encoder Observer**: estimates a robot's joint state (position and velocity) and computes forward kinematics and velocities to obtain body positions and velocities. Various inputs may be used: encoder position, encoder velocity (obtained from a velocity sensor or by finite differences of position), another robot's joint values, etc.
+- **Encoder Observer**: estimates a robot's joint state (position, velocity and torque) and computes forward kinematics and velocities to obtain body positions and velocities. Various inputs may be used: encoder position, encoder velocity (obtained from a velocity sensor or by finite differences of position), another robot's joint values, etc.
 - **BodySensor Observer**: sets a robot's floating base state from measurements provided by a sensor attached to a robot body and the kinematics between the sensor and the floating base. This is typically be used to exploit ground truth measurement from a simulator, or exploit the results of an external component providing information about the floating base (MOCAP, embedded estimator on the robot plateform, etc).
 - **KinematicInertial Observer**: estimates a robot's floating base pose (position + orientation) and velocity (low-pass filtered finite differences of position) from a {% doxygen mc_rbdyn::BodySensor %} (IMU orientation) and a kinematic anchor frame.
 
@@ -71,13 +71,13 @@ When creating a controller with the above pipeline, the framework will display a
 
 ```
 ObserverPipelines:
-- ExamplePipeline: Encoder (position=encoderValues,velocity=encoderFiniteDifferences) -> [BodySensor (sensor=FloatingBase,update=sensor)] ->  KinematicInertial (sensor=Accelerometer,cutoff=0.010000)
+- ExamplePipeline: Encoder (position=encoderValues,velocity=encoderFiniteDifferences, torque=jointTorques) -> [BodySensor (sensor=FloatingBase,update=sensor)] ->  KinematicInertial (sensor=Accelerometer,cutoff=0.010000)
 ```
 
 This displays information about the running pipelines, and their sequence of observers. Observers displayed between `[..]` brackets are run but do not affect the state of the `realRobots` instance. After running the pipelines, the `realRobots` instances now contain the estimated robot states, and can be used in the controller.
 
 For instance, with the above pipeline you can:
-- Get joint position `readRobot().mbc().q()` and velocity `realRobot().mbc().alpha()`
+- Get joint position `readRobot().mbc().q()`, velocity `realRobot().mbc().alpha()` and torque `realRobot().mbc().jointTorque()`
 - Get the floating base pose `realRobot().posW()`
 - Get the floating base velocity `realRobot().velW()`
 - Get the pose of a body: `realRobot().bodyPosW("bodyName");`
@@ -113,10 +113,11 @@ This section provides a brief description of the default observers provided with
 - API: {% doxygen mc_observers::EncoderObserver %}
 - [JSON Schema](../../json.html#Observers/Encoder)
 
-The encoder observer may be used to obtain the position and velocity of all actuated joints.
+The encoder observer may be used to obtain the position, velocity and torque of all actuated joints.
 
 - Joint values can be obtained from sensor as provided by {% doxygen mc_rbdyn::Robot::encoderValues() %} or using the joint state of another robot {% doxygen mc_rbdyn::Robot::q() %}.
 - Joint velocities can be obtained from a joint velocity sensor {% doxygen mc_rbdyn::Robot::encoderVelocities() %}, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot {% doxygen mc_rbdyn::Robot::alpha() %}
+- Joint torques can be obtained from a joint torque sensor {% doxygen mc_rbdyn::Robot::jointTorques() %} or using the joint torques of another robot {% doxygen mc_rbdyn::Robot::alpha() %}
 - The observer will compute forward kinematics {% doxygen mc_rbdyn::Robot::forwardKinematics() %} and forward velocity {% doxygen mc_rbdyn::Robot::forwardVelocity() %} to update the corresponding body positions and velocities (which may be required by subsequent observers).
 
 ## BodySensor observer

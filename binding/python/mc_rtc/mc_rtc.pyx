@@ -171,23 +171,23 @@ cdef class Configuration(object):
       return self
     if t is bool:
       if default is not None:
-        return c_mc_rtc.get_config_as[cppbool](deref(self.impl), default)
+        return c_mc_rtc.get_config_as[cppbool](deref(self.impl), <cppbool>default)
       else:
         return c_mc_rtc.get_config_as[cppbool](deref(self.impl))
     if isinstance(t(), numbers.Integral):
       if default is not None:
-        return c_mc_rtc.get_config_as[int](deref(self.impl), default)
+        return c_mc_rtc.get_config_as[int](deref(self.impl), <int>default)
       else:
         return c_mc_rtc.get_config_as[int](deref(self.impl))
     if isinstance(t(), numbers.Number):
       if default is not None:
-        return c_mc_rtc.get_config_as[double](deref(self.impl), default)
+        return c_mc_rtc.get_config_as[double](deref(self.impl), <double>default)
       else:
         return c_mc_rtc.get_config_as[double](deref(self.impl))
     if t is str or t is unicode:
       if default is not None:
         default = default.encode(u'ascii')
-        return c_mc_rtc.get_config_as[string](deref(self.impl), default).decode(u'ascii')
+        return c_mc_rtc.get_config_as[string](deref(self.impl), <string>default).decode(u'ascii')
       else:
         return c_mc_rtc.get_config_as[string](deref(self.impl)).decode(u'ascii')
     if t is eigen.Vector2d:

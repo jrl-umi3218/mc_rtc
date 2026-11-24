@@ -5,13 +5,10 @@
     mc-rtc-nix.url = "github:mc-rtc/nixpkgs";
     flake-parts.follows = "mc-rtc-nix/flake-parts";
     systems.follows = "mc-rtc-nix/systems";
+    gepetto.follows = "mc-rtc-nix/gepetto";
 
-    # To override dependencies according to a commit/pull request, add them to inputs
-    # For example:
-    # mc-force-shoe-plugin.url = "github:Hugo-L3174/mc_force_shoe_plugin/pull/16/head";
-    # or use pull/N/merge to get the version merged with master, assuming there are no conflicts
-    # mc-force-shoe-plugin.flake = false;
-    # use true if the repository has a flake
+    ccache-trigger.follows = "mc-rtc-nix/ccache-trigger";
+    with-ros-trigger.follows = "mc-rtc-nix/with-ros-trigger";
   };
 
   outputs =
@@ -24,57 +21,64 @@
           inputs.mc-rtc-nix.flakeModule
           # or inputs.mc-rtc-nix.flakeModule if you don't need private repositories
           {
-            flakoboros = {
-              extraPackages = [ "ninja" ];
-
-              overrideAttrs.mc-rtc = {
-                src = lib.cleanSource ./.;
+            mc-rtc-nix = {
+              with-ros = inputs.with-ros-trigger.value;
+              overlays.ccache = inputs.ccache-trigger.value;
+            };
+            mc-rtc-superbuild =
+              { ... }:
+              {
+                enable = true;
+                shells.defaultShells.release = true;
+                shells.defaultShells.devel = false;
               };
-
-              # Define a custom superbuild configuration
-              # This will make all
-              overrides.mc-rtc-superbuild =
-                { pkgs-prev, ... }:
-                let
-                  cfg-prev = pkgs-prev.mc-rtc-superbuild.superbuildArgs;
-                in
-                {
-                  superbuildArgs = cfg-prev // {
-                    pname = "mc-rtc-superbuild-override";
-                    # for example, override any runtime dependency (robots, controllers, etc)
-                    # # extend robots
-                    # robots = cfg-prev.robots ++ [ pkgs-final.mc-hrp4 ];
-                    # # override controllers
-                    # controllers = [ pkgs-final.polytopeController ];
-                    # configs = [ "${pkgs-final.polytopeController}/lib/mc_controller/etc/mc_rtc.yaml" ];
-                    # plugins = [ pkgs-final.mc-force-shoe-plugin ];
-                    # observers = [ pkgs-final.mc-state-observation ];
-                    # apps = [];
-                  };
+            flakoboros = {
+              overrideAttrs.tasks = { pkgs-final, ... }: {
+                src = pkgs-final.fetchFromGitHub {
+                  owner = "jrl-umi3218";
+                  repo = "Tasks";
+                  tag = "v1.9.2";
+                  hash = "sha256-afZbxXd2uQVpDL97sXyxIrbFqa76JGc0s0ZAPzHcpsQ=";
                 };
 
+              };
+              overrideAttrs.mc-rtc =
+                { drv-prev, pkgs-final, ... }:
+                {
+                  src = lib.cleanSource ./.;
+                  # FIXME: enable testing:
+                  # - testing fails in nix build
+                  # - testRobotModule fails in nix devel
+                  cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
+                  nativeBuildInputs = drv-prev.nativeBuildInputs ++ [ pkgs-final.ninja ];
+                  nativeCheckInputs = [
+                    # workaround for some tests trying to write to /homeless-shelter
+                    pkgs-final.writableTmpDirAsHomeHook
+                  ];
+                  doCheck = false;
+                };
             };
           }
         ];
         perSystem =
-          { pkgs, ... }:
+          { ... }:
           {
-            # define a devShell called local-superbuild with the superbuild configuration above
-            # you can also override attributes to add additional shell functionality
-            packages.default = pkgs.mc-rtc-superbuild;
-            devShells.default =
-              (pkgs.callPackage "${inputs.mc-rtc-nix}/shell.nix" {
-                inherit (pkgs) mc-rtc-superbuild;
-              }).overrideAttrs
-                (old: {
-                  shellHook = ''
-                    ${old.shellHook or ""}
-
-                    echo ""
-                    echo "Welcome to the mc-rtc-superbuild devShell for local mc-rtc development!"
-                    echo "----"
-                  '';
-                });
+            treefmt = {
+              settings.global.excludes = [
+                ".envrc"
+                ".git-blame-ignore-revs"
+                ".jrl-ci"
+                "3rd-party/*"
+                "doc/*"
+                "LICENSE"
+              ];
+              programs = {
+                # keep-sorted start
+                mdformat.enable = true;
+                yamlfmt.enable = false;
+                # keep-sorted end
+              };
+            };
           };
       }
     );

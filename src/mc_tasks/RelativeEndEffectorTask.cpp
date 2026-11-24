@@ -62,9 +62,7 @@ void RelativeEndEffectorTask::add_ef_pose(const sva::PTransformd & dtr)
 }
 
 void RelativeEndEffectorTask::set_ef_pose(const sva::PTransformd & tf)
-{
-  curTransform = tf;
-}
+{ curTransform = tf; }
 
 void RelativeEndEffectorTask::update(mc_solver::QPSolver &)
 {
@@ -75,9 +73,7 @@ void RelativeEndEffectorTask::update(mc_solver::QPSolver &)
 }
 
 sva::PTransformd RelativeEndEffectorTask::get_ef_pose()
-{
-  return curTransform;
-}
+{ return curTransform; }
 
 void RelativeEndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {

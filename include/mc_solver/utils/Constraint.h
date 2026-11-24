@@ -56,16 +56,12 @@ protected:
   virtual ~Constraint() {}
 
   void updateNrVars(const std::vector<rbd::MultiBody> & mbs, const tasks::qp::SolverData & data) override
-  {
-    UpdateT::updateNrVarsImpl(mbs, data);
-  }
+  { UpdateT::updateNrVarsImpl(mbs, data); }
 
   void update(const std::vector<rbd::MultiBody> & mbs,
               const std::vector<rbd::MultiBodyConfig> & mbcs,
               const tasks::qp::SolverData & data) override
-  {
-    UpdateT::updateImpl(mbs, mbcs, data);
-  }
+  { UpdateT::updateImpl(mbs, mbcs, data); }
 };
 
 } // namespace utils

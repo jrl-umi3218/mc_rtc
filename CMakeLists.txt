@@ -12,7 +12,7 @@ endif()
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_VERSION 2.14.0)
+set(PROJECT_VERSION 2.16.0)
 set(PROJECT_URL https://github.com/jrl-umi3218/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
@@ -28,6 +28,9 @@ set(CXX_DISABLE_WERROR 1)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON) # for static bundled qhull
+
+option(PYTHON_BINDING "Build the python bindings" ON)
 
 # Check if the submodule cmake have been initialized
 set(JRL_CMAKE_MODULES "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -48,20 +51,26 @@ else()
     FetchContent_Declare(
       "jrl-cmakemodules"
       GIT_REPOSITORY "https://github.com/jrl-umi3218/jrl-cmakemodules.git"
+      GIT_TAG c32298a98e736ac4d15a9540dcd1f22cd7f161db
     )
     FetchContent_MakeAvailable("jrl-cmakemodules")
     FetchContent_GetProperties("jrl-cmakemodules" SOURCE_DIR JRL_CMAKE_MODULES)
   endif()
 endif()
-
 include(${JRL_CMAKE_MODULES}/base.cmake)
-include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
 include(${JRL_CMAKE_MODULES}/msvc-specific.cmake)
 include(${JRL_CMAKE_MODULES}/version-script.cmake)
+if(PYTHON_BINDING)
+  include(${JRL_CMAKE_MODULES}/cython/cython.cmake)
+endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-project(${PROJECT_NAME} C CXX)
+project(
+  ${PROJECT_NAME}
+  LANGUAGES C CXX
+  VERSION ${PROJECT_VERSION}
+)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
 if(NOT DEFINED MC_RTC_INSTALL_PREFIX)
@@ -125,7 +134,6 @@ option(BUILD_MC_RTC_CPP_UTILS "Build cpp utilities (e.g mc_bin_utils, etc)" ON)
 option(BUILD_MC_RTC_PYTHON_UTILS
        "Build python utilities (e.g mc_log_ui, mc_rtc_new_controller, etc)" ON
 )
-
 if(NOT BUILD_MC_RTC)
   if(NOT BUILD_MC_RTC_CPP_UTILS AND NOT BUILD_MC_RTC_PYTHON_UTILS)
     message(STATUS "Nothing to build, exiting.")
@@ -170,7 +178,7 @@ if(BOOST_STACKTRACE STREQUAL "")
   )
 endif()
 
-add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer ${BOOST_STACKTRACE})
+add_project_dependency(Boost REQUIRED COMPONENTS ${BOOST_STACKTRACE})
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(TVM REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
@@ -180,6 +188,11 @@ add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
 add_project_dependency(mesh_sampling REQUIRED)
+# NOTE: linking against mesh_sampling privately links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
+# we should probably use the same qhull libraries in mc_rtc private targets (e.g mc_rbdyn/surface_hull)
+find_package(Qhull REQUIRED)
+# Optional ROS compatiblity library
+add_project_dependency(mc_rtc_ros_compat REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -230,9 +243,6 @@ if(NOT HOST_IS_WSL AND NOT WIN32)
 elseif(NOT HOST_IS_WSL AND WIN32)
   message("-- Use WinToast for notifications")
 endif()
-
-# qhull (build re-entrant static version)
-add_subdirectory(3rd-party/qhull)
 
 # mpack (build static version)
 add_subdirectory(3rd-party/mpack)
@@ -369,7 +379,7 @@ add_subdirectory(src)
 add_subdirectory(plugins)
 add_subdirectory(utils)
 
-if(${PYTHON_BINDING})
+if(PYTHON_BINDING)
   add_subdirectory(binding/python)
 endif()
 

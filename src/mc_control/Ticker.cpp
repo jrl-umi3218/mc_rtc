@@ -6,8 +6,8 @@
 
 #include <thread>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace mc_control
 {
@@ -27,15 +27,11 @@ GetT get(const mc_rtc::log::FlatLog & log,
          bool is_main,
          size_t idx,
          const GetT & def = {})
-{
-  return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
-}
+{ return log.get<GetT>(log_entry(entry, robot, is_main), idx, def); }
 
 /** Get the encoders of a robot from the given log at the given time */
 std::vector<double> get_encoders(const mc_rtc::log::FlatLog & log, const std::string & robot, bool is_main, size_t idx)
-{
-  return get(log, "qIn", robot, is_main, idx);
-}
+{ return get(log, "qIn", robot, is_main, idx); }
 
 /** Get the encoders of a robot from the robot's configuration */
 std::vector<double> get_encoders(const mc_rbdyn::Robot & robot)
@@ -161,7 +157,7 @@ Ticker::Ticker(const Configuration & config) : config_(config), gc_(get_gc_confi
   auto & replay_c = config_.replay_configuration;
   if(!replay_c.log.empty())
   {
-    replay_c.log = bfs::system_complete(replay_c.log).string();
+    replay_c.log = fs::absolute(replay_c.log).string();
     std::map<std::string, std::string> log_to_datastore;
     if(!replay_c.with_datastore_config.empty())
     {

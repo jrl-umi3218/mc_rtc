@@ -1,4 +1,4 @@
-`mc_surfaces_visualization`は、ロボットの表面をRVizで表示するツールです。{% link mc_rtc_ros %}パッケージに含まれています。
+`mc_surfaces_visualization`は、ロボットの表面をRVizで表示するツールです。{% link mc_rtc_ros %}パッケージに含まれています。 これは、利便性のために提供されている [mc_robot_visualization]({{site.baseurl}}/tutorials/tools/mc_robot_visualization.html) のサブツールです。
 
 ### 可視化ツールを起動する
 
@@ -8,13 +8,16 @@
 $ mc_surfaces_visualization JVRC1
 ```
 
+`mc_surfaces_visualization` は `mc_rtc gui` のみにパブリッシュしますが、`mc_surfaces_visualization_ros` は `mc_rtc gui` と `ros`（RViZ）の両方にパブリッシュします。
+Debian パッケージからインストールした場合、ROS 非対応バージョンは `mc-rtc-utils` によって提供され、ROS 対応バージョンは `ros-<distro>-mc-rtc-utils` によって提供されます。
+
 プログラムの引数は `MainRobot` のエントリと同じものを指定します。エイリアスも扱えます。例えば
 
 ```bash
 # 引数のベクトルを指定する
-$ mc_surfaces_visualization env `rospack find mc_env_description` ground
+$ mc_surfaces_visualization_ros env `rospack find mc_env_description` ground
 # またはエイリアス
-$ mc_surfaces_visualization env/ground
+$ mc_surfaces_visualization_ros env/ground
 ```
 
 mc_rtc GUIを起動した後、これが表示されるはずです：

@@ -10,8 +10,9 @@
 #include <mc_rbdyn/rpy_utils.h>
 
 #include <boost/algorithm/string/case_conv.hpp>
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "internals/json.h"
 #include <fstream>
@@ -20,9 +21,7 @@ namespace bfs = boost::filesystem;
 namespace
 {
 inline std::string to_lower(const std::string & in)
-{
-  return boost::algorithm::to_lower_copy(in);
-}
+{ return boost::algorithm::to_lower_copy(in); }
 
 template<typename T>
 T cast_or_default(const std::optional<mc_rtc::Configuration> & opt)
@@ -216,9 +215,7 @@ Configuration::Exception::~Exception() noexcept
 }
 
 const char * Configuration::Exception::what() const noexcept
-{
-  return msg().c_str();
-}
+{ return msg().c_str(); }
 
 void Configuration::Exception::silence() const noexcept
 {
@@ -252,9 +249,7 @@ Configuration::Configuration(const Json & v) : v(v) {}
 Configuration::Configuration(const char * path) : Configuration(std::string(path)) {}
 
 bool Configuration::isMember(const std::string & key) const
-{
-  return has(key);
-}
+{ return has(key); }
 
 bool Configuration::has(const std::string & key) const
 {
@@ -640,9 +635,7 @@ Configuration::Configuration(const std::string & path) : Configuration()
 }
 
 Configuration Configuration::fromData(const std::string & data)
-{
-  return Configuration::fromData(data.c_str());
-}
+{ return Configuration::fromData(data.c_str()); }
 
 Configuration Configuration::fromData(const char * data)
 {
@@ -653,9 +646,7 @@ Configuration Configuration::fromData(const char * data)
 }
 
 Configuration Configuration::fromYAMLData(const std::string & data)
-{
-  return Configuration::fromYAMLData(data.c_str());
-}
+{ return Configuration::fromYAMLData(data.c_str()); }
 
 Configuration Configuration::fromYAMLData(const char * data)
 {
@@ -687,7 +678,7 @@ void Configuration::load(const std::string & path)
 
   if(target.IsNull())
   {
-    std::string extension = to_lower(bfs::path(path).extension().string());
+    std::string extension = to_lower(fs::path(path).extension().string());
     if(extension == ".yml" || extension == ".yaml")
     {
       target.SetObject();
@@ -781,7 +772,7 @@ void Configuration::loadYAMLData(const std::string & data)
 
 void Configuration::save(const std::string & path, bool pretty) const
 {
-  std::string extension = to_lower(bfs::path(path).extension().string());
+  std::string extension = to_lower(fs::path(path).extension().string());
   if(extension == ".yml" || extension == ".yaml") { mc_rtc::internal::saveYAML(path, *this); }
   else
   {
@@ -825,9 +816,7 @@ void Configuration::operator()(const std::string & key, std::string & v) const
 }
 
 bool Configuration::operator==(const char * rhs) const
-{
-  return static_cast<std::string>(*this) == rhs;
-}
+{ return static_cast<std::string>(*this) == rhs; }
 
 namespace
 {
@@ -1042,9 +1031,7 @@ std::vector<std::string> Configuration::keys() const
 }
 
 ConfigurationArrayIterator Configuration::begin() const
-{
-  return ConfigurationArrayIterator(*this);
-}
+{ return ConfigurationArrayIterator(*this); }
 
 ConfigurationArrayIterator Configuration::end() const
 {
@@ -1056,9 +1043,7 @@ ConfigurationArrayIterator Configuration::end() const
 ConfigurationArrayIterator::ConfigurationArrayIterator(const Configuration & conf) : i(0), conf(conf) {}
 
 bool ConfigurationArrayIterator::operator!=(const ConfigurationArrayIterator & rhs) const
-{
-  return i != rhs.i;
-}
+{ return i != rhs.i; }
 
 ConfigurationArrayIterator & ConfigurationArrayIterator::operator++()
 {
@@ -1067,26 +1052,18 @@ ConfigurationArrayIterator & ConfigurationArrayIterator::operator++()
 }
 
 Configuration ConfigurationArrayIterator::operator*()
-{
-  return conf[i];
-}
+{ return conf[i]; }
 
 const Configuration ConfigurationArrayIterator::operator*() const
-{
-  return conf[i];
-}
+{ return conf[i]; }
 
 ConfigurationFile::ConfigurationFile(const std::string & path) : Configuration(path), path_(path) {}
 
 void ConfigurationFile::reload()
-{
-  static_cast<mc_rtc::Configuration &>(*this) = Configuration(path_);
-}
+{ static_cast<mc_rtc::Configuration &>(*this) = Configuration(path_); }
 
 void ConfigurationFile::save() const
-{
-  save(path_);
-}
+{ save(path_); }
 
 } // namespace mc_rtc
 

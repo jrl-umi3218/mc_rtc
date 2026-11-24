@@ -7,9 +7,9 @@
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/logging.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <fstream>
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_rbdyn
 {
@@ -89,9 +89,7 @@ ForceSensor::ForceSensor() : ForceSensor("", "", sva::PTransformd::Identity()) {
 
 ForceSensor::ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f)
 : Device(name, parentBodyName, X_p_f), wrench_(Eigen::Vector6d::Zero())
-{
-  type_ = "ForceSensor";
-}
+{ type_ = "ForceSensor"; }
 
 ForceSensor::ForceSensor(const ForceSensor & fs) : ForceSensor(fs.name_, fs.parentBody(), fs.X_p_f())
 {
@@ -113,13 +111,11 @@ ForceSensor & ForceSensor::operator=(const ForceSensor & fs)
 ForceSensor::~ForceSensor() noexcept = default;
 
 void ForceSensor::loadCalibrator(const detail::ForceSensorCalibData & data) noexcept
-{
-  calibration_ = data;
-}
+{ calibration_ = data; }
 
 void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity)
 {
-  if(!bfs::exists(calib_file))
+  if(!fs::exists(calib_file))
   {
     mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file, name());
     return;
@@ -128,34 +124,22 @@ void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Ve
 }
 
 void ForceSensor::copyCalibrator(const mc_rbdyn::ForceSensor & other)
-{
-  calibration_ = other.calibration_;
-}
+{ calibration_ = other.calibration_; }
 
 void ForceSensor::resetCalibrator()
-{
-  calibration_.reset();
-}
+{ calibration_.reset(); }
 
 const sva::PTransformd & ForceSensor::X_fsmodel_fsactual() const
-{
-  return calibration_.X_f_ds;
-}
+{ return calibration_.X_f_ds; }
 
 const sva::PTransformd ForceSensor::X_fsactual_parent() const
-{
-  return (X_fsmodel_fsactual() * X_p_s_).inv();
-}
+{ return (X_fsmodel_fsactual() * X_p_s_).inv(); }
 
 double ForceSensor::mass() const
-{
-  return calibration_.mass;
-}
+{ return calibration_.mass; }
 
 const sva::ForceVecd & ForceSensor::offset() const
-{
-  return calibration_.offset;
-}
+{ return calibration_.offset; }
 
 sva::ForceVecd ForceSensor::wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const
 {
@@ -181,8 +165,6 @@ sva::ForceVecd ForceSensor::worldWrenchWithoutGravity(const mc_rbdyn::Robot & ro
 }
 
 DevicePtr ForceSensor::clone() const
-{
-  return DevicePtr(new ForceSensor(*this));
-}
+{ return DevicePtr(new ForceSensor(*this)); }
 
 } // namespace mc_rbdyn

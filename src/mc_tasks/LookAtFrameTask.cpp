@@ -39,9 +39,7 @@ LookAtFrameTask::LookAtFrameTask(const mc_rbdyn::RobotFrame & frame,
 }
 
 void LookAtFrameTask::update(mc_solver::QPSolver &)
-{
-  LookAtTask::target((offset_ * target_->position()).translation());
-}
+{ LookAtTask::target((offset_ * target_->position()).translation()); }
 
 void LookAtFrameTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {

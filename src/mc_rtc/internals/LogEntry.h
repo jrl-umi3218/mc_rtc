@@ -12,9 +12,7 @@ namespace mc_rtc::log::internal
 
 template<typename T>
 void void_deleter(void const * ptr)
-{
-  delete static_cast<T const *>(ptr);
-}
+{ delete static_cast<T const *>(ptr); }
 
 inline std::optional<std::string_view> stringFromNode(mpack_node_t node)
 {
@@ -58,9 +56,7 @@ inline LogType logTypeFromNode(mpack_node_t node)
 }
 
 inline LogType logTypeFromNode(mpack_node_t node, size_t idx)
-{
-  return logTypeFromNode(mpack_node_array_at(node, idx));
-}
+{ return logTypeFromNode(mpack_node_array_at(node, idx)); }
 
 template<typename T>
 struct DataFromNode

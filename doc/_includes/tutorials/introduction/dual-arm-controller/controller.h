@@ -29,15 +29,20 @@ public:
   void reset(const mc_control::ControllerResetData & reset_data) override;
 
 private:
-  void runUr();
-  void runKinova();
-  ControllerPhase phase_ = IDLE;
-  ControllerState urState_ = RETURN;
-  ControllerState kinovaState_ = RETURN;
-  std::shared_ptr<mc_tasks::PostureTask> kinovaPostureTask_;
   std::shared_ptr<mc_tasks::EndEffectorTask> urEndEffectorTask_;
+
+  std::shared_ptr<mc_tasks::PostureTask> kinovaPostureTask_;
   std::unique_ptr<mc_solver::KinematicsConstraint> kinovaKinematics_;
 
   const double iDist = 0.1;
   const double sDist = 0.05;
+  const double damping = 0.0;
+
+  ControllerPhase phase_ = IDLE;
+
+  ControllerState urState_ = RETURN;
+  ControllerState kinovaState_ = RETURN;
+
+  void runUr();
+  void runKinova();
 };

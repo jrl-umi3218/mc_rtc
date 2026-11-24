@@ -10,7 +10,7 @@ mc\_rtcは、シミュレーションシステムやロボット制御システ�
 
 UbuntuユーザーとmacOSユーザーにはバイナリ版を推奨します。Windowsユーザーにはvcpkgを推奨します。
 
-### Ubuntu LTS (18.04, 20.04, 22.04)
+### Ubuntu LTS (22.04, 24.04, 26.04)
 
 {% assign install_apt=site.translations[site.lang].tutorials.introduction["installation-guide"].install_apt %}
 

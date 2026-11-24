@@ -13,9 +13,8 @@
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/TasksQPSolver.h>
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/operations.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
@@ -153,9 +152,7 @@ template<>
 struct ConstraintTester<mc_solver::CoMIncPlaneConstr>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  {
-    return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt());
-  }
+  { return std::make_shared<mc_solver::CoMIncPlaneConstr>(*robots, 0, solver.dt()); }
 
   std::string json()
   {
@@ -212,9 +209,7 @@ template<>
 struct ConstraintTester<mc_solver::KinematicsConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  {
-    return std::make_shared<mc_solver::KinematicsConstraint>(*robots, 0, solver.dt());
-  }
+  { return std::make_shared<mc_solver::KinematicsConstraint>(*robots, 0, solver.dt()); }
 
   std::string json()
   {
@@ -243,9 +238,7 @@ template<>
 struct ConstraintTester<mc_solver::DynamicsConstraint>
 {
   mc_solver::ConstraintSetPtr make_ref(mc_solver::QPSolver & solver)
-  {
-    return std::make_shared<mc_solver::DynamicsConstraint>(*robots, 0, solver.dt());
-  }
+  { return std::make_shared<mc_solver::DynamicsConstraint>(*robots, 0, solver.dt()); }
 
   std::string json()
   {
@@ -287,5 +280,5 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestConstraintSetLoaderTasksBackend, T, test_types
   auto conf = tester.json();
   auto loaded = mc_solver::ConstraintSetLoader::load(solver, conf);
   tester.check(ref, loaded, solver);
-  bfs::remove(conf);
+  fs::remove(conf);
 }

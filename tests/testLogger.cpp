@@ -1,14 +1,14 @@
 /*
- * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2026 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #define EIGEN_RUNTIME_NO_MALLOC
-
 #include <mc_rtc/log/FlatLog.h>
+
 #include <mc_rtc/log/Logger.h>
 
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <boost/test/unit_test.hpp>
 
@@ -25,9 +25,7 @@ using Vector8d = Eigen::Matrix<double, 8, 1>;
 } // namespace Eigen
 
 bool operator==(const Eigen::Quaterniond & lhs, const Eigen::Quaterniond & rhs)
-{
-  return lhs.vec() == rhs.vec();
-}
+{ return lhs.vec() == rhs.vec(); }
 
 /** Check one iteration of the logger */
 template<bool malloc_allowed = false, typename Callback>
@@ -69,8 +67,9 @@ private:
   std::vector<double> v = random_vector();
 
 public:
-#define DEFINE_GETTER(MEMBER) \
-  auto get_##MEMBER() const -> const decltype(this->MEMBER) & { return this->MEMBER; }
+#define DEFINE_GETTER(MEMBER)                                 \
+  auto get_##MEMBER() const -> const decltype(this->MEMBER) & \
+  { return this->MEMBER; }
   DEFINE_GETTER(b)
   DEFINE_GETTER(d)
   DEFINE_GETTER(s)
@@ -86,9 +85,11 @@ public:
   DEFINE_GETTER(v)
 #undef DEFINE_GETTER
 
-#define DEFINE_GET_AS_REF(MEMBER)                                                                   \
-  auto get_##MEMBER##_as_ref() const -> Eigen::Ref<decltype(this->MEMBER)> { return this->MEMBER; } \
-  auto get_##MEMBER##_as_cref() const -> Eigen::Ref<const decltype(this->MEMBER)> { return this->MEMBER; }
+#define DEFINE_GET_AS_REF(MEMBER)                                                 \
+  auto get_##MEMBER##_as_ref() const -> Eigen::Ref<decltype(this->MEMBER)>        \
+  { return this->MEMBER; }                                                        \
+  auto get_##MEMBER##_as_cref() const -> Eigen::Ref<const decltype(this->MEMBER)> \
+  { return this->MEMBER; }
   DEFINE_GET_AS_REF(v2d)
   DEFINE_GET_AS_REF(v3d)
   DEFINE_GET_AS_REF(v6d)
@@ -349,7 +350,7 @@ BOOST_AUTO_TEST_CASE(TestLogger)
   std::string path;
   {
     using Policy = mc_rtc::Logger::Policy;
-    mc_rtc::Logger logger(Policy::NON_THREADED, bfs::temp_directory_path().string(), "mc-rtc-test");
+    mc_rtc::Logger logger(Policy::NON_THREADED, fs::temp_directory_path().string(), "mc-rtc-test");
     logger.start("logger", 1.0);
     size_t iter = 1;
     /** Iteration 1 only time */
@@ -535,9 +536,9 @@ BOOST_AUTO_TEST_CASE(TestLogger)
           });
     path = logger.path();
   }
-  auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
-  if(bfs::exists(latest)) { bfs::remove(latest); }
-  if(bfs::exists(path)) { bfs::remove(path); }
+  auto latest = fs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
+  if(fs::exists(latest)) { fs::remove(latest); }
+  if(fs::exists(path)) { fs::remove(path); }
 }
 
 BOOST_AUTO_TEST_CASE(TestResume)
@@ -547,7 +548,7 @@ BOOST_AUTO_TEST_CASE(TestResume)
   double dt = 0.001;
   {
     using Policy = mc_rtc::Logger::Policy;
-    mc_rtc::Logger logger(Policy::NON_THREADED, bfs::temp_directory_path().string(), "mc-rtc-test");
+    mc_rtc::Logger logger(Policy::NON_THREADED, fs::temp_directory_path().string(), "mc-rtc-test");
     logger.start("logger", dt);
     path_1 = logger.path();
     LogData data;
@@ -568,11 +569,11 @@ BOOST_AUTO_TEST_CASE(TestResume)
       data.refresh();
     }
   }
-  auto latest = bfs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
-  if(bfs::exists(latest)) { bfs::remove(latest); }
+  auto latest = fs::temp_directory_path() / "mc-rtc-test-logger-latest.bin";
+  if(fs::exists(latest)) { fs::remove(latest); }
   {
-    BOOST_REQUIRE(bfs::exists(path_1));
-    BOOST_REQUIRE(bfs::exists(path_2));
+    BOOST_REQUIRE(fs::exists(path_1));
+    BOOST_REQUIRE(fs::exists(path_2));
     mc_rtc::log::FlatLog flat_1(path_1);
     BOOST_REQUIRE(flat_1.size() > 0);
     mc_rtc::log::FlatLog flat_2(path_2);
@@ -582,6 +583,6 @@ BOOST_AUTO_TEST_CASE(TestResume)
     auto first_t2 = flat_2.get<double>("t", 0, 0.0);
     BOOST_REQUIRE(std::fabs(first_t2 - final_t1 - dt) < 1e-9);
   }
-  bfs::remove(path_1);
-  bfs::remove(path_2);
+  fs::remove(path_1);
+  fs::remove(path_2);
 }

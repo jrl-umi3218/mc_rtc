@@ -10,7 +10,7 @@ We provide binaries for the current Ubuntu LTS releases and macOS via [Homebrew]
 
 Binaries are recommended for Ubuntu users and macOS users. vcpkg is recommended for Windows users.
 
-### Ubuntu LTS (18.04, 20.04, 22.04)
+### Ubuntu LTS (22.04, 24.04, 26.04)
 
 {% assign install_apt=site.translations[site.lang].tutorials.introduction["installation-guide"].install_apt %}
 

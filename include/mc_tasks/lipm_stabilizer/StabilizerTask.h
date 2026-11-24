@@ -479,9 +479,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   inline void dcmGains(double p, double i, double d) noexcept
-  {
-    dcmGains(Eigen::Vector2d::Constant(p), Eigen::Vector2d::Constant(i), Eigen::Vector2d::Constant(d));
-  }
+  { dcmGains(Eigen::Vector2d::Constant(p), Eigen::Vector2d::Constant(i), Eigen::Vector2d::Constant(d)); }
 
   inline void dcmGains(const Eigen::Vector2d & p, const Eigen::Vector2d & i, const Eigen::Vector2d & d) noexcept
   {
@@ -589,14 +587,10 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   inline void vdcStiffness(double stiffness) noexcept { c_.vdcStiffness = clamp(stiffness, 0., 1e4); }
 
   inline void dfAdmittance(Eigen::Vector3d dfAdmittance) noexcept
-  {
-    c_.dfAdmittance = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE);
-  }
+  { c_.dfAdmittance = clamp(dfAdmittance, 0., c_.safetyThresholds.MAX_DF_ADMITTANCE); }
 
   inline void dfDamping(Eigen::Vector3d dfDamping) noexcept
-  {
-    c_.dfDamping = clamp(dfDamping, 0., c_.safetyThresholds.MAX_DF_DAMPING);
-  }
+  { c_.dfDamping = clamp(dfDamping, 0., c_.safetyThresholds.MAX_DF_DAMPING); }
 
   inline void fdqpWeights(const FDQPWeights & fdqp) noexcept { c_.fdqpWeights = fdqp; }
 
@@ -764,9 +758,7 @@ private:
 
   /** Get 6D contact admittance vector from 2D CoP admittance. */
   inline sva::ForceVecd contactAdmittance() const noexcept
-  {
-    return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
-  }
+  { return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}}; }
 
   inline void zmpcc(const ZMPCCConfiguration & zmpccConfig) noexcept
   {
@@ -851,9 +843,7 @@ protected:
   {
     template<typename T>
     std::size_t operator()(T t) const
-    {
-      return static_cast<std::size_t>(t);
-    }
+    { return static_cast<std::size_t>(t); }
   };
   std::unordered_map<ContactState,
                      internal::Contact,

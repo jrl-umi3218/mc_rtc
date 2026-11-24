@@ -5,11 +5,11 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/pragma.h>
 
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include <boost/test/tools/old/interface.hpp>
 #include <boost/test/unit_test.hpp>
-
-#include <boost/filesystem.hpp>
-namespace bfs = boost::filesystem;
 
 #include <boost/mpl/list.hpp>
 
@@ -29,9 +29,7 @@ namespace Eigen
 {
 
 bool operator==(const Quaterniond & lhs, const Quaterniond & rhs)
-{
-  return lhs.w() == rhs.w() && lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z();
-}
+{ return lhs.w() == rhs.w() && lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z(); }
 
 } // namespace Eigen
 
@@ -924,7 +922,7 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     {
       std::string path = sampleConfig2(true, json2);
       config.load(path);
-      bfs::remove(path);
+      fs::remove(path);
     }
     else
     {
@@ -993,7 +991,7 @@ mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
   {
     auto path = sampleConfig(fromDisk, json);
     auto out = mc_rtc::Configuration(path);
-    bfs::remove(path);
+    fs::remove(path);
     return out;
   }
   else
@@ -1114,7 +1112,7 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
   mc_rtc::Configuration config_partial(tmpF);
   BOOST_CHECK(config_partial == ref_double_v);
 
-  bfs::remove(tmpF);
+  fs::remove(tmpF);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
@@ -1504,7 +1502,7 @@ BOOST_AUTO_TEST_CASE(TestFileConfiguration)
     BOOST_REQUIRE_EQUAL(s, "Hello world");
     BOOST_REQUIRE_EQUAL(i, 42);
   }
-  bfs::remove(file);
+  fs::remove(file);
 }
 
 /** We purposefully create a number-like class that would create an ambiguity without the numeric_limits specialization

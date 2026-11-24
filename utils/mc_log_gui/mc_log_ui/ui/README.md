@@ -1,5 +1,4 @@
-ui files for mc_log_gui
-=======================
+# ui files for mc_log_gui
 
 Generate python files with:
 

@@ -68,9 +68,7 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
 }
 
 void CoMTask::move_com(const Eigen::Vector3d & move)
-{
-  com(com() + move);
-}
+{ com(com() + move); }
 
 void CoMTask::com(const Eigen::Vector3d & com)
 {

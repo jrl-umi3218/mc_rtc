@@ -13,21 +13,15 @@ namespace mc_rbdyn
 
 template<typename T>
 bool Robot::hasDevice(const std::string & name) const noexcept
-{
-  return data_->devicesIndex.count(name) != 0;
-}
+{ return data_->devicesIndex.count(name) != 0; }
 
 template<>
 inline bool Robot::hasDevice<ForceSensor>(const std::string & name) const noexcept
-{
-  return hasForceSensor(name);
-}
+{ return hasForceSensor(name); }
 
 template<>
 inline bool Robot::hasDevice<BodySensor>(const std::string & name) const noexcept
-{
-  return hasBodySensor(name);
-}
+{ return hasBodySensor(name); }
 
 template<typename T>
 const T & Robot::device(const std::string & name) const
@@ -46,14 +40,10 @@ const T & Robot::device(const std::string & name) const
 
 template<>
 inline const ForceSensor & Robot::device<ForceSensor>(const std::string & name) const
-{
-  return forceSensor(name);
-}
+{ return forceSensor(name); }
 
 template<>
 inline const BodySensor & Robot::device<BodySensor>(const std::string & name) const
-{
-  return bodySensor(name);
-}
+{ return bodySensor(name); }
 
 } // namespace mc_rbdyn

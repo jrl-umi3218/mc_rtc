@@ -117,9 +117,7 @@ void ControllerServer::publish(mc_rtc::gui::StateBuilder & gui_builder)
 }
 
 std::pair<const char *, size_t> ControllerServer::data() const
-{
-  return {buffer_.data(), buffer_size_};
-}
+{ return {buffer_.data(), buffer_size_}; }
 
 void ControllerServer::update_rate(double dt, double server_dt)
 {

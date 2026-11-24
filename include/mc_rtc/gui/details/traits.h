@@ -34,9 +34,7 @@ constexpr bool is_getter_impl(void_t<decltype(std::declval<GetT>()())> *)
 
 template<typename GetT>
 constexpr bool is_getter_impl(...)
-{
-  return false;
-}
+{ return false; }
 
 /** This traits is true if:
  *
@@ -45,9 +43,7 @@ constexpr bool is_getter_impl(...)
  */
 template<typename GetT>
 constexpr bool is_getter()
-{
-  return is_getter_impl<GetT>(nullptr);
-}
+{ return is_getter_impl<GetT>(nullptr); }
 
 /** Tag type for non-getter */
 struct NotAGetter

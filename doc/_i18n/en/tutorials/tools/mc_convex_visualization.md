@@ -1,12 +1,15 @@
-`mc_convex_visualization` is a tool that allows you to visualize the convexes of a robot in any mc_rtc GUI application.
+`mc_convex_visualization` is a tool that allows you to visualize the convexes of a robot in mc_rtc GUI or in RViZ. This is a sub-tool of [mc_robot_visualization]({{site.baseurl}}/tutorials/tools/mc_robot_visualization.html) provided for convenience.
 
 ### Launching the visualization
 
 The tool is launched as follows:
 
 ```bash
-$ mc_convex_visualization JVRC1
+$ mc_convex_visualization[_ros] JVRC1
 ```
+
+Note that `mc_convex_visualization` only publishes in `mc_rtc gui`, while `mc_convex_visualization_ros` publishes in both `mc_rtc gui` and `ros` (RViZ).
+If you installed from packages, the ros-free version is provided by `mc-rtc-utils` while the ros version is provided by `ros-<distro>-mc-rtc-utils`.
 
 The arguments to the program should be the same as you would use as a `MainRobot` entry. It can also handle aliases. For example:
 

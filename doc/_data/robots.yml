@@ -131,3 +131,12 @@
     module:
       url: https://github.com/isri-aist/mc_staubli
       name: mc_staubli
+- name: Robogami
+  icon: robogami.png
+  pkg:
+    desc:
+      url: https://github.com/anastasiabolotnikova/robogami_description
+      name: robogami_description
+    module:
+      url: https://github.com/anastasiabolotnikova/mc_robogami
+      name: mc_robogami

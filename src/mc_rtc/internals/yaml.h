@@ -29,9 +29,7 @@ namespace
  */
 template<typename T>
 bool try_convert(const YAML::Node & node, T & out)
-{
-  return YAML::convert<T>::decode(node, out);
-}
+{ return YAML::convert<T>::decode(node, out); }
 
 template<>
 inline bool try_convert<bool>(const YAML::Node & node, bool & out)

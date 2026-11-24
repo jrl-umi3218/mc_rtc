@@ -18,17 +18,10 @@
 #include <string>
 #include <vector>
 
-#ifdef MC_RTC_ROS_IS_ROS2
 namespace rclcpp
 {
 class Node;
 }
-#else
-namespace ros
-{
-class NodeHandle;
-}
-#endif
 
 namespace mc_rbdyn
 {
@@ -42,14 +35,9 @@ struct MCGlobalController;
 
 namespace mc_rtc
 {
-
 struct ROSBridgeImpl;
 
-#ifdef MC_RTC_ROS_IS_ROS2
 using NodeHandlePtr = std::shared_ptr<rclcpp::Node>;
-#else
-using NodeHandlePtr = std::shared_ptr<ros::NodeHandle>;
-#endif
 
 /*! \brief Allows to access ROS functionalities within mc_rtc without explicit ROS dependencies */
 struct MC_RTC_ROS_DLLAPI ROSBridge
@@ -112,6 +100,9 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    * \param publisher Name of the publisher
    */
   static void stop_robot_publisher(const std::string & publisher);
+
+  /** Stop the publication of all robots */
+  static void stop_robot_publishers();
 
   /** Return number of robot publisher
    *

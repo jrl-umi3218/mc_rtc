@@ -1,8 +1,6 @@
-Technical notes on MessagePack format for GUIState
-===
+# Technical notes on MessagePack format for GUIState
 
-Notations
----
+## Notations
 
 ```
 "..."   # String
@@ -14,8 +12,7 @@ Notations
 ( ... ) # Optional
 ```
 
-Message-format
----
+## Message-format
 
 For the root:
 
@@ -37,9 +34,9 @@ For a given Widget:
 
 `WidgetStackID` is `nil` if the widget does not belong to a specific stack.
 
-The creation of widgets binary data is (mostly) performed in [include/mc\_rtc/GUIState.h](../../include/mc_rtc/GUIState.h). The common part is written by `GUIState` during the GUI update call.
+The creation of widgets binary data is (mostly) performed in [include/mc_rtc/GUIState.h](../../include/mc_rtc/GUIState.h). The common part is written by `GUIState` during the GUI update call.
 
-The interpretation of widgets binary data is performed in [src/mc\_control/ControllerClient.cpp](../mc_control/ControllerClient.cpp).
+The interpretation of widgets binary data is performed in [src/mc_control/ControllerClient.cpp](../mc_control/ControllerClient.cpp).
 
 For a `Form`, `WidgetData` is:
 

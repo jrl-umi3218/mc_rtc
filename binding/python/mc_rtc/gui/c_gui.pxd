@@ -75,7 +75,7 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
   cdef LabelImpl[T] Label[T](const string&, T)
 
   cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, T)
-  cdef ArrayLabelImpl[T] ArrayLabel[T](const string&, const vector[string]&, T)
+  cdef ArrayLabelImpl[T] ArrayLabelWithLabels "mc_rtc::gui::ArrayLabel" [T](const string&, const vector[string]&, T)
 
   cdef ButtonImpl[T] Button[T](const string&, T)
 
@@ -90,7 +90,7 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
   cdef NumberSliderImpl[GetT, SetT] NumberSlider[GetT, SetT](const string&, GetT, SetT, double, double)
 
   cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, GetT, SetT)
-  cdef ArrayInputImpl[GetT, SetT] ArrayInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
+  cdef ArrayInputImpl[GetT, SetT] ArrayInputWithLabels "mc_rtc::gui::ArrayInput" [GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 
   cdef ComboInputImpl[GetT, SetT] ComboInput[GetT, SetT](const string&, const vector[string]&, GetT, SetT)
 

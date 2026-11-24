@@ -55,9 +55,7 @@ private:
  * \brief Holds a global mutex for all LTDL operations
  */
 struct MC_RTC_LOADER_DLLAPI LTDLMutex
-{
-  static std::mutex MTX;
-};
+{ static std::mutex MTX; };
 
 /*! \class LTDLHandle
  *

@@ -12,10 +12,10 @@
 
 #include <RBDyn/parsers/urdf.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 
 #include <fstream>
-namespace bfs = boost::filesystem;
+namespace fs = std::filesystem;
 
 namespace mc_robots
 {
@@ -65,12 +65,12 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
   _devices.emplace_back(new JVRC1DummySpeaker{"DummySpeaker"});
 
   std::string convexPath = path + "/convex/" + name + "/";
-  bfs::path p(convexPath);
-  if(bfs::exists(p) && bfs::is_directory(p))
+  fs::path p(convexPath);
+  if(fs::exists(p) && fs::is_directory(p))
   {
-    std::vector<bfs::path> files;
-    std::copy(bfs::directory_iterator(p), bfs::directory_iterator(), std::back_inserter(files));
-    for(const bfs::path & file : files)
+    std::vector<fs::path> files;
+    for(const auto & entry : fs::directory_iterator(p)) { files.push_back(entry.path()); }
+    for(const fs::path & file : files)
     {
       size_t off = file.filename().string().rfind("-ch.txt");
       if(off != std::string::npos)
@@ -131,13 +131,9 @@ JVRC1RobotModule::JVRC1RobotModule(bool fixed, bool filter_mimics) : RobotModule
 extern "C"
 {
   ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names)
-  {
-    names = {"JVRC1", "JVRC1Fixed", "JVRC1NoHands", "JVRC1NoHandsFixed"};
-  }
+  { names = {"JVRC1", "JVRC1Fixed", "JVRC1NoHands", "JVRC1NoHandsFixed"}; }
   ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)
-  {
-    delete ptr;
-  }
+  { delete ptr; }
   ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string & name)
   {
     if(name == "JVRC1") { return new mc_robots::JVRC1RobotModule(false); }

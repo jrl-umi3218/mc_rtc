@@ -5,10 +5,11 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rtc/Configuration.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include <boost/mpl/list.hpp>
 #include <boost/test/unit_test.hpp>
-namespace bfs = boost::filesystem;
 
 #include "utils.h"
 #include <fstream>
@@ -59,9 +60,7 @@ T make_ref()
 
 template<>
 mc_rbdyn::Base make_ref()
-{
-  return {"base", random_pt(), random_pt(), rbd::Joint::Cylindrical};
-}
+{ return {"base", random_pt(), random_pt(), rbd::Joint::Cylindrical}; }
 
 bool operator==(const mc_rbdyn::Base & lhs, const mc_rbdyn::Base & rhs)
 {
@@ -71,15 +70,11 @@ bool operator==(const mc_rbdyn::Base & lhs, const mc_rbdyn::Base & rhs)
 
 template<>
 mc_rbdyn::BodySensor make_ref()
-{
-  return {"sensor", "parent", random_pt()};
-}
+{ return {"sensor", "parent", random_pt()}; }
 
 template<>
 mc_rbdyn::Collision make_ref()
-{
-  return {"Body1", "Body2", 0.05, 0.01, 0.123};
-}
+{ return {"Body1", "Body2", 0.05, 0.01, 0.123}; }
 
 template<>
 std::shared_ptr<mc_rbdyn::PlanarSurface> make_ref()
@@ -177,36 +172,26 @@ bool operator==(const std::shared_ptr<mc_rbdyn::Surface> & lhs, const std::share
 
 template<>
 mc_rbdyn::Flexibility make_ref()
-{
-  return {"jointName", rnd(), rnd(), rnd()};
-}
+{ return {"jointName", rnd(), rnd(), rnd()}; }
 
 namespace mc_rbdyn
 {
 bool operator==(const mc_rbdyn::Flexibility & lhs, const mc_rbdyn::Flexibility & rhs)
-{
-  return lhs.jointName == rhs.jointName && lhs.K == rhs.K && lhs.C == rhs.C && lhs.O == rhs.O;
-}
+{ return lhs.jointName == rhs.jointName && lhs.K == rhs.K && lhs.C == rhs.C && lhs.O == rhs.O; }
 } // namespace mc_rbdyn
 
 template<>
 mc_rbdyn::ForceSensor make_ref()
-{
-  return {"forceSensor", "parentBody", random_pt()};
-}
+{ return {"forceSensor", "parentBody", random_pt()}; }
 
 template<>
 mc_rbdyn::Plane make_ref()
-{
-  return {Eigen::Vector3d::Random(), rnd()};
-}
+{ return {Eigen::Vector3d::Random(), rnd()}; }
 
 namespace mc_rbdyn
 {
 bool operator==(const mc_rbdyn::Plane & lhs, const mc_rbdyn::Plane & rhs)
-{
-  return lhs.normal == rhs.normal && lhs.offset == rhs.offset;
-}
+{ return lhs.normal == rhs.normal && lhs.offset == rhs.offset; }
 } // namespace mc_rbdyn
 
 template<>
@@ -221,9 +206,7 @@ mc_rbdyn::PolygonInterpolator make_ref()
 }
 
 bool operator==(const mc_rbdyn::PolygonInterpolator & lhs, const mc_rbdyn::PolygonInterpolator & rhs)
-{
-  return lhs.tuple_pairs() == rhs.tuple_pairs();
-}
+{ return lhs.tuple_pairs() == rhs.tuple_pairs(); }
 
 template<>
 mc_rbdyn::Springs make_ref()
@@ -264,29 +247,19 @@ namespace parsers
 {
 
 bool operator==(const Geometry::Box & lhs, const Geometry::Box & rhs)
-{
-  return lhs.size == rhs.size;
-}
+{ return lhs.size == rhs.size; }
 
 bool operator==(const Geometry::Cylinder & lhs, const Geometry::Cylinder & rhs)
-{
-  return lhs.radius == rhs.radius && lhs.length == rhs.length;
-}
+{ return lhs.radius == rhs.radius && lhs.length == rhs.length; }
 
 bool operator==(const Geometry::Sphere & lhs, const Geometry::Sphere & rhs)
-{
-  return lhs.radius == rhs.radius;
-}
+{ return lhs.radius == rhs.radius; }
 
 bool operator==(const Geometry::Mesh & lhs, const Geometry::Mesh & rhs)
-{
-  return lhs.filename == rhs.filename && lhs.scaleV == rhs.scaleV;
-}
+{ return lhs.filename == rhs.filename && lhs.scaleV == rhs.scaleV; }
 
 bool operator==(const Geometry::Superellipsoid & lhs, const Geometry::Superellipsoid & rhs)
-{
-  return lhs.size == rhs.size && lhs.epsilon1 == rhs.epsilon1 && lhs.epsilon2 == rhs.epsilon2;
-}
+{ return lhs.size == rhs.size && lhs.epsilon1 == rhs.epsilon1 && lhs.epsilon2 == rhs.epsilon2; }
 
 bool operator==(const Geometry & lhs, const Geometry & rhs)
 {
@@ -313,9 +286,7 @@ bool operator==(const Geometry & lhs, const Geometry & rhs)
 }
 
 bool operator==(const Visual & lhs, const Visual & rhs)
-{
-  return lhs.name == rhs.name && lhs.origin == rhs.origin && lhs.geometry == rhs.geometry;
-}
+{ return lhs.name == rhs.name && lhs.origin == rhs.origin && lhs.geometry == rhs.geometry; }
 
 } // namespace parsers
 
@@ -328,11 +299,11 @@ bool compareHulls(const std::map<std::string, std::pair<std::string, std::string
   {
     const auto & name = itm.first;
     const auto & body = itm.second.first;
-    const auto & path = bfs::path(itm.second.second);
+    const auto & path = fs::path(itm.second.second);
     if(!rhs.count(name)) { return false; }
     const auto & ritm = rhs.at(name);
     const auto & rbody = ritm.first;
-    const auto & rpath = bfs::path(ritm.second);
+    const auto & rpath = fs::path(ritm.second);
     if(rbody != body || path != rpath) { return false; }
   }
   return true;
@@ -340,9 +311,9 @@ bool compareHulls(const std::map<std::string, std::pair<std::string, std::string
 
 bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule & rhs)
 {
-  return bfs::path(lhs.path) == bfs::path(rhs.path) && lhs.name == rhs.name
-         && bfs::path(lhs.urdf_path) == bfs::path(rhs.urdf_path) && bfs::path(lhs.rsdf_dir) == bfs::path(rhs.rsdf_dir)
-         && bfs::path(lhs.calib_dir) == bfs::path(rhs.calib_dir) && lhs._bounds == rhs._bounds
+  return fs::path(lhs.path) == fs::path(rhs.path) && lhs.name == rhs.name
+         && fs::path(lhs.urdf_path) == fs::path(rhs.urdf_path) && fs::path(lhs.rsdf_dir) == fs::path(rhs.rsdf_dir)
+         && fs::path(lhs.calib_dir) == fs::path(rhs.calib_dir) && lhs._bounds == rhs._bounds
          && lhs._accelerationBounds == rhs._accelerationBounds && lhs._jerkBounds == rhs._jerkBounds
          && lhs._torqueDerivativeBounds == rhs._torqueDerivativeBounds && lhs._stance == rhs._stance
          && compareHulls(lhs._convexHull, rhs._convexHull) && compareHulls(lhs._stpbvHull, rhs._stpbvHull)
@@ -388,9 +359,7 @@ void test_config_array_helper(mc_rtc::Configuration &, ...)
 
 template<typename T>
 void test_config_array(mc_rtc::Configuration & config)
-{
-  return test_config_array_helper<T>(config, 0);
-}
+{ return test_config_array_helper<T>(config, 0); }
 
 template<typename T>
 struct AllocatorHelper

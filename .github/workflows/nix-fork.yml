@@ -1,0 +1,72 @@
+# Maintainers can add a push-cachix label to a PR to trigger a nix build and
+# push the result to the binary cache (with CACHIX_AUTH_TOKEN secret)
+name: Push to cachix
+
+on:
+  pull_request_target:
+    types:
+      - labeled
+
+jobs:
+  push-to-cachix:
+    if: github.event.label.name == 'push-cachix'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download nix-closure artifact from PR build run
+        uses: dawidd6/action-download-artifact@v6
+        id: download
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: nix-build.yml
+          pr: ${{ github.event.pull_request.number }}
+          name: nix-closure
+          path: ./artifact-dir
+          search_artifacts: true
+        continue-on-error: true # Allow workflow to continue if artifact is missing or expired
+
+      - name: Check artifact existence
+        id: artifact_check
+        run: |
+          if [ -f ./artifact-dir/nix-result-closure.nar ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Artifact found."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Artifact not found."
+          fi
+
+      - name: Remove Label and Comment (Artifact Missing)
+        if: steps.artifact_check.outputs.exists == 'false'
+        run: |
+          LABEL_NAME="push-cachix"
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          COMMENT="[push-cachix label]: The build closure artifact is not yet available. Please wait for the Nix build to complete before pushing to Cachix."
+
+          curl -s -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/labels/${LABEL_NAME}"
+
+          curl -s -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d "{\"body\": \"${COMMENT}\"}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        if: steps.artifact_check.outputs.exists == 'true'
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v17
+        if: steps.artifact_check.outputs.exists == 'true'
+        with:
+          name: mc-rtc-nix
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          extraPullNames: ros,gepetto
+
+      - name: Import closure and Push to Cachix
+        if: steps.artifact_check.outputs.exists == 'true'
+        run: |
+          # Import the NAR archive back into the runner's /nix/store
+          STORE_PATHS=$(nix-store --import < ./artifact-dir/nix-result-closure.nar)
+          echo "Imported store paths: $STORE_PATHS"
+
+          # Push the imported paths to Cachix
+          cachix push mc-rtc-nix $STORE_PATHS

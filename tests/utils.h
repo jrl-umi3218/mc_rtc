@@ -9,9 +9,8 @@
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <Eigen/Core>
 
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/operations.hpp>
-namespace bfs = boost::filesystem;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <cstdlib>
 #include <fstream>
@@ -27,9 +26,7 @@ bool allclose(
     const Eigen::DenseBase<DerivedB> & b,
     const typename DerivedA::RealScalar & rtol = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
     const typename DerivedA::RealScalar & atol = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon())
-{
-  return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all();
-}
+{ return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all(); }
 
 bool configureRobotLoader()
 {
@@ -49,7 +46,17 @@ bool configureRobotLoader()
 /** Return a temporary file */
 std::string getTmpFile(const std::string & ext = "")
 {
-  bfs::path out = bfs::temp_directory_path() / bfs::unique_path("mcTmpFile-%%%%-%%%%-%%%%-%%%%");
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  static std::uniform_int_distribution<int> dist(0, 15);
+  static const char hex[] = "0123456789abcdef";
+  std::string name = "mcTmpFile-";
+  for(int i = 0; i < 16; ++i)
+  {
+    if(i == 4 || i == 8 || i == 12) { name += '-'; }
+    name += hex[dist(gen)];
+  }
+  fs::path out = fs::temp_directory_path() / name;
   return out.string() + ext;
 }
 
@@ -77,14 +84,10 @@ sva::PTransformd random_pt()
 }
 
 sva::ForceVecd random_fv()
-{
-  return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()};
-}
+{ return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()}; }
 
 sva::MotionVecd random_mv()
-{
-  return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()};
-}
+{ return {Eigen::Vector3d::Random(), Eigen::Vector3d::Random()}; }
 
 double rnd()
 {

@@ -56,7 +56,7 @@ cdef class ArrayLabel(Element):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self._get_fn = get_fn
-    self.impl = c_gui.ArrayLabel[c_gui.get_fn](name, py2cpp(labels), c_gui.make_getter(python_to_conf, get_fn))
+    self.impl = c_gui.ArrayLabelWithLabels[c_gui.get_fn](name, py2cpp(labels), c_gui.make_getter(python_to_conf, get_fn))
     self.base = &self.impl
 
 cdef class Button(Element):
@@ -140,7 +140,7 @@ cdef class ArrayInput(Element):
     self._get_fn = get_fn
     self._set_fn = set_fn
     self._cb_ret_type = [float]
-    self.impl = c_gui.ArrayInput[c_gui.get_fn, c_gui.set_fn](name, py2cpp(labels), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python_list, set_fn, self._cb_ret_type))
+    self.impl = c_gui.ArrayInputWithLabels[c_gui.get_fn, c_gui.set_fn](name, py2cpp(labels), c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python_list, set_fn, self._cb_ret_type))
     self.base = &self.impl
 
 cdef class ComboInput(Element):

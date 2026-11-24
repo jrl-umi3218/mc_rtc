@@ -8,7 +8,7 @@ if(MC_RTC_BUILD_IN_NIX)
 else()
   execute_process(
     COMMAND
-      ${MC_LOG_UI_PYTHON_EXECUTABLE} -c
+      python3 -c
       "from distutils import sysconfig; print(sysconfig.get_python_lib(prefix = '${CMAKE_INSTALL_PREFIX}', plat_specific = True))"
     RESULT_VARIABLE PYTHON_INSTALL_DIR_FOUND
     OUTPUT_VARIABLE PYTHON_INSTALL_DIR

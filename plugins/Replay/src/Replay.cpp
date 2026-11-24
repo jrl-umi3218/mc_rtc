@@ -29,9 +29,7 @@ GetT get(const mc_rtc::log::FlatLog & log,
          bool is_main,
          size_t idx,
          const GetT & def = {})
-{
-  return log.get<GetT>(log_entry(entry, robot, is_main), idx, def);
-}
+{ return log.get<GetT>(log_entry(entry, robot, is_main), idx, def); }
 
 /** Get the a robot's state from the log */
 void log_to_robot(const mc_rtc::log::FlatLog & log, mc_rbdyn::Robot & robot, bool is_main, size_t idx)
@@ -57,18 +55,14 @@ void update_datastore_fn(const mc_rtc::log::FlatLog & log,
                          size_t idx,
                          mc_rtc::DataStore & ds,
                          const std::string & ds_entry)
-{
-  ds.assign(ds_entry, *log.getRaw<CppT>(log_entry, idx));
-}
+{ ds.assign(ds_entry, *log.getRaw<CppT>(log_entry, idx)); }
 
 template<typename CppT>
 void init_datastore(const mc_rtc::log::FlatLog & log,
                     const std::string & log_entry,
                     mc_rtc::DataStore & ds,
                     const std::string & ds_entry)
-{
-  ds.make<CppT>(ds_entry, *log.getRaw<CppT>(log_entry, 0));
-}
+{ ds.make<CppT>(ds_entry, *log.getRaw<CppT>(log_entry, 0)); }
 
 Replay::update_datastore_fn_t make_update_datastore_fn(const mc_rtc::log::FlatLog & log,
                                                        const std::string & log_entry,

@@ -1,1 +1,290 @@
-<p>Coming soon</p>
+<p>An <em>interface</em> is the piece of software that connects mc_rtc to a robot (or a simulator). On every iteration
+  it:</p>
+
+<ol>
+  <li>reads the robot state (joint positions, velocities, torques, IMU, force sensors...)</li>
+  <li>gives it to mc_rtc, and runs the controller</li>
+  <li>sends the result (joint positions, velocities or torques) back to the robot</li>
+</ol>
+
+<p>This tutorial shows how to write one for a new robot. There are two ways to do it:</p>
+
+<ul>
+  <li>
+    <strong>Recommended:</strong> write a small <em>driver</em> plugin for <a
+      href="https://github.com/isri-aist/unified_robot_interface">URI</a> (Unified Robot Interface). URI already
+    contains everything that is not specific to your robot.
+  </li>
+  <li>
+    <strong>Legacy:</strong> write a dedicated interface executable that embeds {% doxygen
+    mc_control::MCGlobalController %}. This is how most of the interfaces listed on the <a
+      href="{{site.baseurl}}/interfaces.html">interfaces page</a> are written.
+  </li>
+</ul>
+
+<div class="alert alert-info">This tutorial assumes that you are familiar with mc_rtc controllers and robot modules, and
+  that you have a RobotModule for your robot (see <a href="{{site.baseurl}}/tutorials/advanced/new-robot.html">this
+    tutorial</a>).</div>
+
+{% include h2.html title="Writing a driver for URI" %}
+
+{% include h3.html title="What is URI" %}
+
+<p>URI splits the traditional interface into three parts:</p>
+
+<ul>
+  <li><code>uri manager</code>: one process that runs a solver (mc_rtc) for all your robots. It is configured with the
+    usual <code>mc_rtc.yaml</code> plus a <code>Robots</code> section.</li>
+  <li><code>uri interface</code>: one generic process per robot. It runs on the robot's PC or on the control PC and
+    loads your <em>driver</em> at startup.</li>
+  <li>a communication layer (Zenoh and FlatBuffers) between the two. You never have to use it directly.</li>
+</ul>
+
+<p>The only part you write is the driver: a shared library that wraps your robot's SDK a templated driver. It does not
+  depend on mc_rtc at all. As a bonus, a controller can drive several different robots at once, each at its own control
+  rate, and robots can live on different computers.</p>
+
+{% include h3.html title="Install URI" %}
+
+<p>URI is installed next to mc_rtc. If you build mc_rtc with <a
+    href="https://github.com/mc-rtc/mc-rtc-superbuild">mc-rtc-superbuild</a>, enable the <code>WITH_URI</code> option:
+</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/install_uri.sh" lang="bash" id="install_uri" %}
+
+<p>Other installation methods (manual, devcontainer) are described in the <a
+    href="https://isri-aist.github.io/unified_robot_interface/docGettingStarted.html">URI documentation</a>.</p>
+
+<div class="alert alert-warning">Remember the install prefix you used. <code>uri interface</code> only looks for drivers
+  in <code>&lt;prefix&gt;/lib/robot_interface</code>, so your driver must be installed with the same prefix.</div>
+
+{% include h3.html title="Check if a driver already exists" %}
+
+<p>Drivers already exist for Universal Robots (RTDE), Kinova Gen3, xArm, any robot with a <code>ros2_control</code>
+  controller manager, and more. See the <a
+    href="https://isri-aist.github.io/unified_robot_interface/docSupportedRobots.html">list of supported robots</a>. If
+  your robot is there, skip to <a href="#use-the-driver-with-mc_rtc">Use the driver with mc_rtc</a>.</p>
+
+{% include h3.html title="Create the driver project" %}
+
+<div class="alert alert-info">Additional information about this topic can be found on URI website (see <a href="https://isri-aist.github.io/unified_robot_interface/docNewRobotDriver.html">Create a new robot driver</a>).</div>
+
+<p>URI generates a ready-to-build project for you:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/create_driver.sh" lang="bash" id="create_driver"
+%}
+
+<p>This creates a standalone CMake project, <code>my_robot_driver</code>, with a class named
+  <code>RobotDriverMyRobot</code>. It already compiles: it is a skeleton that reports an empty state and ignores
+  commands.</p>
+
+{% include h3.html title="Implement the driver" %}
+
+<p>Open <code>src/RobotDriverMyRobot.cpp</code> and fill in the methods. The ones you will implement in most cases are:
+</p>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>What it must do</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>constructor</td>
+      <td>Connect to the robot using the <code>ip</code>, <code>port</code> and optional <code>config_path</code> you
+        receive. Throw if the connection fails.</td>
+    </tr>
+    <tr>
+      <td><code>sync()</code></td>
+      <td>Block until the robot publishes a new state. <strong>This sets the control rate</strong>: use a blocking read
+        from the SDK, not a <code>sleep()</code>.</td>
+    </tr>
+    <tr>
+      <td><code>getActualQ()</code></td>
+      <td>Joint positions [rad]. Return an empty vector if no state is available yet.</td>
+    </tr>
+    <tr>
+      <td><code>getActualQd()</code></td>
+      <td>Joint velocities [rad/s] (optional)</td>
+    </tr>
+    <tr>
+      <td><code>getJointTorques()</code></td>
+      <td>Joint torques [Nm]</td>
+    </tr>
+    <tr>
+      <td><code>servoJ(q)</code></td>
+      <td>Send joint positions [rad] to the robot</td>
+    </tr>
+    <tr>
+      <td><code>speedJ(qd)</code></td>
+      <td>Send joint velocities [rad/s] to the robot</td>
+    </tr>
+    <tr>
+      <td><code>tauJ(tau)</code></td>
+      <td>Send joint torques [Nm] to the robot</td>
+    </tr>
+    <tr>
+      <td><code>getIMUs()</code>, <code>getForceSensors()</code></td>
+      <td>Sensor readings (optional)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You only need to implement the command methods for the control mode your robot supports (<code>servoJ</code> for
+  position control, and so on). The others can throw or do nothing.
+
+<p>Three rules matter more than everything else:</p>
+
+<ul>
+  <li><strong>Joint order</strong>: every vector, in and out of the driver, follows the <code>ref_joint_order</code> of
+    your RobotModule. If your SDK uses a different order, reorder in the driver.</li>
+  <li><strong>Units</strong>: rad, rad/s, Nm, N. Quaternions are <code>(w, x, y, z)</code>.</li>
+  <li><strong>Sensors</strong>: the names used as keys in <code>getIMUs()</code> and <code>getForceSensors()</code> must
+    match the body sensors and force sensors of your RobotModule.</li>
+</ul>
+
+<p>If your SDK needs extra libraries, add them to the generated <code>CMakeLists.txt</code> files with the usual
+  <code>find_package</code> and <code>target_link_libraries</code>. Settings that do not fit in <code>ip</code> and
+  <code>port</code> (topic names, gains...) can go in a YAML file of your own, whose path is passed to the constructor
+  as <code>config_path</code>.</p>
+
+{% include h3.html title="Build and install" %}
+
+<p>Build the driver with the same prefix as URI (and mc_rtc):</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/build_driver.sh" lang="bash" id="build_driver"
+%}
+
+<p>The generated source keeps the line <code>ROBOT_DRIVER_EXPORT_ABI_VERSION()</code>. Do not remove it: URI refuses to
+  load a driver without it. When URI changes the driver interface, drivers built against an older version fail to load
+  with a clear message and must be rebuilt.</p>
+
+{% include h3.html title="Test the driver on its own" %}
+
+<p>Before involving mc_rtc, check that the driver connects and that the state looks right. Write a small file with the
+  robot's address:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/viewer_config.yaml" lang="yaml"
+id="viewer_config" %}
+
+<p>Then run the viewer:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/viewer_run.sh" lang="bash" id="viewer_run" %}
+
+<p>It loads your driver exactly as <code>uri interface</code> does and prints joint positions, velocities and torques,
+  and the time spent in <code>sync()</code>. Move the robot by hand (or in simulation) and check the joint order, signs
+  and units. The viewer never sends any command, so it is safe to use on a real robot.</p>
+
+{% include h2.html title="Use the driver with mc_rtc" %}
+
+<p>Add your robot to the <code>Robots</code> section of an <code>mc_rtc.yaml</code>. Everything else
+  (<code>MainRobot</code>, <code>Enabled</code>, observers, plugins...) keeps its usual meaning:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/mc_rtc_config.yaml" lang="yaml"
+id="mc_rtc_config" %}
+
+<p>Some entries deserve an explanation:</p>
+
+<ul>
+  <li><code>module</code> is the mc_rtc RobotModule of your robot.</li>
+  <li><code>controller.mode</code> is the type of command sent to the robot: <code>position</code>,
+    <code>velocity</code> or <code>torque</code>. It selects which of <code>servoJ</code>, <code>speedJ</code> and
+    <code>tauJ</code> is called.</li>
+  <li><code>controller.time_step</code> is the control period of the robot. <code>Timestep</code> (mc_rtc) must be an
+    exact multiple of it. In the example, the robot runs at 1 kHz and mc_rtc at 200 Hz; the last command is sent again
+    in between.</li>
+  <li><code>robot_interface.driver</code> is the class name of your driver. <code>ip</code> and <code>port</code> are
+    always required, even if your driver ignores them.</li>
+  <li><code>autostart: true</code> makes <code>uri manager</code> start <code>uri interface</code> itself. Use it when
+    the robot is reachable from the control PC.</li>
+</ul>
+
+<p>Now start the controller with <code>uri manager</code> instead of an interface executable:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/run_manager.sh" lang="bash" id="run_manager" %}
+
+<p>You should see the driver being loaded, the robot initialized from its real joint positions, and mc_rtc starting your
+  controller. As usual, you can interact with the controller using any mc_rtc GUI client.</p>
+
+<div class="alert alert-info">The controller only starts once the first state of every robot has been received, so the
+  robot never jumps toward a default posture.</div>
+
+{% include h3.html title="Robot on a different computer" %}
+
+<p>If the robot is connected to its own PC (e.g. a real-time PC next to the arm), remove <code>autostart</code> and
+  install the driver on that PC. Start <code>uri interface</code> there <em>before</em> <code>uri manager</code>. It
+  only needs to know the robot's name:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/remote_interface.yaml" lang="yaml"
+id="remote_interface" %}
+
+{% include show_source.html translate="tutorials/advanced/new-interface/remote_run.sh" lang="bash" id="remote_run" %}
+
+<p>The driver name, IP address and control mode are sent by the manager, so you can change drivers without touching the
+  robot's PC. If the connection is lost, the manager stops the controller and the interface holds the robot in place.
+</p>
+
+{% include h3.html title="Several robots" %}
+
+<p>Add more entries under <code>Robots</code>. Each robot gets its own driver and its own control rate, and all of them
+  are controlled by the same mc_rtc controller. The <code>base</code> key copies another entry so you only write what
+  differs.</p>
+
+{% include h3.html title="Going further" %}
+
+<p>This tutorial only covers the essentials. The <a href="https://isri-aist.github.io/unified_robot_interface/">URI
+    documentation</a> has more details on:</p>
+
+<ul>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docNewRobotDriver.html">Creating a new robot
+      driver</a>: grippers, ROS 2 based drivers, checklist</li>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docRobotManager.html">The robot manager</a>: complete
+    <code>mc_rtc.yaml</code> reference, timing rules, connection loss handling</li>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docCommandLine.html">Command line</a>: all
+    <code>uri</code> subcommands</li>
+  <li><a href="https://isri-aist.github.io/unified_robot_interface/docSimulation.html">Simulation</a>: running the same
+    controller on a simulated robot</li>
+</ul>
+
+{% include h2.html title="Legacy: a dedicated interface executable" %}
+
+<div class="alert alert-warning">This is the historical way to integrate a robot with mc_rtc. It is still supported, but
+  it is <strong>discouraged for new robots</strong>.</div>
+
+<p>In this approach you write an executable that links with mc_rtc and embeds a {% doxygen
+  mc_control::MCGlobalController %}. It owns the whole real-time loop: communication with the robot, timing, and calling
+  mc_rtc. Each iteration looks like this:</p>
+
+{% include show_source.html translate="tutorials/advanced/new-interface/legacy_interface.cpp" lang="cpp"
+id="legacy_interface" %}
+
+<p>The functions you will use most are:</p>
+
+<ul>
+  <li>{% doxygen mc_control::MCGlobalController::init() %} initializes the controller from the initial robot
+    configuration</li>
+  <li>{% doxygen mc_control::MCGlobalController::setEncoderValues() %}, {% doxygen
+    mc_control::MCGlobalController::setEncoderVelocities() %} and {% doxygen
+    mc_control::MCGlobalController::setJointTorques() %} provide the joint state</li>
+  <li>{% doxygen mc_control::MCGlobalController::setSensorOrientations() %}, {% doxygen
+    mc_control::MCGlobalController::setSensorAngularVelocities() %}, {% doxygen
+    mc_control::MCGlobalController::setSensorLinearAccelerations() %} and {% doxygen
+    mc_control::MCGlobalController::setWrenches() %} provide the other sensors</li>
+  <li>{% doxygen mc_control::MCGlobalController::run() %} runs one iteration of the controller</li>
+</ul>
+
+<p>Compared to a URI driver, a dedicated interface has several drawbacks:</p>
+
+<ul>
+  <li>Every robot needs its own executable that links with mc_rtc and its dependencies, and often its own build of them.
+  </li>
+  <li>Timing, safety (connection loss, holding the robot) and multi-rate handling are re-implemented each time.</li>
+  <li>Controlling several robots with different SDKs or rates from one controller is not supported out of the box.</li>
+  <li>The robot's SDK must run on the same machine as mc_rtc.</li>
+</ul>
+
+<p>Existing interfaces (see the <a href="{{site.baseurl}}/interfaces.html">interfaces page</a>) are good examples to
+  read if you need to maintain or port one. If you do need a new standalone interface, for example to integrate a
+  simulator with its own main loop, you can start from one of them.</p>

@@ -15,30 +15,22 @@ namespace gui
 
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element)
-{
-  addElement(category, ElementsStacking::Vertical, element);
-}
+{ addElement(category, ElementsStacking::Vertical, element); }
 
 template<typename SourceT, typename T>
 void StateBuilder::addElement(SourceT * source, const std::vector<std::string> & category, T element)
-{
-  addElement(source, category, ElementsStacking::Vertical, element);
-}
+{ addElement(source, category, ElementsStacking::Vertical, element); }
 
 template<typename T>
 void StateBuilder::addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element)
-{
-  addElementImpl(nullptr, category, stacking, element);
-}
+{ addElementImpl(nullptr, category, stacking, element); }
 
 template<typename SourceT, typename T>
 void StateBuilder::addElement(SourceT * source,
                               const std::vector<std::string> & category,
                               ElementsStacking stacking,
                               T element)
-{
-  addElementImpl(source, category, stacking, element);
-}
+{ addElementImpl(source, category, stacking, element); }
 
 template<typename T>
 void StateBuilder::addElementImpl(void * source,
@@ -63,15 +55,11 @@ void StateBuilder::addElementImpl(void * source,
 
 template<typename T, typename... Args>
 void StateBuilder::addElement(const std::vector<std::string> & category, T element, Args... args)
-{
-  addElement(category, ElementsStacking::Vertical, element, args...);
-}
+{ addElement(category, ElementsStacking::Vertical, element, args...); }
 
 template<typename SourceT, typename T, typename... Args>
 void StateBuilder::addElement(SourceT * source, const std::vector<std::string> & category, T element, Args... args)
-{
-  addElement(source, category, ElementsStacking::Vertical, element, args...);
-}
+{ addElement(source, category, ElementsStacking::Vertical, element, args...); }
 
 template<typename T, typename... Args>
 void StateBuilder::addElement(const std::vector<std::string> & category,
@@ -136,24 +124,18 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
 
 template<typename... Args>
 void StateBuilder::addXYPlot(const std::string & name, Args... args)
-{
-  addXYPlot(name, {}, {}, {}, args...);
-}
+{ addXYPlot(name, {}, {}, {}, args...); }
 
 template<typename... Args>
 void StateBuilder::addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, Args... args)
-{
-  addXYPlot(name, xConfig, {}, {}, args...);
-}
+{ addXYPlot(name, xConfig, {}, {}, args...); }
 
 template<typename... Args>
 void StateBuilder::addXYPlot(const std::string & name,
                              plot::AxisConfiguration xConfig,
                              plot::AxisConfiguration yLeftConfig,
                              Args... args)
-{
-  addXYPlot(name, xConfig, yLeftConfig, {}, args...);
-}
+{ addXYPlot(name, xConfig, yLeftConfig, {}, args...); }
 
 template<typename... Args>
 void StateBuilder::addXYPlot(const std::string & name,
@@ -189,15 +171,11 @@ void StateBuilder::addXYPlot(const std::string & name,
 
 template<typename T, typename... Args>
 void StateBuilder::addPlot(const std::string & name, T abscissa, Args... args)
-{
-  addPlot(name, abscissa, {}, {}, args...);
-}
+{ addPlot(name, abscissa, {}, {}, args...); }
 
 template<typename T, typename... Args>
 void StateBuilder::addPlot(const std::string & name, T abscissa, plot::AxisConfiguration yLeftConfig, Args... args)
-{
-  addPlot(name, abscissa, yLeftConfig, {}, args...);
-}
+{ addPlot(name, abscissa, yLeftConfig, {}, args...); }
 
 template<typename T, typename... Args>
 void StateBuilder::addPlot(const std::string & name,

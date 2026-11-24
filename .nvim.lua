@@ -15,6 +15,9 @@ local function schema_path(rel)
 end
 
 local raw_schemas = {
+  -- github actions
+  ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+  -- mc_rtc
   ["mc_rtc/mc_rtc.json"] = {
     "**/mc_rtc.yaml",
     "**/mc_rtc.in.yaml",

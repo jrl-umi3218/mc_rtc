@@ -315,7 +315,7 @@ controller_test_run(TestCanonicalRobotController 2001)
 controller_test_run(TestRobotConfigurationController 1)
 
 # Create a test observer
-add_library(TestObserver observers/TestObserver.cpp)
+add_library(TestObserver SHARED observers/TestObserver.cpp)
 set_target_properties(TestObserver PROPERTIES FOLDER tests/controllers/observers)
 target_link_libraries(
   TestObserver PUBLIC mc_control Boost::unit_test_framework
