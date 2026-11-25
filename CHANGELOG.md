@@ -1,11 +1,18 @@
 # Changelog
 
-## [Unreleased]
+## Unreleased
+
+## [2.17.0]
 
 ### What's Changed
 
 - #573: Per-robot controller/observer configuration defined in a robot module can now be installed into the robot module's install prefix (instead of mc_rtc's).
   - **Update:** robot modules should be updated the newly introduced `mc_rtc_install_robot_configurations` to install these configurations (optional for `mc-rtc-superbuild`, required for `nix`).
+
+* feat: adapt loading robot modules with multiple visual links per 1 collision body (#587) @Noceo200, @arntanguy, @y-hadj, [@mergify[bot]](https://github.com/apps/mergify), [@pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci)
+* Feat/tutorial new driver (#603) @khangtpham25, @arntanguy, [@pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci)
+* fix(qhull): mc_rbdyn now needs explicit qhull linking (#601) @arntanguy, [@pre-commit-ci[bot]](https://github.com/apps/pre-commit-ci)
+* fix(mc_rbdyn): apply the mesh scale to generated convex hulls (#595) @Dhanushvarma, @arntanguy
 
 ### Fixed
 
@@ -1074,4 +1081,3 @@ Initial release
 [2.9.3]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v2.9.3
 [stabilizer documentation]: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/lipm-stabilizer.html
 [tvm]: https://github.com/jrl-umi3218/tvm
-[unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v2.14.0...HEAD
