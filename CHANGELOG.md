@@ -2,13 +2,34 @@
 
 ## [Unreleased]
 
+### What's Changed
+
+- #573: Per-robot controller/observer configuration defined in a robot module can now be installed into the robot module's install prefix (instead of mc_rtc's).
+  - **Update:** robot modules should be updated the newly introduced `mc_rtc_install_robot_configurations` to install these configurations (optional for `mc-rtc-superbuild`, required for `nix`).
+
 ### Fixed
 
 - Convex hulls generated from collision meshes now apply the mesh scale of the robot description, including mirroring (negative scale). Scaled meshes, such as meshes in millimeters with `scale="0.001 0.001 0.001"`, used to get hulls 1000 times too large. The hulls of scaled meshes are regenerated automatically, and robots without scaled meshes keep their cached hulls
 
 ## [2.16.0] - 2026-10-19
 
-## [2.15.2] - 2026-07-15
+### What's Changed
+
+- Fix the ROSPlugin destructor causing a segfault by @ArnaudDmt in https://github.com/jrl-umi3218/mc_rtc/pull/575
+- Correctly apply collision transforms in case of multiple convexes by @Hugo-L3174 in https://github.com/jrl-umi3218/mc_rtc/pull/550
+- feat(observer): sync jointTorque into realRobot in EncoderObserver by @bastien-muraccioli in https://github.com/jrl-umi3218/mc_rtc/pull/584
+- fix: update tutorial website to match latest code by @khangtpham25 in https://github.com/jrl-umi3218/mc_rtc/pull/588
+- python: drop python2/user/system install, use venv by @arntanguy in https://github.com/jrl-umi3218/mc_rtc/pull/562
+- fix(mc_solver): match with Tasks removal of boost::timer by @khangtpham25 in https://github.com/jrl-umi3218/mc_rtc/pull/598
+
+### New Contributors
+
+- @ArnaudDmt made their first contribution in https://github.com/jrl-umi3218/mc_rtc/pull/575
+- @bastien-muraccioli made their first contribution in https://github.com/jrl-umi3218/mc_rtc/pull/584
+
+**Full Changelog**: https://github.com/jrl-umi3218/mc_rtc/compare/v2.15.2...v2.16.0
+
+### [2.15.2] - 2026-07-15
 
 ### Debian Packaging
 
