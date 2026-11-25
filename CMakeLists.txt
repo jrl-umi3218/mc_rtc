@@ -12,7 +12,7 @@ endif()
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_VERSION 2.16.0)
+set(PROJECT_VERSION 2.17.0)
 set(PROJECT_URL https://github.com/jrl-umi3218/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
@@ -69,6 +69,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 project(
   ${PROJECT_NAME}
   LANGUAGES C CXX
+  HOMEPAGE_URL "https://github.com/jrl-umi3218/mc_rtc"
   VERSION ${PROJECT_VERSION}
 )
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
