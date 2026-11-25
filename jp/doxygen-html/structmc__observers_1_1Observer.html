@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">mc_rtc
-   &#160;<span id="projectnumber">2.16.0</span>
+   &#160;<span id="projectnumber">2.17.1</span>
    </div>
   </td>
  </tr>
@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('structmc__observers_1_1Observer.html',
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="structmc__observers_1_1Observer-members.html">List of all members</a>  </div>
@@ -161,6 +162,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abe5c434f1d731d97473991d6d3ac82d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad50a096eb3ea0ba9a09f3a9b286a73a9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#ad50a096eb3ea0ba9a09f3a9b286a73a9">dt</a> () const noexcept</td></tr>
 <tr class="separator:ad50a096eb3ea0ba9a09f3a9b286a73a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab25932c8ee56c16d45e3f28cbb0fe4b"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#aab25932c8ee56c16d45e3f28cbb0fe4b">get_loading_location</a> () const noexcept</td></tr>
+<tr class="separator:aab25932c8ee56c16d45e3f28cbb0fe4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ae885d308c2817249e204c357e1176d97"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#ae885d308c2817249e204c357e1176d97">set_loading_location</a> (std::string_view location)</td></tr>
+<tr class="separator:ae885d308c2817249e204c357e1176d97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -179,6 +187,9 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a2ec62e39d9969e672369d5166e78fd44"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#a2ec62e39d9969e672369d5166e78fd44">loading_location_</a></td></tr>
+<tr class="memdesc:a2ec62e39d9969e672369d5166e78fd44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path to the folder containing the observer library.  <a href="structmc__observers_1_1Observer.html#a2ec62e39d9969e672369d5166e78fd44">More...</a><br /></td></tr>
+<tr class="separator:a2ec62e39d9969e672369d5166e78fd44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e3f65fb8549873b71b1eeda29c1b363"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td></tr>
 <tr class="memdesc:a2e3f65fb8549873b71b1eeda29c1b363"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structmc__observers_1_1Observer.html" title="State observation API.">Observer</a> name.  <a href="structmc__observers_1_1Observer.html#a2e3f65fb8549873b71b1eeda29c1b363">More...</a><br /></td></tr>
 <tr class="separator:a2e3f65fb8549873b71b1eeda29c1b363"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,9 +216,6 @@ Protected Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">mc_observers::Observer::Observer </td>
@@ -227,11 +235,6 @@ Protected Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
@@ -584,6 +587,31 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aab25932c8ee56c16d45e3f28cbb0fe4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab25932c8ee56c16d45e3f28cbb0fe4b">&#9670;&nbsp;</a></span>get_loading_location()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string&amp; mc_observers::Observer::get_loading_location </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="afb00b8e7fde2d086d3e8674bf70f1c9f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afb00b8e7fde2d086d3e8674bf70f1c9f">&#9670;&nbsp;</a></span>name() <span class="overload">[1/2]</span></h2>
 
@@ -876,6 +904,34 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ae885d308c2817249e204c357e1176d97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae885d308c2817249e204c357e1176d97">&#9670;&nbsp;</a></span>set_loading_location()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_observers::Observer::set_loading_location </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>location</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Called by <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a> to inform the robot module of its loading location For example, if the JVRC1 module is loaded from the library in /usr/local/lib/mc_robots/jvrc1.so then this is /usr/local/lib/mc_robots/</p>
+<p>The value is stored in a thread_local variable and is meant to be used in the constructor of RobotModule </p>
+
+</div>
+</div>
 <a id="a221d24df2ef49cb0f3439a4a99a59cfb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a221d24df2ef49cb0f3439a4a99a59cfb">&#9670;&nbsp;</a></span>type()</h2>
 
@@ -1009,6 +1065,30 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Descriptive error message to show if the observer failed. </p>
+
+</div>
+</div>
+<a id="a2ec62e39d9969e672369d5166e78fd44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ec62e39d9969e672369d5166e78fd44">&#9670;&nbsp;</a></span>loading_location_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_observers::Observer::loading_location_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Path to the folder containing the observer library. </p>
 
 </div>
 </div>

@@ -10,6 +10,7 @@ var structmc__observers_1_1Observer =
     [ "desc", "structmc__observers_1_1Observer.html#a000cb5b45f3ae16d5deec144fbfd0d96", null ],
     [ "dt", "structmc__observers_1_1Observer.html#ad50a096eb3ea0ba9a09f3a9b286a73a9", null ],
     [ "error", "structmc__observers_1_1Observer.html#abe5c434f1d731d97473991d6d3ac82d6", null ],
+    [ "get_loading_location", "structmc__observers_1_1Observer.html#aab25932c8ee56c16d45e3f28cbb0fe4b", null ],
     [ "name", "structmc__observers_1_1Observer.html#afb00b8e7fde2d086d3e8674bf70f1c9f", null ],
     [ "name", "structmc__observers_1_1Observer.html#a9266bf0e19a321fd933a1fd29cc6a7e7", null ],
     [ "removeFromGUI", "structmc__observers_1_1Observer.html#a3deb1aa8ae052466d654f6385ada884a", null ],
@@ -23,6 +24,7 @@ var structmc__observers_1_1Observer =
     [ "desc_", "structmc__observers_1_1Observer.html#a09b5945fa09bf14489d9796d43df60b9", null ],
     [ "dt_", "structmc__observers_1_1Observer.html#adde90bcccecab614f391f6d515d435fa", null ],
     [ "error_", "structmc__observers_1_1Observer.html#a89c80c9c3139aa8025315bb4337618a8", null ],
+    [ "loading_location_", "structmc__observers_1_1Observer.html#a2ec62e39d9969e672369d5166e78fd44", null ],
     [ "name_", "structmc__observers_1_1Observer.html#a2e3f65fb8549873b71b1eeda29c1b363", null ],
     [ "type_", "structmc__observers_1_1Observer.html#af9063e58cac679404843fb7104c60835", null ]
 ];

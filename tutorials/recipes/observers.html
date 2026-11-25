@@ -393,18 +393,50 @@
 
 <h1 id="configuring-the-observer-pipelines">Configuring the observer pipelines</h1>
 
-<p>State observation pipelines can be configured in your controller configuration (each pipeline configuration superseeds the previous one):</p>
+<p>In order to provide sensible default values for each observer, they are configured by merging the following configurations (in order):</p>
+
+<ul>
+  <li>The observer’s author:
+    <ul>
+      <li>The observer’s runtime directory where its library is loaded from:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX</span>/observers/&lt;ObserverType&gt;/etc/&lt;ObserverType&gt;.yaml</code></li>
+    </ul>
+  </li>
+  <li>The observer’s author for a predefined set of robots:
+    <ul>
+      <li>The observer’s robot-specific runtime directory:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX</span>/observers/&lt;ObserverType&gt;/&lt;rm.name&gt;.yaml</code>
+Here, <code class="language-plaintext highlighter-rouge">rm.name</code> refers to the name of the robot module that the observer is associated with.</li>
+    </ul>
+  </li>
+  <li>The robot module’s author (for extensibility to additional robots):
+    <ul>
+      <li>The robot module’s observer configuration:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$OBSERVERS_RUNTIME_INSTALL_PREFIX</span>/etc/observers/&lt;ObserverType&gt;.yaml</code></li>
+    </ul>
+  </li>
+  <li>User configuration:
+    <ul>
+      <li>User configuration path:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/observers/&lt;ObserverType&gt;.yaml</code></li>
+      <li>User robot-specific configuration:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/observers/&lt;ObserverType&gt;/&lt;robotName&gt;.yaml</code>
+Here, <code class="language-plaintext highlighter-rouge">robotName</code> is the name of the robot used in the controller, which may differ from <code class="language-plaintext highlighter-rouge">rm.name</code> in scenarios with multiple robots.</li>
+    </ul>
+  </li>
+  <li>Lastly, the configuration provided directly in your controller’s pipeline configuration.</li>
+</ul>
+
+<p>With these configurations, you can be assured that even without providing detailed configurations for each observer, defaults meaningful to your robot will be applied.</p>
+
+<p>Let’s look first at a simple representative example to estimate the state of a floating-base robot from encoder position measurements and a sensor providing roll and pitch orientation of the floating base. The configuration format is fully documented in the <a href="../../json.html#Observers/ObserverPipelines">Observers JSON schema</a>.</p>
 
 <ul>
   <li>Global configuration: <code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
   <li>User configuration: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li>
   <li>Controller-specific configuration: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_controllers/YourController.yaml</code></li>
-  <li>The FSM configuration of your controller: <code class="highlight language-bash" data-lang="bash">YouController.yaml</code> (recommended)</li>
+  <li>The FSM configuration of your controller: <code class="highlight language-bash" data-lang="bash">YourController.yaml</code> (recommended)</li>
 </ul>
-
-<p>The configuration format is fully documented in the <a href="../../json.html#Observers/ObserverPipelines">Observers JSON schema</a>.</p>
-
-<p>Let’s look first at a simple representative example to estimate the state of a floating-base robot from encoder position measurements and a sensor providing roll and pitch orientation of the floating base.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">ObserverPipelines</span><span class="pi">:</span>

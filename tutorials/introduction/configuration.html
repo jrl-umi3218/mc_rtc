@@ -674,8 +674,10 @@ For a list of all available configuration options, please refer to the <a href="
 <p>For a given controller <code class="highlight language-bash" data-lang="bash">NAME</code> and a given robot's module named <code class="highlight language-bash" data-lang="bash">ROBOT</code>, the following configuration files are loaded:</p>
 
 <ol>
-  <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">NAME_RUNTIME_LOCATION</span><span class="k">}</span>/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>/<span class="k">${</span><span class="nv">ROBOT</span><span class="k">}</span>.yaml</code></li>
+  <li>One provided by the robot module: <code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">ROBOT_MODULE_RUNTIME_LOCATION</span><span class="k">}</span>/etc/controllers/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>/<span class="k">${</span><span class="nv">ROBOT</span><span class="k">}</span>.yaml</code></li>
+  <li>One provided by the controller: <code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">NAME_RUNTIME_LOCATION</span><span class="k">}</span>/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>/<span class="k">${</span><span class="nv">ROBOT</span><span class="k">}</span>.yaml</code></li>
   <li>
+    A user-specific configuration:
     <ul>
       <li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">HOME</span><span class="k">}</span>/.config/mc_rtc/controllers/<span class="k">${</span><span class="nv">NAME</span><span class="k">}</span>/<span class="k">${</span><span class="nv">ROBOT</span><span class="k">}</span>.yaml</code></li>
       <li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="n">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/controllers/</span><span class="o">%</span><span class="nx">NAME</span><span class="o">%</span><span class="nx">/</span><span class="o">%</span><span class="nx">ROBOT</span><span class="o">%.</span><span class="nf">yaml</span></code></li>

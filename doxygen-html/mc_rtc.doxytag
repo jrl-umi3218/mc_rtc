@@ -29555,6 +29555,20 @@
       <anchor>ad50a096eb3ea0ba9a09f3a9b286a73a9</anchor>
       <arglist>() const noexcept</arglist>
     </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>get_loading_location</name>
+      <anchorfile>structmc__observers_1_1Observer.html</anchorfile>
+      <anchor>aab25932c8ee56c16d45e3f28cbb0fe4b</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>set_loading_location</name>
+      <anchorfile>structmc__observers_1_1Observer.html</anchorfile>
+      <anchor>ae885d308c2817249e204c357e1176d97</anchor>
+      <arglist>(std::string_view location)</arglist>
+    </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
       <name>addToLogger</name>
@@ -29582,6 +29596,13 @@
       <anchorfile>structmc__observers_1_1Observer.html</anchorfile>
       <anchor>a3deb1aa8ae052466d654f6385ada884a</anchor>
       <arglist>(mc_rtc::gui::StateBuilder &amp;, const std::vector&lt; std::string &gt; &amp;category)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::string</type>
+      <name>loading_location_</name>
+      <anchorfile>structmc__observers_1_1Observer.html</anchorfile>
+      <anchor>a2ec62e39d9969e672369d5166e78fd44</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::string</type>
@@ -36431,6 +36452,20 @@
       <anchor>a7d603f118a4a09c26a287320b3d6f212</anchor>
       <arglist>() const noexcept</arglist>
     </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>get_loading_location</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a028b6834d7cb6bd6d56bfaf88a288742</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>set_loading_location</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>ac328a42596f2423ec8af4a3edbb441ee</anchor>
+      <arglist>(std::string_view location)</arglist>
+    </member>
     <member kind="variable">
       <type>RobotConverterConfig</type>
       <name>controlToCanonicalConfig</name>
@@ -36443,6 +36478,13 @@
       <name>controlToCanonicalPostProcess</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a0f36485a023d3ba5e4bc09206851f3bb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>loading_location_</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a3d38c719f2f235ffbf33f6c87c5e2a44</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">

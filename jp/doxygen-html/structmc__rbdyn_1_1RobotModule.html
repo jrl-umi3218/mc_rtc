@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">mc_rtc
-   &#160;<span id="projectnumber">2.16.0</span>
+   &#160;<span id="projectnumber">2.17.1</span>
    </div>
   </td>
  </tr>
@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1RobotModule.html','
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structmc__rbdyn_1_1RobotModule-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -228,6 +229,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3bbfe1ae62d9e98aa1bbbc1c518623f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d603f118a4a09c26a287320b3d6f212"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule_1_1FrameDescription.html">FrameDescription</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a7d603f118a4a09c26a287320b3d6f212">frames</a> () const noexcept</td></tr>
 <tr class="separator:a7d603f118a4a09c26a287320b3d6f212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a028b6834d7cb6bd6d56bfaf88a288742"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a028b6834d7cb6bd6d56bfaf88a288742">get_loading_location</a> () const noexcept</td></tr>
+<tr class="separator:a028b6834d7cb6bd6d56bfaf88a288742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ac328a42596f2423ec8af4a3edbb441ee"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ac328a42596f2423ec8af4a3edbb441ee">set_loading_location</a> (std::string_view location)</td></tr>
+<tr class="separator:ac328a42596f2423ec8af4a3edbb441ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -235,6 +243,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a16418afe9c239311f7ff25cc380ae0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f36485a023d3ba5e4bc09206851f3bb"><td class="memItemLeft" align="right" valign="top">std::function&lt; void(const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;control, <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;canonical)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a0f36485a023d3ba5e4bc09206851f3bb">controlToCanonicalPostProcess</a></td></tr>
 <tr class="separator:a0f36485a023d3ba5e4bc09206851f3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d38c719f2f235ffbf33f6c87c5e2a44"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a3d38c719f2f235ffbf33f6c87c5e2a44">loading_location_</a></td></tr>
+<tr class="separator:a3d38c719f2f235ffbf33f6c87c5e2a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5de4bf236d1fa2f107fc27971009e979"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#a5de4bf236d1fa2f107fc27971009e979">path</a></td></tr>
 <tr class="separator:a5de4bf236d1fa2f107fc27971009e979"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad888b6f335ade03b6628633d4a446bc9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ad888b6f335ade03b6628633d4a446bc9">name</a></td></tr>
@@ -449,9 +459,6 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">mc_rbdyn::RobotModule::RobotModule </td>
@@ -477,11 +484,6 @@ Public Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Construct from a provided path, name and urdf_path</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__rbdyn_1_1RobotModule.html#ae2153d9cef8cbcb7d0d87a0ac21ac5ad">RobotModule(const std::string &amp;, const std::string &amp;)</a></dd></dl>
@@ -1206,6 +1208,31 @@ You are responsible for handling force sensor calibration files, by default this
 
 </div>
 </div>
+<a id="a028b6834d7cb6bd6d56bfaf88a288742"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a028b6834d7cb6bd6d56bfaf88a288742">&#9670;&nbsp;</a></span>get_loading_location()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string&amp; mc_rbdyn::RobotModule::get_loading_location </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a10f22df2fe618e1d7ee0db3edec87f72"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10f22df2fe618e1d7ee0db3edec87f72">&#9670;&nbsp;</a></span>grippers()</h2>
 
@@ -1473,6 +1500,34 @@ You are responsible for handling force sensor calibration files, by default this
 </div><div class="memdoc">
 <p>Return the reference (native controller) joint order of the robot</p>
 <p>If it is empty, <a class="el" href="structmc__rbdyn_1_1RobotModule.html#a1e78a7743c7a0b1c9b32b1acd727565e">make_default_ref_joint_order()</a> will be used to generate one </p>
+
+</div>
+</div>
+<a id="ac328a42596f2423ec8af4a3edbb441ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac328a42596f2423ec8af4a3edbb441ee">&#9670;&nbsp;</a></span>set_loading_location()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotModule::set_loading_location </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>location</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Called by <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a> to inform the robot module of its loading location For example, if the JVRC1 module is loaded from the library in /usr/local/lib/mc_robots/jvrc1.so then this is /usr/local/lib/mc_robots/</p>
+<p>The value is stored in a thread_local variable and is meant to be used in the constructor of <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a> </p>
 
 </div>
 </div>
@@ -2096,6 +2151,20 @@ You are responsible for handling force sensor calibration files, by default this
       </table>
 </div><div class="memdoc">
 <p>Path to the robot's convex folder </p>
+
+</div>
+</div>
+<a id="a3d38c719f2f235ffbf33f6c87c5e2a44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d38c719f2f235ffbf33f6c87c5e2a44">&#9670;&nbsp;</a></span>loading_location_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rbdyn::RobotModule::loading_location_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

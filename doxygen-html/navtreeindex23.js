@@ -1,5 +1,9 @@
 var NAVTREEINDEX23 =
 {
+"structmc__solver_1_1TasksQPSolver.html#acdd9f18320b9590e5e53c8c892e3262b":[6,0,7,24,12],
+"structmc__solver_1_1TasksQPSolver.html#af2b544574a42c1a063f7c762af4686c2":[6,0,7,24,18],
+"structmc__solver_1_1TasksQPSolver.html#afd99824587bfcb6f81227032da44de8d":[6,0,7,24,1],
+"structmc__solver_1_1details_1_1CompoundJointConstraint.html":[6,0,7,0,0],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#a12500c0416901546eb4d77bf0a3d2c9e":[6,0,7,0,0,9],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#a55dffd4ce88a71b31224c2487a2156ad":[6,0,7,0,0,5],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#a63d6b830f71e0e0cc7667b1577d754d0":[6,0,7,0,0,8],
@@ -245,9 +249,5 @@ var NAVTREEINDEX23 =
 "structmc__tasks_1_1OrientationTask.html#ab333c1b08462c2014c404b1b2b886246":[6,0,8,16,7],
 "structmc__tasks_1_1OrientationTask.html#ac5953577c61c0b6943106f08851f562c":[6,0,8,16,2],
 "structmc__tasks_1_1OrientationTask.html#acf5a79a834e5413f572c556a972c858f":[6,0,8,16,0],
-"structmc__tasks_1_1OrientationTask.html#ada80fbd5aaf53369618630495e92a175":[6,0,8,16,4],
-"structmc__tasks_1_1OrientationTask.html#ae68bb89e360bfbc1d9f2be05fcaad936":[6,0,8,16,6],
-"structmc__tasks_1_1OrientationTask.html#aed570ad6882e85529777864cc33d58ed":[6,0,8,16,1],
-"structmc__tasks_1_1PositionBasedVisServoTask.html":[6,0,8,17],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#a1c5a2a63cff774edab49e058c63344d6":[6,0,8,17,3]
+"structmc__tasks_1_1OrientationTask.html#ada80fbd5aaf53369618630495e92a175":[6,0,8,16,4]
 };

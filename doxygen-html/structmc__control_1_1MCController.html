@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">mc_rtc
-   &#160;<span id="projectnumber">2.16.0</span>
+   &#160;<span id="projectnumber">2.17.1</span>
    </div>
   </td>
  </tr>
@@ -2585,9 +2585,13 @@ template&lt;typename T  = void&gt; </div>
 </div><div class="memdoc">
 <p>Load a robot specific configuration (if any)</p>
 <p>The following files are loaded (in that order):</p><ul>
-<li>${loading_location}/${name()}/${robot_name}.conf|yaml</li>
+<li>Robot module's per-robot controller configuration: ${robot_module loading_location}/etc/controllers/${name()}/${robot_name}.conf|yaml|yml</li>
+<li>Controller's per-robot configuration: ${loading_location}/${name()}/${robot_name}.conf|yaml|yml</li>
+<li>User's configuration:<ul>
 <li>${HOME}/.config/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Linux/macOS)</li>
 <li>${APPDATA}/mc_rtc/controllers/${name()}/${robot_name}.conf|yaml (Windows) </li>
+</ul>
+</li>
 </ul>
 
 </div>

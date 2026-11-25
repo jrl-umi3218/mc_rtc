@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">mc_rtc
-   &#160;<span id="projectnumber">2.16.0</span>
+   &#160;<span id="projectnumber">2.17.1</span>
    </div>
   </td>
  </tr>
@@ -139,6 +139,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a39bca6757576671034b071813416b6fa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1ObserverPipeline.html#a39bca6757576671034b071813416b6fa">~ObserverPipeline</a> ()=default</td></tr>
 <tr class="separator:a39bca6757576671034b071813416b6fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab577dc04f6192cd5ae25f42adfbf8fd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1ObserverPipeline.html#ab577dc04f6192cd5ae25f42adfbf8fd5">create</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config, double dt)</td></tr>
+<tr class="memdesc:ab577dc04f6192cd5ae25f42adfbf8fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the observers and their configuration.  <a href="structmc__observers_1_1ObserverPipeline.html#ab577dc04f6192cd5ae25f42adfbf8fd5">More...</a><br /></td></tr>
 <tr class="separator:ab577dc04f6192cd5ae25f42adfbf8fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4e1a0ed6d7db9a831779c798ce4a2af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1ObserverPipeline.html#ab4e1a0ed6d7db9a831779c798ce4a2af">reset</a> ()</td></tr>
 <tr class="separator:ab4e1a0ed6d7db9a831779c798ce4a2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -343,6 +344,30 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Load the observers and their configuration. </p>
+<p>Configurations is loaded from the following locations (in order):</p>
+<ol type="1">
+<li><b>Default <a class="el" href="structmc__observers_1_1Observer.html" title="State observation API.">Observer</a> Configuration</b>: Loads the default configuration from <code>&lt;observer_install_prefix&gt;/observers/&lt;observerType&gt;/etc/&lt;observerType&gt;.yaml</code>.</li>
+<li><b>Robot-Specific Configuration</b>:<ul>
+<li>Loads the robot-specific configuration from the observer's runtime path: <code>&lt;observer_install_prefix&gt;/observers/&lt;observerType&gt;/&lt;rm.name&gt;.yaml</code>.</li>
+</ul>
+</li>
+<li><b>Robot Module Configuration</b>: Loads the robot module-specific configurations from the robot module's runtime path: <code>&lt;rm_runtime_dir&gt;/etc/observers/&lt;observerType&gt;.yaml</code>.</li>
+<li><b>User Configuration</b>:<ul>
+<li>Load user configurations from the user config directory: <code>&lt;user_config_directory&gt;/observers/&lt;observerType&gt;.yaml</code>.</li>
+<li>Load user-specific robot configurations from: <code>&lt;user_config_directory&gt;/observers/&lt;observerType&gt;/&lt;rm.name&gt;.yaml</code>.</li>
+</ul>
+</li>
+<li><b>Pipeline Configuration</b>: Finally, the configuration provided directly in the controller's pipeline <code>config</code> is loaded.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>The controller's configuration (which may contain an <a class="el" href="structmc__observers_1_1ObserverPipeline.html" title="State observation pipeline.">ObserverPipeline</a> configuration) </td></tr>
+    <tr><td class="paramname">dt</td><td>controller's timestep in [s] </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

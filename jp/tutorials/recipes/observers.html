@@ -392,18 +392,50 @@
 
 <h1 id="観測器パイプラインを設定する">観測器パイプラインを設定する</h1>
 
-<p>状態観測パイプラインの設定は、コントローラーの設定で行えます（各パイプラインの設定は、その前にあるパイプラインの設定よりも優先されます）。</p>
+<p>各オブザーバーに対して適切なデフォルト値を提供するために、以下の設定を順番にマージすることにより構成されます。</p>
 
 <ul>
-  <li>全般的な設定: <code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
-  <li>ユーザーによる設定: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li>
-  <li>コントローラー固有の設定: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_controllers/YourController.yaml</code></li>
-  <li>コントローラーの有限オートマトンの設定: <code class="highlight language-bash" data-lang="bash">YouController.yaml</code> （推奨）</li>
+  <li>オブザーバーの作成者:
+    <ul>
+      <li>オブザーバーのライブラリが読み込まれるランタイムディレクトリ:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX</span>/observers/&lt;ObserverType&gt;/etc/&lt;ObserverType&gt;.yaml</code></li>
+    </ul>
+  </li>
+  <li>予め定義されたロボットのセットに対するオブザーバーの作成者:
+    <ul>
+      <li>オブザーバーのロボット固有ランタイムディレクトリ:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX</span>/observers/&lt;ObserverType&gt;/&lt;rm.name&gt;.yaml</code>
+ここで <code class="language-plaintext highlighter-rouge">rm.name</code> は、オブザーバーが関連付けられているロボットモジュールの名前を指します。</li>
+    </ul>
+  </li>
+  <li>ロボットモジュールの作成者（他のロボットへの拡張性のため）:
+    <ul>
+      <li>ロボットモジュールのオブザーバー設定:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$OBSERVERS_RUNTIME_INSTALL_PREFIX</span>/etc/observers/&lt;ObserverType&gt;.yaml</code></li>
+    </ul>
+  </li>
+  <li>ユーザー設定:
+    <ul>
+      <li>ユーザー設定パス:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/observers/&lt;ObserverType&gt;.yaml</code></li>
+      <li>ユーザーのロボット固有設定:
+<code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/observers/&lt;ObserverType&gt;/&lt;robotName&gt;.yaml</code>
+ここで <code class="language-plaintext highlighter-rouge">robotName</code> は、コントローラーで使用されるロボットの名前であり、複数のロボットがいる場合には <code class="language-plaintext highlighter-rouge">rm.name</code> と異なる場合があります。</li>
+    </ul>
+  </li>
+  <li>最後に、コントローラーのパイプライン設定で直接提供された構成。</li>
 </ul>
 
-<p>設定形式については、<a href="../../json.html#Observers/ObserverPipelines">観測器のJSONスキーマ</a>に詳しく記述されています。</p>
+<p>これらの設定により、各オブザーバーに対して詳細な設定を提供しなくても、ロボットに意味のあるデフォルト値が適用されることが保証されます。</p>
 
-<p>はじめに、エンコーダーの位置測定値と浮遊ベースのロールとピッチを測定するセンサーの出力に基づいて浮遊ベースロボットの状態を推定する簡単な例を見てみましょう。</p>
+<p>はじめに、エンコーダーの位置測定と浮遊基部のロールおよびピッチオリエンテーションを提供するセンサーから、浮遊基ロボットの状態を推定するシンプルな代表例を見ていきましょう。設定形式は<a href="../../json.html#Observers/ObserverPipelines">Observers JSONスキーマ</a>で完全に文書化されています。</p>
+
+<ul>
+  <li>グローバル設定: <code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
+  <li>ユーザー設定: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li>
+  <li>コントローラー特有の設定: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_controllers/YourController.yaml</code></li>
+  <li>コントローラーのFSM設定: <code class="highlight language-bash" data-lang="bash">YourController.yaml</code> （推奨）</li>
+</ul>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">ObserverPipelines</span><span class="pi">:</span>
