@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [2.17.1]
+
+- ci: fix triggering debian packaging
+
 ## [2.17.0]
 
 ### What's Changed
