@@ -1,0 +1,9 @@
+{% for itm in site.data.community %}
+<div class="media features">
+  <img class="mr-3" src="{{site.baseurl_root}}/assets/icons/{{itm}}.svg" alt="{% t community.{{itm}}.heading %}" width="64" height="64"/>
+  <div class="media-body">
+    <h5 class="mt-0">{% t community.{{itm}}.heading %}</h5>
+    <a href="{%t community.{{itm}}.url %}">{%t community.{{itm}}.url_desc %}</a>
+  </div>
+</div>
+{% endfor %}

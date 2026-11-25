@@ -3,13 +3,8 @@
 #
 
 set(MC_RTC_JEKYLL_PLUGINS_PATH "${CMAKE_INSTALL_DOCDIR}/jekyll/plugins")
-configure_file(
-  _plugins/data_page_generator.in.rb
-  "${CMAKE_CURRENT_BINARY_DIR}/_plugins/data_page_generator.rb"
-)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_plugins/data_page_generator.rb
-        DESTINATION ${MC_RTC_JEKYLL_PLUGINS_PATH}
-)
+
+install(FILES _plugins/data_page_generator.rb DESTINATION ${MC_RTC_JEKYLL_PLUGINS_PATH})
 
 configure_file(_plugins/doxygen.in.rb "${CMAKE_CURRENT_BINARY_DIR}/_plugins/doxygen.rb")
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/_plugins/doxygen.rb
