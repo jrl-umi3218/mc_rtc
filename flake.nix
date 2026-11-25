@@ -59,6 +59,12 @@
                     pkgs-final.writableTmpDirAsHomeHook
                   ];
                   doCheck = false;
+
+                  shellHook = ''
+                    echo "To build the documentation, use:"
+                    echo "$ bundle install"
+                    echo "$ bundle exec jekyll serve"
+                  '';
                 };
             };
           }
