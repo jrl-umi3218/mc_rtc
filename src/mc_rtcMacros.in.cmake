@@ -202,6 +202,36 @@ endmacro()
 
 mc_rtc_set_prefix(ROBOTS mc_robots)
 
+# Macro: add_robot
+# -----------------
+# Creates a shared library (plugin) for a robot with the specified name and source files.
+#
+# This macro handles the creation of a shared library for a specific robot component,
+# links it with required dependencies, sets export properties, and manages its
+# installation paths. Additionally, it invokes the installation of robot-specific
+# configurations.
+#
+# Parameters:
+#   - robot_name: The name of the robot (used as the library name).
+#   - ARGN: A list of source files to include in the library.
+#
+# Usage:
+#   add_robot(robot_name source1.cpp source2.cpp ...)
+#
+# Example:
+#   add_robot(hrp4 hrp4.cpp hrp4.h)
+#
+# Installation Paths:
+# - The library is installed to:
+#   - ARCHIVE: ${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>
+#   - LIBRARY: ${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>
+#   - RUNTIME: ${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:${MC_RTC_LOADER_DEBUG_SUFFIX}>
+#
+# Additional Notes:
+# - The macro sets the compile flag `-DMC_ROBOTS_EXPORTS` for the library.
+# - The macro links the library to `mc_rtc::mc_rbdyn` for necessary dependencies.
+# - User's should call `mc_rtc_install_robot_configurations` to handle installation of robot-specific
+#   configuration files from `etc/` folder (per-robot controller's / observers configuration).
 macro(add_robot robot_name)
   add_library(${robot_name} SHARED ${ARGN})
 
@@ -236,26 +266,51 @@ else()
   set(MC_ROBOTS_USER_ALIASES_DIRECTORY "$ENV{HOME}/.config/mc_rtc/aliases/")
 endif()
 
-# Macro: install_robot_specific_configurations
-# ----------------------------------------
-# Installs a robot-specific config files (named <ROBOT>.yaml) from controllers/ and observers/
-# subfolders located in the specified ETC_FOLDER. If ETC_FOLDER is not provided or is
-# empty, defaults to the current source directory (${CMAKE_CURRENT_SOURCE_DIR}).
+# Macro: mc_rtc_install_robot_configurations
+# --------------------------------------------
+# Installs robot-specific configuration files (named <ROBOT>.yaml) from
+# `controllers/` and `observers/` subfolders located in the specified
+# `ETC_FOLDER`. If `ETC_FOLDER` is not provided or is empty, it defaults
+# to the current source directory (${CMAKE_CURRENT_SOURCE_DIR}).
+#
+# Expected ETC_FOLDER Structure:
+# ------------------------------
+# The `ETC_FOLDER` should follow a specific directory structure for the
+# `mc_rtc_install_robot_configurations` macro to function correctly.
+#
+# ETC_FOLDER/
+# ├── controllers/
+# │   ├── <CONTROLLER_NAME>/
+# │   │   └── <ROBOT_NAME>.yaml
+# │   └── ... (other controllers)
+# └── observers/
+#     ├── <OBSERVER_NAME>/
+#     │   └── <ROBOT_NAME>.yaml
+#     └── ... (other observers)
+#
+# Description:
+# - The `controllers` folder should contain subdirectories for each
+#   controller related to the robot. Each controller subdirectory should
+#   contain a corresponding `<ROBOT_NAME>.yaml` configuration file.
+#
+# - The `observers` folder should contain subdirectories for each observer
+#   related to the robot. Similar to controllers, each observer subdirectory
+#   should also contain a `<ROBOT_NAME>.yaml` configuration file.
 #
 # Usage:
-#   install_config_files(ROBOT [ETC_FOLDER])
+#   mc_rtc_install_robot_configurations(ROBOT [ETC_FOLDER])
 #
 # Example:
-#   install_config_files(hrp4)                       # Installs hrp4.yaml from current source directory
-#   install_config_files(jvrc1 path/to/etc)          # Installs jvrc1.yaml from specified etc folder
+#   mc_rtc_install_robot_configurations(hrp4)               # Installs hrp4.yaml from <CMAKE_SOURCE_DIR>/etc
+#   mc_rtc_install_robot_configurations(jvrc1 path/to/etc)  # Installs jvrc1.yaml from specified etc folder
 #
 # For each controller or observer subfolder, if <ROBOT>.yaml exists, it will be
 # installed to the appropriate destination under the install prefix.
-macro(install_robot_specific_configurations ROBOT)
+macro(mc_rtc_install_robot_configurations ROBOT)
   if(${ARGC} GREATER 1)
     set(ETC_FOLDER "${ARGV1}")
   else()
-    set(ETC_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}")
+    set(ETC_FOLDER "${CMAKE_SOURCE_DIR}/etc")
   endif()
   set(CONFIG_FILE "${ROBOT}.yaml")
   if(EXISTS "${ETC_FOLDER}/controllers")
@@ -295,6 +350,27 @@ endmacro()
 # -- Observers --
 mc_rtc_set_prefix(OBSERVERS mc_observers)
 
+# Macro: add_observer
+# ---------------------
+# Creates a shared library (plugin) for an observer with the specified name and source files.
+#
+# Parameters:
+#   - observer_name: The name of the observer library.
+#   - ARGN: Source files to include in the library.
+#
+# Usage:
+#   add_observer(observer_name source1.cpp source2.cpp ...)
+#
+# Example:
+#   add_observer(my_observer my_observer.cpp my_observer.h)
+#
+# Installation:
+# - The library is installed to specified PREFIX directories based on configuration.
+# - Sets compile flags and links to `mc_rtc::mc_observers`.
+#
+# Additional Notes:
+# - User's should call `mc_rtc_install_robot_configurations` to handle installation of robot-specific
+#   configuration files from `etc/` folder (per-robot controller's / observers configuration).
 macro(add_observer observer_name)
   add_library(${observer_name} SHARED ${ARGN})
   set_target_properties(
