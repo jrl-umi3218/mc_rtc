@@ -49,7 +49,10 @@
                   # FIXME: enable testing:
                   # - testing fails in nix build
                   # - testRobotModule fails in nix devel
-                  cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [ (lib.cmakeBool "BUILD_TESTING" true) ];
+                  cmakeFlags = (drv-prev.cmakeFlags or [ ]) ++ [
+                    (lib.cmakeBool "BUILD_TESTING" true)
+                    "-GNinja"
+                  ];
                   nativeBuildInputs = drv-prev.nativeBuildInputs ++ [ pkgs-final.ninja ];
                   nativeCheckInputs = [
                     # workaround for some tests trying to write to /homeless-shelter

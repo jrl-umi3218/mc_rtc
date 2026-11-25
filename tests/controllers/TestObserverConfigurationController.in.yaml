@@ -1,12 +1,80 @@
+# This is the controller's configuration file for TestObserverConfigurationController
+
+robots:
+  jvrc2:
+    module: JVRC1
+
+# Adds an observer pipeline with 3 identical observers
+# Only their configuration differs
 ObserverPipelines:
 - name: "ObserverPipeline"
   observers:
+    # First observer sets properties from within the controller's configuration (this file)
+    # Expected:
+    # - Observer's configuration TestObserver.yaml
+    #    - fromObserverConfig: true
+    #    - finalValue: 1
+    # merged with:
+    # - Per-robot observer configuration TestObserver.jvrc1.yaml
+    #   - fromRobotConfig: true
+    #   - finalValue: 2
+    #
+    # - Controller's observer configuration (this file)
+    #   - fromControllerConfig: true
+    #   - finalValue: 3
+    #
+    # So we should have:
+    # fromObserverConfig: true
+    # fromRobotConfig: true
+    # fromControllerConfig: true
+    # finalValue: 3 # successive overrides 1 -> 2 -> 3
     - type: TestObserver
       name: FullConfiguration
       fromControllerConfig: true
       finalValue: 3
+    # Second observer does not set any property from the controller's configuration,
+    # but instead sets them from the robot's observer configuration TestObserver.jvrc1.yaml
+    #
+    # Expected:
+    # - Observer's configuration TestObserver.yaml
+    #    - fromObserverConfig: true
+    #      finalValue: 1
+    # merged with:
+    # - Per-robot observer configuration TestObserver.jvrc1.yaml
+    #   - fromRobotConfig: true
+    #     finalValue: 2
+    #
+    # - Controller's observer configuration (this file)
+    #   - none
+    #
+    # So we should have:
+    #   - fromObserverConfig: true
+    #     fromRobotConfig: true
+    #     finalValue: 2
     - type: TestObserver
       name: NoControllerConfiguration
+    # Third observer does not set any controller configuration
+
+    # Expected:
+    # - Observer's configuration TestObserver.yaml
+    #    - fromObserverConfig: true
+    #      finalValue: 1
+    #
+    # merged with:
+    #
+    # - Per-robot module observer configuration : TestObserver.jvrc1.yaml -> jvrc1.yaml
+    # - Per-robot observer configuration : TestObserver.jvrc2.yaml -> jvrc2.yaml
+    #
+    # - Controller's observer configuration (this file)
+    #   - robot: jvrc2
+    #
+    # So we should have:
+    #   - fromObserverConfig: true
+    #     finalValue: 4
+    #     type: TestObserver
+    #     name: NoControllerOrRobotConfiguration
+    #     robot: jvrc2
     - type: TestObserver
-      name: NoControllerOrRobotConfiguration
+      name: AdditionalRobotConfiguration
       robot: jvrc2
+      finalValue: 4

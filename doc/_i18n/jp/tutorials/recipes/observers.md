@@ -15,16 +15,38 @@
 
 # 観測器パイプラインを設定する
 
-状態観測パイプラインの設定は、コントローラーの設定で行えます（各パイプラインの設定は、その前にあるパイプラインの設定よりも優先されます）。
+各オブザーバーに対して適切なデフォルト値を提供するために、以下の設定を順番にマージすることにより構成されます。
 
-- 全般的な設定: {% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}
-- ユーザーによる設定: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}
-- コントローラー固有の設定: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_controllers/YourController.yaml{% endihighlight %}
-- コントローラーの有限オートマトンの設定: {% ihighlight bash %} YouController.yaml{% endihighlight %} （推奨）
+- オブザーバーの作成者:
+  - オブザーバーのライブラリが読み込まれるランタイムディレクトリ:
+    {% ihighlight bash %}$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX/observers/<ObserverType>/etc/<ObserverType>.yaml{% endihighlight %}
 
-設定形式については、[観測器のJSONスキーマ](../../json.html#Observers/ObserverPipelines)に詳しく記述されています。
+- 予め定義されたロボットのセットに対するオブザーバーの作成者:
+  - オブザーバーのロボット固有ランタイムディレクトリ:
+    {% ihighlight bash %}$MC_OBSERVERS_RUNTIME_INSTALL_PREFIX/observers/<ObserverType>/<rm.name>.yaml{% endihighlight %}
+    ここで `rm.name` は、オブザーバーが関連付けられているロボットモジュールの名前を指します。
 
-はじめに、エンコーダーの位置測定値と浮遊ベースのロールとピッチを測定するセンサーの出力に基づいて浮遊ベースロボットの状態を推定する簡単な例を見てみましょう。
+- ロボットモジュールの作成者（他のロボットへの拡張性のため）:
+  - ロボットモジュールのオブザーバー設定:
+    {% ihighlight bash %}$OBSERVERS_RUNTIME_INSTALL_PREFIX/etc/observers/<ObserverType>.yaml{% endihighlight %}
+
+- ユーザー設定:
+  - ユーザー設定パス:
+    {% ihighlight bash %}$HOME/.config/mc_rtc/observers/<ObserverType>.yaml{% endihighlight %}
+  - ユーザーのロボット固有設定:
+    {% ihighlight bash %}$HOME/.config/mc_rtc/observers/<ObserverType>/<robotName>.yaml{% endihighlight %}
+    ここで `robotName` は、コントローラーで使用されるロボットの名前であり、複数のロボットがいる場合には `rm.name` と異なる場合があります。
+
+- 最後に、コントローラーのパイプライン設定で直接提供された構成。
+
+これらの設定により、各オブザーバーに対して詳細な設定を提供しなくても、ロボットに意味のあるデフォルト値が適用されることが保証されます。
+
+はじめに、エンコーダーの位置測定と浮遊基部のロールおよびピッチオリエンテーションを提供するセンサーから、浮遊基ロボットの状態を推定するシンプルな代表例を見ていきましょう。設定形式は[Observers JSONスキーマ](../../json.html#Observers/ObserverPipelines)で完全に文書化されています。
+
+- グローバル設定: {% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}
+- ユーザー設定: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}
+- コントローラー特有の設定: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_controllers/YourController.yaml{% endihighlight %}
+- コントローラーのFSM設定: {% ihighlight bash %}YourController.yaml{% endihighlight %} （推奨）
 
 ```yaml
 ---

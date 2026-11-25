@@ -34,20 +34,42 @@ static inline void load_config(mc_rtc::Configuration & out, const std::string & 
   out.load(mc_rtc::Configuration(cfg));
 }
 
+/**
+ * @see ObserverPipeline::create for the full paths documentation.
+ */
 static inline mc_rtc::Configuration get_observer_config(const std::string & observerType,
-                                                        const std::string & robot,
+                                                        const mc_observers::Observer & observer,
+                                                        const mc_rbdyn::RobotModule & rm,
                                                         mc_rtc::Configuration config)
 {
   mc_rtc::Configuration out;
-  // Load observer configuration
-  auto runtime_dir = mc_observers::ObserverLoader::get_observer_runtime_directory(observerType);
-  if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/etc", observerType); }
+  // Load observer's configuration path
+  // That is in <observer_install_prefix>/observers/<observerType>/
+  // Note that:
+  // - outside of Nix <observer_install_prefix> resolves to <mc_rtc_prefix>
+  // - for        Nix <observer_install_prefix> resolves to its own install path
+  // In both cases this is found relative to the observer's library itself
+  auto observers_runtime_dir = observer.get_loading_location();
+
+  // 1. Load default observer's configuration etc/<observerType>.yaml
+  load_config(out, observers_runtime_dir + "/etc", observerType);
+
+  // 2. Load robot specific configuration in the observer's runtime path
+  load_config(out, observers_runtime_dir + "/" + observerType, rm.name);
+
+  // Get robot module's runtime path
+  // Same remark as for observers_runtime_dir, this resolves relative to the robot module's library path
+  const auto & rm_runtime_dir = rm.get_loading_location();
+  // 3. Load robot specific configuration in the robot module's runtime path
+  load_config(out, rm_runtime_dir + "/etc/observers", observerType);
+
+  // 4. Load user configuration for <observerType> from the user config directory
   fs::path user_path = mc_rtc::user_config_directory_path("observers");
   load_config(out, user_path.string(), observerType);
-  // Load robot specific configuration
-  if(!runtime_dir.empty()) { load_config(out, runtime_dir + "/" + observerType, robot); }
-  load_config(out, (user_path / observerType).string(), robot);
-  // Finally load the configuration provided in the pipeline
+  // 5. Load user's per-robot configuration
+  load_config(out, (user_path / observerType).string(), rm.name);
+
+  // 6. Finally load the configuration provided in the pipeline
   out.load(config);
   return out;
 }
@@ -96,8 +118,13 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
       // override deprecated "config" object if provided in the new format
       config.load(observerConf);
       std::string robot = config("robot", ctl_.robot().name());
-      if(ctl_.hasRobot(robot)) { robot = ctl_.robot(robot).module().name; }
-      observer->configure(ctl_, get_observer_config(observerType, robot, config));
+      if(!ctl_.hasRobot(robot))
+      {
+        mc_rtc::log::error_and_throw("[ObserverPipeline::{}] Observer {} requires robot {} but it is not available",
+                                     name_, observerName, robot);
+      }
+      auto & rm = ctl_.robot(robot).module();
+      observer->configure(ctl_, get_observer_config(observerType, *observer, rm, config));
       pipelineObservers_.emplace_back(observer, observerConf);
     }
     else if(!observerConf("required", true))
