@@ -157,20 +157,20 @@ contacts:
 
 この場合、左足と右足の裏が地面と接触しているとみなされます。また、足の裏が動かないように制限され、二次計画法によって生成された力が線形化された摩擦円錐の内部に収まるように制限されています。
 
-衝突メッシュ
+距離制限
 ===
 
-次に、衝突メッシュの初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して衝突メッシュを後で追加・削除できます。`collisions`要素は、[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint)オブジェクトの配列で構成されます。`MainRobot`については、自己衝突メッシュのデフォルトのリストが{% doxygen mc_rbdyn::RobotModule %}で定義されており、それらをここで使用できます。
+次に、衝突回避のための距離制限の初期セットを追加する方法について見ていきましょう。接触面の場合と同様に、状態を使用して距離制限を後で追加・削除できます。`distanceConstraints`要素は、[DistanceConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/DistanceConstraint)オブジェクトの配列で構成されます(`collisions`/[CollisionConstraint]({{site.baseurl}}/json-full.html#ConstraintSet/CollisionsConstraint)は後方互換性のため非推奨の別名として残されています)。`MainRobot`については、自己衝突回避のための距離制限のデフォルトのリストが{% doxygen mc_rbdyn::RobotModule %}で定義されており、それらをここで使用できます。
 
 ```yaml
-# 干渉回避制約
-collisions:
-- type: collision
-  useMinimal: true  # 最小限の自己干渉回避セットはロボットモジュールに定義されている
-- type: collision
+# 距離制約
+distanceConstraints:
+- type: distanceLimit
+  useEssential: true  # 必須の距離制限セットはロボットモジュールに定義されている
+- type: distanceLimit
   r1: jvrc1
   r2: door
-  collisions: # このロボットの組み合わせに対する干渉回避拘束のリスト
+  distanceLimits: # このロボットの組み合わせに対する距離制限のリスト
     - body1: L_WRIST_Y_S
       body2: door
       iDist: 0.5  # インタラクション距離：物体間の距離がこの値を下回ると拘束が有効になる

@@ -52,16 +52,16 @@ states:
     RemoveContactsAfter: *special-contacts
   TestCollisionsManipulation:
     base: HalfSitting
-    AddCollisions: &robot-ground-collisions
+    AddDistanceLimits: &robot-ground-collisions
       - r1: jvrc1
         r2: ground
-        collisions:
+        distanceLimits:
           - body1: L_WRIST_Y_S
             body2: ground
             iDist: 0.05
             sDist: 0.01
             damping: 0
-    RemoveCollisionsAfter: *robot-ground-collisions
+    RemoveDistanceLimitsAfter: *robot-ground-collisions
     RemoveCollisions: &robot-self-collisions
       - r1: jvrc1
         r2: jvrc1

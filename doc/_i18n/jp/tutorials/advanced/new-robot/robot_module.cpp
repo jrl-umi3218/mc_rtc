@@ -23,11 +23,12 @@ MyRobotModule::MyRobotModule(bool fixed) : mc_rbdyn::RobotModule(MY_PATH, "my_ro
   _bodySensors.emplace_back("Accelerometer", "PELVIS_S", sva::PTransformd(Eigen::Vector3d(-0.0325, 0, 0.1095)));
   _bodySensors.emplace_back("FloatingBase", "PELVIS_S", sva::PTransformd::Identity());
 
-  _minimalSelfCollisions = {
+  std::vector<mc_rbdyn::DistanceLimit> selfCollisionLimits = {
       {"WAIST_R_S", "L_SHOULDER_Y_S", 0.02, 0.001, 0.}, {"WAIST_R_S", "R_SHOULDER_Y_S", 0.02, 0.001, 0.},
       {"PELVIS_S", "R_ELBOW_P_S", 0.05, 0.001, 0.},     {"PELVIS_S", "L_ELBOW_P_S", 0.05, 0.001, 0.},
       {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0.},    {"L_WRIST_Y_S", "L_HIP_Y_S", 0.05, 0.025, 0.}};
-  _commonSelfCollisions = _minimalSelfCollisions;
+  essentialDistanceLimits(selfCollisionLimits);
+  extraDistanceLimits(std::move(selfCollisionLimits));
   _grippers = {{"l_gripper", {"L_UTHUMB"}, true}, {"r_gripper", {"R_UTHUMB"}, false}};
 }
 {% endraw %}

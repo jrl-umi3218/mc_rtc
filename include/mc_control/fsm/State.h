@@ -30,8 +30,8 @@ struct MC_CONTROL_FSM_DLLAPI Controller;
  * it needs, with the following exceptions:
  * - Contacts are handled at the global level, the state should go through the
  *   addContact/removeContact methods of FSMController
- * - Collision constraints are handled at the global level, the state should go
- *   through the addCollisons/removeCollisions methods of Controller
+ * - Distance limit constraints are handled at the global level, the state should go
+ *   through the addDistanceLimits/removeDistanceLimits methods of Controller
  * - Kinematics/Dynamics constraints are handled at the global level
  * - Posture tasks are handled at the global level, if a state removes a
  *   posture task from the solver, it should put it back afterwards
@@ -65,10 +65,11 @@ struct MC_CONTROL_FSM_DLLAPI State
    *   start
    * - AddContactsAfter/RemoveContactsAfter: add and remove contacts during the
    *   state's teardown
-   * - AddCollisions/RemoveCollisions: add and remove collisions during the state's
-   *   start
-   * - AddCollisionsAfter/RemoveCollisionsAfter: add and remove collisions during the
-   *   state's teardown
+   * - AddDistanceLimits/RemoveDistanceLimits: add and remove distance limits during
+   *   the state's start (AddCollisions/RemoveCollisions are accepted as aliases)
+   * - AddDistanceLimitsAfter/RemoveDistanceLimitsAfter: add and remove distance
+   *   limits during the state's teardown (AddCollisionsAfter/RemoveCollisionsAfter
+   *   are accepted as aliases)
    * - RemovePostureTask: if true, remove the robot posture task at the state's
    *   start
    */
@@ -140,14 +141,14 @@ protected:
   mc_rtc::Configuration add_contacts_after_config_;
   /** RemoveContactsAfter in the configuration */
   mc_rtc::Configuration remove_contacts_after_config_;
-  /** AddCollisions in the configuration */
-  mc_rtc::Configuration add_collisions_config_;
-  /** RemoveCollisions in the configuration */
-  mc_rtc::Configuration remove_collisions_config_;
-  /** AddCollisionsAfter in the configuration */
-  mc_rtc::Configuration add_collisions_after_config_;
-  /** RemoveCollisionsAfter in the configuration */
-  mc_rtc::Configuration remove_collisions_after_config_;
+  /** AddDistanceLimits (or its alias AddCollisions) in the configuration */
+  mc_rtc::Configuration add_distance_limits_config_;
+  /** RemoveDistanceLimits (or its alias RemoveCollisions) in the configuration */
+  mc_rtc::Configuration remove_distance_limits_config_;
+  /** AddDistanceLimitsAfter (or its alias AddCollisionsAfter) in the configuration */
+  mc_rtc::Configuration add_distance_limits_after_config_;
+  /** RemoveDistanceLimitsAfter (or its alias RemoveCollisionsAfter) in the configuration */
+  mc_rtc::Configuration remove_distance_limits_after_config_;
   /** constraints in the configuration */
   mc_rtc::Configuration constraints_config_;
   /** tasks in the configuration */

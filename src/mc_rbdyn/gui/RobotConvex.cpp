@@ -23,7 +23,7 @@ void addConvexToGUI(mc_rtc::gui::StateBuilder & gui,
   const auto & convex = robot.convex(name);
   const auto & body = convex.first;
   const auto & c = convex.second;
-  auto get_pose = [&, name, body]() { return robot.collisionTransform(name) * robot.bodyPosW(body); };
+  auto get_pose = [&, name, body]() { return robot.convexTransform(name) * robot.bodyPosW(body); };
   auto publish_object = [&](auto && element) { gui.addElement(category, element); };
   if(auto * poly = dynamic_cast<sch::S_Polyhedron *>(c.get()))
   {

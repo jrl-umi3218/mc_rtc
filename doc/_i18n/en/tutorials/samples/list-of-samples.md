@@ -13,7 +13,7 @@ Make each of the robot's DoF target a given joint position. By default this cont
 **Constraints**
 - {% doxygen mc_solver::ContactConstraint %}: A controller must always have a contact constraint, but it can have an empty set of contacts.
 - {% doxygen mc_solver::KinematicsConstraint %}: Joint limits constraint.
-- {% doxygen mc_solver::CollisionsConstraint %}: Self-collision avoidance constraint.
+- {% doxygen mc_solver::DistanceConstraint %}: Self-collision avoidance constraint.
 - {% doxygen mc_solver::CompoundJointConstraint %}: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).
 
 **Supported robots**
@@ -38,7 +38,7 @@ The `CoM` sample controller (see [online demonstration](https://mc-rtc-demo.netl
 **Constraints**
 - {% doxygen mc_solver::ContactConstraint %}: Adds contacts between the left/right foot and the ground environment.
 - {% doxygen mc_solver::DynamicsConstraint %}: In addition to the joint limits constraint provided by the {% doxygen mc_solver::KinematicsConstraint %} this constraint enables computation of the joint torques and friction cones.
-- {% doxygen mc_solver::CollisionsConstraint %}: Self-collision avoidance constraint.
+- {% doxygen mc_solver::DistanceConstraint %}: Self-collision avoidance constraint.
 - {% doxygen mc_solver::CompoundJointConstraint %}: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).
 
 **Supported robots**
@@ -87,7 +87,7 @@ Text:
   constraints:
   - type: dynamics
   - type: contact
-  - type: collision
+  - type: distanceLimit
   - type: compoundJoint
   tasks:
   - type: com

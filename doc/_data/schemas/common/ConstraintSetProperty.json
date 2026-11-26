@@ -6,6 +6,7 @@
     { "$ref": "../ConstraintSet/BoundedSpeedConstr.json" },
     { "$ref": "../ConstraintSet/CoMIncPlaneConstr.json" },
     { "$ref": "../ConstraintSet/CollisionsConstraint.json" },
+    { "$ref": "../ConstraintSet/DistanceConstraint.json" },
     { "$ref": "../ConstraintSet/CompoundJointConstraint.json" },
     { "$ref": "../ConstraintSet/ContactConstraint.json" },
     { "$ref": "../ConstraintSet/DynamicsConstraint.json" },

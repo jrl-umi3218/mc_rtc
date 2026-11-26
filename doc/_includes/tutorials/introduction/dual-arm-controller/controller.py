@@ -24,10 +24,10 @@ class DualArmController(mc_control.MCPythonController):
         self.qpsolver.addConstraintSet(self.kinematicsConstraint)
         self.qpsolver.addConstraintSet(self.selfCollisionConstraint)
         iDist, sDist, damping = 0.1, 0.05, 0.1
-        self.addCollisions(
+        self.addDistanceLimits(
             "ur5e",
             "kinova",
-            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+            [mc_rbdyn.DistanceLimit("*", "*", iDist, sDist, damping)],
         )
         self.postureTask.stiffness(1)
         self.postureTask.weight(1)

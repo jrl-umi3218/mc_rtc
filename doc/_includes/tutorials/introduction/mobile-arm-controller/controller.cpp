@@ -23,8 +23,8 @@ MobileArmController::MobileArmController(mc_rbdyn::RobotModulePtr rm, double dt,
 
   double iDist = 0.1;
   double sDist = 0.05;
-  addCollisions("dingo", "door", {{"*", "*", iDist, sDist, 0}});
-  addCollisions("ur5e", "door", {{"*", "*", iDist, sDist, 0}});
+  addDistanceLimits("dingo", "door", {{"*", "*", iDist, sDist, 0}});
+  addDistanceLimits("ur5e", "door", {{"*", "*", iDist, sDist, 0}});
 
   mc_rtc::log::success("MobileArmController init done ");
 }

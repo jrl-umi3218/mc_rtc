@@ -186,15 +186,15 @@ void UpdateWall::start(mc_control::fsm::Controller & ctl)
 
 ### 最初の姿勢に戻す
 
-この有限オートマトンの残りの部分では、ロボットを最初の姿勢に戻します。まず、スムーズに遷移できるように、`RightHandReleaseAdmittance`を使用して手の圧力を解放し、手の圧力をほぼ0にします。次に、現在の位置から`10cm`後方に手を動かします。最後に、{% doxygen mc_control::fsm::HalfSittingState %}状態を使用して、最初の中腰の姿勢に戻します。今回は手の動きを明示的に指定していないため、中腰の姿勢に戻るまでに手と壁が衝突するおそれがあります。それを防ぐため、手と壁との間に衝突制約条件を追加します。
+この有限オートマトンの残りの部分では、ロボットを最初の姿勢に戻します。まず、スムーズに遷移できるように、`RightHandReleaseAdmittance`を使用して手の圧力を解放し、手の圧力をほぼ0にします。次に、現在の位置から`10cm`後方に手を動かします。最後に、{% doxygen mc_control::fsm::HalfSittingState %}状態を使用して、最初の中腰の姿勢に戻します。今回は手の動きを明示的に指定していないため、中腰の姿勢に戻るまでに手と壁が衝突するおそれがあります。それを防ぐため、手と壁との間に距離制約条件を追加します(`AddCollisionsAfter`は`AddDistanceLimitsAfter`、`collisions`は`distanceLimits`の後方互換性のための非推奨の別名として残されています)。
 
 ```cpp
   RightHandMoveBack:
     base: StandingBase
-    AddCollisionsAfter:
+    AddDistanceLimitsAfter:
       - r1: jvrc1
         r2: wall
-        collisions:
+        distanceLimits:
           - body1: R_WRIST_Y_S
             body2: ground
             iDist: 0.15

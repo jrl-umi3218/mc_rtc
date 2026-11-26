@@ -68,11 +68,24 @@
         "$ref": "../common/ConstraintSetProperty.json"
       }
     },
+    "distanceConstraints": {
+      "type": "array",
+      "description": "Distance constraints.",
+      "items": {
+        "oneOf": [
+          { "$ref": "../ConstraintSet/DistanceConstraint.json" },
+          { "$ref": "../ConstraintSet/CollisionsConstraint.json" }
+        ]
+      }
+    },
     "collisions": {
       "type": "array",
-      "description": "Collision constraints.",
+      "description": "Deprecated alias for distanceConstraints.",
       "items": {
-        "$ref": "../ConstraintSet/CollisionsConstraint.json"
+        "oneOf": [
+          { "$ref": "../ConstraintSet/DistanceConstraint.json" },
+          { "$ref": "../ConstraintSet/CollisionsConstraint.json" }
+        ]
       }
     },
     "contacts": {

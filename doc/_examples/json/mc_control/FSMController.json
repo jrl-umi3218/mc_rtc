@@ -34,12 +34,12 @@
       "type": "compoundJoint"
     }
   ],
-  // Collision constraint
-  "collisions":
+  // Distance constraint
+  "distanceConstraints":
   [
     {
-      "type": "collision",
-      "useMinimal": true
+      "type": "distanceLimit",
+      "useEssential": true
     }
   ],
   // Initial set of contacts

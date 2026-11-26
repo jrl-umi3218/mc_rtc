@@ -148,10 +148,10 @@ add_collision_constraint_sources:
         // In the constructor
         double iDist = 0.1;
         double sDist = 0.05;
-        addCollisions(
+        addDistanceLimits(
           "dingo", "door", {{"*", "*", iDist, sDist, 0}}
         );
-        addCollisions(
+        addDistanceLimits(
           "ur5e", "door", {{"*", "*", iDist, sDist, 0}}
         );
   - name: Python
@@ -159,15 +159,15 @@ add_collision_constraint_sources:
     source: |
         # In the constructor
         iDist, sDist, damping = 0.1, 0.05, 0.0
-        self.addCollisions(
+        self.addDistanceLimits(
             "dingo",
             "door",
-            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+            [mc_rbdyn.DistanceLimit("*", "*", iDist, sDist, damping)],
         )
-        self.addCollisions(
+        self.addDistanceLimits(
             "ur5e",
             "door",
-            [mc_rbdyn.Collision("*", "*", iDist, sDist, damping)],
+            [mc_rbdyn.DistanceLimit("*", "*", iDist, sDist, damping)],
         )
 logic_setup_sources:
   - name: C++

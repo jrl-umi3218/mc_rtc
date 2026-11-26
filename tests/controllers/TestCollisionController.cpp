@@ -65,17 +65,20 @@ public:
       g.addConvex(fmt::format("object{}", i), b, std::make_shared<sch::S_Sphere>(1.0));
     }
     // Check the wildcard adding
-    addCollisions("jvrc1", "ground", {{"R_WRIST_Y_S", "object*", iDist, sDist, 0}});
+    addDistanceLimits("jvrc1", "ground", {{"R_WRIST_Y_S", "object*", iDist, sDist, 0}});
     for(size_t i = 0; i < 10; ++i)
     {
-      BOOST_REQUIRE(hasCollision("jvrc1", "ground", "R_WRIST_Y_S", fmt::format("object{}", i)));
+      BOOST_REQUIRE(hasDistanceLimit("jvrc1", "ground", "R_WRIST_Y_S", fmt::format("object{}", i)));
     }
+    // Check the mc_rbdyn::DistanceLimit overload of hasDistanceLimit
+    BOOST_REQUIRE(hasDistanceLimit("jvrc1", "ground", {"R_WRIST_Y_S", "object0", iDist, sDist, 0}));
     // Check the wildcard removing
-    removeCollisions("jvrc1", "ground", {{"R_WRIST_Y_S", "object*", iDist, sDist, 0}});
+    removeDistanceLimits("jvrc1", "ground", {{"R_WRIST_Y_S", "object*", iDist, sDist, 0}});
     for(size_t i = 0; i < 10; ++i)
     {
-      BOOST_REQUIRE(!hasCollision("jvrc1", "ground", "R_WRIST_Y_S", fmt::format("object{}", i)));
+      BOOST_REQUIRE(!hasDistanceLimit("jvrc1", "ground", "R_WRIST_Y_S", fmt::format("object{}", i)));
     }
+    BOOST_REQUIRE(!hasDistanceLimit("jvrc1", "ground", {"R_WRIST_Y_S", "object0", iDist, sDist, 0}));
 
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(kinematicsConstraint);
