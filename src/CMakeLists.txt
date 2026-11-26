@@ -346,14 +346,14 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR} ${mc_tvm_SRC} ${mc_t
 target_compile_definitions(mc_rbdyn PRIVATE "-DMC_RBDYN_EXPORTS" "-DMC_TVM_EXPORTS")
 target_link_libraries(
   mc_rbdyn
-  PUBLIC
-    RBDyn::Parsers
-    Tasks::Tasks
-    mc_rtc_loader
-    mc_rtc_utils
-    mc_filter
-    GEOS::geos
-    TVM::TVM
+  PUBLIC RBDyn::Parsers
+         Tasks::Tasks
+         mc_rtc_loader
+         mc_rtc_utils
+         mc_filter
+         GEOS::geos
+         TVM::TVM
+  PRIVATE
     mesh_sampling::mesh_sampling # privately links against Qhull::qhull_r Qhull::qhullcpp
 )
 target_link_libraries(mc_rbdyn PRIVATE Qhull::qhull_r Qhull::qhullcpp)
