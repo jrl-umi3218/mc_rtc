@@ -188,7 +188,7 @@ endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
 add_project_dependency(ndcurves REQUIRED)
-add_project_dependency(mesh_sampling REQUIRED)
+find_package(mesh_sampling REQUIRED)
 # NOTE: linking against mesh_sampling privately links agaist Qhull::qhullcpp and Qhull::qhull_r re-entrant dynamic libraries
 # we should probably use the same qhull libraries in mc_rtc private targets (e.g mc_rbdyn/surface_hull)
 find_package(Qhull REQUIRED)
