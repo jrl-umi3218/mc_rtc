@@ -27,9 +27,13 @@ features:
     desc: URDFファイルがあればあなたのロボットをmc_rtcフレームワークで動かし始めることができます。これらの<a href="robots.html">ロボット</a>はすでにサポートされており、すぐに利用可能です。
 community:
   matrix:
-    heading: コミュニティと私たちの公式マトリックスチャンネルで議論する
+    heading: 私たちの公式マトリックスチャンネルで議論する
     url: https://matrix.to/#/#mc_rtc:matrix.org
     url_desc: "#mc_rtc:matrix.org"
+  github:
+    heading: GitHubで議論する
+    url: https://github.com/jrl-umi3218/mc_rtc/discussions
+    url_desc: "Github Discussions"
 global:
   credits: クレジット
   next_tutorial: 次のチュートリアル
